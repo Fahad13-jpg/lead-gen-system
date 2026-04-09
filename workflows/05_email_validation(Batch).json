@@ -1,0 +1,196 @@
+{
+  "name": "5 - Email Validation (Batch)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 5
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5abfffec-d292-45c5-a683-c129b0d46d25",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id, email\nFROM cleaned_leads\nWHERE email IS NOT NULL\nAND email_verification_status = 'pending'\nORDER BY created_at ASC\nLIMIT 10",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        208,
+        0
+      ],
+      "id": "fac14f39-d1d5-4aae-ade0-56a2818ddf62",
+      "name": "Get Pending Emails",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b631fb03-54b6-4e94-b560-2da43c0ec811",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "bafc215d-4d49-4de6-947a-8599ebf30fa8",
+      "name": "Check If Any"
+    },
+    {
+      "parameters": {
+        "url": "=https://emailvalidation.abstractapi.com/v1/?api_key={{ $env.ABSTRACT_EMAIL_API_KEY }}&email={{ $json.email }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        624,
+        -96
+      ],
+      "id": "73f4f849-4da1-42ff-8089-c2effe481782",
+      "name": "Validate Email"
+    },
+    {
+      "parameters": {
+        "jsCode": "const validation = $input.first().json;\nconst leadId = $('PostgreSQL').item.json.id;\n\nconst isValid = validation.deliverability === 'DELIVERABLE';\nconst isDisposable = validation.is_disposable_email?.value || false;\n\nreturn {\n  lead_id: leadId,\n  email_valid: isValid && !isDisposable,\n  email_verification_status: validation.deliverability || 'unknown'\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        816,
+        -96
+      ],
+      "id": "53f8cbbd-5338-4818-bb55-e62642786e0b",
+      "name": "Parse & Update"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE cleaned_leads\nSET \n  email_valid = {{ $json.email_valid }},\n  email_verification_status = '{{ $json.email_verification_status }}'\nWHERE id = {{ $json.lead_id }}\n```\n\n---\n\n## ✅ Benefits of This Approach:\n\n1. **Faster cleaning** - no waiting for API calls\n2. **Better API usage** - batch processing, easier to control rate limits\n3. **Can pause/resume** - stop validation anytime\n4. **Easy monitoring** - see validation progress\n5. **Manual trigger** - validate only when needed\n6. **Priority validation** - validate hot leads first\n\n---\n\n## 🎯 Complete System Flow:\n```\nWorkflow 3: Scrape Leads\n  → staging_leads (raw data)\n  \nWorkflow 4: Clean Data (FAST)\n  → cleaned_leads (email_verification_status = 'pending')\n  \nWorkflow 5: Validate Emails (BATCH - runs hourly)\n  → Updates email_valid = true/false\n  \nWorkflow 6: AI Enrichment\n  → Only enriches leads with email_valid = true",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1024,
+        -96
+      ],
+      "id": "34ea7b40-3a19-4cd9-98c1-bc1f5a6744b0",
+      "name": "Update Database",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Pending Emails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Pending Emails": {
+      "main": [
+        [
+          {
+            "node": "Check If Any",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check If Any": {
+      "main": [
+        [
+          {
+            "node": "Validate Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Email": {
+      "main": [
+        [
+          {
+            "node": "Parse & Update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse & Update": {
+      "main": [
+        [
+          {
+            "node": "Update Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "db5d3b70-4384-49ac-a5bf-61c5dd906071",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
+  },
+  "id": "PhPwFzvnz5uOmYQN",
+  "tags": []
+}

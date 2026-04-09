@@ -1,0 +1,392 @@
+{
+  "name": "4 - Data Cleaning",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a346a19b-e9e6-4ce8-88c9-8018e88daf68",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM staging_leads\nWHERE processed = FALSE\nLIMIT 50",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        208,
+        0
+      ],
+      "id": "55a43771-4f81-48a2-9eed-e5231fe6deb1",
+      "name": "Get Unprocessed Leads",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7b28defd-caa1-4819-8772-3ad2351b2b56",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "e47235ef-39ba-45da-8ed2-41e2e245f2f1",
+      "name": "Any to Process?"
+    },
+    {
+      "parameters": {
+        "jsCode": "const leads = $input.all();\nconst cleaned = [];\n\nfor (const item of leads) {\n  const raw = item.json.raw_data;\n  \n  // Clean email\n  const cleanEmail = (email) => {\n    if (!email) return null;\n    const clean = email.toLowerCase().trim();\n    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(clean)) return null;\n    return clean;\n  };\n  \n  // Clean phone\n  const cleanPhone = (phone) => {\n    if (!phone) return null;\n    return phone.replace(/[^0-9+]/g, '');\n  };\n  \n  const lead = {\n    staging_id: item.json.id,\n    user_id: item.json.user_id,\n    company_name: (raw.title || raw.name || 'Unknown').substring(0, 255),\n    email: cleanEmail(raw.email),\n    phone: cleanPhone(raw.phoneNumber || raw.phone),\n    city: (raw.city || '').substring(0, 100),\n    state: (raw.state || '').substring(0, 100),\n    website: raw.website || null\n  };\n  \n  // Skip if no email AND no phone\n  if (!lead.email && !lead.phone) continue;\n  \n  cleaned.push(lead);\n}\n\nreturn cleaned;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        624,
+        -96
+      ],
+      "id": "903d5552-fe71-4fc1-be64-057fa8205598",
+      "name": "Clean Data"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id FROM cleaned_leads\nWHERE user_id = {{ $json.user_id }}\nAND (email = '{{ $json.email }}' OR (company_name = '{{ $json.company_name }}' AND phone = '{{ $json.phone }}'))\nLIMIT 1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        832,
+        -96
+      ],
+      "id": "5e4605b9-f585-4bb7-b615-501ae356a785",
+      "name": "Check Duplicates",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a389d8f6-a834-4d65-87d7-f949d32a34aa",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": "0",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        -96
+      ],
+      "id": "3f797827-88c3-47ab-b96b-9a06d317fd0a",
+      "name": "Is New Lead?"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "cleaned_leads",
+          "mode": "list",
+          "cachedResultName": "cleaned_leads"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "user_id": "={{ $('Clean Data').item.json.user_id }}",
+            "company_name": "={{ $('Clean Data').item.json.company_name }}",
+            "email": "={{ $('Clean Data').item.json.email }}",
+            "phone": "={{ $('Clean Data').item.json.phone }}",
+            "city": "={{ $('Clean Data').item.json.city }}",
+            "state": "={{ $('Clean Data').item.json.state }}",
+            "website": "={{ $('Clean Data').item.json.website }}",
+            "id": 0,
+            "cleaned_at": "="
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "company_name",
+              "displayName": "company_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "state",
+              "displayName": "state",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "website",
+              "displayName": "website",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "cleaned_at",
+              "displayName": "cleaned_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1280,
+        -192
+      ],
+      "id": "ba6d0e56-7255-4da5-9c3f-2c40fb2b774f",
+      "name": "Insert Cleaned Lead",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE staging_leads\nSET processed = TRUE\nWHERE id = {{ $('Clean Data').item.json.staging_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1504,
+        -192
+      ],
+      "id": "95cb4d10-9c1f-41c6-b4cd-7558dbab71be",
+      "name": "Mark Processed",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Unprocessed Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Unprocessed Leads": {
+      "main": [
+        [
+          {
+            "node": "Any to Process?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Any to Process?": {
+      "main": [
+        [
+          {
+            "node": "Clean Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clean Data": {
+      "main": [
+        [
+          {
+            "node": "Check Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Is New Lead?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is New Lead?": {
+      "main": [
+        [
+          {
+            "node": "Insert Cleaned Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert Cleaned Lead": {
+      "main": [
+        [
+          {
+            "node": "Mark Processed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "95792db2-363e-4f2f-98f2-00ef745b38cc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
+  },
+  "id": "PnLPSceKs2Rzn4xw",
+  "tags": []
+}

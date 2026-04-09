@@ -1,0 +1,333 @@
+{
+  "name": "7A - Email Outreach Executor",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "6c2f2d90-36e6-4a36-bc16-af0512f450e2",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n  el.lead_id,\n  cl.company_name,\n  cl.email,\n  el.email_should_use,\n  el.email_subject_line,\n  el.email_opening,\n  el.email_body_template,\n  el.primary_channel,\n  el.lead_score,\n  el.priority\nFROM enriched_leads el\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nWHERE el.enrichment_stage = 3\nAND el.email_should_use = TRUE\nAND cl.email IS NOT NULL\nAND el.outreach_status IS NULL\nORDER BY el.lead_score DESC\nLIMIT 10",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        144,
+        112
+      ],
+      "id": "462c5791-e8e9-484a-9819-1e0df35587be",
+      "name": "Get Email-Ready Leads",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a4253785-f88f-48a5-acab-c70bb4db2c91",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "10374b63-4114-44b5-adb6-0c5a37be346b",
+      "name": "Any Emails to Send?"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT email \nFROM unsubscribes \nWHERE email = '{{ $json.email }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        624,
+        -96
+      ],
+      "id": "6116ae85-90fa-4e1c-89ee-1a177f0bca3a",
+      "name": "Check Not Unsubscribed",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a4fbc3e0-a03c-4fd5-8f4a-ebfead218259",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": "0",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        832,
+        -96
+      ],
+      "id": "ff1e3e7d-7f62-4e75-9da6-8c6a8a440af6",
+      "name": "Not Unsubscribed?"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO outreach_activities (\n  lead_id,\n  channel,\n  status,\n  external_id,\n  sent_at\n) VALUES (\n  {{ $('Prepare Email Content').item.json.lead_id }},\n  'email',\n  'sent',\n  '{{ $json.message_id || 'pending' }}',\n  NOW()\n)",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1504,
+        -112
+      ],
+      "id": "b8385ccb-bddc-47d8-b95d-0da96e9887db",
+      "name": "Log Email Sent",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Get lead data from the original query\nconst leadData = $('Get Email-Ready Leads').first().json;\n\n// Get AI-generated content\nconst subject = leadData.email_subject_line || `Following up: ${leadData.company_name}`;\nconst opening = leadData.email_opening || '';\nconst bodyTemplate = leadData.email_body_template || '';\n\n// Build complete email body\nconst emailBody = `\n${opening}\n\n${bodyTemplate}\n\nBest regards,\nYour Name\nYour Company\nyour-email@company.com\n\n---\nYou're receiving this because we thought it might be valuable for ${leadData.company_name}.\nIf you'd prefer not to receive these emails, click here to unsubscribe.\n`;\n\nreturn {\n  lead_id: leadData.lead_id,\n  to_email: leadData.email,\n  to_name: leadData.company_name,\n  subject_line: subject,\n  email_body: emailBody,\n  from_email: 'mohmmadfahad53408@gmail.com',  // Change this to your verified sender\n  from_name: 'Muhammad Fahad',  // Change this\n  priority: leadData.priority,\n  lead_score: leadData.lead_score\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        -112
+      ],
+      "id": "1d853559-0799-4ea5-bf18-e84d0eccc9b5",
+      "name": "Prepare Email Content"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE enriched_leads\nSET \n  outreach_status = 'email_sent',\n  last_contacted_at = NOW(),\n  follow_up_count = 1\nWHERE lead_id = {{ $('Prepare Email Content').item.json.lead_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1760,
+        -112
+      ],
+      "id": "50737bf6-3f82-4fbf-9a04-47b56d3b2862",
+      "name": "Mark Email Sent",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.to_email }}",
+        "subject": "={{ $json.subject_line }}",
+        "emailType": "text",
+        "message": "={{ $json.email_body }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1248,
+        -112
+      ],
+      "id": "44714a2f-df66-4b15-9d92-e61de2686cba",
+      "name": "Send Email - Gmail",
+      "webhookId": "498e8d39-e615-478a-93d7-f43c3db1113e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ErvKkvbo4c5GQjPn",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    lead_id: 1,\n    company_name: \"Test Company\",\n    email: \"mohmmadfahad53408@gmail.com\",  // YOUR GMAIL HERE\n    email_should_use: true,\n    email_subject_line: \"Quick question about your business\",\n    email_opening: \"Hi there,\\n\\nI noticed your business online.\",\n    email_body_template: \"Would love to connect and see if we can help.\\n\\nBest regards\",\n    primary_channel: \"email\",\n    lead_score: 85,\n    priority: \"hot\"\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        -352
+      ],
+      "id": "6cf73c15-ec96-4269-80f1-6eef1e362d1c",
+      "name": "Test Data - Email Ready"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Test Data - Email Ready",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Email-Ready Leads": {
+      "main": [
+        []
+      ]
+    },
+    "Any Emails to Send?": {
+      "main": [
+        [
+          {
+            "node": "Check Not Unsubscribed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Not Unsubscribed": {
+      "main": [
+        [
+          {
+            "node": "Not Unsubscribed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Not Unsubscribed?": {
+      "main": [
+        [
+          {
+            "node": "Prepare Email Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Email Sent": {
+      "main": [
+        [
+          {
+            "node": "Mark Email Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Email Content": {
+      "main": [
+        [
+          {
+            "node": "Send Email - Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email - Gmail": {
+      "main": [
+        [
+          {
+            "node": "Log Email Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test Data - Email Ready": {
+      "main": [
+        [
+          {
+            "node": "Any Emails to Send?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ee4435ae-086f-4313-918e-cbb792756ed0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
+  },
+  "id": "gTjsUEP8VLlxKfWf",
+  "tags": []
+}

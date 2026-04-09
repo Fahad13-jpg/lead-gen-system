@@ -1,0 +1,322 @@
+{
+  "name": "7B - LinkedIn Outreach Helper",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 2
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "95553ffb-98b9-4057-9f65-eadd754f05ed",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n  el.lead_id,\n  cl.user_id,\n  cl.company_name,\n  cl.email,\n  el.company_linkedin_url,\n  el.linkedin_should_use,\n  el.linkedin_connection_note,\n  el.linkedin_first_message,\n  el.linkedin_approach,\n  el.personalization_hook,\n  el.lead_score,\n  el.priority,\n  el.products_services,\n  el.decision_maker_access\nFROM enriched_leads el\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nWHERE el.enrichment_stage = 3\nAND el.linkedin_should_use = TRUE\nAND el.company_linkedin_url IS NOT NULL\nAND el.linkedin_status IS NULL\nORDER BY el.lead_score DESC\nLIMIT 5",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        208,
+        0
+      ],
+      "id": "98cdc2c4-ecfe-4bff-a0e8-5611714b502b",
+      "name": "Get LinkedIn-Ready Leads",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f1078d7f-2f24-4a06-863c-13ddfe1a0633",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        0
+      ],
+      "id": "cfaf0d78-a11d-4749-a6f3-d49ce3696bde",
+      "name": "Any LinkedIn Outreach?"
+    },
+    {
+      "parameters": {
+        "jsCode": "const leads = $input.all();\n\nconst formattedLeads = leads.map(item => {\n  const lead = item.json;\n  \n  // Determine approach\n  const approach = lead.linkedin_approach || 'connection_request';\n  \n  // Get messages from AI (generated in Workflow 6C)\n  const connectionNote = lead.linkedin_connection_note || \n    `Hi! I came across ${lead.company_name} and was impressed by your work in ${lead.products_services || 'your industry'}. Would love to connect!`;\n  \n  const followupMessage = lead.linkedin_first_message || \n    `Thanks for connecting! I noticed ${lead.personalization_hook}. Would love to learn more about how ${lead.company_name} approaches ${lead.products_services}.`;\n  \n  // Calculate character counts (LinkedIn limits)\n  const noteLength = connectionNote.length;\n  const messageLength = followupMessage.length;\n  \n  // Generate step-by-step instructions\n  const instructions = `\nLINKEDIN OUTREACH STEPS:\n\nSTEP 1: Send Connection Request\n1. Go to: ${lead.company_linkedin_url}\n2. Click the \"Connect\" button\n3. Click \"Add a note\"\n4. Copy and paste the message below:\n\n${connectionNote}\n\n5. Click \"Send\"\n6. Wait for connection acceptance (usually 1-7 days)\n\n---\n\nSTEP 2: After Connection Accepted\n1. Go to LinkedIn Messages\n2. Find ${lead.company_name}\n3. Copy and paste:\n\n${followupMessage}\n\n4. Send message\n5. Mark as completed in dashboard\n\n---\n\nTIPS:\n- Check LinkedIn daily for acceptance\n- Personalize further if you want\n- Don't send too many requests per day (max 20-30)\n- Wait at least 24 hours before step 2\n  `.trim();\n  \n  return {\n    lead_id: lead.lead_id,\n    user_id: lead.user_id,\n    company_name: lead.company_name,\n    linkedin_url: lead.company_linkedin_url,\n    priority: lead.priority,\n    lead_score: lead.lead_score,\n    \n    // Action items\n    approach: approach,\n    connection_note: connectionNote,\n    connection_note_length: noteLength,\n    connection_note_status: noteLength <= 300 ? 'ok' : 'too_long',\n    \n    followup_message: followupMessage,\n    followup_message_length: messageLength,\n    \n    instructions: instructions,\n    \n    // For dashboard display\n    status: 'ready_for_manual_send',\n    step_1_action: approach === 'connection_request' ? 'Send Connection Request' : 'Send InMail',\n    step_2_action: 'Send Follow-up Message',\n    \n    // Warnings\n    warnings: noteLength > 300 ? ['Connection note exceeds 300 char limit - trim it before sending'] : [],\n    \n    generated_at: new Date().toISOString()\n  };\n});\n\nreturn formattedLeads;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        832,
+        -96
+      ],
+      "id": "e36928fa-422f-471e-8511-2178bdf0e446",
+      "name": "Format LinkedIn Actions"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "72458195-2072-4744-88f9-40169d094360",
+              "leftValue": "={{ $json.connection_note_status }}",
+              "rightValue": "ok",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        -96
+      ],
+      "id": "5fa0a434-6722-4a60-900b-615a6694593f",
+      "name": "Valid Message Length?"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO linkedin_outreach_queue (\n  lead_id,\n  user_id,\n  company_name,\n  linkedin_url,\n  connection_note,\n  followup_message,\n  approach,\n  priority,\n  lead_score,\n  status\n) VALUES (\n  {{ $json.lead_id }},\n  {{ $json.user_id }},\n  '{{ $json.company_name.replace(/'/g, \"''\") }}',\n  '{{ $json.linkedin_url }}',\n  '{{ $json.connection_note.replace(/'/g, \"''\") }}',\n  '{{ $json.followup_message.replace(/'/g, \"''\") }}',\n  '{{ $json.approach }}',\n  '{{ $json.priority }}',\n  {{ $json.lead_score }},\n  'pending'\n)",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1248,
+        -192
+      ],
+      "id": "4dc106c2-443d-428a-9a7e-e00e099c55d4",
+      "name": "Insert LinkedIn Task",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE enriched_leads\nSET \n  linkedin_status = 'ready',\n  linkedin_prepared_at = NOW()\nWHERE lead_id = {{ $('Format LinkedIn Actions').item.json.lead_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1488,
+        -192
+      ],
+      "id": "7863fdff-dac6-4274-acf7-1bdbbe6c3250",
+      "name": "Mark LinkedIn Ready",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const lead = $input.first().json;\n\nconsole.log(`WARNING: LinkedIn message too long for ${lead.company_name}`);\nconsole.log(`Length: ${lead.connection_note_length} (max 300)`);\nconsole.log(`Message: ${lead.connection_note}`);\n\nreturn {\n  lead_id: lead.lead_id,\n  company_name: lead.company_name,\n  issue: 'message_too_long',\n  length: lead.connection_note_length,\n  max_length: 300\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1264,
+        16
+      ],
+      "id": "1af04d6d-f72e-498d-98ea-0c3263a34654",
+      "name": "Log Warning - Message Too Long"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE enriched_leads\nSET \n  linkedin_status = 'needs_review',\n  linkedin_prepared_at = NOW()\nWHERE lead_id = {{ $('Format LinkedIn Action Items').item.json.lead_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1488,
+        16
+      ],
+      "id": "7dabee1c-ca42-43a2-a87c-deb4d5abe34c",
+      "name": "Mark Needs Review",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    lead_id: 1,\n    user_id: 1,\n    company_name: \"Blue Bottle Coffee\",\n    email: \"test@bluebottle.com\",\n    company_linkedin_url: \"https://www.linkedin.com/company/blue-bottle-coffee\",\n    linkedin_should_use: true,\n    linkedin_connection_note: \"Hi! Saw Blue Bottle expanding in Oakland - love your specialty roasting approach. Would be great to connect!\",\n    linkedin_first_message: \"Thanks for connecting! I'm impressed by Blue Bottle's commitment to quality. Given your expansion plans, I thought you might be interested in how we help specialty roasters optimize supply chains.\",\n    linkedin_approach: \"connection_request\",\n    personalization_hook: \"Premium specialty roaster with 523 reviews\",\n    lead_score: 87,\n    priority: \"hot\",\n    products_services: \"Specialty coffee roasting\",\n    decision_maker_access: \"Regional Manager\"\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "ddc34add-d6f3-4ce1-8f84-6add0a00dee9",
+      "name": "Test Data - LinkedIn Ready"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get LinkedIn-Ready Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get LinkedIn-Ready Leads": {
+      "main": [
+        []
+      ]
+    },
+    "Any LinkedIn Outreach?": {
+      "main": [
+        [
+          {
+            "node": "Format LinkedIn Actions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format LinkedIn Actions": {
+      "main": [
+        [
+          {
+            "node": "Valid Message Length?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valid Message Length?": {
+      "main": [
+        [
+          {
+            "node": "Insert LinkedIn Task",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log Warning - Message Too Long",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert LinkedIn Task": {
+      "main": [
+        [
+          {
+            "node": "Mark LinkedIn Ready",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark LinkedIn Ready": {
+      "main": [
+        []
+      ]
+    },
+    "Log Warning - Message Too Long": {
+      "main": [
+        [
+          {
+            "node": "Mark Needs Review",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test Data - LinkedIn Ready": {
+      "main": [
+        [
+          {
+            "node": "Any LinkedIn Outreach?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "168911ea-61eb-47c6-92d1-193ee67d2df4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
+  },
+  "id": "SYZYgAbCrJSbVCwa",
+  "tags": []
+}

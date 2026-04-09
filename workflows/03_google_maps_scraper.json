@@ -1,0 +1,768 @@
+{
+  "name": "3 - Google Maps Scraper",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "scrape-google-maps",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        96,
+        0
+      ],
+      "id": "28beba8f-c7b5-4aa9-a54d-0ffd685d4d2f",
+      "name": "Webhook",
+      "webhookId": "2687c0f9-02cf-4503-ba94-224d86ab124b"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\n\n// Validate required fields\nif (!body.job_id) throw new Error('job_id required');\nif (!body.user_id) throw new Error('user_id required');\nif (!body.apify_api_key) throw new Error('apify_api_key required');\nif (!body.search_query) throw new Error('search_query required');\nif (!body.location) throw new Error('location required');\nif (!body.max_results) throw new Error('max_results required');\n\n// Prepare Apify actor input\nconst apifyInput = {\n  searchStringsArray: [body.search_query],\n  locationQuery: body.location,\n  maxCrawledPlacesPerSearch: parseInt(body.max_results),\n  language: \"en\",\n  includeWebsites: true,\n  includeEmails: true,\n  includePhoneNumbers: true\n};\n\nreturn {\n  job_id: parseInt(body.job_id),\n  user_id: parseInt(body.user_id),\n  apify_api_key: body.apify_api_key,\n  apifyInput: apifyInput,\n  max_results: parseInt(body.max_results)\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        816,
+        -16
+      ],
+      "id": "983928d8-55dc-4ca2-87ca-e4fe99e2b667",
+      "name": "Validate & Prepare Input"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE scraping_jobs\nSET status = 'running', started_at = NOW()\nWHERE id = {{ $json.job_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1072,
+        0
+      ],
+      "id": "117918f4-bbf8-4aa5-9fc0-d845555cbedb",
+      "name": "Mark Job Running",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const response = $input.first().json;\nconst prepareNode = $('Validate & Prepare Input').first().json;\n\nif (response.error) {\n  throw new Error('Apify error: ' + JSON.stringify(response.error));\n}\n\nreturn {\n  runId: response.data.id,\n  defaultDatasetId: response.data.defaultDatasetId,\n  status: response.data.status,\n  apify_api_key: prepareNode.apify_api_key,\n  job_id: prepareNode.job_id,\n  user_id: prepareNode.user_id,\n  max_results: prepareNode.max_results\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1872,
+        0
+      ],
+      "id": "ce83ee0c-73a5-4734-b76f-6ef731ef2858",
+      "name": "Extract Run Info"
+    },
+    {
+      "parameters": {
+        "amount": 45
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2080,
+        0
+      ],
+      "id": "c587802b-05b2-4160-86ab-b6634ff9a3d7",
+      "name": "After Time Interval",
+      "webhookId": "25541fa6-3dc7-41da-a220-b863436f885f"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.apify.com/v2/actor-runs/{{ $json.runId }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "token",
+              "value": "={{ $json.apify_api_key }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2288,
+        0
+      ],
+      "id": "f8971488-a893-4af5-8e65-19bea7a9587a",
+      "name": "Check Actor Status"
+    },
+    {
+      "parameters": {
+        "jsCode": "const statusResponse = $input.first().json;\nconst extractNode = $('Extract Run Info').first().json;\n\nconst status = statusResponse.data.status;\nconst isComplete = ['SUCCEEDED', 'FAILED', 'ABORTED'].includes(status);\n\nreturn {\n  runId: extractNode.runId,\n  defaultDatasetId: extractNode.defaultDatasetId,\n  status: status,\n  isComplete: isComplete,\n  apify_api_key: extractNode.apify_api_key,\n  job_id: extractNode.job_id,\n  user_id: extractNode.user_id,\n  max_results: extractNode.max_results\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2496,
+        0
+      ],
+      "id": "ebfc3b57-0ac3-40a0-961d-0e1699233ed2",
+      "name": "Parse Code"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5bde9c21-489a-4149-b953-a60fea912a2e",
+              "leftValue": "={{ $json.isComplete }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2704,
+        0
+      ],
+      "id": "f82ed444-7aa7-4f59-b8b7-d78ec0ea69c2",
+      "name": "Is Completed"
+    },
+    {
+      "parameters": {
+        "amount": 20
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2912,
+        96
+      ],
+      "id": "4ce12440-9405-4fc2-8393-0d3a5f707904",
+      "name": "Wait 20s More",
+      "webhookId": "58364155-0187-4857-971e-89fc9f9f92d9"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.apify.com/v2/datasets/{{ $json.defaultDatasetId }}/items",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "token",
+              "value": "={{ $json.apify_api_key }}"
+            },
+            {
+              "name": "format",
+              "value": "json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3120,
+        -112
+      ],
+      "id": "b06158e2-cd29-49b3-9327-7d265b422658",
+      "name": "Get Scraped Results"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const item = $input.item.json;\nconst checkNode = $('Check If Succeeded').first().json;\n\nreturn {\n  user_id: checkNode.user_id,\n  job_id: checkNode.job_id,\n  source: 'google_maps',\n  raw_data: item\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3328,
+        -112
+      ],
+      "id": "164f8aa1-ad22-464b-9ae4-b8a7de8546dc",
+      "name": "Transform Results"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "staging_leads",
+          "mode": "list",
+          "cachedResultName": "staging_leads"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "processed": false,
+            "user_id": "={{ $json.user_id }}",
+            "job_id": "={{ $json.job_id }}",
+            "raw_data": "={{ JSON.stringify($json.raw_data) }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "job_id",
+              "displayName": "job_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "raw_data",
+              "displayName": "raw_data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "processed",
+              "displayName": "processed",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        3536,
+        -112
+      ],
+      "id": "b98d148b-a205-4806-bf50-9b332a2bd8f8",
+      "name": "Insert to Staging",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst leadCount = items.length;\nconst checkNode = $('Check If Succeeded').first().json;\n\n// Cost: $0.01 per 100 leads\nconst actualCost = (leadCount / 100) * 0.01;\n\nreturn {\n  job_id: checkNode.job_id,\n  user_id: checkNode.user_id,\n  runId: checkNode.runId,\n  leads_scraped: leadCount,\n  cost_usd: actualCost\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3744,
+        -112
+      ],
+      "id": "b59e211f-e44d-4b2c-a13d-85527981d668",
+      "name": "Calculate Stats"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE users\nSET \n  apify_credit = GREATEST(0, apify_credit - {{ $json.cost_usd }}),\n  apify_status = CASE \n    WHEN (apify_credit - {{ $json.cost_usd }}) < 0.10 THEN 'depleted'\n    ELSE apify_status\n  END\nWHERE id = {{ $json.user_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        3952,
+        -112
+      ],
+      "id": "05fe737d-b36e-40fc-b68e-f044a545571a",
+      "name": "Update User Credit",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE scraping_jobs\nSET \n  status = 'completed',\n  actual_cost = {{ $('Calculate Stats').first().json.cost_usd }},\n  completed_at = NOW(),\n  apify_actor_run_id = '{{ $('Calculate Stats').first().json.runId }}'\nWHERE id = {{ $('Calculate Stats').first().json.job_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        4144,
+        -112
+      ],
+      "id": "7cc77600-0ec0-479b-8416-9ac1ac954230",
+      "name": "Mark Job Complete",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/compass~crawler-google-places/runs",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "token",
+              "value": "={{ $json.apify_api_key }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.apifyInput }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1568,
+        0
+      ],
+      "id": "15ad091c-f9ae-4f38-a2de-74ce83751a46",
+      "name": "Start Apify Actor"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the data from the Validate & Prepare Input node\nconst prepareData = $('Validate & Prepare Input').first().json;\n\nreturn prepareData;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1296,
+        0
+      ],
+      "id": "dd832596-a425-4a00-be21-858707aedeb2",
+      "name": "Get Data Back"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\n\nif (data.status !== 'SUCCEEDED') {\n  throw new Error('Apify actor failed with status: ' + data.status);\n}\n\nreturn data;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2912,
+        -112
+      ],
+      "id": "0da4a1a7-7395-4b22-9c65-e92793feb98d",
+      "name": "Check If Succeeded"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n  o.id as org_id,\n  o.org_name,\n  o.credits_remaining,\n  o.status as org_status,\n  u.id as user_id,\n  u.username,\n  u.role\nFROM organizations o\nJOIN users u ON o.id = u.org_id\nWHERE u.id = {{ $json.user_id }}\nAND o.status = 'active'\nAND u.is_active = TRUE",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        336,
+        0
+      ],
+      "id": "c84402c8-6747-462c-b375-051f3ec3ac33",
+      "name": "Get Organization & Check Credits",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "afa5c628-3df4-40ac-aab7-b1a39dabda52",
+              "leftValue": "={{ $json.credits_remaining }}",
+              "rightValue": 10,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        544,
+        0
+      ],
+      "id": "61ca99c8-a664-47e6-80be-38be8a0603f1",
+      "name": "Credits Available?"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": false,\n  \"error\": 'Insufficient credits',\n  \"credits_remaining\": $('Get Organization & Check Credits').item.json.credits_remaining,\n  \"message\": 'Your organization needs at least 10 credits to start scraping. Please contact admin to add credits.'\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        800,
+        144
+      ],
+      "id": "38452854-4b8d-4933-af9f-dd6187079bdf",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "user-agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.6456",
+            "content-type": "application/json",
+            "host": "localhost:5678",
+            "content-length": "163",
+            "connection": "Keep-Alive"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "job_id": 13,
+            "user_id": 1,
+            "apify_api_key": "apify_api_oB8GrSTl9SNWmquMr3ceuZQjrztU3G3Os4Kx",
+            "search_query": "coffee",
+            "location": "New York",
+            "max_results": 3
+          },
+          "webhookUrl": "http://localhost:5678/webhook/scrape-google-maps",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get Organization & Check Credits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate & Prepare Input": {
+      "main": [
+        [
+          {
+            "node": "Mark Job Running",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Job Running": {
+      "main": [
+        [
+          {
+            "node": "Get Data Back",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Run Info": {
+      "main": [
+        [
+          {
+            "node": "After Time Interval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "After Time Interval": {
+      "main": [
+        [
+          {
+            "node": "Check Actor Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Actor Status": {
+      "main": [
+        [
+          {
+            "node": "Parse Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Code": {
+      "main": [
+        [
+          {
+            "node": "Is Completed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Completed": {
+      "main": [
+        [
+          {
+            "node": "Check If Succeeded",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait 20s More",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 20s More": {
+      "main": [
+        [
+          {
+            "node": "Check Actor Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Scraped Results": {
+      "main": [
+        [
+          {
+            "node": "Transform Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transform Results": {
+      "main": [
+        [
+          {
+            "node": "Insert to Staging",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert to Staging": {
+      "main": [
+        [
+          {
+            "node": "Calculate Stats",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Stats": {
+      "main": [
+        [
+          {
+            "node": "Update User Credit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update User Credit": {
+      "main": [
+        [
+          {
+            "node": "Mark Job Complete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start Apify Actor": {
+      "main": [
+        [
+          {
+            "node": "Extract Run Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Data Back": {
+      "main": [
+        [
+          {
+            "node": "Start Apify Actor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check If Succeeded": {
+      "main": [
+        [
+          {
+            "node": "Get Scraped Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Organization & Check Credits": {
+      "main": [
+        [
+          {
+            "node": "Credits Available?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Credits Available?": {
+      "main": [
+        [
+          {
+            "node": "Validate & Prepare Input",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "64fdea91-563e-46c8-ae07-417b4b86196f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
+  },
+  "id": "Tz2ITCKb2ut8J2ue",
+  "tags": []
+}

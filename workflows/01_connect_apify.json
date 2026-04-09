@@ -1,0 +1,275 @@
+{
+  "name": "1 - Connect Apify",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "connect-apify",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -176,
+        -32
+      ],
+      "id": "f8de7b4f-1687-4fd5-96a9-842d027877e3",
+      "name": "Webhook",
+      "webhookId": "d43e13c2-a5a5-45b9-8a1e-d3075066675d"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\n\n// Check if data exists\nif (!body) {\n  throw new Error('No data received');\n}\n\n// Check user_id\nif (!body.user_id) {\n  throw new Error('user_id is required');\n}\n\n// Check API key\nif (!body.apify_api_key) {\n  throw new Error('apify_api_key is required');\n}\n\n// Validate key format\nif (!body.apify_api_key.startsWith('apify_api_')) {\n  throw new Error('Invalid Apify key format');\n}\n\n// Return cleaned data\nreturn {\n  user_id: parseInt(body.user_id),\n  apify_api_key: body.apify_api_key.trim()\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        32,
+        -32
+      ],
+      "id": "f6f2a701-b1ac-414e-9995-a50743ed45a9",
+      "name": "Validate Input"
+    },
+    {
+      "parameters": {
+        "jsCode": "const response = $input.first().json;\nconst validateNode = $('Validate Input').first().json;\n\n// Check if error\nif (response.error) {\n  return {\n    valid: false,\n    user_id: validateNode.user_id,\n    error_message: 'Invalid API key'\n  };\n}\n\n// Success\nreturn {\n  valid: true,\n  user_id: validateNode.user_id,\n  apify_api_key: validateNode.apify_api_key,\n  apify_username: response.data.username || 'Unknown'\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        -32
+      ],
+      "id": "6cc86b91-4947-43b7-9504-518b53c9f541",
+      "name": "Parse Response"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c4a04596-fb64-4b4f-a49d-8debc8f77d76",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        864,
+        -32
+      ],
+      "id": "0dc699d3-2124-4eac-8913-0b175357b742",
+      "name": "Is Valid"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE users\nSET \n  apify_api_key = '{{ $json.apify_api_key }}',\n  apify_status = 'active',\n  apify_credit = 5.00\nWHERE id = {{ $json.user_id }}\nRETURNING *",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1072,
+        -96
+      ],
+      "id": "812921fa-6a5c-4c6b-82b3-6393d981d3f4",
+      "name": "Update User - Success",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"message\": \"Apify connected successfully!\",\n  \"credit\": {{ $('Update User - Success').first().json.apify_credit }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1280,
+        -96
+      ],
+      "id": "dadd3d22-b1ac-41f7-a1cb-e4077b504238",
+      "name": "Success Response"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE users\nSET apify_status = 'invalid'\nWHERE id = {{ $json.user_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1072,
+        64
+      ],
+      "id": "1d6ed8f0-192d-444b-bc31-347f60b76054",
+      "name": "Update User - Failed",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"success\": false,\n  \"message\": \"Invalid Apify API key\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1280,
+        64
+      ],
+      "id": "cc0fc3da-c1e3-4c6e-97cf-8c22840f0612",
+      "name": "Error Response"
+    },
+    {
+      "parameters": {
+        "url": "https://api.apify.com/v2/users/me",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "token",
+              "value": "={{ $json.apify_api_key }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        288,
+        -32
+      ],
+      "id": "10521473-d63a-4405-b950-3066c9a8098e",
+      "name": "Test Apify Key"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Input": {
+      "main": [
+        [
+          {
+            "node": "Test Apify Key",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Response": {
+      "main": [
+        [
+          {
+            "node": "Is Valid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Valid": {
+      "main": [
+        [
+          {
+            "node": "Update User - Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update User - Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update User - Success": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update User - Failed": {
+      "main": [
+        [
+          {
+            "node": "Error Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test Apify Key": {
+      "main": [
+        [
+          {
+            "node": "Parse Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ac58bd3d-b26f-4542-ae37-1844b899e949",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
+  },
+  "id": "pqV3XLFfzbJGWxpG",
+  "tags": []
+}

@@ -1,0 +1,262 @@
+{
+  "name": "3A - Yellow Pages Scraper",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "yellowpages-scraper",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "04a5f3ba-4cab-480a-a7dd-40beb5335356",
+      "name": "Webhook",
+      "webhookId": "a678c1b8-2824-40dc-ac28-861ea03ccd91"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\n\n// Validate required fields\nif (!body.query) throw new Error('query required (e.g., \"marketing agencies\")');\nif (!body.location) throw new Error('location required (e.g., \"New York, NY\")');\n\nconst maxResults = body.max_results || 100;\nconst userId = body.user_id || 1;\n\nreturn {\n  query: body.query,\n  location: body.location,\n  max_results: maxResults,\n  user_id: userId,\n  scraper_type: 'yellow_pages',\n  requested_at: new Date().toISOString()\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "1400c38b-14d2-4e5e-8500-9f4ac9f80643",
+      "name": "Validate Scraping Request"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO scraping_jobs (\n  user_id,\n  source,\n  scraper_type,\n  search_query,\n  location,\n  max_results,\n  status,\n  requested_at\n) VALUES (\n  {{ $json.user_id }},\n  'yellow_pages',\n  'yellow_pages',\n  '{{ $json.query }}',\n  '{{ $json.location }}',\n  {{ $json.max_results }},\n  'processing',\n  NOW()\n)\nRETURNING id as job_id",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        416,
+        0
+      ],
+      "id": "30f810f9-64f7-4add-b557-d3fd0ad6f47f",
+      "name": "Create Yellow Pages Job",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const leads = $input.all();\nconst { Client } = require('pg');\n\nconst client = new Client({\n  host: 'postgres',\n  database: 'lead_db',\n  user: 'n8n_user',\n  password: 'n8n_pass123',\n  port: 5432\n});\n\nawait client.connect();\n\nlet insertedCount = 0;\n\nfor (const item of leads) {\n  const lead = item.json;\n  \n  const query = `\n    INSERT INTO staging_leads (\n      job_id, user_id, company_name, phone, email, website,\n      address, city, state, zip, country, category, rating,\n      review_count, additional_data, scraped_at, processing_status\n    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)\n  `;\n  \n  await client.query(query, [\n    lead.job_id,\n    lead.user_id,\n    lead.company_name,\n    lead.phone,\n    lead.email,\n    lead.website,\n    lead.address,\n    lead.city,\n    lead.state,\n    lead.zip,\n    lead.country,\n    lead.category,\n    lead.rating,\n    lead.review_count,\n    lead.additional_data,\n    lead.scraped_at,\n    'pending'\n  ]);\n  \n  insertedCount++;\n}\n\nawait client.end();\n\nreturn {\n  job_id: leads[0].json.job_id,\n  total_inserted: insertedCount,\n  scraper_type: 'yellow_pages'\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1488,
+        0
+      ],
+      "id": "bc6109c7-e69f-4e6d-aed4-e0187ba7dd4d",
+      "name": "Insert Yellow Pages Leads"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE scraping_jobs\nSET \n  status = 'completed',\n  total_leads = {{ $json.total_inserted }},\n  completed_at = NOW()\nWHERE id = {{ $json.job_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1712,
+        0
+      ],
+      "id": "317bd459-d100-439b-b4ed-baa6cfe5385f",
+      "name": "Mark Yellow Pages Job Complete",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "=={\n  success: true,\n  job_id: $json.job_id,\n  scraper: 'yellow_pages',\n  total_leads: $json.total_inserted,\n  message: 'Yellow Pages scraping completed successfully'\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1920,
+        0
+      ],
+      "id": "9fcd9157-6e0d-4435-9e50-419555a56bf0",
+      "name": "Return Success Response"
+    },
+    {
+      "parameters": {
+        "jsCode": "const validationData = $('Validate Scraping Request').first().json;\nconst jobId = $('Create Yellow Pages Job').first().json.job_id;\n\nreturn {\n  job_id: jobId,\n  user_id: validationData.user_id,\n  apify_input: {\n    search: validationData.query,\n    location: validationData.location,\n    maxItems: validationData.max_results,\n    debugMode: false,\n    proxyConfiguration: {\n      useApifyProxy: true\n    }\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "0439f266-ebee-48f5-94c8-d122cb36d8b1",
+      "name": "Prepare Apify Payload"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.apify.com/v2/acts/trudax~yellow-pages-us-scraper/run-sync-get-dataset-items?token={{ $env.APIFY_API_KEY }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.apify_input }}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        896,
+        0
+      ],
+      "id": "cb7676f2-44eb-4225-9004-992296da091f",
+      "name": "Start Yellow Pages Scraper"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = $input.all();\nconst jobId = $('Prepare Apify Payload').first().json.job_id;\nconst userId = $('Prepare Apify Payload').first().json.user_id;\n\nconst processedLeads = results.map(item => {\n  const lead = item.json;\n  \n  return {\n    job_id: jobId,\n    user_id: userId,\n    company_name: lead.businessName || lead.name || 'Unknown',\n    phone: lead.phone || null,\n    email: lead.email || null,\n    website: lead.website || null,\n    address: lead.address || null,\n    city: lead.city || null,\n    state: lead.state || null,\n    zip: lead.zipCode || null,\n    country: 'United States',\n    category: lead.category || null,\n    rating: lead.rating || null,\n    review_count: lead.numberOfReviews || 0,\n    additional_data: JSON.stringify({\n      categories: lead.categories || []\n    }),\n    scraped_at: new Date().toISOString()\n  };\n});\n\nreturn processedLeads;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1152,
+        0
+      ],
+      "id": "ecab5b74-0fcd-417f-8b96-0be96aa63229",
+      "name": "Process Yellow Pages Leads"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate Scraping Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Scraping Request": {
+      "main": [
+        [
+          {
+            "node": "Create Yellow Pages Job",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Yellow Pages Job": {
+      "main": [
+        [
+          {
+            "node": "Prepare Apify Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert Yellow Pages Leads": {
+      "main": [
+        [
+          {
+            "node": "Mark Yellow Pages Job Complete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Yellow Pages Job Complete": {
+      "main": [
+        [
+          {
+            "node": "Return Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Apify Payload": {
+      "main": [
+        [
+          {
+            "node": "Start Yellow Pages Scraper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start Yellow Pages Scraper": {
+      "main": [
+        [
+          {
+            "node": "Process Yellow Pages Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Yellow Pages Leads": {
+      "main": [
+        [
+          {
+            "node": "Insert Yellow Pages Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2027fcaa-732b-44ca-8e59-9e903b464383",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
+  },
+  "id": "RY8gsLPbZm4R3zti",
+  "tags": []
+}

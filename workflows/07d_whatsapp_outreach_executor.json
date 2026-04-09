@@ -1,0 +1,263 @@
+{
+  "name": "7D - WhatsApp Outreach Executor",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 3
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "baaab998-ceb3-4361-96eb-b2a232dc0716",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n  el.lead_id,\n  cl.company_name,\n  cl.phone,\n  el.whatsapp_should_use,\n  el.whatsapp_message,\n  el.whatsapp_timing,\n  el.priority,\n  el.lead_score,\n  el.outreach_status,\n  el.last_whatsapp_sent_at,\n  el.sms_status,\n  EXTRACT(DAY FROM NOW() - COALESCE(el.last_contacted_at, el.created_at)) as days_since_last_contact\nFROM enriched_leads el\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nWHERE el.enrichment_stage = 3\nAND el.whatsapp_should_use = TRUE\nAND cl.phone IS NOT NULL\nAND el.whatsapp_status IS NULL\nAND (\n  (el.outreach_status = 'email_sent' AND el.sms_status = 'sent')\n  AND EXTRACT(DAY FROM NOW() - el.last_contacted_at) >= 5\n)\nORDER BY el.lead_score DESC\nLIMIT 5",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        208,
+        0
+      ],
+      "id": "e70bca9b-61b0-45f4-bddb-5929e4aa3850",
+      "name": "Get WhatsApp-Ready Leads",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ded3a300-fc97-445f-9171-ffe31d397f3e",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "6061d654-c3d4-4bea-b122-7481cb305fc9",
+      "name": "Check If Any WhatsApp"
+    },
+    {
+      "parameters": {
+        "jsCode": "const lead = $input.item.json;\n\n// Get AI-generated WhatsApp message\nlet whatsappMessage = lead.whatsapp_message || `Hi! 👋\\n\\nI noticed ${lead.company_name} and wanted to reach out.\\n\\nWould love to connect!`;\n\n// Replace placeholders\nwhatsappMessage = whatsappMessage\n  .replace(/{{company_name}}/g, lead.company_name)\n  .replace(/{{first_name}}/g, extractFirstName(lead.company_name));\n\n// Ensure reasonable length\nif (whatsappMessage.length > 500) {\n  whatsappMessage = whatsappMessage.substring(0, 497) + '...';\n}\n\nfunction extractFirstName(companyName) {\n  const words = companyName.split(' ');\n  return words[0] || 'there';\n}\n\nreturn {\n  lead_id: lead.lead_id,\n  company_name: lead.company_name,\n  to_phone: `whatsapp:${lead.phone}`, // WhatsApp format\n  whatsapp_body: whatsappMessage,\n  from_phone: process.env.TWILIO_WHATSAPP_NUMBER,\n  priority: lead.priority\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        656,
+        -96
+      ],
+      "id": "f9f95209-4380-463f-930f-a4596988bbca",
+      "name": "Prepare WhatsApp Message"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.twilio.com/2010-04-01/Accounts/{{ $env.TWILIO_ACCOUNT_SID }}/Messages.json",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/x-www-form-urlencoded"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "From",
+              "value": "={{ $json.from_phone }}"
+            },
+            {
+              "name": "To",
+              "value": "={{ $json.to_phone }}"
+            },
+            {
+              "name": "Body",
+              "value": "={{ $json.whatsapp_body }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        864,
+        -96
+      ],
+      "id": "1a61443a-d678-4498-8455-72957d30412a",
+      "name": "Send WhatsApp - Twilio",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "0tI3YvWRIV6pDkQ2",
+          "name": "Twilio API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO outreach_activities (\n  lead_id,\n  channel,\n  status,\n  external_id,\n  whatsapp_sid,\n  sent_at\n) VALUES (\n  {{ $('Prepare WhatsApp Message').item.json.lead_id }},\n  'whatsapp',\n  'sent',\n  '{{ $json.sid }}',\n  '{{ $json.sid }}',\n  NOW()\n)",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1072,
+        -96
+      ],
+      "id": "b7ec4ad3-4b91-4051-a320-545897556ed9",
+      "name": "Log WhatsApp Activity",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE enriched_leads\nSET \n  whatsapp_status = 'sent',\n  last_whatsapp_sent_at = NOW(),\n  last_contacted_at = NOW()\nWHERE lead_id = {{ $('Prepare WhatsApp Message').item.json.lead_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1280,
+        -96
+      ],
+      "id": "4cb644bd-adcc-423e-b45d-12036171ca95",
+      "name": "Update Lead WhatsApp Status",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get WhatsApp-Ready Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get WhatsApp-Ready Leads": {
+      "main": [
+        [
+          {
+            "node": "Check If Any WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check If Any WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Prepare WhatsApp Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare WhatsApp Message": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp - Twilio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send WhatsApp - Twilio": {
+      "main": [
+        [
+          {
+            "node": "Log WhatsApp Activity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log WhatsApp Activity": {
+      "main": [
+        [
+          {
+            "node": "Update Lead WhatsApp Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fbd4212e-f00c-4c0d-8654-bd2c8f929f16",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
+  },
+  "id": "MQSFLjiWooxYRtA7",
+  "tags": []
+}

@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+
+  postgres:
+
+    image: postgres:15
+
+    container_name: postgres_db
+
+    restart: always
+
+    environment:
+
+      POSTGRES_USER: n8n_user
+
+      POSTGRES_PASSWORD: n8n_pass123
+
+      POSTGRES_DB: lead_db
+
+    ports:
+
+      - "5432:5432"
+
+    volumes:
+
+      - postgres_data:/var/lib/postgresql/data
+
+  n8n:
+
+    image: n8nio/n8n
+
+    container_name: n8n
+
+    restart: always
+
+    ports:
+
+      - "5678:5678"
+
+    environment:
+
+      - DB_TYPE=postgresdb
+
+      - DB_POSTGRESDB_HOST=postgres
+
+      - DB_POSTGRESDB_PORT=5432
+
+      - DB_POSTGRESDB_DATABASE=lead_db
+
+      - DB_POSTGRESDB_USER=n8n_user
+
+      - DB_POSTGRESDB_PASSWORD=n8n_pass123
+
+      - N8N_BASIC_AUTH_ACTIVE=true
+
+      - N8N_BASIC_AUTH_USER=admin
+
+      - N8N_BASIC_AUTH_PASSWORD=admin123
+
+      - TWILIO_ACCOUNT_SID=AC669e841bc916ea105c74a840650aea8a
+
+      - TWILIO_AUTH_TOKEN=0d256855d52036f71bddd7f37fe21cf8
+
+      - TWILIO_PHONE_NUMBER=+17407385542
+
+      - TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
+      
+
+      # Email & Research APIs
+
+      - ABSTRACT_EMAIL_API_KEY=8bffecda76014e539c186ef85b504a6d
+
+      - GROQ_API_KEY=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
+
+      - SERPER_API_KEY=b309711560aa1506014a010154c7248735d51830
+
+      
+
+      # Scraping APIs 
+
+      - APIFY_API_KEY=apify_api_oB8GrSTl9SNWmquMr3ceuZQjrztU3G3Os4Kx
+
+      
+
+      # Email Provider (Optional - for production)
+
+      - SENDGRID_API_KEY=YOUR_SENDGRID_KEY_HERE
+
+      - MAILGUN_API_KEY=YOUR_MAILGUN_KEY_HERE
+
+      
+
+    volumes:
+
+      - n8n_data:/home/node/.n8n
+
+    depends_on:
+
+      - postgres
+
+volumes:
+
+  postgres_data:
+
+  n8n_data:

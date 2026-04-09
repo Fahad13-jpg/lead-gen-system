@@ -1,0 +1,298 @@
+{
+  "name": "6B - AI Deep Research",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -16,
+        0
+      ],
+      "id": "c8e45519-9898-4bdd-8cd4-0698b02941ea",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n  cl.id,\n  cl.company_name,\n  cl.email,\n  cl.phone,\n  cl.website,\n  cl.city,\n  cl.state,\n  cl.category,\n  cl.rating,\n  cl.review_count,\n  el.domain,\n  el.detected_country,\n  el.website_description,\n  el.has_contact_form\nFROM cleaned_leads cl\nJOIN enriched_leads el ON cl.id = el.lead_id\nWHERE el.enrichment_stage = 1\nAND (el.ai_company_summary IS NULL OR el.products_services IS NULL)\nORDER BY cl.rating DESC, cl.review_count DESC\nLIMIT 3",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        176,
+        0
+      ],
+      "id": "b24a1b12-570e-4154-951e-0f58ff0cecc3",
+      "name": "Get Leads - Stage 2 Ready",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "73c9b95f-49b5-4bdd-9589-ea5bcd68b70b",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        384,
+        0
+      ],
+      "id": "b76aae52-9c56-4132-9e21-bdedf882fb3d",
+      "name": "Check If Any"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Research this company thoroughly:\n\nCompany: {{ $json.company_name }}\nWebsite: {{ $json.domain || 'Not available' }}\nLocation: {{ $json.city }}, {{ $json.state }}, {{ $json.detected_country }}\nIndustry: {{ $json.category }}\nRating: {{ $json.rating }}/5 ({{ $json.review_count }} reviews)\n\nYour tasks:\n1. What products or services does this company offer?\n2. Are they B2B (selling to businesses) or B2C (selling to consumers)?\n3. What are 3 specific pain points or challenges they likely face in their industry?\n4. Any recent news, expansion plans, or growth signals?\n5. Estimate company size: micro (1-10 employees), small (11-50), medium (51-200), or large (201+)\n6. Who typically makes purchasing decisions at companies like this? (owner/manager/director/c-level)\n7. What's one unique detail about this company that could be used for personalized outreach?\n8. If you can find it, what's their LinkedIn company page URL?\n\nReturn your findings in this exact JSON format:\n{\n  \"products_services\": \"Brief description of what they offer\",\n  \"target_customer\": \"B2B or B2C or Both\",\n  \"pain_points\": [\"pain point 1\", \"pain point 2\", \"pain point 3\"],\n  \"recent_activity\": \"Any recent news or developments, or 'None found'\",\n  \"company_size\": \"micro or small or medium or large\",\n  \"decision_maker\": \"Who makes buying decisions\",\n  \"personalization_hook\": \"One unique detail for outreach\",\n  \"linkedin_url\": \"LinkedIn URL if found, or null\"\n}\n\nIMPORTANT: Return ONLY the JSON object, nothing else.\n\n5. **LinkedIn & Social Intelligence** (use web search):\n   Search for: \"[company_name] LinkedIn\"\n   \n   From search results, extract:\n   - LinkedIn company page URL\n   - Employee count (often visible in search snippets like \"51-200 employees\")\n   - Company tagline/description\n   - Industry classification\n   - Headquarters location (if not already found)\n   \n   If you find the LinkedIn page, also note:\n   - Follower count (if visible)\n   - Recent posts or activity (engagement signal)\n\n6. **Additional Online Presence**:\n   - Twitter/X profile (if relevant for B2B)\n   - Crunchbase profile (for funding info)\n   - Recent news mentions (growth signals)\n\nReturn ONLY this JSON (no other text):\n\n{\n  \"products_services\": \"...\",\n  \"target_customer\": \"B2B/B2C\",\n  \"pain_points\": [\"pain 1\", \"pain 2\", \"pain 3\"],\n  \"company_size\": \"micro/small/medium/large\",\n  \"decision_maker_access\": \"...\",\n  \"personalization_hook\": \"...\",\n  \"recent_news\": \"...\",\n  \n  // NEW LINKEDIN FIELDS\n  \"company_linkedin_url\": \"https://linkedin.com/company/... or null\",\n  \"linkedin_employee_count\": \"1-10/11-50/51-200/201-500/500+ or unknown\",\n  \"linkedin_followers\": \"number or unknown\",\n  \"linkedin_industry\": \"...\",\n  \"linkedin_description\": \"...\",\n  \n  // NEW SOCIAL/GROWTH SIGNALS\n  \"twitter_url\": \"... or null\",\n  \"crunchbase_url\": \"... or null\",\n  \"recent_funding\": \"... or null\",\n  \"growth_signals\": [\"signal 1\", \"signal 2\"]\n}\n",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert B2B company researcher. You analyze businesses and extract actionable sales intelligence. Use web search tools when available to find current, accurate information about companies."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        656,
+        -96
+      ],
+      "id": "7c8a7bb9-69c2-4883-9137-64980679668b",
+      "name": "AI Agent - Company Intelligence",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "jsCode": "const agentOutput = $input.first().json.output || {};\nconst lead = $('Get Leads - Stage 2 Ready').item.json;\n\n// Calculate initial AI score\nlet aiScore = 0;\n\nif (agentOutput.company_size === 'medium' || agentOutput.company_size === 'large') aiScore += 20;\nif (agentOutput.recent_activity && agentOutput.recent_activity !== 'None') aiScore += 15;\nif (agentOutput.linkedin_url) aiScore += 10;\nif (agentOutput.pain_points && agentOutput.pain_points.length >= 3) aiScore += 10;\n\nreturn {\n  lead_id: lead.id,\n  products_services: agentOutput.products_services,\n  target_customer: agentOutput.target_customer,\n  pain_points: JSON.stringify(agentOutput.pain_points || []),\n  recent_news: agentOutput.recent_activity,\n  company_size: agentOutput.company_size,\n  decision_maker_access: agentOutput.decision_maker,\n  personalization_hook: agentOutput.personalization_hook,\n  company_linkedin_url: agentOutput.linkedin_url,\n  ai_research_score: aiScore,\n  enrichment_stage: 2\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1072,
+        -96
+      ],
+      "id": "b86a46d9-a6fa-4da6-8135-229811ceda2b",
+      "name": "Extract AI Research Data"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO enriched_leads (\n  lead_id,\n  products_services,\n  target_customer,\n  pain_points,\n  company_size,\n  decision_maker_access,\n  personalization_hook,\n  recent_news,\n  \n  -- NEW LINKEDIN FIELDS\n  company_linkedin_url,\n  linkedin_employee_count,\n  linkedin_followers,\n  linkedin_industry,\n  linkedin_description,\n  \n  -- NEW GROWTH SIGNALS\n  twitter_url,\n  crunchbase_url,\n  recent_funding,\n  growth_signals,\n  \n  enrichment_stage\n) VALUES (\n  {{ $json.lead_id }},\n  '{{ $json.products_services }}',\n  '{{ $json.target_customer }}',\n  ARRAY[{{ $json.pain_points.map(p => `'${p.replace(/'/g, \"''\")}'`).join(',') }}],\n  '{{ $json.company_size }}',\n  '{{ $json.decision_maker_access }}',\n  '{{ $json.personalization_hook }}',\n  '{{ $json.recent_news }}',\n  \n  -- NEW LINKEDIN DATA\n  '{{ $json.company_linkedin_url }}',\n  '{{ $json.linkedin_employee_count }}',\n  {{ $json.linkedin_followers === 'unknown' ? 'NULL' : $json.linkedin_followers }},\n  '{{ $json.linkedin_industry }}',\n  '{{ $json.linkedin_description }}',\n  \n  -- NEW GROWTH SIGNALS\n  '{{ $json.twitter_url }}',\n  '{{ $json.crunchbase_url }}',\n  '{{ $json.recent_funding }}',\n  ARRAY[{{ ($json.growth_signals || []).map(s => `'${s.replace(/'/g, \"''\")}'`).join(',') || 'NULL' }}],\n  \n  2\n)\nON CONFLICT (lead_id) DO UPDATE SET\n  products_services = EXCLUDED.products_services,\n  target_customer = EXCLUDED.target_customer,\n  pain_points = EXCLUDED.pain_points,\n  company_size = EXCLUDED.company_size,\n  decision_maker_access = EXCLUDED.decision_maker_access,\n  personalization_hook = EXCLUDED.personalization_hook,\n  recent_news = EXCLUDED.recent_news,\n  company_linkedin_url = EXCLUDED.company_linkedin_url,\n  linkedin_employee_count = EXCLUDED.linkedin_employee_count,\n  linkedin_followers = EXCLUDED.linkedin_followers,\n  linkedin_industry = EXCLUDED.linkedin_industry,\n  linkedin_description = EXCLUDED.linkedin_description,\n  twitter_url = EXCLUDED.twitter_url,\n  crunchbase_url = EXCLUDED.crunchbase_url,\n  recent_funding = EXCLUDED.recent_funding,\n  growth_signals = EXCLUDED.growth_signals,\n  enrichment_stage = 2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1280,
+        -96
+      ],
+      "id": "05129d86-1daf-4c7d-b90b-ec671f7ac53f",
+      "name": "Update with AI Research",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {
+          "maxTokensToSample": 4000,
+          "temperature": 0.3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        560,
+        144
+      ],
+      "id": "cf97637a-d3ca-4f43-9186-f7cd0f69a5c2",
+      "name": "Groq Chat Model",
+      "notesInFlow": false,
+      "credentials": {
+        "groqApi": {
+          "id": "QQB9yzE6weHJvRcp",
+          "name": "Groq API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"products_services\": {\n      \"type\": \"string\",\n      \"description\": \"What the company offers\"\n    },\n    \"target_customer\": {\n      \"type\": \"string\",\n      \"description\": \"B2B or B2C\"\n    },\n    \"pain_points\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      },\n      \"description\": \"List of challenges\"\n    },\n    \"recent_activity\": {\n      \"type\": \"string\",\n      \"description\": \"Recent news\"\n    },\n    \"company_size\": {\n      \"type\": \"string\",\n      \"description\": \"Company size estimate\"\n    },\n    \"decision_maker\": {\n      \"type\": \"string\",\n      \"description\": \"Who makes decisions\"\n    },\n    \"personalization_hook\": {\n      \"type\": \"string\",\n      \"description\": \"Unique detail\"\n    },\n    \"linkedin_url\": {\n      \"type\": \"string\",\n      \"description\": \"LinkedIn URL\"\n    }\n  },\n  \"required\": [\"products_services\", \"target_customer\", \"pain_points\", \"company_size\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        880,
+        144
+      ],
+      "id": "ed563125-0e29-4eab-94e7-5d04fd7fe614",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Search Google for current information about companies",
+        "method": "POST",
+        "url": "https://google.serper.dev/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"q\": \"{{query}}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        752,
+        144
+      ],
+      "id": "e1532aef-13a1-4d27-9ee0-60289b45ee7a",
+      "name": "web Search",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "SMYLTdHXdM2qnLyo",
+          "name": "Twilio API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Leads - Stage 2 Ready",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Leads - Stage 2 Ready": {
+      "main": [
+        [
+          {
+            "node": "Check If Any",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check If Any": {
+      "main": [
+        [
+          {
+            "node": "AI Agent - Company Intelligence",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent - Company Intelligence": {
+      "main": [
+        [
+          {
+            "node": "Extract AI Research Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract AI Research Data": {
+      "main": [
+        [
+          {
+            "node": "Update with AI Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent - Company Intelligence",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent - Company Intelligence",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "web Search": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent - Company Intelligence",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "d5410e58-7345-467f-8b64-8f4fd9ac3489",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
+  },
+  "id": "GcF1OfshaLH1zJoQ",
+  "tags": []
+}

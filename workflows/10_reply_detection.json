@@ -1,0 +1,682 @@
+{
+  "name": "10 - Reply Detection & AI Qualification",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -208,
+        -288
+      ],
+      "id": "b3f74c30-afcb-455a-a4ac-26a33756eb7e",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n  oa.id as activity_id,\n  oa.lead_id,\n  el.org_id,\n  cl.email as lead_email,\n  cl.company_name,\n  oa.sent_at,\n  oa.external_id,\n  el.reply_received,\n  el.outreach_status\nFROM outreach_activities oa\nJOIN enriched_leads el ON oa.lead_id = el.lead_id\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nWHERE oa.channel IN ('email', 'email_followup')\nAND oa.sent_at >= NOW() - INTERVAL '7 days'\nAND (el.reply_received IS NULL OR el.reply_received = FALSE)\nAND el.outreach_status NOT IN ('qualified', 'disqualified', 'unsubscribed')\nORDER BY oa.sent_at DESC\nLIMIT 50",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -32,
+        0
+      ],
+      "id": "2f7db315-97f4-4194-8b61-9177c7509027",
+      "name": "Get Recent Outreach Emails",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c595493a-5310-43b9-a6f9-d32d8a93f0c9",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "f0631d4a-c11b-4840-b648-d28f65fb4663",
+      "name": "Any Emails to Check?"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 10,
+        "filters": {
+          "q": "=from:{{ $json.lead_email }} newer_than:7d"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        656,
+        -96
+      ],
+      "id": "cc114d17-1727-4aeb-bc1f-8a992afdf5d5",
+      "name": "Check Gmail Inbox",
+      "webhookId": "8300f760-80e9-47c9-8d3f-f9e781383335",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ErvKkvbo4c5GQjPn",
+          "name": "Gmail account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dff7ca0e-d775-4a26-b569-11b03e4aba60",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        864,
+        -96
+      ],
+      "id": "2855e2a5-73a9-41d3-af6a-ed80031cdfcf",
+      "name": "Reply Found?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get Gmail message data\nconst gmailMessages = $input.all();\n// const leadData = $('Get Recent Outreach Emails').first().json;\nconst leadInfo = $('Test Data - Mock Outreach').first().json;\nconst replies = [];\n\nfor (const item of gmailMessages) {\n  const message = item.json;\n  \n  // Extract email body\n  let bodyText = '';\n  \n  // Gmail stores body in different formats\n  if (message.payload.parts) {\n    // Multi-part message\n    for (const part of message.payload.parts) {\n      if (part.mimeType === 'text/plain' && part.body.data) {\n        bodyText += Buffer.from(part.body.data, 'base64').toString('utf-8');\n      }\n    }\n  } else if (message.payload.body && message.payload.body.data) {\n    // Simple message\n    bodyText = Buffer.from(message.payload.body.data, 'base64').toString('utf-8');\n  }\n  \n  // Extract subject\n  const headers = message.payload.headers;\n  const subject = headers.find(h => h.name === 'Subject')?.value || '';\n  const from = headers.find(h => h.name === 'From')?.value || '';\n  const date = headers.find(h => h.name === 'Date')?.value || '';\n  \n  // Clean body (remove quoted text, signatures)\n  const cleanBody = cleanEmailBody(bodyText);\n  \n  replies.push({\n    lead_id: leadInfo.lead_id,\n    org_id: leadInfo.org_id,\n    company_name: leadInfo.company_name,\n    reply_from: from,\n    reply_to: leadInfo.lead_email,\n    subject: subject,\n    body: cleanBody,\n    full_body: bodyText,\n    received_at: new Date(date).toISOString(),\n    thread_id: message.threadId,\n    message_id: message.id\n  });\n}\n\n// Helper function to clean email body\nfunction cleanEmailBody(body) {\n  if (!body) return '';\n  \n  // Remove quoted text (lines starting with >)\n  let lines = body.split('\\n');\n  lines = lines.filter(line => !line.trim().startsWith('>'));\n  \n  // Remove common signature markers\n  const signatureMarkers = [\n    'Sent from my iPhone',\n    'Sent from my Android',\n    'Get Outlook for',\n    '---',\n    'Best regards',\n    'Thanks,',\n    'Sincerely,'\n  ];\n  \n  let cleaned = lines.join('\\n');\n  \n  // Find first signature marker and cut there\n  for (const marker of signatureMarkers) {\n    const index = cleaned.indexOf(marker);\n    if (index > 0) {\n      cleaned = cleaned.substring(0, index);\n      break;\n    }\n  }\n  \n  return cleaned.trim();\n}\n\nreturn replies;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1072,
+        -128
+      ],
+      "id": "95810306-d5fa-42a8-b51a-7e4e3923f646",
+      "name": "Extract Reply Data"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analyze this email reply and qualify the lead:\n\nLEAD CONTEXT:\nCompany: {{ $json.company_name }}\nOur Email Sent: 7 days ago\nOur Subject: Initial outreach about [product/service]\n\nTHEIR REPLY:\nFrom: {{ $json.reply_from }}\nSubject: {{ $json.subject }}\nBody:\n\"\"\"\n{{ $json.body }}\n\"\"\"\n\n---\n\nANALYZE AND QUALIFY:\n\n1. SENTIMENT ANALYSIS:\n   - What's the overall tone? (interested/not_interested/neutral/question/out_of_office/autoresponder)\n\n2. INTENT DETECTION:\n   - What do they want? (wants_demo, wants_pricing, needs_more_info, ask_question, decline, unsubscribe, reschedule, refer_colleague)\n\n3. BANT QUALIFICATION (Budget, Authority, Need, Timeline):\n   - Budget: Did they mention budget? Any price concerns?\n   - Authority: Are they the decision maker? Do they need to involve others?\n   - Need: Do they have the problem we solve? How urgent?\n   - Timeline: When are they looking to implement/buy?\n\n4. BUYING SIGNALS:\n   - Urgency level: urgent/normal/low\n   - Pain points mentioned\n   - Competitor mentions\n   - Current solution dissatisfaction\n   - Decision maker confirmed\n\n5. QUALIFICATION SCORE (0-100):\n   - 90-100: Hot lead (ready to buy)\n   - 70-89: Warm lead (interested, needs nurturing)\n   - 40-69: Cold lead (mild interest, long-term)\n   - 0-39: Disqualified (not interested, wrong fit)\n\n6. NEXT ACTION:\n   - send_to_sales: Qualified, ready for sales call\n   - send_demo: They want to see product\n   - send_pricing: They want pricing info\n   - answer_question: They have specific questions\n   - nurture: Interested but not ready\n   - disqualify: Not a fit\n   - unsubscribe: They opted out\n\nReturn ONLY this JSON (no other text):\n\n{\n  \"sentiment\": \"interested/not_interested/neutral/question/out_of_office\",\n  \"intent\": \"wants_demo/wants_pricing/etc\",\n  \"urgency\": \"urgent/normal/low\",\n  \"budget_mentioned\": true/false,\n  \"budget_info\": \"details if mentioned\",\n  \"timeline_mentioned\": \"specific timeline or null\",\n  \"pain_points\": [\"pain point 1\", \"pain point 2\"],\n  \"decision_maker_confirmed\": true/false,\n  \"authority_level\": \"decision_maker/influencer/gatekeeper\",\n  \"qualification_score\": 85,\n  \"interest_level\": \"hot/warm/cold/dead\",\n  \"next_action\": \"send_to_sales\",\n  \"recommended_response\": \"Brief suggestion for how sales should respond\",\n  \"key_insights\": \"Important notes for sales team\",\n  \"red_flags\": [\"any concerns\"],\n  \"confidence\": 95\n}",
+        "options": {
+          "systemMessage": "You are an expert sales lead qualifier. You analyze email replies to determine:\n1. Intent and interest level\n2. Buying signals (budget, timeline, authority, need)\n3. Qualification score (0-100)\n4. Recommended next action\n\nYou are direct, analytical, and focused on actionable insights for sales teams."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1280,
+        -128
+      ],
+      "id": "0b9616cf-9ecf-4b6c-98fc-90e727495bc4",
+      "name": "AI - Reply Analyzer & Lead Qualifier"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        1264,
+        64
+      ],
+      "id": "781d9ed8-d7b8-494d-9db4-00c3ff5e5a4d",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "QQB9yzE6weHJvRcp",
+          "name": "Groq API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const aiAnalysis = $input.first().json.output || {};\nconst replyData = $('Extract Reply Data').first().json;\n\n// Parse AI response\nconst qualification = {\n  // Lead info\n  lead_id: replyData.lead_id,\n  org_id: replyData.org_id,\n  company_name: replyData.company_name,\n  \n  // Reply data\n  reply_from: replyData.reply_from,\n  reply_to: replyData.reply_to,\n  subject: replyData.subject,\n  body: replyData.body,\n  received_at: replyData.received_at,\n  thread_id: replyData.thread_id,\n  \n  // AI Analysis\n  sentiment: aiAnalysis.sentiment || 'neutral',\n  intent: aiAnalysis.intent || 'unknown',\n  urgency: aiAnalysis.urgency || 'normal',\n  budget_mentioned: aiAnalysis.budget_mentioned || false,\n  budget_info: aiAnalysis.budget_info || null,\n  timeline_mentioned: aiAnalysis.timeline_mentioned || null,\n  pain_points_mentioned: aiAnalysis.pain_points || [],\n  decision_maker_confirmed: aiAnalysis.decision_maker_confirmed || false,\n  \n  // Qualification\n  qualification_score: aiAnalysis.qualification_score || 50,\n  interest_level: aiAnalysis.interest_level || 'cold',\n  next_action: aiAnalysis.next_action || 'nurture',\n  \n  // For sales team\n  recommended_response: aiAnalysis.recommended_response || '',\n  key_insights: aiAnalysis.key_insights || '',\n  red_flags: aiAnalysis.red_flags || [],\n  \n  // Metadata\n  ai_confidence: aiAnalysis.confidence || 0,\n  processed: true,\n  processed_at: new Date().toISOString()\n};\n\n// Determine qualification status\nlet qualificationStatus;\nif (qualification.qualification_score >= 70) {\n  qualificationStatus = 'qualified';\n} else if (qualification.qualification_score >= 40) {\n  qualificationStatus = 'warm';\n} else if (qualification.sentiment === 'not_interested' || qualification.intent === 'unsubscribe') {\n  qualificationStatus = 'disqualified';\n} else {\n  qualificationStatus = 'cold';\n}\n\nqualification.qualification_status = qualificationStatus;\n\n// Determine if sales ready\nqualification.sales_ready = (\n  qualification.qualification_score >= 70 &&\n  ['interested', 'question'].includes(qualification.sentiment) &&\n  !['unsubscribe', 'decline'].includes(qualification.intent)\n);\n\nreturn qualification;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1632,
+        -128
+      ],
+      "id": "4b50c055-1577-4f14-b1ea-1f8cc64b78b4",
+      "name": "Prepare Qualification Data"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO email_replies (\n  lead_id,\n  org_id,\n  reply_from,\n  reply_to,\n  subject,\n  body,\n  received_at,\n  thread_id,\n  sentiment,\n  intent,\n  urgency,\n  budget_mentioned,\n  timeline_mentioned,\n  pain_points_mentioned,\n  decision_maker_confirmed,\n  qualification_score,\n  next_action,\n  processed,\n  processed_at\n) VALUES (\n  {{ $json.lead_id }},\n  {{ $json.org_id }},\n  '{{ $json.reply_from }}',\n  '{{ $json.reply_to }}',\n  '{{ $json.subject.replace(/'/g, \"''\") }}',\n  '{{ $json.body.replace(/'/g, \"''\") }}',\n  '{{ $json.received_at }}',\n  '{{ $json.thread_id }}',\n  '{{ $json.sentiment }}',\n  '{{ $json.intent }}',\n  '{{ $json.urgency }}',\n  {{ $json.budget_mentioned }},\n  '{{ $json.timeline_mentioned || null }}',\n  ARRAY[{{ $json.pain_points_mentioned.map(p => `'${p.replace(/'/g, \"''\")}'`).join(',') || null }}],\n  {{ $json.decision_maker_confirmed }},\n  {{ $json.qualification_score }},\n  '{{ $json.next_action }}',\n  TRUE,\n  NOW()\n)\nRETURNING id",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1840,
+        -128
+      ],
+      "id": "7b00afd4-54a5-45ec-b249-c9b0521e26ee",
+      "name": "Insert Reply Record",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- UPDATE enriched_leads\n-- SET \n--   reply_received = TRUE,\n--   reply_date = '{{ $json.received_at }}',\n--   reply_sentiment = '{{ $json.sentiment }}',\n--   qualification_status = '{{ $json.qualification_status }}',\n--   qualification_score = {{ $json.qualification_score }},\n--   sales_ready = {{ $json.sales_ready }},\n--   outreach_status = CASE\n--     WHEN '{{ $json.qualification_status }}' = 'qualified' THEN 'qualified'\n--     WHEN '{{ $json.qualification_status }}' = 'disqualified' THEN 'disqualified'\n--     ELSE outreach_status\n--   END\n-- WHERE lead_id = {{ $json.lead_id }}\nUPDATE enriched_leads\nSET \n  reply_received = TRUE,\n  reply_date = '{{ $('Prepare Qualification Data').item.json.received_at }}',\n  reply_sentiment = '{{ $('Prepare Qualification Data').item.json.sentiment }}',\n  qualification_status = '{{ $('Prepare Qualification Data').item.json.qualification_status }}',\n  qualification_score = {{ $('Prepare Qualification Data').item.json.qualification_score }},\n  sales_ready = {{ $('Prepare Qualification Data').item.json.sales_ready }},\n  outreach_status = CASE\n    WHEN '{{ $('Prepare Qualification Data').item.json.qualification_status }}' = 'qualified' THEN 'qualified'\n    WHEN '{{ $('Prepare Qualification Data').item.json.qualification_status }}' = 'disqualified' THEN 'disqualified'\n    ELSE outreach_status\n  END\nWHERE lead_id = {{ $('Prepare Qualification Data').item.json.lead_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2048,
+        -128
+      ],
+      "id": "31be46b2-5271-40dd-a2d9-d35fa62bb990",
+      "name": "Update Lead with Reply",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO qualification_events (\n  lead_id,\n  event_type,\n  new_status,\n  new_score,\n  reason,\n  created_by\n) VALUES (\n  {{ $json.lead_id }},\n  'reply_received',\n  '{{ $json.qualification_status }}',\n  {{ $json.qualification_score }},\n  '{{ $json.key_insights.replace(/'/g, \"''\") }}',\n  'ai_agent'\n)",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2256,
+        -128
+      ],
+      "id": "49a8b01c-90ee-4e3b-93e7-c73efe1f7879",
+      "name": "Log Qualification Event",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.qualification_status }}",
+                    "rightValue": "qualified",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "a1906cc6-9667-43d8-b72a-5358b10c2d6f"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Qualified"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "86ded976-7c59-4ec1-b2f5-c7375d950295",
+                    "leftValue": "={{ $json.qualification_status }}",
+                    "rightValue": "disqualified",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Disqualified"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d3910be7-d58c-41ae-becf-fcd23e3819f8",
+                    "leftValue": "={{ $json.qualification_status }}",
+                    "rightValue": "warm",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Needs Nurturing"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "none"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        2464,
+        -144
+      ],
+      "id": "048a79f9-f0a9-4b9e-be8e-61f14db73a80",
+      "name": "Route by Qualification"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO sales_queue (\n  lead_id,\n  org_id,\n  priority,\n  qualification_score,\n  interest_level,\n  budget_estimate,\n  timeline,\n  next_action,\n  notes,\n  status\n) VALUES (\n  {{ $json.lead_id }},\n  {{ $json.org_id }},\n  CASE\n    WHEN {{ $json.qualification_score }} >= 90 THEN 'urgent'\n    WHEN {{ $json.qualification_score }} >= 80 THEN 'high'\n    ELSE 'medium'\n  END,\n  {{ $json.qualification_score }},\n  '{{ $json.interest_level }}',\n  '{{ $json.budget_info || 'Not mentioned' }}',\n  '{{ $json.timeline_mentioned || 'Not specified' }}',\n  '{{ $json.next_action }}',\n  'AI Insights: {{ $json.key_insights.replace(/'/g, \"''\") }}\\n\\nRecommended Response: {{ $json.recommended_response.replace(/'/g, \"''\") }}',\n  'pending'\n)",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2944,
+        -288
+      ],
+      "id": "287dc326-d163-4978-ba2f-c169c5756a64",
+      "name": "Add to Sales Queue",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE enriched_leads\nSET \n  outreach_status = 'disqualified',\n  follow_up_count = 999, -- Prevent further follow-ups\n  next_follow_up_date = NULL\nWHERE lead_id = {{ $json.lead_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2944,
+        -128
+      ],
+      "id": "90f3b782-40b1-4ac0-9a09-11697f2fc824",
+      "name": "Stop All Outreach",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6e88f030-0c33-4218-b0e7-7a8ca2617a87",
+              "name": "status",
+              "value": "continue_nurture",
+              "type": "string"
+            },
+            {
+              "id": "0fff45a3-3ff0-4f9e-bbb3-67b9efcd7817",
+              "name": "note",
+              "value": "Lead showed interest but not ready yet",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2944,
+        48
+      ],
+      "id": "7008234b-09ed-466a-a680-2938e73fdfba",
+      "name": "Continue Nurturing"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        16,
+        304
+      ],
+      "id": "b4bdfa88-1c0f-408b-b3a3-2ee74479bdd6",
+      "name": "Error Handler",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const error = $input.first().json;\n\nconsole.error('Reply Detection Error:', {\n  workflow: 'Reply Detection',\n  node: error.node?.name,\n  error: error.error?.message,\n  timestamp: new Date().toISOString()\n});\n\n// Could also insert to error log table\nreturn {\n  workflow: 'Reply Detection',\n  error_message: error.error?.message,\n  node_name: error.node?.name,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        432,
+        304
+      ],
+      "id": "eae846a8-b04b-4e72-a298-414fde54f34b",
+      "name": "Log Error",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    activity_id: 1,\n    lead_id: 1,\n    org_id: 1,\n    lead_email: \"fah7861234@gmail.com\", // Email you sent test from\n    company_name: \"Test Company\",\n    sent_at: \"2026-03-10T10:00:00Z\",\n    external_id: \"test123\",\n    reply_received: false,\n    outreach_status: \"email_sent\"\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "a6b79d56-7ac3-439b-bdb3-5c5984891102",
+      "name": "Test Data - Mock Outreach"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    id: \"mock123\",\n    threadId: \"thread123\",\n    payload: {\n      headers: [\n        { name: \"From\", value: \"fah7861234@gmail.com\" },\n        { name: \"Subject\", value: \"Re: Quick question about your business\" },\n        { name: \"Date\", value: new Date().toISOString() }\n      ],\n      body: {\n        data: Buffer.from(\"Hi,\\n\\nThanks for reaching out! We're actually looking for a solution like this.\\n\\nCan you send me pricing for 50 users? We'd like to implement by end of Q2 if the pricing works.\\n\\nThanks,\\nJohn Smith\\nCEO, Test Company\").toString('base64')\n      }\n    }\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        768,
+        48
+      ],
+      "id": "c3a8f357-6015-4e51-b223-4a8c86db48f7",
+      "name": "Check Gmail for Replies"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Test Data - Mock Outreach",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Recent Outreach Emails": {
+      "main": [
+        []
+      ]
+    },
+    "Any Emails to Check?": {
+      "main": [
+        [
+          {
+            "node": "Check Gmail for Replies",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Gmail Inbox": {
+      "main": [
+        []
+      ]
+    },
+    "Reply Found?": {
+      "main": [
+        [
+          {
+            "node": "Extract Reply Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Reply Data": {
+      "main": [
+        [
+          {
+            "node": "AI - Reply Analyzer & Lead Qualifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI - Reply Analyzer & Lead Qualifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI - Reply Analyzer & Lead Qualifier": {
+      "main": [
+        [
+          {
+            "node": "Prepare Qualification Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Qualification Data": {
+      "main": [
+        [
+          {
+            "node": "Insert Reply Record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert Reply Record": {
+      "main": [
+        [
+          {
+            "node": "Update Lead with Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Lead with Reply": {
+      "main": [
+        [
+          {
+            "node": "Log Qualification Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Qualification Event": {
+      "main": [
+        [
+          {
+            "node": "Route by Qualification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Qualification": {
+      "main": [
+        [
+          {
+            "node": "Add to Sales Queue",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop All Outreach",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Continue Nurturing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Continue Nurturing": {
+      "main": [
+        []
+      ]
+    },
+    "Add to Sales Queue": {
+      "main": [
+        []
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Log Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test Data - Mock Outreach": {
+      "main": [
+        [
+          {
+            "node": "Any Emails to Check?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Gmail for Replies": {
+      "main": [
+        [
+          {
+            "node": "Reply Found?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7e2292f9-64cc-431f-ab55-787b4666865b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
+  },
+  "id": "TrgeZrs4ILZnrXuJ",
+  "tags": []
+}
