@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "🚀 Start System",
+      "type": "shell",
+      "command": "docker-compose up -d",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "🛑 Stop System",
+      "type": "shell",
+      "command": "docker-compose down",
+      "problemMatcher": []
+    },
+    {
+      "label": "📋 View Logs",
+      "type": "shell",
+      "command": "docker-compose logs -f",
+      "problemMatcher": []
+    },
+    {
+      "label": "🔄 Restart System",
+      "type": "shell",
+      "command": "docker-compose restart",
+      "problemMatcher": []
+    },
+    {
+      "label": "🗄️ Backup Database",
+      "type": "shell",
+      "command": "docker exec postgres_db pg_dump -U n8n_user lead_db > backups/backup_$(date +%Y%m%d_%H%M%S).sql",
+      "problemMatcher": []
+    }
+  ]
+}
