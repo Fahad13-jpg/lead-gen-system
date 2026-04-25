@@ -460,7 +460,7 @@
                   "followAllRedirects": true,
                   "timeout": 300000,
                   "qs": {
-                    "token": "apify_api_6ImdC6QdFMvuLxaeTjDP9RBVj8VdFj1wqYEE"
+                    "token": "YOUR_APIFY_API_KEY"
                   },
                   "encoding": null,
                   "json": false,
