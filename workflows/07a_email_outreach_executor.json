@@ -14,7 +14,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        0,
+        32,
         0
       ],
       "id": "6c2f2d90-36e6-4a36-bc16-af0512f450e2",
@@ -29,8 +29,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        144,
-        112
+        224,
+        0
       ],
       "id": "462c5791-e8e9-484a-9819-1e0df35587be",
       "name": "Get Email-Ready Leads",
@@ -77,7 +77,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT email \nFROM unsubscribes \nWHERE email = '{{ $json.email }}'",
+        "query": "SELECT COUNT(*) as unsubscribe_count\nFROM unsubscribes\nWHERE email = '{{ $json.email }}'",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -107,12 +107,11 @@
           "conditions": [
             {
               "id": "a4fbc3e0-a03c-4fd5-8f4a-ebfead218259",
-              "leftValue": "={{ $input.all().length }}",
-              "rightValue": "0",
+              "leftValue": "={{ $json.unsubscribe_count }}",
+              "rightValue": 0,
               "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
+                "type": "number",
+                "operation": "equals"
               }
             }
           ],
@@ -123,7 +122,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        832,
+        1040,
         -96
       ],
       "id": "ff1e3e7d-7f62-4e75-9da6-8c6a8a440af6",
@@ -132,13 +131,13 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO outreach_activities (\n  lead_id,\n  channel,\n  status,\n  external_id,\n  sent_at\n) VALUES (\n  {{ $('Prepare Email Content').item.json.lead_id }},\n  'email',\n  'sent',\n  '{{ $json.message_id || 'pending' }}',\n  NOW()\n)",
+        "query": "INSERT INTO outreach_activities (\n  lead_id,\n  channel,\n  status,\n  external_id,\n  sent_at\n) VALUES (\n  {{ $('Prepare Email Content').item.json.lead_id }},\n  'email',\n  'sent',\n  '{{ $json.id || \"pending\" }}',\n  NOW()\n)",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1504,
+        2080,
         -112
       ],
       "id": "b8385ccb-bddc-47d8-b95d-0da96e9887db",
@@ -153,12 +152,12 @@
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "// Get lead data from the original query\nconst leadData = $('Get Email-Ready Leads').first().json;\n\n// Get AI-generated content\nconst subject = leadData.email_subject_line || `Following up: ${leadData.company_name}`;\nconst opening = leadData.email_opening || '';\nconst bodyTemplate = leadData.email_body_template || '';\n\n// Build complete email body\nconst emailBody = `\n${opening}\n\n${bodyTemplate}\n\nBest regards,\nYour Name\nYour Company\nyour-email@company.com\n\n---\nYou're receiving this because we thought it might be valuable for ${leadData.company_name}.\nIf you'd prefer not to receive these emails, click here to unsubscribe.\n`;\n\nreturn {\n  lead_id: leadData.lead_id,\n  to_email: leadData.email,\n  to_name: leadData.company_name,\n  subject_line: subject,\n  email_body: emailBody,\n  from_email: 'mohmmadfahad53408@gmail.com',  // Change this to your verified sender\n  from_name: 'Muhammad Fahad',  // Change this\n  priority: leadData.priority,\n  lead_score: leadData.lead_score\n};"
+        "jsCode": "const leadData = $input.item.json;\n\nconst subject = leadData.email_subject_line || `Following up: ${leadData.company_name}`;\nconst opening = leadData.email_opening || '';\nconst bodyTemplate = leadData.email_body_template || '';\n\nconst emailBody = `${opening}\n\n${bodyTemplate}\n\nBest regards,\nMuhammad Fahad\nLead Generation System\nmohmmadfahad53408@gmail.com\n\n---\nYou're receiving this because we thought it might be valuable for ${leadData.company_name}.\nTo unsubscribe, reply with UNSUBSCRIBE.`;\n\nreturn {\n  lead_id: leadData.lead_id,\n  to_email: leadData.email,\n  to_name: leadData.company_name,\n  subject_line: subject,\n  email_body: emailBody,\n  priority: leadData.priority,\n  lead_score: leadData.lead_score\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1040,
+        1664,
         -112
       ],
       "id": "1d853559-0799-4ea5-bf18-e84d0eccc9b5",
@@ -173,7 +172,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1760,
+        2288,
         -112
       ],
       "id": "50737bf6-3f82-4fbf-9a04-47b56d3b2862",
@@ -196,7 +195,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1248,
+        1872,
         -112
       ],
       "id": "44714a2f-df66-4b15-9d92-e61de2686cba",
@@ -211,16 +210,58 @@
     },
     {
       "parameters": {
-        "jsCode": "return [{\n  json: {\n    lead_id: 1,\n    company_name: \"Test Company\",\n    email: \"mohmmadfahad53408@gmail.com\",  // YOUR GMAIL HERE\n    email_should_use: true,\n    email_subject_line: \"Quick question about your business\",\n    email_opening: \"Hi there,\\n\\nI noticed your business online.\",\n    email_body_template: \"Would love to connect and see if we can help.\\n\\nBest regards\",\n    primary_channel: \"email\",\n    lead_score: 85,\n    priority: \"hot\"\n  }\n}];"
+        "jsCode": "const unsubResult = $input.item.json;\nconst leadData = $('Any Emails to Send?').item.json;\n\nreturn {\n  ...leadData,\n  unsubscribe_count: parseInt(unsubResult.unsubscribe_count) || 0\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        384,
-        -352
+        832,
+        -96
       ],
-      "id": "6cf73c15-ec96-4269-80f1-6eef1e362d1c",
-      "name": "Test Data - Email Ready"
+      "id": "38c37f70-e782-432b-beba-492d6d6283df",
+      "name": "Merge Unsubscribe Check"
+    },
+    {
+      "parameters": {
+        "content": "## 📤Email Outreach Executor\n\n**Purpose**\nAutomatically sends personalized cold emails to leads that are fully enriched and ready for outreach. Uses Gmail to send.\n\n**How it works**\nRuns every **hour** → picks top 10 highest-scoring leads → checks unsubscribe list → builds personalized email from AI-generated content → sends via Gmail → logs activity → marks lead as contacted.\n\n**Key Rules**\n- Only sends to leads at `enrichment_stage = 3`\n- **Unsubscribed emails are never contacted**\n- After sending, sets `outreach_status = email_sent`\n- Includes unsubscribe instructions in every email",
+        "height": 544,
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        32,
+        -576
+      ],
+      "typeVersion": 1,
+      "id": "06a6efea-aacb-4f53-a3fc-c9dfe6a2390a",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Daily limit check\nconst leads = $input.all();\nconst MAX_PER_DAY = 50;\n\n// Check how many sent today (add this DB check)\nreturn leads.slice(0, 5); // Max 5 per run for safety"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1360,
+        -112
+      ],
+      "id": "619f9552-ab92-45b5-b7ef-4b6338ad9003",
+      "name": "Daily limit check"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      lead_id: 1,\n      company_name: \"Blue Bottle Coffee\",\n      email: \"your-test-email@gmail.com\", // use your own email for testing\n      email_should_use: true,\n      email_subject_line: \"Quick question about Blue Bottle's expansion\",\n      email_opening: \"Hi! I noticed Blue Bottle recently opened new locations.\",\n      email_body_template: \"We help coffee brands scale their operations efficiently. Given your recent expansion, I thought this might be valuable.\",\n      primary_channel: \"email\",\n      lead_score: 87,\n      priority: \"hot\"\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        208
+      ],
+      "id": "b3493b90-3358-4dee-b111-c13cbc1dfdce",
+      "name": "Mock Email Ready Leads",
+      "disabled": true
     }
   ],
   "pinData": {},
@@ -229,7 +270,7 @@
       "main": [
         [
           {
-            "node": "Test Data - Email Ready",
+            "node": "Get Email-Ready Leads",
             "type": "main",
             "index": 0
           }
@@ -238,7 +279,13 @@
     },
     "Get Email-Ready Leads": {
       "main": [
-        []
+        [
+          {
+            "node": "Any Emails to Send?",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Any Emails to Send?": {
@@ -256,7 +303,7 @@
       "main": [
         [
           {
-            "node": "Not Unsubscribed?",
+            "node": "Merge Unsubscribe Check",
             "type": "main",
             "index": 0
           }
@@ -267,7 +314,7 @@
       "main": [
         [
           {
-            "node": "Prepare Email Content",
+            "node": "Daily limit check",
             "type": "main",
             "index": 0
           }
@@ -307,11 +354,22 @@
         ]
       ]
     },
-    "Test Data - Email Ready": {
+    "Merge Unsubscribe Check": {
       "main": [
         [
           {
-            "node": "Any Emails to Send?",
+            "node": "Not Unsubscribed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily limit check": {
+      "main": [
+        [
+          {
+            "node": "Prepare Email Content",
             "type": "main",
             "index": 0
           }
@@ -323,7 +381,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "ee4435ae-086f-4313-918e-cbb792756ed0",
+  "versionId": "98115392-08a5-498b-a9c3-7c1b9031af3e",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"

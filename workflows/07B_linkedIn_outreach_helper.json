@@ -15,7 +15,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        0,
+        64,
         0
       ],
       "id": "95553ffb-98b9-4057-9f65-eadd754f05ed",
@@ -30,7 +30,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        208,
+        304,
         0
       ],
       "id": "98cdc2c4-ecfe-4bff-a0e8-5611714b502b",
@@ -69,7 +69,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        640,
+        544,
         0
       ],
       "id": "cfaf0d78-a11d-4749-a6f3-d49ce3696bde",
@@ -124,7 +124,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO linkedin_outreach_queue (\n  lead_id,\n  user_id,\n  company_name,\n  linkedin_url,\n  connection_note,\n  followup_message,\n  approach,\n  priority,\n  lead_score,\n  status\n) VALUES (\n  {{ $json.lead_id }},\n  {{ $json.user_id }},\n  '{{ $json.company_name.replace(/'/g, \"''\") }}',\n  '{{ $json.linkedin_url }}',\n  '{{ $json.connection_note.replace(/'/g, \"''\") }}',\n  '{{ $json.followup_message.replace(/'/g, \"''\") }}',\n  '{{ $json.approach }}',\n  '{{ $json.priority }}',\n  {{ $json.lead_score }},\n  'pending'\n)",
+        "query": "INSERT INTO linkedin_outreach_queue (\n  lead_id, user_id, company_name, linkedin_url,\n  connection_note, followup_message, approach,\n  priority, lead_score, status\n) VALUES (\n  {{ $json.lead_id }},\n  {{ $json.user_id }},\n  '{{ $json.company_name.replace(/'/g, \"''\") }}',\n  '{{ $json.linkedin_url }}',\n  '{{ $json.connection_note.replace(/'/g, \"''\") }}',\n  '{{ $json.followup_message.replace(/'/g, \"''\") }}',\n  '{{ $json.approach }}',\n  '{{ $json.priority }}',\n  {{ $json.lead_score }},\n  'pending'\n)\nRETURNING id, lead_id",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -145,7 +145,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "UPDATE enriched_leads\nSET \n  linkedin_status = 'ready',\n  linkedin_prepared_at = NOW()\nWHERE lead_id = {{ $('Format LinkedIn Actions').item.json.lead_id }}",
+        "query": "UPDATE enriched_leads\nSET \n  linkedin_status = 'ready',\n  linkedin_prepared_at = NOW()\nWHERE lead_id = {{ $json.lead_id }}",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -170,7 +170,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1264,
+        1248,
         16
       ],
       "id": "1af04d6d-f72e-498d-98ea-0c3263a34654",
@@ -179,7 +179,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "UPDATE enriched_leads\nSET \n  linkedin_status = 'needs_review',\n  linkedin_prepared_at = NOW()\nWHERE lead_id = {{ $('Format LinkedIn Action Items').item.json.lead_id }}",
+        "query": "UPDATE enriched_leads\nSET \n  linkedin_status = 'needs_review',\n  linkedin_prepared_at = NOW()\nWHERE lead_id = {{ $('Format LinkedIn Actions').item.json.lead_id }}",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -199,16 +199,18 @@
     },
     {
       "parameters": {
-        "jsCode": "return [{\n  json: {\n    lead_id: 1,\n    user_id: 1,\n    company_name: \"Blue Bottle Coffee\",\n    email: \"test@bluebottle.com\",\n    company_linkedin_url: \"https://www.linkedin.com/company/blue-bottle-coffee\",\n    linkedin_should_use: true,\n    linkedin_connection_note: \"Hi! Saw Blue Bottle expanding in Oakland - love your specialty roasting approach. Would be great to connect!\",\n    linkedin_first_message: \"Thanks for connecting! I'm impressed by Blue Bottle's commitment to quality. Given your expansion plans, I thought you might be interested in how we help specialty roasters optimize supply chains.\",\n    linkedin_approach: \"connection_request\",\n    personalization_hook: \"Premium specialty roaster with 523 reviews\",\n    lead_score: 87,\n    priority: \"hot\",\n    products_services: \"Specialty coffee roasting\",\n    decision_maker_access: \"Regional Manager\"\n  }\n}];"
+        "content": "## 💼LinkedIn Outreach Helper\n\n**Purpose**\nPrepares LinkedIn outreach messages for leads that have a LinkedIn URL. Since LinkedIn cannot be automated, this workflow saves ready-to-send messages into a queue for manual sending.\n\n**How it works**\nRuns every **2 hours** → finds leads with LinkedIn URLs → formats connection request note and follow-up message → checks message length → saves to `linkedin_outreach_queue` for manual action.\n\n**Key Rules**\n- LinkedIn connection notes have a **300 character limit**\n- Messages exceeding limit are flagged as `needs_review`\n- You must **manually send** these on LinkedIn yourself\n- Max **20–30 connection requests per day** on LinkedIn",
+        "height": 608,
+        "width": 288
       },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "type": "n8n-nodes-base.stickyNote",
       "position": [
-        416,
-        0
+        64,
+        -640
       ],
-      "id": "ddc34add-d6f3-4ce1-8f84-6add0a00dee9",
-      "name": "Test Data - LinkedIn Ready"
+      "typeVersion": 1,
+      "id": "76d0ae9f-70bc-4861-b8c7-588e924cc315",
+      "name": "Sticky Note"
     }
   ],
   "pinData": {},
@@ -226,7 +228,13 @@
     },
     "Get LinkedIn-Ready Leads": {
       "main": [
-        []
+        [
+          {
+            "node": "Any LinkedIn Outreach?",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Any LinkedIn Outreach?": {
@@ -295,24 +303,13 @@
           }
         ]
       ]
-    },
-    "Test Data - LinkedIn Ready": {
-      "main": [
-        [
-          {
-            "node": "Any LinkedIn Outreach?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "168911ea-61eb-47c6-92d1-193ee67d2df4",
+  "versionId": "56be0483-72d0-4365-89ee-9de05e5a21ea",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"

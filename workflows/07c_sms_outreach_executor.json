@@ -24,7 +24,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n  el.lead_id,\n  cl.company_name,\n  cl.phone,\n  el.sms_should_use,\n  el.sms_message,\n  el.sms_timing,\n  el.priority,\n  el.lead_score,\n  el.outreach_status,\n  el.last_sms_sent_at,\n  EXTRACT(DAY FROM NOW() - COALESCE(el.last_contacted_at, el.created_at)) as days_since_last_contact\nFROM enriched_leads el\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nWHERE el.enrichment_stage = 3\nAND el.sms_should_use = TRUE\nAND cl.phone IS NOT NULL\nAND el.sms_status IS NULL\nAND (\n  el.outreach_status = 'email_sent' \n  AND EXTRACT(DAY FROM NOW() - el.last_contacted_at) >= 3\n  OR el.outreach_status IS NULL\n)\nORDER BY el.lead_score DESC\nLIMIT 10",
+        "query": "SELECT \n  el.lead_id,\n  cl.company_name,\n  cl.phone,\n  el.sms_should_use,\n  el.sms_message,\n  el.sms_timing,\n  el.priority,\n  el.lead_score,\n  el.outreach_status,\n  el.sms_status,\n  el.last_sms_sent_at,\n  EXTRACT(DAY FROM NOW() - COALESCE(el.last_contacted_at, cl.created_at)) as days_since_last_contact\nFROM enriched_leads el\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nWHERE el.enrichment_stage = 3\nAND el.sms_should_use = TRUE\nAND cl.phone IS NOT NULL\nAND el.sms_status IS NULL\nAND (\n  (el.outreach_status = 'email_sent'\n  AND EXTRACT(DAY FROM NOW() - el.last_contacted_at) >= 3)\n  OR\n  (el.outreach_status IS NULL)\n)\nORDER BY el.lead_score DESC\nLIMIT 10",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -77,7 +77,8 @@
     },
     {
       "parameters": {
-        "jsCode": "const lead = $input.item.json;\n\n// Personalize SMS message\nlet smsMessage = lead.sms_message || `Hi! Quick question about ${lead.company_name}. Interested in discussing?`;\n\n// Replace placeholders\nsmsMessage = smsMessage\n  .replace(/{{company_name}}/g, lead.company_name)\n  .replace(/{{first_name}}/g, extractFirstName(lead.company_name));\n\n// Ensure under 160 characters\nif (smsMessage.length > 160) {\n  smsMessage = smsMessage.substring(0, 157) + '...';\n}\n\n// Add opt-out (required by law)\nsmsMessage += '\\n\\nReply STOP to opt-out';\n\nfunction extractFirstName(companyName) {\n  // Try to get first word as first name\n  const words = companyName.split(' ');\n  return words[0] || 'there';\n}\n\nreturn {\n  lead_id: lead.lead_id,\n  company_name: lead.company_name,\n  to_phone: lead.phone,\n  sms_body: smsMessage,\n  from_phone: process.env.TWILIO_PHONE_NUMBER,\n  priority: lead.priority,\n  lead_score: lead.lead_score\n};"
+        "mode": "runOnceForEachItem",
+        "jsCode": "const lead = $input.item.json;\n\n// Trial account verified numbers only\n// Add your verified test numbers here\nconst VERIFIED_NUMBERS = [\n  '+923175153405', // add your verified number\n];\n\nconst IS_TRIAL = true; // set false when you upgrade Twilio\n\nfunction extractFirstName(name) {\n  return name.split(' ')[0] || 'there';\n}\n\n// Skip unverified numbers in trial mode\nif (IS_TRIAL && !VERIFIED_NUMBERS.includes(lead.to_phone)) {\n  return {\n    skip: true,\n    lead_id: lead.lead_id,\n    reason: `Trial account — ${lead.to_phone} not verified`,\n    company_name: lead.company_name,\n  };\n}\n\nlet smsMessage = lead.sms_message ||\n  `Hi! Quick question about ${lead.company_name}. Interested in discussing?`;\n\nsmsMessage = smsMessage\n  .replace(/{{company_name}}/g, lead.company_name)\n  .replace(/{{first_name}}/g, extractFirstName(lead.company_name));\n\nconst optOut = '\\n\\nReply STOP to opt-out';\nif (smsMessage.length > 160 - optOut.length) {\n  smsMessage = smsMessage.substring(0, 157 - optOut.length) + '...';\n}\nsmsMessage += optOut;\n\nreturn {\n  skip: false,\n  lead_id: lead.lead_id,\n  company_name: lead.company_name,\n  to_phone: lead.phone,\n  sms_body: smsMessage,\n  from_phone: $env.TWILIO_PHONE_NUMBER || '+17407385542',\n  priority: lead.priority,\n  lead_score: lead.lead_score,\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -126,8 +127,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        832,
-        -96
+        1056,
+        16
       ],
       "id": "8b5b7cd8-46a3-4d47-9cba-a5c94ff687be",
       "name": "Send SMS - Twilio",
@@ -145,14 +146,14 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO outreach_activities (\n  lead_id,\n  channel,\n  status,\n  external_id,\n  sms_sid,\n  sent_at\n) VALUES (\n  {{ $('Prepare SMS Message').item.json.lead_id }},\n  'sms',\n  'sent',\n  '{{ $json.sid }}',\n  '{{ $json.sid }}',\n  NOW()\n)",
+        "query": "INSERT INTO outreach_activities (\n  lead_id, channel, status, external_id, sms_sid, sent_at\n) VALUES (\n  {{ $('Prepare SMS Message').item.json.lead_id }},\n  'sms',\n  'sent',\n  '{{ $json.sid }}',\n  '{{ $json.sid }}',\n  NOW()\n)\nRETURNING id, lead_id",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1040,
-        -96
+        1264,
+        16
       ],
       "id": "7e70268d-13aa-4c8f-bb60-96b566b25ca0",
       "name": "Log SMS Activity",
@@ -172,8 +173,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1248,
-        -96
+        1472,
+        16
       ],
       "id": "6f5cba28-30c6-4293-9de2-1121e66f2ef8",
       "name": "Update Lead SMS Status",
@@ -189,24 +190,110 @@
       "type": "n8n-nodes-base.errorTrigger",
       "typeVersion": 1,
       "position": [
-        640,
-        224
+        0,
+        208
       ],
       "id": "a8b6989e-ac4e-4894-8efa-f463bfee853d",
       "name": "Error Handler"
     },
     {
       "parameters": {
-        "jsCode": "const error = $input.first().json;\n\nconsole.error('SMS Error:', {\n  error: error.error?.message,\n  lead: error.execution?.data?.resultData?.runData?.['Prepare SMS Message']?.[0]?.data?.main?.[0]?.[0]?.json?.company_name\n});\n\nreturn {\n  error: true,\n  message: 'SMS sending failed',\n  details: error.error?.message\n};"
+        "content": "## 📱SMS Outreach Executor\n\n**Purpose**\nSends short personalized SMS messages to leads via Twilio. SMS is the second touch in the outreach sequence — only fires after email with no reply.\n\n**How it works**\nRuns every **2 hours** → finds leads where email was sent 3+ days ago with no reply → personalizes the AI-generated SMS → sends via Twilio API → logs activity → updates lead status.\n\n**Key Rules**\n- Only fires if email was sent **3+ days ago**\n- All messages include **\"Reply STOP to opt-out\"** (required by law)\n- Max **160 characters** per SMS\n- Uses `TWILIO_PHONE_NUMBER` from environment",
+        "height": 544,
+        "width": 288
       },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "type": "n8n-nodes-base.stickyNote",
       "position": [
-        848,
-        224
+        0,
+        -576
       ],
-      "id": "a8811316-2774-4048-86a5-19b57645e5d2",
-      "name": "Code in JavaScript"
+      "typeVersion": 1,
+      "id": "ed3a24b5-2b29-40dc-bbda-d6b03386fa5e",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "00b0e897-2669-42d3-b25c-4967f9dd0d92",
+              "leftValue": "={{ $json.skip }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        832,
+        -96
+      ],
+      "id": "08b76dd8-5a3f-4a47-b235-87e464dd51a6",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1184dea8-d8a0-464a-8056-8fc0f63a6c93",
+              "name": "skipped_reason",
+              "value": "={{ $json.reason }}",
+              "type": "string"
+            },
+            {
+              "id": "dd1035f9-bb50-4273-b637-d9065d810b94",
+              "name": "lead_id",
+              "value": "={{ $json.lead_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        -192
+      ],
+      "id": "4500b4d1-98b2-4bc5-a382-abb32ae323dd",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE enriched_leads\nSET sms_status = 'failed'\nWHERE lead_id = {{ $json.lead_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        208,
+        208
+      ],
+      "id": "96e262a4-56d3-41c3-a6bd-c89d10aa2d14",
+      "name": "Mark SMS Failed",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -248,7 +335,7 @@
       "main": [
         [
           {
-            "node": "Send SMS - Twilio",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -281,7 +368,25 @@
       "main": [
         [
           {
-            "node": "Code in JavaScript",
+            "node": "Mark SMS Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send SMS - Twilio",
             "type": "main",
             "index": 0
           }
@@ -293,7 +398,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "b533055a-aef0-4683-ad44-a106191e24fe",
+  "versionId": "727bf5c1-98c3-481e-863f-eca15b0ca29a",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"

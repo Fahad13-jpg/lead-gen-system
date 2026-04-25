@@ -6,8 +6,7 @@
         "rule": {
           "interval": [
             {
-              "field": "minutes",
-              "minutesInterval": 30
+              "field": "hours"
             }
           ]
         }
@@ -15,8 +14,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -320,
-        32
+        112,
+        -16
       ],
       "id": "a19bda1d-a2a6-45c9-9da7-ee0ff4dab750",
       "name": "Schedule Trigger"
@@ -57,7 +56,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n  cl.id,\n  cl.user_id,\n  cl.company_name,\n  cl.email,\n  cl.phone,\n  cl.website,\n  cl.city,\n  cl.state,\n  cl.country,\n  cl.email_valid,\n  cl.category,\n  cl.rating,\n  cl.review_count\nFROM cleaned_leads cl\nLEFT JOIN enriched_leads el ON cl.id = el.lead_id\nWHERE el.id IS NULL\nAND (cl.email_valid = TRUE OR cl.phone IS NOT NULL)\nORDER BY \n  CASE \n    WHEN cl.email_valid = TRUE THEN 1\n    WHEN cl.rating >= 4.5 THEN 2\n    ELSE 3\n  END\nLIMIT 10",
+        "query": "SELECT \n  cl.id,\n  cl.user_id,\n  cl.company_name,\n  cl.email,\n  cl.phone,\n  cl.website,\n  cl.city,\n  cl.state,\n  cl.country,\n  cl.email_valid,\n  cl.category,\n  cl.rating,\n  cl.review_count\nFROM cleaned_leads cl\nLEFT JOIN enriched_leads el ON cl.id = el.lead_id\nWHERE el.id IS NULL\nAND (cl.email_valid = TRUE OR cl.phone IS NOT NULL)\nORDER BY \n  CASE \n    WHEN cl.email_valid = TRUE THEN 1\n    WHEN cl.rating >= 4.5 THEN 2\n    ELSE 3\n  END\nLIMIT 2",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -124,332 +123,15 @@
     },
     {
       "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        1296,
-        48
-      ],
-      "id": "ce6214ec-e027-45e6-8158-ba38e2bfb725",
-      "name": "Skip Website"
-    },
-    {
-      "parameters": {
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "enriched_leads",
-          "mode": "list",
-          "cachedResultName": "enriched_leads"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "lead_id": "={{ $json.lead_id }}",
-            "domain": "={{ $json.domain }}",
-            "detected_country": "={{ $json.detected_country }}",
-            "detected_timezone": "={{ $json.detected_timezone }}",
-            "phone_country_code": "={{ $json.phone_country_code }}",
-            "lead_score": 0,
-            "id": 0,
-            "linkedin_followers": 0,
-            "optimal_contact_hour": 0,
-            "website_description": "={{ $json.website_description }}",
-            "has_contact_form": "={{ $json.has_contact_form }}",
-            "technologies_detected": "={{ $json.technologies_detected }}",
-            "enrichment_stage": 1
-          },
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": [
-            {
-              "id": "id",
-              "displayName": "id",
-              "required": false,
-              "defaultMatch": true,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "lead_id",
-              "displayName": "lead_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "business_category",
-              "displayName": "business_category",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "industry",
-              "displayName": "industry",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "lead_score",
-              "displayName": "lead_score",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "priority",
-              "displayName": "priority",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "enriched_at",
-              "displayName": "enriched_at",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "domain",
-              "displayName": "domain",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "company_linkedin_url",
-              "displayName": "company_linkedin_url",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "linkedin_employee_count",
-              "displayName": "linkedin_employee_count",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "linkedin_industry",
-              "displayName": "linkedin_industry",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "linkedin_headquarters",
-              "displayName": "linkedin_headquarters",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "linkedin_followers",
-              "displayName": "linkedin_followers",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "linkedin_specialties",
-              "displayName": "linkedin_specialties",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "company_news",
-              "displayName": "company_news",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "latest_blog_post",
-              "displayName": "latest_blog_post",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "latest_social_post",
-              "displayName": "latest_social_post",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "ai_company_summary",
-              "displayName": "ai_company_summary",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "ai_personalization_angle",
-              "displayName": "ai_personalization_angle",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "detected_timezone",
-              "displayName": "detected_timezone",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "detected_country",
-              "displayName": "detected_country",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "detected_region",
-              "displayName": "detected_region",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "phone_country_code",
-              "displayName": "phone_country_code",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "optimal_contact_hour",
-              "displayName": "optimal_contact_hour",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "data_sources_used",
-              "displayName": "data_sources_used",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "object",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "website_description",
-              "displayName": "website_description",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "has_contact_form",
-              "displayName": "has_contact_form",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "boolean",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "technologies_detected",
-              "displayName": "technologies_detected",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "object",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "enrichment_stage",
-              "displayName": "enrichment_stage",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
+        "operation": "executeQuery",
+        "query": "INSERT INTO enriched_leads (\n  lead_id,\n  domain,\n  detected_country,\n  detected_timezone,\n  phone_country_code,\n  website_description,\n  has_contact_form,\n  technologies_detected,\n  enrichment_stage,\n  lead_score\n) VALUES (\n  {{ $json.lead_id }},\n  {{ $json.domain ? `'${$json.domain}'` : 'NULL' }},\n  {{ $json.detected_country ? `'${$json.detected_country}'` : 'NULL' }},\n  {{ $json.detected_timezone ? `'${$json.detected_timezone}'` : 'NULL' }},\n  {{ $json.phone_country_code ? `'${$json.phone_country_code}'` : 'NULL' }},\n  {{ $json.website_description ? `'${$json.website_description.replace(/'/g, \"''\")}'` : 'NULL' }},\n  {{ $json.has_contact_form || false }},\n  '{{ $json.technologies_detected }}'::jsonb,\n  1,\n  0\n)\nON CONFLICT (lead_id) DO UPDATE SET\n  domain = EXCLUDED.domain,\n  detected_country = EXCLUDED.detected_country,\n  detected_timezone = EXCLUDED.detected_timezone,\n  phone_country_code = EXCLUDED.phone_country_code,\n  website_description = EXCLUDED.website_description,\n  has_contact_form = EXCLUDED.has_contact_form,\n  technologies_detected = EXCLUDED.technologies_detected,\n  enrichment_stage = 1",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1904,
-        -224
+        2320,
+        -208
       ],
       "id": "65d84c5b-b141-472f-9e01-340510e84976",
       "name": "Insert Stage 1 Enrichment",
@@ -463,7 +145,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Analyze the online presence of this company:\n\nCompany Name: {{ $json.company_name }}\nDomain: {{ $json.domain }}\nWebsite: {{ $json.website }}\nIndustry: Coffee Shop\nLocation: {{ $json.city }}, {{ $json.state }}\n\nBased on the company name and domain, provide:\n\n1. **website_description**: A 1-sentence description of what their website likely contains (e.g., \"Coffee shop website featuring menu, locations, and online ordering\")\n\n2. **has_contact_form**: Would a company like this typically have a contact form on their website? (true/false/null)\n\n3. **has_social_media**: Would they likely have social media presence? (true/false)\n\n4. **likely_technologies**: What 2-3 technologies might they use? (e.g., WordPress, Shopify, Square, Instagram)\n\n5. **online_maturity**: Rate their digital presence: \"basic\" (just info), \"moderate\" (has some features), or \"advanced\" (e-commerce, app, etc.)\n\nReturn ONLY this JSON format:\n{\n  \"website_description\": \"one sentence description\",\n  \"has_contact_form\": true/false/null,\n  \"has_social_media\": true/false,\n  \"likely_technologies\": [\"tech1\", \"tech2\"],\n  \"online_maturity\": \"basic/moderate/advanced\"\n}",
+        "text": "=Analyze the online presence of this company:\n\nCompany Name: {{ $json.company_name }}\nDomain: {{ $json.domain }}\nWebsite: {{ $json.website }}\nIndustry: {{ $json.category || 'Unknown' }}\nLocation: {{ $json.city }}, {{ $json.state }}\n\nBased on the company name and domain, provide:\n\n1. **website_description**: A 1-sentence description of what their website likely contains (e.g., \"Coffee shop website featuring menu, locations, and online ordering\")\n\n2. **has_contact_form**: Would a company like this typically have a contact form on their website? (true/false/null)\n\n3. **has_social_media**: Would they likely have social media presence? (true/false)\n\n4. **likely_technologies**: What 2-3 technologies might they use? (e.g., WordPress, Shopify, Square, Instagram)\n\n5. **online_maturity**: Rate their digital presence: \"basic\" (just info), \"moderate\" (has some features), or \"advanced\" (e-commerce, app, etc.)\n\nReturn ONLY this JSON format:\n{\n  \"website_description\": \"one sentence description\",\n  \"has_contact_form\": true/false/null,\n  \"has_social_media\": true/false,\n  \"likely_technologies\": [\"tech1\", \"tech2\"],\n  \"online_maturity\": \"basic/moderate/advanced\"\n}",
         "hasOutputParser": true,
         "options": {
           "systemMessage": "You are a website and online presence analyst. You research companies' digital footprint and make intelligent assessments about their online presence based on their name, domain, and industry. Be concise and accurate."
@@ -472,8 +154,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        1216,
-        -352
+        1376,
+        -368
       ],
       "id": "69960724-acf9-4f85-8ffe-7c38356c2e71",
       "name": "AI Agent"
@@ -486,7 +168,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
       "typeVersion": 1,
       "position": [
-        1136,
+        1264,
         -144
       ],
       "id": "3fcdc1cd-c4b2-4f54-ae6b-07c18ec1e7f8",
@@ -506,21 +188,21 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        1456,
-        -160
+        1632,
+        -144
       ],
       "id": "479f26a2-2dc4-4e6c-89e1-ce764667bb19",
       "name": "Structured Output Parser"
     },
     {
       "parameters": {
-        "jsCode": "const agentOutput = $input.first().json.output || {};\nconst lead = $('Extract Domain & Geographic Data').item.json;\n\nreturn {\n  ...lead,\n  website_description: agentOutput.website_description || null,\n  has_contact_form: agentOutput.has_contact_form,\n  has_social_media: agentOutput.has_social_media || false,\n  technologies_detected: JSON.stringify(agentOutput.likely_technologies || []),\n  online_maturity: agentOutput.online_maturity || 'unknown'\n};"
+        "jsCode": "const agentOutput = $input.first().json.output || {};\nconst lead = $('Extract Domain & Geographic Data').item.json;\n\n// Safely parse technologies\nlet technologies = agentOutput.likely_technologies || [];\nif (typeof technologies === 'string') {\n  try { technologies = JSON.parse(technologies); } catch(e) { technologies = []; }\n}\nif (!Array.isArray(technologies)) technologies = [];\n\nreturn {\n  ...lead,\n  website_description: agentOutput.website_description || null,\n  has_contact_form: agentOutput.has_contact_form || false,\n  has_social_media: agentOutput.has_social_media || false,\n  technologies_detected: JSON.stringify(technologies),\n  online_maturity: agentOutput.online_maturity || 'unknown'\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1712,
-        -224
+        2128,
+        -208
       ],
       "id": "ed13fcf0-8ee9-498c-a702-6b7e36c1d518",
       "name": "Process Website Intelligence"
@@ -539,80 +221,62 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        1312,
-        -160
+        1472,
+        -144
       ],
       "id": "cbb31197-2d96-46cf-ba1b-3caef4fef65d",
       "name": "Web Search",
       "credentials": {
         "httpHeaderAuth": {
-          "id": "SMYLTdHXdM2qnLyo",
-          "name": "Twilio API"
+          "id": "otZXZxlxwbXaObwA",
+          "name": "Serper API"
         }
       }
+    },
+    {
+      "parameters": {
+        "jsCode": "const lead = $input.item.json;\n\nreturn {\n  lead_id: lead.lead_id,\n  user_id: lead.user_id,\n  company_name: lead.company_name,\n  domain: lead.domain,\n  detected_country: lead.detected_country,\n  detected_timezone: lead.detected_timezone,\n  phone_country_code: lead.phone_country_code,\n  website: lead.website,\n  has_website: lead.has_website,\n  enrichment_stage: lead.enrichment_stage,\n  website_description: null,\n  has_contact_form: false,\n  has_social_media: false,\n  technologies_detected: '[]',\n  online_maturity: 'unknown'\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        128
+      ],
+      "id": "c652137a-65a1-46cd-9c11-14c93c183be1",
+      "name": "Skip Website"
+    },
+    {
+      "parameters": {
+        "content": "## 🔍 Basic Enrichment Stage 1\n\n**Purpose**\nFirst enrichment pass. Adds company domain, geographic info, and a basic online presence analysis to each lead. Prepares leads for deeper AI research in Stage 2.\n\n**How it works**\nRuns every **30 minutes** → picks unenriched leads → extracts domain from email/website → detects country from phone number → if website exists, AI analyzes their online presence and tech stack → saves to `enriched_leads`.\n\n**Key Rules**\n- Uses **Groq AI** + Serper web search\n- After this stage we know WHERE the company is and WHAT their digital presence looks like\n- Sets `enrichment_stage = 1`",
+        "height": 560,
+        "width": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        112,
+        -608
+      ],
+      "typeVersion": 1,
+      "id": "ec215a5f-ad38-458c-990b-e1ab3d0490d5",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      id: 1, user_id: 1,\n      company_name: \"Blue Bottle Coffee\",\n      email: \"info@bluebottlecoffee.com\",\n      phone: \"+14155551234\",\n      website: \"https://bluebottlecoffee.com\",\n      city: \"San Francisco\", state: \"CA\", country: \"US\",\n      email_valid: true,\n      category: \"Coffee Shop\",\n      rating: 4.7, review_count: 523\n    }\n  },\n  {\n    json: {\n      id: 2, user_id: 1,\n      company_name: \"Karachi Digital Agency\",\n      email: \"hello@karachidigital.pk\",\n      phone: \"+923001234567\",\n      website: \"https://karachidigital.pk\",\n      city: \"Karachi\", state: \"Sindh\", country: \"PK\",\n      email_valid: true,\n      category: \"Digital Marketing\",\n      rating: 4.2, review_count: 89\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        304,
+        192
+      ],
+      "id": "a7ec43e3-2866-42b8-909a-af5b7663837c",
+      "name": "Mock Leads Stage 1",
+      "disabled": true
     }
   ],
-  "pinData": {
-    "Schedule Trigger": [
-      {
-        "json": {
-          "id": 1,
-          "user_id": 1,
-          "company_name": "Blue Bottle Coffee",
-          "email": "hello@bluebottlecoffee.com",
-          "phone": "+14155551001",
-          "website": "https://bluebottlecoffee.com",
-          "address": "300 Webster St",
-          "city": "Oakland",
-          "state": "California",
-          "country": "US",
-          "zip_code": "94607",
-          "email_valid": true,
-          "category": "Coffee Shop",
-          "rating": 4.6,
-          "review_count": 523
-        }
-      },
-      {
-        "json": {
-          "id": 2,
-          "user_id": 1,
-          "company_name": "Philz Coffee",
-          "email": "contact@philzcoffee.com",
-          "phone": "+14155551002",
-          "website": "https://philzcoffee.com",
-          "address": "3101 24th St",
-          "city": "San Francisco",
-          "state": "California",
-          "country": "US",
-          "zip_code": "94110",
-          "email_valid": true,
-          "category": "Coffee Shop",
-          "rating": 4.5,
-          "review_count": 892
-        }
-      },
-      {
-        "json": {
-          "id": 3,
-          "user_id": 1,
-          "company_name": "Intelligentsia Coffee",
-          "email": "info@intelligentsiacoffee.com",
-          "phone": "+13125551003",
-          "website": "https://intelligentsiacoffee.com",
-          "address": "53 W Jackson Blvd",
-          "city": "Chicago",
-          "state": "Illinois",
-          "country": "US",
-          "zip_code": "60604",
-          "email_valid": true,
-          "category": "Coffee Roaster",
-          "rating": 4.7,
-          "review_count": 1245
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "connections": {
     "Schedule Trigger": {
       "main": [
@@ -720,17 +384,6 @@
         ]
       ]
     },
-    "Skip Website": {
-      "main": [
-        [
-          {
-            "node": "Process Website Intelligence",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Web Search": {
       "ai_tool": [
         [
@@ -741,13 +394,24 @@
           }
         ]
       ]
+    },
+    "Skip Website": {
+      "main": [
+        [
+          {
+            "node": "Process Website Intelligence",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "3aba928b-99a8-4fc1-820a-142f2e00df1a",
+  "versionId": "3acda211-eb5b-4017-990f-776a681baa8b",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"

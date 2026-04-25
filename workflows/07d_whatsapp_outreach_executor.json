@@ -24,7 +24,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n  el.lead_id,\n  cl.company_name,\n  cl.phone,\n  el.whatsapp_should_use,\n  el.whatsapp_message,\n  el.whatsapp_timing,\n  el.priority,\n  el.lead_score,\n  el.outreach_status,\n  el.last_whatsapp_sent_at,\n  el.sms_status,\n  EXTRACT(DAY FROM NOW() - COALESCE(el.last_contacted_at, el.created_at)) as days_since_last_contact\nFROM enriched_leads el\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nWHERE el.enrichment_stage = 3\nAND el.whatsapp_should_use = TRUE\nAND cl.phone IS NOT NULL\nAND el.whatsapp_status IS NULL\nAND (\n  (el.outreach_status = 'email_sent' AND el.sms_status = 'sent')\n  AND EXTRACT(DAY FROM NOW() - el.last_contacted_at) >= 5\n)\nORDER BY el.lead_score DESC\nLIMIT 5",
+        "query": "SELECT \n  el.lead_id,\n  cl.company_name,\n  cl.phone,\n  el.whatsapp_should_use,\n  el.whatsapp_message,\n  el.whatsapp_timing,\n  el.priority,\n  el.lead_score,\n  el.outreach_status,\n  el.last_whatsapp_sent_at,\n  el.sms_status,\n  EXTRACT(DAY FROM NOW() - COALESCE(el.last_contacted_at, cl.created_at)) as days_since_last_contact\nFROM enriched_leads el\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nWHERE el.enrichment_stage = 3\nAND el.whatsapp_should_use = TRUE\nAND cl.phone IS NOT NULL\nAND el.whatsapp_status IS NULL\nAND (\n  (el.outreach_status = 'email_sent' AND el.sms_status = 'sent')\n  AND EXTRACT(DAY FROM NOW() - el.last_contacted_at) >= 5\n)\nORDER BY el.lead_score DESC\nLIMIT 5",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -77,7 +77,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const lead = $input.item.json;\n\n// Get AI-generated WhatsApp message\nlet whatsappMessage = lead.whatsapp_message || `Hi! 👋\\n\\nI noticed ${lead.company_name} and wanted to reach out.\\n\\nWould love to connect!`;\n\n// Replace placeholders\nwhatsappMessage = whatsappMessage\n  .replace(/{{company_name}}/g, lead.company_name)\n  .replace(/{{first_name}}/g, extractFirstName(lead.company_name));\n\n// Ensure reasonable length\nif (whatsappMessage.length > 500) {\n  whatsappMessage = whatsappMessage.substring(0, 497) + '...';\n}\n\nfunction extractFirstName(companyName) {\n  const words = companyName.split(' ');\n  return words[0] || 'there';\n}\n\nreturn {\n  lead_id: lead.lead_id,\n  company_name: lead.company_name,\n  to_phone: `whatsapp:${lead.phone}`, // WhatsApp format\n  whatsapp_body: whatsappMessage,\n  from_phone: process.env.TWILIO_WHATSAPP_NUMBER,\n  priority: lead.priority\n};"
+        "jsCode": "const lead = $input.item.json;\n\n// Get AI-generated WhatsApp message\nlet whatsappMessage = lead.whatsapp_message || `Hi! 👋\\n\\nI noticed ${lead.company_name} and wanted to reach out.\\n\\nWould love to connect!`;\n\n// Replace placeholders\nwhatsappMessage = whatsappMessage\n  .replace(/{{company_name}}/g, lead.company_name)\n  .replace(/{{first_name}}/g, extractFirstName(lead.company_name));\n\n// Ensure reasonable length\nif (whatsappMessage.length > 500) {\n  whatsappMessage = whatsappMessage.substring(0, 497) + '...';\n}\n\nfunction extractFirstName(companyName) {\n  const words = companyName.split(' ');\n  return words[0] || 'there';\n}\n\nreturn {\n  lead_id: lead.lead_id,\n  company_name: lead.company_name,\n  to_phone: `whatsapp:${lead.phone}`, // WhatsApp format\n  whatsapp_body: whatsappMessage,\n  from_phone: $env.TWILIO_WHATSAPP_NUMBER ||    'whatsapp:+14155238886',\n  priority: lead.priority\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -178,6 +178,21 @@
           "name": "Lead Database"
         }
       }
+    },
+    {
+      "parameters": {
+        "content": "## 💬WhatsApp Outreach Executor\n\n**Purpose**\nSends personalized WhatsApp messages to leads via Twilio. This is the third and final touch in the outreach sequence for leads who didn't respond to email or SMS.\n\n**How it works**\nRuns every **3 hours** → finds leads where both email AND SMS were sent 5+ days ago → formats WhatsApp message → sends via Twilio → logs activity → updates lead status.\n\n**Key Rules**\n- Only fires after **both email and SMS** have been sent\n- Waits **5+ days** after last contact before sending\n- Max **500 characters** per message\n- Currently uses **Twilio Sandbox** — upgrade to WhatsApp Business for production",
+        "height": 528,
+        "width": 320
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        -544
+      ],
+      "typeVersion": 1,
+      "id": "53e66ac4-a5d4-42c4-8a1a-3d7e47f40bda",
+      "name": "Sticky Note"
     }
   ],
   "pinData": {},
@@ -253,7 +268,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "fbd4212e-f00c-4c0d-8654-bd2c8f929f16",
+  "versionId": "909a7e77-98bd-4377-868c-9731c8a69759",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"

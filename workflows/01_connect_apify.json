@@ -11,7 +11,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -176,
+        -112,
         -32
       ],
       "id": "f8de7b4f-1687-4fd5-96a9-842d027877e3",
@@ -25,7 +25,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        32,
+        80,
         -32
       ],
       "id": "f6f2a701-b1ac-414e-9995-a50743ed45a9",
@@ -38,7 +38,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        560,
+        464,
         -32
       ],
       "id": "6cc86b91-4947-43b7-9504-518b53c9f541",
@@ -72,7 +72,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        864,
+        640,
         -32
       ],
       "id": "0dc699d3-2124-4eac-8913-0b175357b742",
@@ -81,14 +81,14 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "UPDATE users\nSET \n  apify_api_key = '{{ $json.apify_api_key }}',\n  apify_status = 'active',\n  apify_credit = 5.00\nWHERE id = {{ $json.user_id }}\nRETURNING *",
+        "query": "UPDATE users\nSET \n  apify_api_key = '{{ $json.apify_api_key }}',\n  apify_status = 'active',\n  apify_credit = CASE \n    WHEN apify_credit IS NULL OR apify_credit = 0 THEN 5.00\n    ELSE apify_credit\n  END\nWHERE id = {{ $json.user_id }}\nRETURNING id, apify_credit, apify_status",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1072,
-        -96
+        992,
+        -112
       ],
       "id": "812921fa-6a5c-4c6b-82b3-6393d981d3f4",
       "name": "Update User - Success",
@@ -108,8 +108,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        1280,
-        -96
+        1232,
+        -112
       ],
       "id": "dadd3d22-b1ac-41f7-a1cb-e4077b504238",
       "name": "Success Response"
@@ -123,7 +123,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1072,
+        992,
         64
       ],
       "id": "1d6ed8f0-192d-444b-bc31-347f60b76054",
@@ -144,7 +144,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        1280,
+        1232,
         64
       ],
       "id": "cc0fc3da-c1e3-4c6e-97cf-8c22840f0612",
@@ -167,11 +167,26 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        288,
+        272,
         -32
       ],
       "id": "10521473-d63a-4405-b950-3066c9a8098e",
       "name": "Test Apify Key"
+    },
+    {
+      "parameters": {
+        "content": "## 🔌 Connect Apify\n\n**Purpose**\nLinks a user's Apify account to the system. Apify is the scraping engine that collects leads from Google Maps and Yellow Pages. Without this step, no scraping can happen.\n\n**How it works**\nUser sends their Apify API key → system tests it live against Apify → if valid, saves it to database and gives **$5.00 starting credit**.\n\n**Key Rules**\n- API key must start with `apify_api_`\n- On success → status set to `active`\n- On failure → status set to `invalid`",
+        "height": 464,
+        "width": 272
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -112,
+        -528
+      ],
+      "typeVersion": 1,
+      "id": "35301c17-d050-488c-aa46-151bcbd8881d",
+      "name": "Sticky Note"
     }
   ],
   "pinData": {},
@@ -261,11 +276,11 @@
       ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "ac58bd3d-b26f-4542-ae37-1844b899e949",
+  "versionId": "9373884d-c559-4482-b555-04db165014aa",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"

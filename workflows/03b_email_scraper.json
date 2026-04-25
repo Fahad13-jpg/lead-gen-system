@@ -1,0 +1,849 @@
+{
+  "name": "3B - Website Email Scraper",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -3184,
+        -256
+      ],
+      "id": "437222da-189f-405e-9b36-d7d8415fba5d",
+      "name": "Every 10 Minutes"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id, job_id, user_id, company_name, website\nFROM staging_leads\nWHERE email IS NULL\nAND website IS NOT NULL\nAND website != ''\nAND processing_status = 'pending'\nORDER BY id ASC\nLIMIT 10",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -2976,
+        -256
+      ],
+      "id": "c47d6fab-bdaa-410f-b6a4-e7cd5ce66e31",
+      "name": "Get Leads Without Email",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "check-any",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2784,
+        -256
+      ],
+      "id": "98d741eb-062e-4344-a3e3-a66b8d0b6ba4",
+      "name": "Any Leads?"
+    },
+    {
+      "parameters": {
+        "jsCode": "const lead = $input.item.json;\n\nlet url = lead.website.trim();\nif (!url.startsWith('http://') && !url.startsWith('https://')) {\n  url = 'https://' + url;\n}\nurl = url.replace(/\\/+$/, '');\n\nreturn {\n  staging_id:   lead.id,\n  job_id:       lead.job_id,\n  user_id:      lead.user_id,\n  company_name: lead.company_name,\n  website:      url\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2576,
+        -352
+      ],
+      "id": "c8efa517-9d5b-4d76-b496-752179c14df3",
+      "name": "Prepare URLs"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.website }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2384,
+        -352
+      ],
+      "id": "c4f31d0c-80cc-4063-8971-14b44867350b",
+      "name": "Fetch Homepage",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Prepare URLs').item.json.website }}/contact",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2176,
+        -352
+      ],
+      "id": "7de19556-af82-4f49-8d0b-59b854f40ef9",
+      "name": "Fetch Contact Page",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Prepare URLs').item.json.website }}/about",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1984,
+        -352
+      ],
+      "id": "9563fe12-88db-45bd-92a2-3631681243cb",
+      "name": "Fetch About Page",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const prepData = $('Prepare URLs').item.json;\n\n// Get HTML from all pages - handle different response formats\nlet allHtml = '';\n\ntry {\n  const homepage = $('Fetch Homepage').item.json;\n  if (typeof homepage === 'string') allHtml += homepage;\n  else if (homepage?.body) allHtml += homepage.body;\n  else if (homepage?.data) allHtml += homepage.data;\n  else allHtml += JSON.stringify(homepage);\n} catch(e) {}\n\ntry {\n  const contact = $('Fetch Contact Page').item.json;\n  if (typeof contact === 'string') allHtml += contact;\n  else if (contact?.body) allHtml += contact.body;\n  else if (contact?.data) allHtml += contact.data;\n  else allHtml += JSON.stringify(contact);\n} catch(e) {}\n\ntry {\n  const about = $('Fetch About Page').item.json;\n  if (typeof about === 'string') allHtml += about;\n  else if (about?.body) allHtml += about.body;\n  else if (about?.data) allHtml += about.data;\n  else allHtml += JSON.stringify(about);\n} catch(e) {}\ntry {\n  const contactus = $('Fetch Contact Us').item.json;\n  if (typeof contactus === 'string') allHtml += contactus;\n  else if (contactus?.body) allHtml += contactus.body;\n  else if (contactus?.data) allHtml += contactus.data;\n} catch(e) {}\n\ntry {\n  const team = $('Fetch Team').item.json;\n  if (typeof team === 'string') allHtml += team;\n  else if (team?.body) allHtml += team.body;\n  else if (team?.data) allHtml += team.data;\n} catch(e) {}\n\ntry {\n  const ourteam = $('Fetch Our Team').item.json;\n  if (typeof ourteam === 'string') allHtml += ourteam;\n  else if (ourteam?.body) allHtml += ourteam.body;\n  else if (ourteam?.data) allHtml += ourteam.data;\n} catch(e) {}\n\nconst emailRegex = /[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}/g;\nconst rawEmails = allHtml.match(emailRegex) || [];\n\nconst skipDomains = [\n  'sentry.io', 'wixpress.com', 'example.com',\n  'wordpress.org', 'w3.org', 'schema.org',\n  'googleapis.com', 'google.com', 'facebook.com',\n  'twitter.com', 'instagram.com'\n];\n\nconst skipExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.css', '.js'];\n\nconst validEmails = rawEmails\n  .map(e => e.toLowerCase().trim())\n  .filter(e => {\n    if (skipExtensions.some(ext => e.endsWith(ext))) return false;\n    if (skipDomains.some(d => e.includes(d))) return false;\n    if (!/\\.[a-z]{2,}$/.test(e)) return false;\n    if (e.length > 100) return false;\n    return true;\n  });\n\nconst uniqueEmails = [...new Set(validEmails)];\n\nlet bestEmail = null;\nif (uniqueEmails.length > 0) {\n  const preferred = ['info@', 'contact@', 'hello@', 'sales@', 'admin@', 'support@'];\n  bestEmail = uniqueEmails.find(e => preferred.some(p => e.startsWith(p))) || uniqueEmails[0];\n}\n\nreturn {\n  staging_id:    prepData.staging_id,\n  job_id:        prepData.job_id,\n  user_id:       prepData.user_id,\n  company_name:  prepData.company_name,\n  website:       prepData.website,\n  email_found:   bestEmail || '',\n  emails_count:  uniqueEmails.length\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1152,
+        -352
+      ],
+      "id": "6579cbce-0410-4ae6-b28c-13fa48501dd1",
+      "name": "Extract Emails from HTML"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "has-email",
+              "leftValue": "={{ $json.email_found }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "isNotEmpty"
+              }
+            },
+            {
+              "id": "3052d419-a6a1-43fd-abc6-7c64343fccc1",
+              "leftValue": "={{ $json.emails_count }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -960,
+        -352
+      ],
+      "id": "5e6231ab-db35-4c0e-a13d-6d46f202c502",
+      "name": "Email Found?"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE staging_leads\nSET\n  email = '{{ $json.email_found }}',\n  processing_status = 'pending'\nWHERE id = {{ $json.staging_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -752,
+        -448
+      ],
+      "id": "3d9d5329-8089-4d3a-976b-08210722a9e1",
+      "name": "Update Email in DB",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE staging_leads\nSET processing_status = 'no_email_found'\nWHERE id = {{ $json.staging_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -752,
+        -256
+      ],
+      "id": "1da0617b-407d-4cc1-9513-3d8746d3670a",
+      "name": "Mark No Email - Tier 1",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id, job_id, user_id, company_name, website\nFROM staging_leads\nWHERE email IS NULL\nAND website IS NOT NULL\nAND processing_status = 'no_email_found'\nORDER BY id ASC\nLIMIT 5",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -2976,
+        160
+      ],
+      "id": "e38c660f-5259-4bb6-9b84-8310e4f5b100",
+      "name": "Get Tier 2 Leads",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "check-tier2",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2784,
+        160
+      ],
+      "id": "2de157fb-3215-4e36-80f2-dbfd781bf2a0",
+      "name": "Any Tier 2?"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT apify_api_key\nFROM users\nWHERE id = {{ $json.user_id }}\nAND apify_status = 'active'\nLIMIT 1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -2576,
+        64
+      ],
+      "id": "50ad201b-dcbb-4a29-b84b-7bdcec06fa8b",
+      "name": "Get User Apify Key",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const lead     = $('Get Tier 2 Leads').item.json;\nconst userInfo = $input.item.json;\n\nif (!userInfo.apify_api_key) {\n  throw new Error('No Apify key for user ' + lead.user_id);\n}\n\nlet url = lead.website.trim();\nif (!url.startsWith('http')) url = 'https://' + url;\n\nreturn {\n  staging_id:    lead.id,\n  job_id:        lead.job_id,\n  user_id:       lead.user_id,\n  company_name:  lead.company_name,\n  website:       url,\n  apify_api_key: userInfo.apify_api_key,\n  apify_input: {\n    startUrls: [{ url: url }],\n    maxDepth: 2,\n    maxPages: 5,\n    contactInfoFrom: \"all\"\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2384,
+        64
+      ],
+      "id": "81caf33d-af89-4e30-9499-8179c0f9c22e",
+      "name": "Prepare Apify Input"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE staging_leads\nSET processing_status = 'apify_scraping'\nWHERE id = {{ $json.staging_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -2176,
+        64
+      ],
+      "id": "aaa8850f-78a5-4404-a449-ff7ea69a036e",
+      "name": "Mark Apify Running",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.apify.com/v2/acts/vdrmota~contact-info-scraper/run-sync-get-dataset-items?token={{ $json.apify_api_key }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.apify_input }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          },
+          "timeout": 120000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1152,
+        64
+      ],
+      "id": "cd270529-53f8-4524-bdb4-9a221358033c",
+      "name": "Run Apify Contact Scraper",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results  = $input.all();\nconst prepData = $('Get Apify Data').first().json;\n\nlet email = null;\n\nfor (const item of results) {\n  const r = item.json;\n  if (r.emails?.length > 0)                { email = r.emails[0]; break; }\n  if (r.email)                              { email = r.email;     break; }\n  if (r.contactInfo?.emails?.length > 0)   { email = r.contactInfo.emails[0]; break; }\n}\n\nif (email) email = email.toLowerCase().trim();\n\nreturn {\n  staging_id:   prepData.staging_id,\n  user_id:      prepData.user_id,\n  company_name: prepData.company_name,\n  email_found:  email || ''\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -944,
+        64
+      ],
+      "id": "b0625e26-510f-42a8-8fc5-67c406fb526b",
+      "name": "Parse Apify Result"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "apify-email-check",
+              "leftValue": "={{ $json.email_found }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "isNotEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -752,
+        64
+      ],
+      "id": "2dafd9b1-4c71-4dab-ac7e-d9a8861f9eff",
+      "name": "Apify Found Email?"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE staging_leads\nSET\n  email = '{{ $json.email_found }}',\n  processing_status = 'pending'\nWHERE id = {{ $json.staging_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -544,
+        -48
+      ],
+      "id": "6848e663-46fc-42c5-b885-8f9c194f3434",
+      "name": "Update Apify Email",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE staging_leads\nSET processing_status = 'no_email_available'\nWHERE id = {{ $json.staging_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -544,
+        160
+      ],
+      "id": "cc3da080-3cdf-404d-a751-6f45482a0b4e",
+      "name": "Mark No Email - Final",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $('Prepare Apify Input').first().json;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1568,
+        64
+      ],
+      "id": "74056d5b-c528-4e6d-896f-7332c48bd8ac",
+      "name": "Get Apify Data"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Prepare URLs').item.json.website }}/contact-us",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1776,
+        -352
+      ],
+      "id": "c450ce7a-07aa-492b-99d6-c146d4c03160",
+      "name": "Fetch Contact Us",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Prepare URLs').item.json.website }}/team",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1568,
+        -352
+      ],
+      "id": "52e32b19-0e98-46a2-a2fa-de76e27880f7",
+      "name": "Fetch Team",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Prepare URLs').item.json.website }}/our-team",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1360,
+        -352
+      ],
+      "id": "9823454c-3314-46cf-8487-d900c8fdcb1f",
+      "name": "Fetch Our Team",
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every 10 Minutes": {
+      "main": [
+        [
+          {
+            "node": "Get Leads Without Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Leads Without Email": {
+      "main": [
+        [
+          {
+            "node": "Any Leads?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Any Leads?": {
+      "main": [
+        [
+          {
+            "node": "Prepare URLs",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Tier 2 Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare URLs": {
+      "main": [
+        [
+          {
+            "node": "Fetch Homepage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Homepage": {
+      "main": [
+        [
+          {
+            "node": "Fetch Contact Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Contact Page": {
+      "main": [
+        [
+          {
+            "node": "Fetch About Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch About Page": {
+      "main": [
+        [
+          {
+            "node": "Fetch Contact Us",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Emails from HTML": {
+      "main": [
+        [
+          {
+            "node": "Email Found?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Found?": {
+      "main": [
+        [
+          {
+            "node": "Update Email in DB",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark No Email - Tier 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark No Email - Tier 1": {
+      "main": [
+        [
+          {
+            "node": "Get Tier 2 Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Tier 2 Leads": {
+      "main": [
+        [
+          {
+            "node": "Any Tier 2?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Any Tier 2?": {
+      "main": [
+        [
+          {
+            "node": "Get User Apify Key",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Apify Key": {
+      "main": [
+        [
+          {
+            "node": "Prepare Apify Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Apify Input": {
+      "main": [
+        [
+          {
+            "node": "Mark Apify Running",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Apify Running": {
+      "main": [
+        [
+          {
+            "node": "Get Apify Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Apify Contact Scraper": {
+      "main": [
+        [
+          {
+            "node": "Parse Apify Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Apify Result": {
+      "main": [
+        [
+          {
+            "node": "Apify Found Email?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify Found Email?": {
+      "main": [
+        [
+          {
+            "node": "Update Apify Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark No Email - Final",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Apify Data": {
+      "main": [
+        [
+          {
+            "node": "Run Apify Contact Scraper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Contact Us": {
+      "main": [
+        [
+          {
+            "node": "Fetch Team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Team": {
+      "main": [
+        [
+          {
+            "node": "Fetch Our Team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Our Team": {
+      "main": [
+        [
+          {
+            "node": "Extract Emails from HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1baa0afd-58a6-4d73-8af2-ed4b8319683e",
+  "meta": {
+    "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
+  },
+  "id": "uCZOwnPIZXN6UjQF",
+  "tags": []
+}

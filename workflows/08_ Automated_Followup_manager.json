@@ -6,8 +6,8 @@
         "rule": {
           "interval": [
             {
-              "field": "hours",
-              "hoursInterval": 6
+              "field": "minutes",
+              "minutesInterval": 10
             }
           ]
         }
@@ -15,23 +15,22 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -160,
+        160,
         0
       ],
       "id": "b615b885-1853-4218-86e3-833dbfff829e",
-      "name": "Schedule Trigger",
-      "disabled": true
+      "name": "Schedule Trigger"
     },
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n  el.lead_id,\n  cl.company_name,\n  cl.email,\n  cl.phone,\n  el.follow_up_count,\n  el.outreach_status,\n  el.sms_status,\n  el.whatsapp_status,\n  oa.opened_at,\n  oa.clicked_at,\n  EXTRACT(DAY FROM NOW() - oa.sent_at) as days_since_sent\nFROM enriched_leads el\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nLEFT JOIN outreach_activities oa ON el.lead_id = oa.lead_id AND oa.channel = 'email'\nWHERE oa.replied_at IS NULL\nAND el.follow_up_count < 4\nORDER BY el.lead_score DESC\nLIMIT 20",
+        "query": "SELECT \n  el.lead_id,\n  cl.company_name,\n  cl.email,\n  cl.phone,\n  el.follow_up_count,\n  el.outreach_status,\n  el.sms_status,\n  el.whatsapp_status,\n  el.email_subject_line,\n  el.email_follow_up_day_3,\n  el.email_follow_up_day_7,\n  el.lead_score,\n  el.priority,\n  oa.opened_at,\n  oa.clicked_at,\n  EXTRACT(DAY FROM NOW() - oa.sent_at) as days_since_sent\nFROM enriched_leads el\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nLEFT JOIN outreach_activities oa ON el.lead_id = oa.lead_id AND oa.channel = 'email'\nWHERE el.enrichment_stage = 3\nAND cl.email IS NOT NULL\nAND oa.replied_at IS NULL\nAND el.follow_up_count < 4\nAND el.outreach_status = 'email_sent'\nAND EXTRACT(DAY FROM NOW() - el.last_contacted_at) >= 3\nORDER BY el.lead_score DESC\nLIMIT 3",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -16,
+        384,
         0
       ],
       "id": "77ed5048-a243-4e66-9b92-c70185b9dd91",
@@ -70,7 +69,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        624,
+        608,
         0
       ],
       "id": "97824475-bdf1-42a5-bb7c-32c69fd1023e",
@@ -116,21 +115,7 @@
     },
     {
       "parameters": {
-        "jsonSchemaExample": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"follow_up_type\": {},\n    \"subject_line\": {},\n    \"email_body\": {},\n    \"reasoning\": {},\n    \"engagement_assessment\": {},\n    \"recommended_next_step\": {},\n    \"tone\": {}\n  },\n  \"additionalProperties\": true\n}"
-      },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
-      "position": [
-        1088,
-        96
-      ],
-      "id": "ce005dcb-7512-41c4-80c6-f78c1744cd59",
-      "name": "Structured Output Parser",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "jsCode": "const aiResponse = $input.first().json.output || {};\nconst lead = $('Test Data - Follow-Up Ready').item.json;\n// Get AI-generated content\nconst subject = aiResponse.subject_line || `Re: ${lead.email_subject_line}`;\nconst body = aiResponse.email_body || lead[`email_follow_up_day_${lead.follow_up_count === 1 ? '3' : '7'}`] || 'Following up on my previous email...';\n\n// Build complete email\nconst emailBody = `\n${body}\n\nBest regards,\nYour Name\nYour Company\n\n---\nUnsubscribe: {{unsubscribe_link}}\n`;\n\nreturn {\n  lead_id: lead.lead_id,\n  user_id: lead.user_id,\n  to_email: lead.email,\n  to_name: lead.company_name,\n  subject_line: subject,\n  email_body: emailBody,\n  from_email: 'hello@yourcompany.com',\n  from_name: 'Your Name',\n  \n  // AI insights\n  follow_up_type: aiResponse.follow_up_type,\n  follow_up_number: lead.follow_up_count + 1,\n  engagement_assessment: aiResponse.engagement_assessment,\n  ai_reasoning: aiResponse.reasoning,\n  \n  // For tracking\n  days_since_initial: lead.days_since_sent,\n  was_opened: lead.opened_at ? true : false,\n  was_clicked: lead.clicked_at ? true : false\n};"
+        "jsCode": "const aiResponse = $input.first().json.output || {};\nconst lead = $('Mock Follow-Up Ready').first().json;\n\nconst subject = aiResponse.subject_line || `Re: ${lead.email_subject_line || 'our previous conversation'}`;\nconst body = aiResponse.email_body || \n  (lead.follow_up_count === 1 ? lead.email_follow_up_day_3 : lead.email_follow_up_day_7) || \n  'Following up on my previous email...';\n\nconst emailBody = `${body}\n\nBest regards,\nMuhammad Fahad\nmohmmadfahad53408@gmail.com\n\n---\nTo unsubscribe, reply with UNSUBSCRIBE.`;\n\nreturn {\n  lead_id: lead.lead_id,\n  company_name: lead.company_name,\n  to_email: lead.email,\n  subject_line: subject,\n  email_body: emailBody,\n  follow_up_count: lead.follow_up_count,\n  priority: lead.priority\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -144,7 +129,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT email FROM unsubscribes WHERE email = '{{ $json.to_email }}'",
+        "query": "SELECT COUNT(*) as unsubscribe_count\nFROM unsubscribes\nWHERE email = '{{ $json.to_email }}'",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -175,12 +160,11 @@
           "conditions": [
             {
               "id": "70132540-fb14-4a57-afe8-4353f231ab9c",
-              "leftValue": "={{ $input.all().length.toString() }}",
-              "rightValue": "0",
+              "leftValue": "={{ $json.unsubscribe_count }}",
+              "rightValue": 0,
               "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
+                "type": "number",
+                "operation": "equals"
               }
             }
           ],
@@ -191,7 +175,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1632,
+        1840,
         -128
       ],
       "id": "f24640f7-7987-4ce9-966c-912113ac2f28",
@@ -208,7 +192,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1872,
+        2080,
         -176
       ],
       "id": "ebb0f0c3-614c-44e1-b15c-f16084761fa8",
@@ -230,32 +214,11 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2064,
+        2272,
         -176
       ],
       "id": "2cfb3ac5-a0e5-4437-bdbb-7a3eafee1301",
       "name": "Log Follow-Up Sent",
-      "credentials": {
-        "postgres": {
-          "id": "Scc3yxojKZkvXpOL",
-          "name": "Lead Database"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "UPDATE enriched_leads\nSET \n  follow_up_count = follow_up_count + 1,\n  last_contacted_at = NOW(),\n  last_follow_up_sent = NOW(),\n  next_follow_up_date = CASE\n    WHEN follow_up_count + 1 = 2 THEN NOW() + INTERVAL '4 days'\n    WHEN follow_up_count + 1 = 3 THEN NOW() + INTERVAL '7 days'\n    ELSE NULL\n  END\nWHERE lead_id = {{ $('Prepare Follow-Up Email').item.json.lead_id }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        2272,
-        -176
-      ],
-      "id": "4db045f8-fcd1-4fc1-aa2f-7195828c63df",
-      "name": "Update Follow-Up Count1",
       "credentials": {
         "postgres": {
           "id": "Scc3yxojKZkvXpOL",
@@ -275,12 +238,11 @@
           "conditions": [
             {
               "id": "29b8f0ec-9495-4e8a-8851-4ea54b474209",
-              "leftValue": "={{ $('Prepare Follow-Up Email').item.json.follow_up_number }}",
-              "rightValue": "4",
+              "leftValue": "={{ $('Prepare Follow-Up Email').item.json.follow_up_count }}",
+              "rightValue": 3,
               "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
+                "type": "number",
+                "operation": "gte"
               }
             }
           ],
@@ -291,7 +253,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2480,
+        2688,
         -176
       ],
       "id": "f9942e0a-6056-4c75-a782-fb4586304afc",
@@ -306,7 +268,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2720,
+        2928,
         -272
       ],
       "id": "06f7550a-ba81-40cb-8229-63b7389b6e9c",
@@ -341,7 +303,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2720,
+        2928,
         -80
       ],
       "id": "05edd545-3358-45c3-af28-c0002c3340f2",
@@ -377,27 +339,66 @@
     },
     {
       "parameters": {
-        "jsCode": "return [{\n  json: {\n    lead_id: 1,\n    company_name: \"Test Company\",\n    email: \"your-email@gmail.com\",\n    user_id: 1,\n    email_subject_line: \"Quick question about your business\",\n    email_follow_up_day_3: \"Just following up - thought you might find this helpful...\",\n    email_follow_up_day_7: \"Last note - wanted to see if this resonates...\",\n    pain_points: '[\"Scaling challenges\",\"Staff training\"]',\n    personalization_hook: \"Expanding to new locations\",\n    follow_up_count: 1,\n    lead_score: 75,\n    priority: \"warm\",\n    sent_at: \"2026-03-04T10:00:00Z\",\n    opened_at: \"2026-03-04T14:30:00Z\",\n    clicked_at: null,\n    replied_at: null,\n    bounced_at: null,\n    days_since_sent: 3\n  }\n}];"
+        "jsCode": "const unsubResult = $input.item.json;\nconst leadData = $('Prepare Follow-Up Email').item.json;\nreturn {\n  ...leadData,\n  unsubscribe_count: parseInt(unsubResult.unsubscribe_count) || 0\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        416,
-        0
+        1632,
+        -128
       ],
-      "id": "4c52d676-068d-4db9-83c3-77d3fbc7f4fa",
-      "name": "Test Data - Follow-Up Ready"
+      "id": "484ca00b-6a6c-4c78-b4a5-f25e1abcf233",
+      "name": "Merge Unsub Check"
     },
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE enriched_leads\nSET \n  follow_up_count = follow_up_count + 1,\n  last_contacted_at = NOW(),\n  last_follow_up_sent = NOW(),\n  next_follow_up_date = CASE\n    WHEN follow_up_count + 1 = 2 THEN NOW() + INTERVAL '4 days'\n    WHEN follow_up_count + 1 = 3 THEN NOW() + INTERVAL '7 days'\n    ELSE NULL\n  END\nWHERE lead_id = {{ $('Prepare Follow-Up Email').item.json.lead_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
       "position": [
-        208,
-        0
+        2480,
+        -176
       ],
-      "id": "49f948fc-c582-4f42-a426-a12d6f35a708",
-      "name": "When clicking ‘Execute workflow’"
+      "id": "4db045f8-fcd1-4fc1-aa2f-7195828c63df",
+      "name": "Update Follow-Up Count",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 🔁 Automated Follow-Up Manager\n\n**Purpose**\nKeeps following up with leads who received an email but never replied. AI generates a fresh follow-up message each time based on whether the lead opened the previous email or not.\n\n**How it works**\nRuns every **6 hours** → finds leads with no reply → AI generates a context-aware follow-up → checks unsubscribe list → sends via Gmail → updates follow-up count.\n\n**Follow-up Sequence**\n- Day 3 → Value-add email (new insight or resource)\n- Day 7 → Gentle nudge (simple yes/no question)\n- Day 14 → Breakup email (last attempt)\n- After 4 follow-ups → Lead moves to **nurture list**",
+        "height": 576,
+        "width": 272
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        160,
+        -608
+      ],
+      "typeVersion": 1,
+      "id": "ab963f29-7c98-48e2-a68d-678ee294bd5e",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      lead_id: 1,\n      company_name: \"Blue Bottle Coffee\",\n      email: \"your-test-email@gmail.com\",\n      phone: \"+14155551234\",\n      follow_up_count: 1,\n      outreach_status: \"email_sent\",\n      email_subject_line: \"Quick question about Blue Bottle\",\n      email_follow_up_day_3: \"Just following up - did you get a chance to review?\",\n      email_follow_up_day_7: \"Last note - happy to answer any questions.\",\n      pain_points: [\"Scaling\", \"Staff training\"],\n      personalization_hook: \"Recently opened 3 new locations\",\n      lead_score: 87, priority: \"hot\",\n      opened_at: new Date().toISOString(),\n      clicked_at: null,\n      days_since_sent: 3\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        224
+      ],
+      "id": "79b6afed-e480-4bd3-b3ac-57b84137b4c8",
+      "name": "Mock Follow-Up Ready",
+      "disabled": true
     }
   ],
   "pinData": {},
@@ -415,7 +416,13 @@
     },
     "Get Follow-Up Candidates": {
       "main": [
-        []
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "If": {
@@ -451,11 +458,6 @@
         ]
       ]
     },
-    "Structured Output Parser": {
-      "ai_outputParser": [
-        []
-      ]
-    },
     "Prepare Follow-Up Email": {
       "main": [
         [
@@ -471,7 +473,7 @@
       "main": [
         [
           {
-            "node": "Still Subscribed?",
+            "node": "Merge Unsub Check",
             "type": "main",
             "index": 0
           }
@@ -504,18 +506,7 @@
       "main": [
         [
           {
-            "node": "Update Follow-Up Count1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Update Follow-Up Count1": {
-      "main": [
-        [
-          {
-            "node": "Is This Final Follow-Up?",
+            "node": "Update Follow-Up Count",
             "type": "main",
             "index": 0
           }
@@ -556,26 +547,31 @@
         ]
       ]
     },
-    "Test Data - Follow-Up Ready": {
+    "Merge Unsub Check": {
       "main": [
         [
           {
-            "node": "If",
+            "node": "Still Subscribed?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "When clicking ‘Execute workflow’": {
+    "Update Follow-Up Count": {
       "main": [
         [
           {
-            "node": "Test Data - Follow-Up Ready",
+            "node": "Is This Final Follow-Up?",
             "type": "main",
             "index": 0
           }
         ]
+      ]
+    },
+    "Mock Follow-Up Ready": {
+      "main": [
+        []
       ]
     }
   },
@@ -583,7 +579,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "f92b5d17-16a2-4726-a22f-c92648b826fc",
+  "versionId": "fcf24de8-4a70-4896-98f4-b1216f8b7eca",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"

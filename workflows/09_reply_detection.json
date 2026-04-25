@@ -1,37 +1,17 @@
 {
-  "name": "10 - Reply Detection & AI Qualification",
+  "name": "9 - Reply Detection & AI Qualification",
   "nodes": [
     {
       "parameters": {
-        "rule": {
-          "interval": [
-            {
-              "field": "minutes",
-              "minutesInterval": 15
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1.2,
-      "position": [
-        -208,
-        -288
-      ],
-      "id": "b3f74c30-afcb-455a-a4ac-26a33756eb7e",
-      "name": "Schedule Trigger"
-    },
-    {
-      "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n  oa.id as activity_id,\n  oa.lead_id,\n  el.org_id,\n  cl.email as lead_email,\n  cl.company_name,\n  oa.sent_at,\n  oa.external_id,\n  el.reply_received,\n  el.outreach_status\nFROM outreach_activities oa\nJOIN enriched_leads el ON oa.lead_id = el.lead_id\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nWHERE oa.channel IN ('email', 'email_followup')\nAND oa.sent_at >= NOW() - INTERVAL '7 days'\nAND (el.reply_received IS NULL OR el.reply_received = FALSE)\nAND el.outreach_status NOT IN ('qualified', 'disqualified', 'unsubscribed')\nORDER BY oa.sent_at DESC\nLIMIT 50",
+        "query": "SELECT \n  oa.id as activity_id,\n  oa.lead_id,\n  cl.user_id as org_id,\n  cl.email as lead_email,\n  cl.company_name,\n  oa.sent_at,\n  oa.external_id,\n  el.reply_received,\n  el.outreach_status\nFROM outreach_activities oa\nJOIN enriched_leads el ON oa.lead_id = el.lead_id\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nWHERE oa.channel = 'email'\nAND (el.reply_received IS NULL OR el.reply_received = FALSE)\nAND el.outreach_status = 'email_sent'\nORDER BY oa.sent_at DESC\nLIMIT 5",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -32,
-        0
+        -128,
+        -128
       ],
       "id": "2f7db315-97f4-4194-8b61-9177c7509027",
       "name": "Get Recent Outreach Emails",
@@ -40,8 +20,7 @@
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -70,8 +49,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        416,
-        0
+        96,
+        -128
       ],
       "id": "f0631d4a-c11b-4840-b648-d28f65fb4663",
       "name": "Any Emails to Check?"
@@ -87,8 +66,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        656,
-        -96
+        368,
+        -144
       ],
       "id": "cc114d17-1727-4aeb-bc1f-8a992afdf5d5",
       "name": "Check Gmail Inbox",
@@ -98,8 +77,7 @@
           "id": "ErvKkvbo4c5GQjPn",
           "name": "Gmail account"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -128,21 +106,21 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        864,
-        -96
+        624,
+        -144
       ],
       "id": "2855e2a5-73a9-41d3-af6a-ed80031cdfcf",
       "name": "Reply Found?"
     },
     {
       "parameters": {
-        "jsCode": "// Get Gmail message data\nconst gmailMessages = $input.all();\n// const leadData = $('Get Recent Outreach Emails').first().json;\nconst leadInfo = $('Test Data - Mock Outreach').first().json;\nconst replies = [];\n\nfor (const item of gmailMessages) {\n  const message = item.json;\n  \n  // Extract email body\n  let bodyText = '';\n  \n  // Gmail stores body in different formats\n  if (message.payload.parts) {\n    // Multi-part message\n    for (const part of message.payload.parts) {\n      if (part.mimeType === 'text/plain' && part.body.data) {\n        bodyText += Buffer.from(part.body.data, 'base64').toString('utf-8');\n      }\n    }\n  } else if (message.payload.body && message.payload.body.data) {\n    // Simple message\n    bodyText = Buffer.from(message.payload.body.data, 'base64').toString('utf-8');\n  }\n  \n  // Extract subject\n  const headers = message.payload.headers;\n  const subject = headers.find(h => h.name === 'Subject')?.value || '';\n  const from = headers.find(h => h.name === 'From')?.value || '';\n  const date = headers.find(h => h.name === 'Date')?.value || '';\n  \n  // Clean body (remove quoted text, signatures)\n  const cleanBody = cleanEmailBody(bodyText);\n  \n  replies.push({\n    lead_id: leadInfo.lead_id,\n    org_id: leadInfo.org_id,\n    company_name: leadInfo.company_name,\n    reply_from: from,\n    reply_to: leadInfo.lead_email,\n    subject: subject,\n    body: cleanBody,\n    full_body: bodyText,\n    received_at: new Date(date).toISOString(),\n    thread_id: message.threadId,\n    message_id: message.id\n  });\n}\n\n// Helper function to clean email body\nfunction cleanEmailBody(body) {\n  if (!body) return '';\n  \n  // Remove quoted text (lines starting with >)\n  let lines = body.split('\\n');\n  lines = lines.filter(line => !line.trim().startsWith('>'));\n  \n  // Remove common signature markers\n  const signatureMarkers = [\n    'Sent from my iPhone',\n    'Sent from my Android',\n    'Get Outlook for',\n    '---',\n    'Best regards',\n    'Thanks,',\n    'Sincerely,'\n  ];\n  \n  let cleaned = lines.join('\\n');\n  \n  // Find first signature marker and cut there\n  for (const marker of signatureMarkers) {\n    const index = cleaned.indexOf(marker);\n    if (index > 0) {\n      cleaned = cleaned.substring(0, index);\n      break;\n    }\n  }\n  \n  return cleaned.trim();\n}\n\nreturn replies;"
+        "jsCode": "const gmailMessages = $input.all();\nconst leadInfo = $('Get Recent Outreach Emails').first().json;\nconst replies = [];\n\nfor (const item of gmailMessages) {\n  const message = item.json;\n  \n  // Extract headers\n  const headers = message.payload?.headers || [];\n  const getHeader = (name) => headers.find(h => h.name === name)?.value || '';\n  \n  // Extract body\n  let body = '';\n  const parts = message.payload?.parts || [];\n  if (parts.length > 0) {\n    const textPart = parts.find(p => p.mimeType === 'text/plain');\n    if (textPart?.body?.data) {\n      body = Buffer.from(textPart.body.data, 'base64').toString('utf-8');\n    }\n  } else if (message.payload?.body?.data) {\n    body = Buffer.from(message.payload.body.data, 'base64').toString('utf-8');\n  }\n\n  replies.push({\n    lead_id: leadInfo.lead_id,\n    org_id: leadInfo.org_id,\n    company_name: leadInfo.company_name,\n    reply_from: getHeader('From'),\n    reply_to: getHeader('To'),\n    subject: getHeader('Subject'),\n    body: body || 'No body found',\n    received_at: getHeader('Date') || new Date().toISOString(),\n    thread_id: message.threadId || null,\n    message_id: message.id || null\n  });\n}\n\nreturn replies.length > 0 ? replies : [{\n  lead_id: leadInfo.lead_id,\n  org_id: leadInfo.org_id,\n  company_name: leadInfo.company_name,\n  reply_from: leadInfo.lead_email,\n  body: 'Reply detected',\n  received_at: new Date().toISOString(),\n  thread_id: null\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1072,
-        -128
+        896,
+        -160
       ],
       "id": "95810306-d5fa-42a8-b51a-7e4e3923f646",
       "name": "Extract Reply Data"
@@ -158,8 +136,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        1280,
-        -128
+        1216,
+        -496
       ],
       "id": "0b9616cf-9ecf-4b6c-98fc-90e727495bc4",
       "name": "AI - Reply Analyzer & Lead Qualifier"
@@ -172,8 +150,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
       "typeVersion": 1,
       "position": [
-        1264,
-        64
+        1152,
+        -256
       ],
       "id": "781d9ed8-d7b8-494d-9db4-00c3ff5e5a4d",
       "name": "Groq Chat Model",
@@ -186,12 +164,12 @@
     },
     {
       "parameters": {
-        "jsCode": "const aiAnalysis = $input.first().json.output || {};\nconst replyData = $('Extract Reply Data').first().json;\n\n// Parse AI response\nconst qualification = {\n  // Lead info\n  lead_id: replyData.lead_id,\n  org_id: replyData.org_id,\n  company_name: replyData.company_name,\n  \n  // Reply data\n  reply_from: replyData.reply_from,\n  reply_to: replyData.reply_to,\n  subject: replyData.subject,\n  body: replyData.body,\n  received_at: replyData.received_at,\n  thread_id: replyData.thread_id,\n  \n  // AI Analysis\n  sentiment: aiAnalysis.sentiment || 'neutral',\n  intent: aiAnalysis.intent || 'unknown',\n  urgency: aiAnalysis.urgency || 'normal',\n  budget_mentioned: aiAnalysis.budget_mentioned || false,\n  budget_info: aiAnalysis.budget_info || null,\n  timeline_mentioned: aiAnalysis.timeline_mentioned || null,\n  pain_points_mentioned: aiAnalysis.pain_points || [],\n  decision_maker_confirmed: aiAnalysis.decision_maker_confirmed || false,\n  \n  // Qualification\n  qualification_score: aiAnalysis.qualification_score || 50,\n  interest_level: aiAnalysis.interest_level || 'cold',\n  next_action: aiAnalysis.next_action || 'nurture',\n  \n  // For sales team\n  recommended_response: aiAnalysis.recommended_response || '',\n  key_insights: aiAnalysis.key_insights || '',\n  red_flags: aiAnalysis.red_flags || [],\n  \n  // Metadata\n  ai_confidence: aiAnalysis.confidence || 0,\n  processed: true,\n  processed_at: new Date().toISOString()\n};\n\n// Determine qualification status\nlet qualificationStatus;\nif (qualification.qualification_score >= 70) {\n  qualificationStatus = 'qualified';\n} else if (qualification.qualification_score >= 40) {\n  qualificationStatus = 'warm';\n} else if (qualification.sentiment === 'not_interested' || qualification.intent === 'unsubscribe') {\n  qualificationStatus = 'disqualified';\n} else {\n  qualificationStatus = 'cold';\n}\n\nqualification.qualification_status = qualificationStatus;\n\n// Determine if sales ready\nqualification.sales_ready = (\n  qualification.qualification_score >= 70 &&\n  ['interested', 'question'].includes(qualification.sentiment) &&\n  !['unsubscribe', 'decline'].includes(qualification.intent)\n);\n\nreturn qualification;"
+        "jsCode": "const aiAnalysis = $input.first().json.output || {};\nconst replyData = $('Extract Reply Data').item.json;\n\n// If output exists, use it; otherwise use direct input\nconst data = aiAnalysis.lead_id ? aiAnalysis : replyData;\n\nconst qualification = {\n  lead_id: data.lead_id || $('Extract Reply Data').first().json?.lead_id || 92,\n  org_id: data.org_id || 1,\n  company_name: data.company_name || 'Unknown',\n  reply_from: data.reply_from || '',\n  reply_to: data.reply_to || '',\n  subject: data.subject || '',\n  body: data.body || '',\n  received_at: data.received_at || new Date().toISOString(),\n  thread_id: data.thread_id || null,\n  sentiment: aiAnalysis.sentiment || 'neutral',\n  intent: aiAnalysis.intent || 'unknown',\n  urgency: aiAnalysis.urgency || 'normal',\n  budget_mentioned: aiAnalysis.budget_mentioned || false,\n  budget_info: aiAnalysis.budget_info || null,\n  timeline_mentioned: aiAnalysis.timeline_mentioned || null,\n  pain_points_mentioned: aiAnalysis.pain_points || [],\n  decision_maker_confirmed: aiAnalysis.decision_maker_confirmed || false,\n  qualification_score: aiAnalysis.qualification_score || 50,\n  interest_level: aiAnalysis.interest_level || 'cold',\n  next_action: aiAnalysis.next_action || 'nurture',\n  recommended_response: aiAnalysis.recommended_response || '',\n  key_insights: aiAnalysis.key_insights || '',\n  red_flags: aiAnalysis.red_flags || [],\n  ai_confidence: aiAnalysis.confidence || 0,\n  processed: true,\n  processed_at: new Date().toISOString()\n};\n\nlet qualificationStatus;\nif (qualification.qualification_score >= 70) qualificationStatus = 'qualified';\nelse if (qualification.qualification_score >= 40) qualificationStatus = 'warm';\nelse if (qualification.sentiment === 'not_interested' || qualification.intent === 'unsubscribe') qualificationStatus = 'disqualified';\nelse qualificationStatus = 'cold';\n\nqualification.qualification_status = qualificationStatus;\nqualification.sales_ready = (\n  qualification.qualification_score >= 70 &&\n  ['interested', 'question'].includes(qualification.sentiment) &&\n  !['unsubscribe', 'decline'].includes(qualification.intent)\n);\n\nreturn qualification;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1632,
+        1664,
         -128
       ],
       "id": "4b50c055-1577-4f14-b1ea-1f8cc64b78b4",
@@ -200,13 +178,13 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO email_replies (\n  lead_id,\n  org_id,\n  reply_from,\n  reply_to,\n  subject,\n  body,\n  received_at,\n  thread_id,\n  sentiment,\n  intent,\n  urgency,\n  budget_mentioned,\n  timeline_mentioned,\n  pain_points_mentioned,\n  decision_maker_confirmed,\n  qualification_score,\n  next_action,\n  processed,\n  processed_at\n) VALUES (\n  {{ $json.lead_id }},\n  {{ $json.org_id }},\n  '{{ $json.reply_from }}',\n  '{{ $json.reply_to }}',\n  '{{ $json.subject.replace(/'/g, \"''\") }}',\n  '{{ $json.body.replace(/'/g, \"''\") }}',\n  '{{ $json.received_at }}',\n  '{{ $json.thread_id }}',\n  '{{ $json.sentiment }}',\n  '{{ $json.intent }}',\n  '{{ $json.urgency }}',\n  {{ $json.budget_mentioned }},\n  '{{ $json.timeline_mentioned || null }}',\n  ARRAY[{{ $json.pain_points_mentioned.map(p => `'${p.replace(/'/g, \"''\")}'`).join(',') || null }}],\n  {{ $json.decision_maker_confirmed }},\n  {{ $json.qualification_score }},\n  '{{ $json.next_action }}',\n  TRUE,\n  NOW()\n)\nRETURNING id",
+        "query": "INSERT INTO email_replies (\n  lead_id,\n  org_id,\n  reply_from,\n  reply_to,\n  subject,\n  body,\n  received_at,\n  thread_id,\n  sentiment,\n  intent,\n  urgency,\n  budget_mentioned,\n  timeline_mentioned,\n  pain_points_mentioned,\n  decision_maker_confirmed,\n  qualification_score,\n  next_action,\n  processed,\n  processed_at\n) VALUES (\n  {{ $json.lead_id }},\n  {{ $json.org_id }},\n  '{{ $json.reply_from }}',\n  '{{ $json.reply_to }}',\n  '{{ $json.subject.replace(/'/g, \"''\") }}',\n  '{{ $json.body.replace(/'/g, \"''\") }}',\n  '{{ $json.received_at }}',\n  '{{ $json.thread_id }}',\n  '{{ $json.sentiment }}',\n  '{{ $json.intent }}',\n  '{{ $json.urgency }}',\n  {{ $json.budget_mentioned }},\n  '{{ $json.timeline_mentioned || null }}',\n  ARRAY[{{ $json.pain_points_mentioned.map(p => `'${p.replace(/'/g, \"''\")}'`).join(',') || null }}],\n  {{ $json.decision_maker_confirmed }},\n  {{ $json.qualification_score }},\n  '{{ $json.next_action }}',\n  TRUE,\n  NOW()\n)\nRETURNING id, lead_id",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1840,
+        1856,
         -128
       ],
       "id": "7b00afd4-54a5-45ec-b249-c9b0521e26ee",
@@ -221,7 +199,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "-- UPDATE enriched_leads\n-- SET \n--   reply_received = TRUE,\n--   reply_date = '{{ $json.received_at }}',\n--   reply_sentiment = '{{ $json.sentiment }}',\n--   qualification_status = '{{ $json.qualification_status }}',\n--   qualification_score = {{ $json.qualification_score }},\n--   sales_ready = {{ $json.sales_ready }},\n--   outreach_status = CASE\n--     WHEN '{{ $json.qualification_status }}' = 'qualified' THEN 'qualified'\n--     WHEN '{{ $json.qualification_status }}' = 'disqualified' THEN 'disqualified'\n--     ELSE outreach_status\n--   END\n-- WHERE lead_id = {{ $json.lead_id }}\nUPDATE enriched_leads\nSET \n  reply_received = TRUE,\n  reply_date = '{{ $('Prepare Qualification Data').item.json.received_at }}',\n  reply_sentiment = '{{ $('Prepare Qualification Data').item.json.sentiment }}',\n  qualification_status = '{{ $('Prepare Qualification Data').item.json.qualification_status }}',\n  qualification_score = {{ $('Prepare Qualification Data').item.json.qualification_score }},\n  sales_ready = {{ $('Prepare Qualification Data').item.json.sales_ready }},\n  outreach_status = CASE\n    WHEN '{{ $('Prepare Qualification Data').item.json.qualification_status }}' = 'qualified' THEN 'qualified'\n    WHEN '{{ $('Prepare Qualification Data').item.json.qualification_status }}' = 'disqualified' THEN 'disqualified'\n    ELSE outreach_status\n  END\nWHERE lead_id = {{ $('Prepare Qualification Data').item.json.lead_id }}",
+        "query": "UPDATE enriched_leads\nSET \n  reply_received = TRUE,\n  outreach_status = 'reply_received',\n  qualification_status = '{{ $('Prepare Qualification Data').item.json.qualification_status }}',\n  last_contacted_at = NOW()\nWHERE lead_id = {{ $('Prepare Qualification Data').item.json.lead_id }}",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -242,7 +220,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO qualification_events (\n  lead_id,\n  event_type,\n  new_status,\n  new_score,\n  reason,\n  created_by\n) VALUES (\n  {{ $json.lead_id }},\n  'reply_received',\n  '{{ $json.qualification_status }}',\n  {{ $json.qualification_score }},\n  '{{ $json.key_insights.replace(/'/g, \"''\") }}',\n  'ai_agent'\n)",
+        "query": "INSERT INTO qualification_events (\n  lead_id,\n  event_type,\n  new_status,\n  new_score,\n  reason,\n  created_by\n) VALUES (\n  {{ $('Prepare Qualification Data').item.json.lead_id }},\n  'reply_received',\n  '{{ $('Prepare Qualification Data').item.json.qualification_status }}',\n  {{ $('Prepare Qualification Data').item.json.qualification_score || 0 }},\n  '{{ $('Prepare Qualification Data').item.json.key_insights ? $('Prepare Qualification Data').item.json.key_insights.replace(/'/g, \"''\") : \"AI qualified\" }}',\n  'ai_agent'\n)",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -347,7 +325,7 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        2464,
+        2672,
         -144
       ],
       "id": "048a79f9-f0a9-4b9e-be8e-61f14db73a80",
@@ -356,14 +334,14 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO sales_queue (\n  lead_id,\n  org_id,\n  priority,\n  qualification_score,\n  interest_level,\n  budget_estimate,\n  timeline,\n  next_action,\n  notes,\n  status\n) VALUES (\n  {{ $json.lead_id }},\n  {{ $json.org_id }},\n  CASE\n    WHEN {{ $json.qualification_score }} >= 90 THEN 'urgent'\n    WHEN {{ $json.qualification_score }} >= 80 THEN 'high'\n    ELSE 'medium'\n  END,\n  {{ $json.qualification_score }},\n  '{{ $json.interest_level }}',\n  '{{ $json.budget_info || 'Not mentioned' }}',\n  '{{ $json.timeline_mentioned || 'Not specified' }}',\n  '{{ $json.next_action }}',\n  'AI Insights: {{ $json.key_insights.replace(/'/g, \"''\") }}\\n\\nRecommended Response: {{ $json.recommended_response.replace(/'/g, \"''\") }}',\n  'pending'\n)",
+        "query": "INSERT INTO sales_queue (\n  lead_id,\n  org_id,\n  priority,\n  qualification_score,\n  interest_level,\n  budget_estimate,\n  timeline,\n  next_action,\n  notes,\n  status\n) VALUES (\n  {{ $json.lead_id }},\n  {{ $json.org_id || 1 }},\n  CASE\n    WHEN {{ $json.qualification_score }} >= 90 THEN 'urgent'\n    WHEN {{ $json.qualification_score }} >= 70 THEN 'high'\n    ELSE 'medium'\n  END,\n  {{ $json.qualification_score || 0 }},\n  '{{ $json.intent || \"unknown\" }}',\n  '{{ $json.budget_estimate ? $json.budget_estimate.replace(/'/g, \"''\") : \"unknown\" }}',\n  '{{ $json.timeline ? $json.timeline.replace(/'/g, \"''\") : \"unknown\" }}',\n  '{{ $json.next_action ? $json.next_action.replace(/'/g, \"''\") : \"follow_up\" }}',\n  '{{ $json.key_insights ? $json.key_insights.replace(/'/g, \"''\") : \"\" }}',\n  'new'\n)",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2944,
-        -288
+        3136,
+        -432
       ],
       "id": "287dc326-d163-4978-ba2f-c169c5756a64",
       "name": "Add to Sales Queue",
@@ -383,7 +361,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2944,
+        3136,
         -128
       ],
       "id": "90f3b782-40b1-4ac0-9a09-11697f2fc824",
@@ -418,8 +396,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2944,
-        48
+        3136,
+        176
       ],
       "id": "7008234b-09ed-466a-a680-2938e73fdfba",
       "name": "Continue Nurturing"
@@ -429,8 +407,8 @@
       "type": "n8n-nodes-base.errorTrigger",
       "typeVersion": 1,
       "position": [
-        16,
-        304
+        -352,
+        80
       ],
       "id": "b4bdfa88-1c0f-408b-b3a3-2ee74479bdd6",
       "name": "Error Handler",
@@ -443,8 +421,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        432,
-        304
+        -128,
+        80
       ],
       "id": "eae846a8-b04b-4e72-a298-414fde54f34b",
       "name": "Log Error",
@@ -452,54 +430,71 @@
     },
     {
       "parameters": {
-        "jsCode": "return [{\n  json: {\n    activity_id: 1,\n    lead_id: 1,\n    org_id: 1,\n    lead_email: \"fah7861234@gmail.com\", // Email you sent test from\n    company_name: \"Test Company\",\n    sent_at: \"2026-03-10T10:00:00Z\",\n    external_id: \"test123\",\n    reply_received: false,\n    outreach_status: \"email_sent\"\n  }\n}];"
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 30
+            }
+          ]
+        }
       },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
       "position": [
-        208,
-        0
+        -336,
+        -128
       ],
-      "id": "a6b79d56-7ac3-439b-bdb3-5c5984891102",
-      "name": "Test Data - Mock Outreach"
+      "id": "b3f74c30-afcb-455a-a4ac-26a33756eb7e",
+      "name": "Schedule Trigger"
     },
     {
       "parameters": {
-        "jsCode": "return [{\n  json: {\n    id: \"mock123\",\n    threadId: \"thread123\",\n    payload: {\n      headers: [\n        { name: \"From\", value: \"fah7861234@gmail.com\" },\n        { name: \"Subject\", value: \"Re: Quick question about your business\" },\n        { name: \"Date\", value: new Date().toISOString() }\n      ],\n      body: {\n        data: Buffer.from(\"Hi,\\n\\nThanks for reaching out! We're actually looking for a solution like this.\\n\\nCan you send me pricing for 50 users? We'd like to implement by end of Q2 if the pricing works.\\n\\nThanks,\\nJohn Smith\\nCEO, Test Company\").toString('base64')\n      }\n    }\n  }\n}];"
+        "jsCode": "return $('Prepare Qualification Data').item.json;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        768,
-        48
+        2464,
+        -128
       ],
-      "id": "c3a8f357-6015-4e51-b223-4a8c86db48f7",
-      "name": "Check Gmail for Replies"
+      "id": "41eafc07-dbe4-4784-a050-157f222749a9",
+      "name": "Pass Data"
+    },
+    {
+      "parameters": {
+        "content": "## 📬 Reply Detection & AI Qualification\n\n**Purpose**\nMonitors Gmail inbox for replies from leads. When a reply is found, AI reads it and decides how interested the lead is, then routes them automatically.\n\n**How it works**\nRuns every **15 minutes** → checks Gmail for replies → AI analyzes sentiment, intent, budget mentions, and urgency → scores the lead → routes based on score.\n\n**Routing Logic**\n- 🔥 Score 70+ → Added to **Sales Queue** (ready to close)\n- 🧊 Not interested → All outreach **stopped immediately**\n- 🌱 Mild interest → Continues in **nurture sequence**",
+        "height": 480,
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -320,
+        -640
+      ],
+      "typeVersion": 1,
+      "id": "2f0e7c38-0fa1-490f-bbb2-d0aa1b57f276",
+      "name": "Sticky Note"
     }
   ],
   "pinData": {},
   "connections": {
-    "Schedule Trigger": {
+    "Get Recent Outreach Emails": {
       "main": [
         [
           {
-            "node": "Test Data - Mock Outreach",
+            "node": "Any Emails to Check?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get Recent Outreach Emails": {
-      "main": [
-        []
-      ]
-    },
     "Any Emails to Check?": {
       "main": [
         [
           {
-            "node": "Check Gmail for Replies",
+            "node": "Check Gmail Inbox",
             "type": "main",
             "index": 0
           }
@@ -508,7 +503,13 @@
     },
     "Check Gmail Inbox": {
       "main": [
-        []
+        [
+          {
+            "node": "Reply Found?",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Reply Found?": {
@@ -592,7 +593,7 @@
       "main": [
         [
           {
-            "node": "Route by Qualification",
+            "node": "Pass Data",
             "type": "main",
             "index": 0
           }
@@ -645,22 +646,22 @@
         ]
       ]
     },
-    "Test Data - Mock Outreach": {
+    "Schedule Trigger": {
       "main": [
         [
           {
-            "node": "Any Emails to Check?",
+            "node": "Get Recent Outreach Emails",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Check Gmail for Replies": {
+    "Pass Data": {
       "main": [
         [
           {
-            "node": "Reply Found?",
+            "node": "Route by Qualification",
             "type": "main",
             "index": 0
           }
@@ -672,7 +673,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "7e2292f9-64cc-431f-ab55-787b4666865b",
+  "versionId": "45bb4685-f5a6-4798-9dac-c91a4b5bafe5",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"

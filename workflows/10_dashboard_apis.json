@@ -1,0 +1,1207 @@
+{
+  "name": "10 - Dashboard APIs",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 📊 Dashboard APIs\n\n**Purpose**\nServes live data to the frontend dashboard. Simple API endpoints that the React dashboard calls to display data.\n\n**Available Endpoints**\n- `GET /api/stats` → KPIs: total leads, open rate, reply rate, costs\n- `GET /api/leads` → All leads with filters (priority, search, status)\n- `GET /api/lead-detail` → Single lead full detail with outreach history\n- `GET /api/jobs` → Scraping job history\n- `GET /api/job-status` → Specific job status with staging lead count\n- `GET /api/pipeline` → Full funnel breakdown (staging → cleaned → enriched → outreach)\n- `GET /api/linkedin-queue` → Pending LinkedIn tasks ready for manual sending\n- `GET /api/analytics` → 30-day daily outreach activity chart\n- `GET /api/sales-queue` → Hot leads that replied and are qualified\n- `GET /api/user-info` → User account info, Apify status and credit\n- `POST /api/leads/update-status` → Manually mark a lead (qualified, contacted, unsubscribed)\n\n**Key Notes**\n- All GET endpoints require `user_id` as a query parameter\n- `GET /api/lead-detail` requires `lead_id` as a query parameter\n- `GET /api/job-status` accepts optional `job_id` to filter a specific job\n- Stats include open rate, click rate, and reply rate calculations\n- Sales queue is ordered by priority (urgent → high → medium)",
+        "height": 896,
+        "width": 320
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        880,
+        416
+      ],
+      "typeVersion": 1,
+      "id": "e259fb66-ad1b-4675-bcde-42bb4a1dcc43",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "path": "api/leads",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "c111461c-7c44-4341-821a-8299933b3153",
+      "name": "Webhook - GET Leads",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1392,
+        400
+      ],
+      "webhookId": "api-leads"
+    },
+    {
+      "parameters": {
+        "path": "api/stats",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "d4eea675-4cc6-4fc6-a61c-b8982984ae9c",
+      "name": "Webhook - GET Stats",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1392,
+        608
+      ],
+      "webhookId": "api-stats"
+    },
+    {
+      "parameters": {
+        "path": "api/jobs",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a3387ca3-0f95-477c-9133-debbc291e813",
+      "name": "Webhook - GET Jobs",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1392,
+        800
+      ],
+      "webhookId": "api-jobs"
+    },
+    {
+      "parameters": {
+        "path": "api/linkedin-queue",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "6a3ee14f-1995-4cae-ae50-88108784537c",
+      "name": "Webhook - LinkedIn Queue",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1392,
+        1008
+      ],
+      "webhookId": "api-linkedin"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "api/leads/update-status",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "c1e72553-f729-4215-9932-341c0417960d",
+      "name": "Webhook - Update Status",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1392,
+        1200
+      ],
+      "webhookId": "api-update"
+    },
+    {
+      "parameters": {
+        "path": "api/job-status",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "56e336e8-fc01-471d-bdbc-5a2430ce7f43",
+      "name": "Webhook - Job Status",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1392,
+        1392
+      ],
+      "webhookId": "api-job-status"
+    },
+    {
+      "parameters": {
+        "path": "api/pipeline",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "e07890b0-1a2b-434e-9a7e-f7d1e042c289",
+      "name": "Webhook - Pipeline",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1392,
+        1600
+      ],
+      "webhookId": "api-pipeline"
+    },
+    {
+      "parameters": {
+        "path": "api/lead-detail",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "962a2339-7b2d-4db3-9701-5f8be85eb1bc",
+      "name": "Webhook - Lead Detail",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1392,
+        1808
+      ],
+      "webhookId": "api-lead-detail"
+    },
+    {
+      "parameters": {
+        "path": "api/analytics",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "f601ff17-f694-4e38-bc1a-40395428a840",
+      "name": "Webhook - Analytics",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1392,
+        2016
+      ],
+      "webhookId": "api-analytics"
+    },
+    {
+      "parameters": {
+        "path": "api/sales-queue",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "c00e281c-28a6-4d22-8db5-e7772e70bc54",
+      "name": "Webhook - Sales Queue",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1392,
+        2224
+      ],
+      "webhookId": "api-sales-queue"
+    },
+    {
+      "parameters": {
+        "path": "api/user-info",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "2dc0e4b9-a760-47d0-bc34-47a57adae0cf",
+      "name": "Webhook - User Info",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1392,
+        2432
+      ],
+      "webhookId": "api-user-info"
+    },
+    {
+      "parameters": {
+        "jsCode": "const query = $input.first().json.query || {};\nreturn {\n  user_id: parseInt(query.user_id) || 1,\n  status:   query.status   || null,\n  priority: query.priority || null,\n  search:   query.search   || null,\n  limit:  parseInt(query.limit)  || 50,\n  offset: parseInt(query.offset) || 0\n};"
+      },
+      "id": "4101453a-b12e-4eb3-9ce0-501aee7575c2",
+      "name": "Parse Lead Filters",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1616,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n  el.lead_id,\n  cl.company_name,\n  cl.email,\n  cl.phone,\n  cl.website,\n  cl.city,\n  cl.state,\n  cl.country,\n  cl.category,\n  cl.rating,\n  cl.review_count,\n  el.lead_score,\n  el.priority,\n  el.qualification_status,\n  el.outreach_status,\n  el.last_contacted_at,\n  el.company_linkedin_url,\n  el.pain_points,\n  el.decision_maker_access,\n  el.company_size,\n  el.email_subject_line,\n  el.enrichment_stage,\n  el.follow_up_count,\n  el.sms_status,\n  el.whatsapp_status,\n  el.linkedin_status,\n  el.reply_received\nFROM enriched_leads el\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nWHERE cl.user_id = {{ $json.user_id }}\n{{ $json.status   ? `AND el.qualification_status = '${$json.status}'`        : '' }}\n{{ $json.priority ? `AND el.priority = '${$json.priority}'`                  : '' }}\n{{ $json.search   ? `AND cl.company_name ILIKE '%${$json.search}%'`          : '' }}\nORDER BY el.lead_score DESC\nLIMIT  {{ $json.limit }}\nOFFSET {{ $json.offset }}",
+        "options": {}
+      },
+      "id": "297bc51d-ce3a-435a-97ac-8550d6411578",
+      "name": "Get Leads Query",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1840,
+        400
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const leads = $input.all().map(i => i.json);\nreturn { success: true, total: leads.length, leads };"
+      },
+      "id": "51c2eaa3-2795-4d5a-b4d2-3c93fca506d0",
+      "name": "Format Leads Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2064,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "0b8f2fa0-e2e3-46b7-aead-f4b3f435ea4d",
+      "name": "Respond - Leads",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2272,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n  COUNT(DISTINCT el.lead_id) as total_leads,\n  COUNT(DISTINCT el.lead_id) FILTER (WHERE el.qualification_status = 'qualified')  as qualified_leads,\n  COUNT(DISTINCT el.lead_id) FILTER (WHERE el.priority = 'hot')                   as hot_leads,\n  COUNT(DISTINCT el.lead_id) FILTER (WHERE el.priority = 'warm')                  as warm_leads,\n  COUNT(DISTINCT el.lead_id) FILTER (WHERE el.priority = 'cold')                  as cold_leads,\n  COUNT(DISTINCT el.lead_id) FILTER (WHERE el.reply_received = TRUE)              as replied_leads,\n  COUNT(DISTINCT el.lead_id) FILTER (WHERE el.sales_ready = TRUE)                 as sales_ready,\n  COUNT(DISTINCT oa.id)      FILTER (WHERE oa.channel = 'email')                  as emails_sent,\n  COUNT(DISTINCT oa.id)      FILTER (WHERE oa.opened_at IS NOT NULL)              as emails_opened,\n  COUNT(DISTINCT oa.id)      FILTER (WHERE oa.replied_at IS NOT NULL)             as emails_replied,\n  COUNT(DISTINCT oa.id)      FILTER (WHERE oa.channel = 'sms')                   as sms_sent,\n  COUNT(DISTINCT oa.id)      FILTER (WHERE oa.channel = 'whatsapp')              as whatsapp_sent,\n  COUNT(DISTINCT sj.id)      FILTER (WHERE sj.status = 'completed')              as jobs_completed,\n  COUNT(DISTINCT sj.id)      FILTER (WHERE sj.status = 'failed')                 as jobs_failed,\n  COUNT(DISTINCT sj.id)      FILTER (WHERE sj.status = 'running')                as jobs_running,\n  COALESCE(SUM(sj.actual_cost), 0)                                               as total_cost\nFROM enriched_leads el\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nLEFT JOIN outreach_activities oa ON el.lead_id = oa.lead_id\nLEFT JOIN scraping_jobs sj ON cl.user_id = sj.user_id\nWHERE cl.user_id = {{ $input.first().json.query?.user_id || 1 }}",
+        "options": {}
+      },
+      "id": "d114dcaa-f3d8-4148-8060-1c256befa6c7",
+      "name": "Get Stats Query",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1616,
+        608
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const s = $input.first().json;\nconst sent    = parseInt(s.emails_sent)   || 0;\nconst opened  = parseInt(s.emails_opened) || 0;\nconst replied = parseInt(s.emails_replied)|| 0;\n\nreturn {\n  success: true,\n  total_leads:      parseInt(s.total_leads)      || 0,\n  qualified_leads:  parseInt(s.qualified_leads)  || 0,\n  hot_leads:        parseInt(s.hot_leads)        || 0,\n  warm_leads:       parseInt(s.warm_leads)       || 0,\n  cold_leads:       parseInt(s.cold_leads)       || 0,\n  replied_leads:    parseInt(s.replied_leads)    || 0,\n  sales_ready:      parseInt(s.sales_ready)      || 0,\n  emails_sent:      sent,\n  emails_opened:    opened,\n  emails_replied:   replied,\n  sms_sent:         parseInt(s.sms_sent)         || 0,\n  whatsapp_sent:    parseInt(s.whatsapp_sent)    || 0,\n  open_rate:        sent > 0 ? +((opened  / sent) * 100).toFixed(1) : 0,\n  reply_rate:       sent > 0 ? +((replied / sent) * 100).toFixed(1) : 0,\n  jobs_completed:   parseInt(s.jobs_completed)   || 0,\n  jobs_failed:      parseInt(s.jobs_failed)      || 0,\n  jobs_running:     parseInt(s.jobs_running)     || 0,\n  total_cost:       parseFloat(s.total_cost)     || 0\n};"
+      },
+      "id": "1d82e13b-2f20-4b12-8084-0d5759533b04",
+      "name": "Calculate Metrics",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        608
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "e9b9f772-7289-4266-8da6-e66ba07e2acd",
+      "name": "Respond - Stats",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2064,
+        608
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n  sj.id           as job_id,\n  sj.job_name,\n  sj.source,\n  sj.search_query,\n  sj.location,\n  sj.max_results,\n  sj.total_leads,\n  sj.status,\n  sj.estimated_cost,\n  sj.actual_cost,\n  sj.error_message,\n  sj.created_at,\n  sj.started_at,\n  sj.completed_at,\n  EXTRACT(EPOCH FROM (sj.completed_at - sj.started_at)) as duration_seconds\nFROM scraping_jobs sj\nWHERE sj.user_id = {{ $input.first().json.query?.user_id || 1 }}\nORDER BY sj.id DESC\nLIMIT 50",
+        "options": {}
+      },
+      "id": "a66ee9d5-674c-48ed-a63e-288ba61d20e1",
+      "name": "Get Jobs Query",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1616,
+        800
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const jobs = $input.all().map(i => i.json);\nreturn { success: true, total: jobs.length, jobs };"
+      },
+      "id": "facf776b-0dec-4863-89b8-a63d7e2afc6d",
+      "name": "Format Jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "b25d8b6f-3072-4eda-a89d-7ddd06445bcd",
+      "name": "Respond - Jobs",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2064,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n  loq.id,\n  loq.company_name,\n  loq.linkedin_url,\n  loq.connection_note,\n  loq.followup_message,\n  loq.approach,\n  loq.priority,\n  loq.lead_score,\n  loq.status,\n  loq.created_at\nFROM linkedin_outreach_queue loq\nWHERE loq.user_id = {{ $input.first().json.query?.user_id || 1 }}\nAND loq.status = 'pending'\nORDER BY loq.lead_score DESC\nLIMIT 50",
+        "options": {}
+      },
+      "id": "d1c59db2-92e0-4723-a014-28678e8e9f85",
+      "name": "Get LinkedIn Queue",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1616,
+        1008
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const tasks = $input.all().map(i => i.json);\nreturn { success: true, pending_tasks: tasks.length, tasks };"
+      },
+      "id": "aaac2385-ea4a-40dc-894e-5f079c906c8c",
+      "name": "Format LinkedIn",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        1008
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "ff3fe3bd-d38f-4e44-a07a-8b68ebc6c534",
+      "name": "Respond - LinkedIn",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2064,
+        1008
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body || {};\n\nif (!body.lead_id) throw new Error('lead_id is required');\nif (!body.action)  throw new Error('action is required');\n\nconst validActions = ['mark_qualified','mark_contacted','mark_disqualified','mark_unsubscribed'];\nif (!validActions.includes(body.action)) {\n  throw new Error('Invalid action. Use: ' + validActions.join(', '));\n}\n\nreturn {\n  lead_id: parseInt(body.lead_id),\n  action:  body.action,\n  notes:   body.notes || null\n};"
+      },
+      "id": "e9809287-ae69-41fb-885e-27eb3f5f9cd3",
+      "name": "Parse Update",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1616,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE enriched_leads\nSET\n  qualification_status = CASE\n    WHEN '{{ $json.action }}' = 'mark_qualified'    THEN 'qualified'\n    WHEN '{{ $json.action }}' = 'mark_disqualified' THEN 'disqualified'\n    WHEN '{{ $json.action }}' = 'mark_unsubscribed' THEN 'unsubscribed'\n    ELSE qualification_status\n  END,\n  outreach_status = CASE\n    WHEN '{{ $json.action }}' = 'mark_contacted'    THEN 'manually_contacted'\n    WHEN '{{ $json.action }}' = 'mark_unsubscribed' THEN 'unsubscribed'\n    ELSE outreach_status\n  END,\n  last_contacted_at = CASE\n    WHEN '{{ $json.action }}' = 'mark_contacted' THEN NOW()\n    ELSE last_contacted_at\n  END\nWHERE lead_id = {{ $json.lead_id }}\nRETURNING lead_id",
+        "options": {}
+      },
+      "id": "ce8b00df-7942-406a-98c0-b8ddfc21a5fc",
+      "name": "Update Lead Status",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1840,
+        1200
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { success: true, lead_id: $json.lead_id, message: 'Lead updated successfully' } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "d77fb6a7-f22c-4271-b8df-21a2a892f9b3",
+      "name": "Respond - Update",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2064,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const query = $input.first().json.query || {};\nreturn {\n  job_id:  parseInt(query.job_id)  || null,\n  user_id: parseInt(query.user_id) || 1\n};"
+      },
+      "id": "0f1e3d02-e84d-4f7d-8f52-417c9e318af0",
+      "name": "Parse Job Status Filters",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1616,
+        1392
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n  sj.id           as job_id,\n  sj.job_name,\n  sj.status,\n  sj.source,\n  sj.search_query,\n  sj.location,\n  sj.max_results,\n  sj.total_leads,\n  sj.estimated_cost,\n  sj.actual_cost,\n  sj.error_message,\n  sj.started_at,\n  sj.completed_at,\n  sj.created_at,\n  EXTRACT(EPOCH FROM (sj.completed_at - sj.started_at)) as duration_seconds,\n  COUNT(sl.id) as leads_in_staging\nFROM scraping_jobs sj\nLEFT JOIN staging_leads sl ON sj.id = sl.job_id\nWHERE sj.user_id = {{ $json.user_id }}\n{{ $json.job_id ? `AND sj.id = ${$json.job_id}` : '' }}\nGROUP BY sj.id\nORDER BY sj.created_at DESC\nLIMIT 20",
+        "options": {}
+      },
+      "id": "20646495-b62e-4e62-bde5-4f86c37a61a8",
+      "name": "Get Job Status Query",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1840,
+        1392
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const jobs = $input.all().map(i => i.json);\nreturn { success: true, total: jobs.length, jobs };"
+      },
+      "id": "c83da2f4-1c2c-414b-aaba-fec09a74c93f",
+      "name": "Format Job Status",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2064,
+        1392
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "5fc55598-d42c-494d-aef8-2e2b6a2c064c",
+      "name": "Respond - Job Status",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2272,
+        1392
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n  COUNT(DISTINCT sl.id) FILTER (WHERE sl.processing_status = 'pending')             as staging_pending,\n  COUNT(DISTINCT sl.id) FILTER (WHERE sl.processing_status = 'done')                as staging_done,\n  COUNT(DISTINCT sl.id) FILTER (WHERE sl.processing_status = 'no_email_found')      as staging_no_email,\n  COUNT(DISTINCT sl.id) FILTER (WHERE sl.processing_status = 'no_email_available')  as staging_no_email_final,\n  COUNT(DISTINCT sl.id)                                                              as staging_total,\n  COUNT(DISTINCT cl.id)                                                              as total_cleaned,\n  COUNT(DISTINCT cl.id) FILTER (WHERE cl.email_valid = TRUE)                        as valid_emails,\n  COUNT(DISTINCT cl.id) FILTER (WHERE cl.phone IS NOT NULL)                         as has_phone,\n  COUNT(DISTINCT cl.id) FILTER (WHERE cl.email IS NOT NULL)                         as has_email,\n  COUNT(DISTINCT el.lead_id) FILTER (WHERE el.enrichment_stage = 1)                as enriched_stage1,\n  COUNT(DISTINCT el.lead_id) FILTER (WHERE el.enrichment_stage = 2)                as enriched_stage2,\n  COUNT(DISTINCT el.lead_id) FILTER (WHERE el.enrichment_stage = 3)                as enriched_stage3,\n  COUNT(DISTINCT el.lead_id) FILTER (WHERE el.outreach_status = 'email_sent')      as email_sent,\n  COUNT(DISTINCT el.lead_id) FILTER (WHERE el.outreach_status = 'qualified')       as qualified,\n  COUNT(DISTINCT el.lead_id) FILTER (WHERE el.outreach_status = 'disqualified')    as disqualified,\n  COUNT(DISTINCT el.lead_id) FILTER (WHERE el.reply_received = TRUE)               as replied,\n  COUNT(DISTINCT el.lead_id) FILTER (WHERE el.sales_ready = TRUE)                  as sales_ready\nFROM staging_leads sl\nFULL JOIN cleaned_leads cl ON sl.user_id = cl.user_id\nFULL JOIN enriched_leads el ON cl.id = el.lead_id\nWHERE COALESCE(sl.user_id, cl.user_id, el.user_id) = {{ $input.first().json.query?.user_id || 1 }}",
+        "options": {}
+      },
+      "id": "245e06a9-c8b0-4801-9d37-9453385aba10",
+      "name": "Get Pipeline Query",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1616,
+        1600
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const p = $input.first().json;\nreturn {\n  success: true,\n  staging: {\n    total:          parseInt(p.staging_total)          || 0,\n    pending:        parseInt(p.staging_pending)        || 0,\n    done:           parseInt(p.staging_done)           || 0,\n    no_email:       parseInt(p.staging_no_email)       || 0,\n    no_email_final: parseInt(p.staging_no_email_final) || 0\n  },\n  cleaned: {\n    total:       parseInt(p.total_cleaned) || 0,\n    valid_emails:parseInt(p.valid_emails)  || 0,\n    has_phone:   parseInt(p.has_phone)     || 0,\n    has_email:   parseInt(p.has_email)     || 0\n  },\n  enriched: {\n    stage1: parseInt(p.enriched_stage1) || 0,\n    stage2: parseInt(p.enriched_stage2) || 0,\n    stage3: parseInt(p.enriched_stage3) || 0\n  },\n  outreach: {\n    email_sent:   parseInt(p.email_sent)   || 0,\n    qualified:    parseInt(p.qualified)    || 0,\n    disqualified: parseInt(p.disqualified) || 0,\n    replied:      parseInt(p.replied)      || 0,\n    sales_ready:  parseInt(p.sales_ready)  || 0\n  }\n};"
+      },
+      "id": "88ccc288-edb8-4ca2-bb96-973f654811de",
+      "name": "Format Pipeline",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        1600
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "80a8f8e9-3c57-4b06-87f0-1d94e3679c02",
+      "name": "Respond - Pipeline",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2064,
+        1600
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const query = $input.first().json.query || {};\nif (!query.lead_id) throw new Error('lead_id is required');\nreturn { lead_id: parseInt(query.lead_id) };"
+      },
+      "id": "49135d0b-8e18-4c32-a947-3a38acdcdc15",
+      "name": "Parse Lead Detail",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1616,
+        1808
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n  cl.id, cl.company_name, cl.email, cl.phone,\n  cl.website, cl.city, cl.state, cl.country,\n  cl.category, cl.rating, cl.review_count,\n  cl.email_valid, cl.email_verification_status,\n  el.lead_score, el.priority, el.qualification_status,\n  el.outreach_status, el.enrichment_stage,\n  el.products_services, el.pain_points,\n  el.company_size, el.decision_maker_access,\n  el.personalization_hook, el.recent_news,\n  el.company_linkedin_url, el.domain,\n  el.email_subject_line, el.email_body_template,\n  el.email_follow_up_day_3, el.email_follow_up_day_7,\n  el.sms_message, el.whatsapp_message,\n  el.linkedin_connection_note,\n  el.reply_received, el.reply_sentiment,\n  el.last_contacted_at, el.follow_up_count,\n  el.sms_status, el.whatsapp_status,\n  el.linkedin_status, el.sales_ready,\n  el.qualification_score,\n  json_agg(json_build_object(\n    'channel',    oa.channel,\n    'status',     oa.status,\n    'sent_at',    oa.sent_at,\n    'opened_at',  oa.opened_at,\n    'clicked_at', oa.clicked_at,\n    'replied_at', oa.replied_at\n  )) FILTER (WHERE oa.id IS NOT NULL) as activities\nFROM cleaned_leads cl\nLEFT JOIN enriched_leads el ON cl.id = el.lead_id\nLEFT JOIN outreach_activities oa ON cl.id = oa.lead_id\nWHERE cl.id = {{ $json.lead_id }}\nGROUP BY cl.id, el.lead_id",
+        "options": {}
+      },
+      "id": "aca8979b-3f08-4bd1-9fd5-d72848de0bc6",
+      "name": "Get Lead Detail Query",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1840,
+        1808
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const lead = $input.first().json;\nreturn { success: true, lead };"
+      },
+      "id": "bd568bdd-0afa-4ae5-b8bc-aa614f1418a9",
+      "name": "Format Lead Detail",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2064,
+        1808
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "a9ebf871-cab7-4ea4-a6f9-59e92eacb930",
+      "name": "Respond - Lead Detail",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2272,
+        1808
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n  DATE(oa.sent_at)                                          as date,\n  COUNT(*) FILTER (WHERE oa.channel = 'email')             as emails_sent,\n  COUNT(*) FILTER (WHERE oa.channel = 'sms')               as sms_sent,\n  COUNT(*) FILTER (WHERE oa.channel = 'whatsapp')          as whatsapp_sent,\n  COUNT(*) FILTER (WHERE oa.opened_at  IS NOT NULL)        as opened,\n  COUNT(*) FILTER (WHERE oa.replied_at IS NOT NULL)        as replied,\n  COUNT(*) FILTER (WHERE oa.clicked_at IS NOT NULL)        as clicked\nFROM outreach_activities oa\nJOIN enriched_leads el ON oa.lead_id = el.lead_id\nWHERE el.user_id = {{ $input.first().json.query?.user_id || 1 }}\nAND oa.sent_at >= NOW() - INTERVAL '30 days'\nGROUP BY DATE(oa.sent_at)\nORDER BY date DESC",
+        "options": {}
+      },
+      "id": "369b944a-99c2-4b32-b95c-682c237505e9",
+      "name": "Get Analytics Query",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1616,
+        2016
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all().map(i => i.json);\nreturn { success: true, days: rows.length, analytics: rows };"
+      },
+      "id": "4d1ec23d-b699-4dff-b34f-7a748ab1615d",
+      "name": "Format Analytics",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        2016
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "6603e8d9-ed5a-40fc-9199-e26bd99f7b25",
+      "name": "Respond - Analytics",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2064,
+        2016
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n  sq.id, sq.lead_id,\n  cl.company_name, cl.email, cl.phone,\n  sq.priority, sq.qualification_score,\n  sq.interest_level, sq.next_action,\n  sq.budget_estimate, sq.timeline,\n  sq.notes, sq.status, sq.created_at,\n  el.pain_points, el.decision_maker_access,\n  el.company_linkedin_url, el.personalization_hook,\n  er.body        as reply_body,\n  er.received_at as reply_date,\n  er.sentiment   as reply_sentiment\nFROM sales_queue sq\nJOIN cleaned_leads cl  ON sq.lead_id = cl.id\nJOIN enriched_leads el ON sq.lead_id = el.lead_id\nLEFT JOIN email_replies er ON sq.lead_id = er.lead_id\nWHERE sq.status = 'pending'\nAND cl.user_id = {{ $input.first().json.query?.user_id || 1 }}\nORDER BY\n  CASE sq.priority\n    WHEN 'urgent' THEN 1\n    WHEN 'high'   THEN 2\n    ELSE 3\n  END,\n  sq.qualification_score DESC\nLIMIT 20",
+        "options": {}
+      },
+      "id": "b9916e88-140b-45fa-a477-86537477b903",
+      "name": "Get Sales Queue Query",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1616,
+        2224
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all().map(i => i.json);\nreturn { success: true, total: items.length, queue: items };"
+      },
+      "id": "ccb93f2d-9654-43fd-b733-88ba17ee4f43",
+      "name": "Format Sales Queue",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        2224
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "a74ef069-34bf-4909-8045-47e9ccd68fe8",
+      "name": "Respond - Sales Queue",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2064,
+        2224
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n  u.id, u.email,\n  u.apify_status,\n  u.apify_credit,\n  COUNT(DISTINCT sj.id)                                         as total_jobs,\n  COUNT(DISTINCT sj.id) FILTER (WHERE sj.status = 'completed') as completed_jobs,\n  COUNT(DISTINCT sj.id) FILTER (WHERE sj.status = 'failed')    as failed_jobs,\n  COUNT(DISTINCT sj.id) FILTER (WHERE sj.status = 'running')   as running_jobs,\n  COALESCE(SUM(sj.actual_cost),  0)                            as total_spent,\n  COALESCE(SUM(sj.total_leads),  0)                            as total_leads_scraped,\n  MAX(sj.created_at)                                           as last_job_at\nFROM users u\nLEFT JOIN scraping_jobs sj ON u.id = sj.user_id\nWHERE u.id = {{ $input.first().json.query?.user_id || 1 }}\nGROUP BY u.id",
+        "options": {}
+      },
+      "id": "4dd21fec-bc00-4842-9b7d-73d9538ca33f",
+      "name": "Get User Info Query",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1616,
+        2432
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const u = $input.first().json;\nreturn {\n  success: true,\n  user: {\n    id:                   u.id,\n    email:                u.email,\n    apify_status:         u.apify_status,\n    apify_credit:         parseFloat(u.apify_credit) || 0,\n    total_jobs:           parseInt(u.total_jobs)      || 0,\n    completed_jobs:       parseInt(u.completed_jobs)  || 0,\n    failed_jobs:          parseInt(u.failed_jobs)     || 0,\n    running_jobs:         parseInt(u.running_jobs)    || 0,\n    total_spent:          parseFloat(u.total_spent)   || 0,\n    total_leads_scraped:  parseInt(u.total_leads_scraped) || 0,\n    last_job_at:          u.last_job_at\n  }\n};"
+      },
+      "id": "7c70bbdb-e4cf-431d-9c9e-e131279f6619",
+      "name": "Format User Info",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        2432
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "21f2b93a-6078-48d7-80c4-f62bd44a0c33",
+      "name": "Respond - User Info",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2064,
+        2432
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook - GET Leads": {
+      "main": [
+        [
+          {
+            "node": "Parse Lead Filters",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Lead Filters": {
+      "main": [
+        [
+          {
+            "node": "Get Leads Query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Leads Query": {
+      "main": [
+        [
+          {
+            "node": "Format Leads Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Leads Response": {
+      "main": [
+        [
+          {
+            "node": "Respond - Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - GET Stats": {
+      "main": [
+        [
+          {
+            "node": "Get Stats Query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Stats Query": {
+      "main": [
+        [
+          {
+            "node": "Calculate Metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Metrics": {
+      "main": [
+        [
+          {
+            "node": "Respond - Stats",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - GET Jobs": {
+      "main": [
+        [
+          {
+            "node": "Get Jobs Query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Jobs Query": {
+      "main": [
+        [
+          {
+            "node": "Format Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Jobs": {
+      "main": [
+        [
+          {
+            "node": "Respond - Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - LinkedIn Queue": {
+      "main": [
+        [
+          {
+            "node": "Get LinkedIn Queue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get LinkedIn Queue": {
+      "main": [
+        [
+          {
+            "node": "Format LinkedIn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format LinkedIn": {
+      "main": [
+        [
+          {
+            "node": "Respond - LinkedIn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Update Status": {
+      "main": [
+        [
+          {
+            "node": "Parse Update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Update": {
+      "main": [
+        [
+          {
+            "node": "Update Lead Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Lead Status": {
+      "main": [
+        [
+          {
+            "node": "Respond - Update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Job Status": {
+      "main": [
+        [
+          {
+            "node": "Parse Job Status Filters",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Job Status Filters": {
+      "main": [
+        [
+          {
+            "node": "Get Job Status Query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Job Status Query": {
+      "main": [
+        [
+          {
+            "node": "Format Job Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Job Status": {
+      "main": [
+        [
+          {
+            "node": "Respond - Job Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Pipeline": {
+      "main": [
+        [
+          {
+            "node": "Get Pipeline Query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Pipeline Query": {
+      "main": [
+        [
+          {
+            "node": "Format Pipeline",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Pipeline": {
+      "main": [
+        [
+          {
+            "node": "Respond - Pipeline",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Lead Detail": {
+      "main": [
+        [
+          {
+            "node": "Parse Lead Detail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Lead Detail": {
+      "main": [
+        [
+          {
+            "node": "Get Lead Detail Query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Lead Detail Query": {
+      "main": [
+        [
+          {
+            "node": "Format Lead Detail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Lead Detail": {
+      "main": [
+        [
+          {
+            "node": "Respond - Lead Detail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Analytics": {
+      "main": [
+        [
+          {
+            "node": "Get Analytics Query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Analytics Query": {
+      "main": [
+        [
+          {
+            "node": "Format Analytics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Analytics": {
+      "main": [
+        [
+          {
+            "node": "Respond - Analytics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Sales Queue": {
+      "main": [
+        [
+          {
+            "node": "Get Sales Queue Query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Sales Queue Query": {
+      "main": [
+        [
+          {
+            "node": "Format Sales Queue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Sales Queue": {
+      "main": [
+        [
+          {
+            "node": "Respond - Sales Queue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - User Info": {
+      "main": [
+        [
+          {
+            "node": "Get User Info Query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Info Query": {
+      "main": [
+        [
+          {
+            "node": "Format User Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format User Info": {
+      "main": [
+        [
+          {
+            "node": "Respond - User Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4fa4c58d-9fb4-4e9d-b43a-30142a097de1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
+  },
+  "id": "fjIenISCh3orPlgB",
+  "tags": []
+}

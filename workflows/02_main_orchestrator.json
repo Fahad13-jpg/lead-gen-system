@@ -3,6 +3,21 @@
   "nodes": [
     {
       "parameters": {
+        "content": "## 🎯 Main Orchestrator\n\n**Purpose**\nThe starting point for every scraping request. Acts as the gatekeeper, checks if the user's Apify account is active and has enough credit before allowing a job to run.\n\n**How it works**\nUser sends a search request → system validates all fields → checks Apify status and credit → creates a job record in the database.\n\n**Key Rules**\n- Only `google_maps` is accepted as source\n- `max_results` must be between 1 and 500\n- Fails if Apify not connected or credit too low",
+        "height": 496,
+        "width": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        48,
+        -528
+      ],
+      "typeVersion": 1,
+      "id": "630b64d7-bc7c-4384-bf22-a944588bb3e7",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
         "httpMethod": "POST",
         "path": "start-scraping",
         "responseMode": "responseNode",
@@ -11,39 +26,39 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        0,
-        0
+        48,
+        48
       ],
-      "id": "a029f79b-5068-4aca-a694-da6f5cc3a82f",
+      "id": "bba663b3-cc62-4dbb-9503-7988f55453e3",
       "name": "Webhook",
       "webhookId": "b884510a-1904-4023-8aa9-27164523fa0f"
     },
     {
       "parameters": {
-        "jsCode": "const body = $input.first().json.body;\n\n// Validate all required fields\nif (!body.user_id) throw new Error('user_id required');\nif (!body.job_name) throw new Error('job_name required');\nif (!body.source) throw new Error('source required');\nif (!body.search_query) throw new Error('search_query required');\nif (!body.location) throw new Error('location required');\nif (!body.max_results) throw new Error('max_results required');\n\n// Validate source\nif (!['google_maps'].includes(body.source)) {\n  throw new Error('Invalid source');\n}\n\n// Validate max_results\nconst maxResults = parseInt(body.max_results);\nif (maxResults < 1 || maxResults > 500) {\n  throw new Error('max_results must be 1-500');\n}\n\nreturn {\n  user_id: parseInt(body.user_id),\n  job_name: body.job_name,\n  source: body.source,\n  search_query: body.search_query,\n  location: body.location,\n  max_results: maxResults\n};"
+        "jsCode": "const body = $input.first().json.body;\n\nif (!body.user_id)      throw new Error('user_id is required');\nif (!body.job_name)     throw new Error('job_name is required');\nif (!body.search_query) throw new Error('search_query is required');\nif (!body.location)     throw new Error('location is required');\nif (!body.max_results)  throw new Error('max_results is required');\n\nconst maxResults = parseInt(body.max_results);\nif (maxResults < 1 || maxResults > 500)\n  throw new Error('max_results must be 1-500');\n\nreturn {\n  user_id:      parseInt(body.user_id),\n  job_name:     body.job_name,\n  source:       'google_maps',\n  search_query: body.search_query,\n  location:     body.location,\n  max_results:  maxResults\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        208,
-        0
+        240,
+        48
       ],
-      "id": "3ac8ac47-a481-453e-ad96-ea2752bfe056",
+      "id": "d2bb51e0-c49d-4a80-85fb-e5ce54cb8d55",
       "name": "Validate Request"
     },
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n  id, \n  email, \n  apify_api_key,\n  apify_status,\n  apify_credit\nFROM users \nWHERE id = {{ $json.user_id }}\nLIMIT 1",
+        "query": "SELECT id, email, apify_api_key, apify_status, apify_credit\nFROM users\nWHERE id = {{ $json.user_id }}\nLIMIT 1",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        416,
-        0
+        432,
+        48
       ],
-      "id": "f80d6714-9775-4776-a4a1-4b4b16e4a403",
+      "id": "b88933a9-981c-45b3-8a2c-33840c9b16a2",
       "name": "Get User Info",
       "credentials": {
         "postgres": {
@@ -54,15 +69,15 @@
     },
     {
       "parameters": {
-        "jsCode": "const user = $input.first().json;\nconst request = $('Validate Request').first().json;\n\n// Check if user exists\nif (!user || !user.id) {\n  return {\n    error: true,\n    code: 'USER_NOT_FOUND',\n    message: 'User not found'\n  };\n}\n\n// Check Apify key\nif (!user.apify_api_key) {\n  return {\n    error: true,\n    code: 'APIFY_NOT_CONNECTED',\n    message: 'Please connect Apify account first'\n  };\n}\n\n// Check status\nif (user.apify_status !== 'active') {\n  return {\n    error: true,\n    code: 'APIFY_INVALID',\n    message: 'Apify key is invalid or inactive'\n  };\n}\n\n// Calculate cost\nconst estimatedCost = (request.max_results / 100) * 0.01;\n\n// Check credit\nif (user.apify_credit < estimatedCost) {\n  return {\n    error: true,\n    code: 'INSUFFICIENT_CREDIT',\n    message: `Need $${estimatedCost.toFixed(4)}, have $${user.apify_credit.toFixed(2)}`\n  };\n}\n\n// All good\nreturn {\n  error: false,\n  user_id: user.id,\n  apify_api_key: user.apify_api_key,\n  estimated_cost: estimatedCost,\n  job_name: request.job_name,\n  source: request.source,\n  search_query: request.search_query,\n  location: request.location,\n  max_results: request.max_results\n};"
+        "jsCode": "const user    = $input.first().json;\nconst request = $('Validate Request').first().json;\n\nif (!user || !user.id) {\n  return { error: true, code: 'USER_NOT_FOUND', message: 'User not found' };\n}\nif (!user.apify_api_key) {\n  return { error: true, code: 'APIFY_NOT_CONNECTED', message: 'Please connect Apify account first' };\n}\nif (user.apify_status !== 'active') {\n  return { error: true, code: 'APIFY_INVALID', message: 'Apify key is invalid or inactive' };\n}\n\nconst estimatedCost = (request.max_results / 100) * 0.01;\n\nif (parseFloat(user.apify_credit) < estimatedCost) {\n  return {\n    error: true,\n    code: 'INSUFFICIENT_CREDIT',\n    message: `Need $${estimatedCost.toFixed(4)}, have $${parseFloat(user.apify_credit).toFixed(2)}`\n  };\n}\n\nreturn {\n  error:          false,\n  user_id:        user.id,\n  apify_api_key:  user.apify_api_key,\n  estimated_cost: estimatedCost,\n  job_name:       request.job_name,\n  source:         'google_maps',\n  search_query:   request.search_query,\n  location:       request.location,\n  max_results:    request.max_results\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         624,
-        0
+        48
       ],
-      "id": "fee8c23f-4841-4496-b85c-1dbddff27732",
+      "id": "4ac20a5c-54bc-4482-b559-2482f6c04896",
       "name": "Check Apify Status"
     },
     {
@@ -94,50 +109,29 @@
       "typeVersion": 2.2,
       "position": [
         832,
-        0
+        48
       ],
-      "id": "909a6540-7a70-44fa-8ea0-2e32ee4e9921",
+      "id": "0e09156f-c40c-4f78-8800-3b04ab2aeea3",
       "name": "Has Error?"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "INSERT INTO scraping_jobs (\n  user_id,\n  job_name,\n  source,\n  search_query,\n  location,\n  max_results,\n  status,\n  estimated_cost\n)\nVALUES (\n  {{ $json.user_id }},\n  '{{ $json.job_name }}',\n  '{{ $json.source }}',\n  '{{ $json.search_query }}',\n  '{{ $json.location }}',\n  {{ $json.max_results }},\n  'pending',\n  {{ $json.estimated_cost }}\n)\nRETURNING *",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        1040,
-        96
-      ],
-      "id": "438b4fdc-be12-4554-9c8e-8f2bee534762",
-      "name": "Create Scrapping Job",
-      "credentials": {
-        "postgres": {
-          "id": "Scc3yxojKZkvXpOL",
-          "name": "Lead Database"
-        }
-      }
     },
     {
       "parameters": {
         "assignments": {
           "assignments": [
             {
-              "id": "1837a769-409a-4e6b-9328-30fd5aecf714",
+              "id": "err1",
               "name": "success",
-              "value": "false",
-              "type": "string"
+              "value": false,
+              "type": "boolean"
             },
             {
-              "id": "4228dc65-eddb-4840-ad87-bfadf23e7fa2",
+              "id": "err2",
               "name": "error",
               "value": "={{ $json.code }}",
               "type": "string"
             },
             {
-              "id": "526daf21-c120-4aa6-9d93-0a45b498a3c7",
+              "id": "err3",
               "name": "message",
               "value": "={{ $json.message }}",
               "type": "string"
@@ -150,87 +144,135 @@
       "typeVersion": 3.4,
       "position": [
         1040,
-        -96
+        -112
       ],
-      "id": "25ce55b2-aa26-4597-9789-1132851e482f",
+      "id": "5c88837b-94eb-4f44-868b-989ef4627602",
       "name": "Format Error Response"
     },
     {
       "parameters": {
-        "respondWith": "allIncomingItems",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.4,
-      "position": [
-        1248,
-        -96
-      ],
-      "id": "91314f0d-aa41-4603-80a4-be0883656561",
-      "name": "Send Error Response"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "a7df4a38-7bc9-450e-bae6-f77f5207f499",
-              "name": "success",
-              "value": "true",
-              "type": "string"
-            },
-            {
-              "id": "e3908546-c643-46c1-8f61-af7daa9df5f3",
-              "name": "message",
-              "value": "Job created successfully",
-              "type": "string"
-            },
-            {
-              "id": "3215685d-893d-42c7-8dc0-854a9e20f3a4",
-              "name": "job_id",
-              "value": "={{ $json.id }}",
-              "type": "string"
-            },
-            {
-              "id": "3bf8a096-4361-4750-b6b2-3465944f17e3",
-              "name": "status",
-              "value": "={{ $json.status }}",
-              "type": "string"
-            },
-            {
-              "id": "13839a83-b495-4ae0-940d-f66c51cfb47c",
-              "name": "estimated_cost",
-              "value": "={{ $json.estimated_cost }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        1248,
-        96
-      ],
-      "id": "4a882a01-8d55-4a87-9b24-5e52af37360e",
-      "name": "Format Success Response"
-    },
-    {
-      "parameters": {
-        "respondWith": "allIncomingItems",
+        "respondWith": "json",
+        "responseBody": "={{ { success: false, error: $json.error, message: $json.message } }}",
         "options": {
-          "responseCode": 200
+          "responseCode": 400
         }
       },
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        1456,
-        96
+        1232,
+        -112
       ],
-      "id": "4cfc3ce3-8a6d-4ac8-aced-cd345a02dfe7",
-      "name": "Respond to Webhook"
+      "id": "a29e0c74-34e7-47e8-a219-76f9813a7a42",
+      "name": "Send Error Response"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO scraping_jobs (\n  user_id, job_name, source,\n  search_query, location, max_results,\n  status, estimated_cost\n) VALUES (\n  {{ $json.user_id }},\n  '{{ $json.job_name.replace(/'/g, \"''\") }}',\n  'google_maps',\n  '{{ $json.search_query.replace(/'/g, \"''\") }}',\n  '{{ $json.location.replace(/'/g, \"''\") }}',\n  {{ $json.max_results }},\n  'pending',\n  {{ $json.estimated_cost }}\n)\nRETURNING id, user_id, search_query, location, max_results",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1040,
+        144
+      ],
+      "id": "a2cc750b-6cb5-4139-9843-93e87404f270",
+      "name": "Create Scraping Job",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const job      = $input.first().json;\nconst apifyKey = $('Check Apify Status').first().json.apify_api_key;\n\nconst jobId = job.id || job.job_id;\nif (!jobId)    throw new Error('job_id missing from DB insert');\nif (!apifyKey) throw new Error('Apify key missing');\n\nreturn {\n  job_id:        jobId,\n  user_id:       job.user_id,\n  apify_api_key: apifyKey,\n  search_query:  job.search_query,\n  location:      job.location,\n  max_results:   job.max_results\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1232,
+        144
+      ],
+      "id": "39f98b8e-8977-4657-9d22-61da15fd155a",
+      "name": "Prepare Payload"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"job_id\": {{ $json.job_id }},\n  \"message\": \"Scraping started! Results will be ready in a few minutes.\",\n  \"search_query\": \"{{ $json.search_query }}\",\n  \"location\": \"{{ $json.location }}\",\n  \"max_results\": {{ $json.max_results }}\n}",
+        "options": {
+          "responseCode": 202
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1440,
+        48
+      ],
+      "id": "c5f0a504-afd7-43f8-bc3d-61d0a83c777a",
+      "name": "Respond to User NOW"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://n8n:5678/webhook/scrape-google-maps",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"job_id\":        {{ $('Prepare Payload').first().json.job_id }},\n  \"user_id\":       {{ $('Prepare Payload').first().json.user_id }},\n  \"apify_api_key\": \"{{ $('Prepare Payload').first().json.apify_api_key }}\",\n  \"search_query\":  \"{{ $('Prepare Payload').first().json.search_query }}\",\n  \"location\":      \"{{ $('Prepare Payload').first().json.location }}\",\n  \"max_results\":   {{ $('Prepare Payload').first().json.max_results }}\n}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          },
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        240
+      ],
+      "id": "c5c41240-ce26-477a-81a1-d14e98a578e4",
+      "name": "Trigger Scraper WF3"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        48,
+        240
+      ],
+      "id": "29fcd7e9-145b-4ae8-a427-0404a7433e28",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE scraping_jobs\nSET \n  status = 'failed',\n  error_message = '{{ $json.error }}'\nWHERE id = {{ $json.job_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        256,
+        240
+      ],
+      "id": "2f9c2560-5706-42f8-ab5e-e9a9ffc103be",
+      "name": "Mark Job Failed",
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -290,18 +332,7 @@
         ],
         [
           {
-            "node": "Create Scrapping Job",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create Scrapping Job": {
-      "main": [
-        [
-          {
-            "node": "Format Success Response",
+            "node": "Create Scraping Job",
             "type": "main",
             "index": 0
           }
@@ -319,11 +350,38 @@
         ]
       ]
     },
-    "Format Success Response": {
+    "Create Scraping Job": {
       "main": [
         [
           {
-            "node": "Respond to Webhook",
+            "node": "Prepare Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Payload": {
+      "main": [
+        [
+          {
+            "node": "Respond to User NOW",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Trigger Scraper WF3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Mark Job Failed",
             "type": "main",
             "index": 0
           }
@@ -331,11 +389,11 @@
       ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "fa6f2753-b531-4f3e-9189-bcc153f6b061",
+  "versionId": "c96a67cb-dd28-4ec5-9fd4-796680efa0a2",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"

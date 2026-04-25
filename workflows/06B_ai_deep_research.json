@@ -6,7 +6,7 @@
         "rule": {
           "interval": [
             {
-              "field": "hours"
+              "field": "minutes"
             }
           ]
         }
@@ -23,7 +23,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n  cl.id,\n  cl.company_name,\n  cl.email,\n  cl.phone,\n  cl.website,\n  cl.city,\n  cl.state,\n  cl.category,\n  cl.rating,\n  cl.review_count,\n  el.domain,\n  el.detected_country,\n  el.website_description,\n  el.has_contact_form\nFROM cleaned_leads cl\nJOIN enriched_leads el ON cl.id = el.lead_id\nWHERE el.enrichment_stage = 1\nAND (el.ai_company_summary IS NULL OR el.products_services IS NULL)\nORDER BY cl.rating DESC, cl.review_count DESC\nLIMIT 3",
+        "query": "SELECT \n  cl.id,\n  cl.company_name,\n  cl.email,\n  cl.phone,\n  cl.website,\n  cl.city,\n  cl.state,\n  cl.category,\n  cl.rating,\n  cl.review_count,\n  el.domain,\n  el.detected_country,\n  el.website_description,\n  el.has_contact_form\nFROM cleaned_leads cl\nJOIN enriched_leads el ON cl.id = el.lead_id\nWHERE el.enrichment_stage = 1\nAND (el.ai_company_summary IS NULL OR el.products_services IS NULL)\nORDER BY cl.rating DESC, cl.review_count DESC\nLIMIT 2",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -95,7 +95,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const agentOutput = $input.first().json.output || {};\nconst lead = $('Get Leads - Stage 2 Ready').item.json;\n\n// Calculate initial AI score\nlet aiScore = 0;\n\nif (agentOutput.company_size === 'medium' || agentOutput.company_size === 'large') aiScore += 20;\nif (agentOutput.recent_activity && agentOutput.recent_activity !== 'None') aiScore += 15;\nif (agentOutput.linkedin_url) aiScore += 10;\nif (agentOutput.pain_points && agentOutput.pain_points.length >= 3) aiScore += 10;\n\nreturn {\n  lead_id: lead.id,\n  products_services: agentOutput.products_services,\n  target_customer: agentOutput.target_customer,\n  pain_points: JSON.stringify(agentOutput.pain_points || []),\n  recent_news: agentOutput.recent_activity,\n  company_size: agentOutput.company_size,\n  decision_maker_access: agentOutput.decision_maker,\n  personalization_hook: agentOutput.personalization_hook,\n  company_linkedin_url: agentOutput.linkedin_url,\n  ai_research_score: aiScore,\n  enrichment_stage: 2\n};"
+        "jsCode": "const agentOutput = $input.first().json.output || {};\nconst lead = $('Get Leads - Stage 2 Ready').item.json;\n\n// Calculate initial AI score\nlet aiScore = 0;\nif (agentOutput.company_size === 'medium' || agentOutput.company_size === 'large') aiScore += 20;\nif (agentOutput.recent_activity && agentOutput.recent_activity !== 'None') aiScore += 15;\nif (agentOutput.linkedin_url) aiScore += 10;\nif (agentOutput.pain_points && agentOutput.pain_points.length >= 3) aiScore += 10;\n\n// Safely format pain_points array for PostgreSQL\nconst painPoints = Array.isArray(agentOutput.pain_points) ? agentOutput.pain_points : [];\nconst painPointsSQL = painPoints.length > 0\n  ? `ARRAY[${painPoints.map(p => `'${String(p).replace(/'/g, \"''\")}'`).join(',')}]`\n  : 'NULL';\n\n// Safely format growth_signals array for PostgreSQL\nconst growthSignals = Array.isArray(agentOutput.growth_signals) ? agentOutput.growth_signals : [];\nconst growthSignalsSQL = growthSignals.length > 0\n  ? `ARRAY[${growthSignals.map(s => `'${String(s).replace(/'/g, \"''\")}'`).join(',')}]`\n  : 'NULL';\n\n// Parse linkedin_followers safely\nlet linkedinFollowers = null;\nif (agentOutput.linkedin_followers && agentOutput.linkedin_followers !== 'unknown') {\n  const parsed = parseInt(agentOutput.linkedin_followers);\n  linkedinFollowers = isNaN(parsed) ? null : parsed;\n}\n\nreturn {\n  lead_id: lead.id,\n  products_services: agentOutput.products_services || null,\n  target_customer: agentOutput.target_customer || null,\n  pain_points_sql: painPointsSQL,\n  recent_news: agentOutput.recent_news || agentOutput.recent_activity || null,\n  company_size: agentOutput.company_size || null,\n  decision_maker_access: agentOutput.decision_maker || agentOutput.decision_maker_access || null,\n  personalization_hook: agentOutput.personalization_hook || null,\n  company_linkedin_url: agentOutput.linkedin_url || agentOutput.company_linkedin_url || null,\n  linkedin_employee_count: agentOutput.linkedin_employee_count || null,\n  linkedin_industry: agentOutput.linkedin_industry || null,\n  linkedin_description: agentOutput.linkedin_description || null,\n  twitter_url: agentOutput.twitter_url || null,\n  crunchbase_url: agentOutput.crunchbase_url || null,\n  recent_funding: agentOutput.recent_funding || null,\n  growth_signals_sql: growthSignalsSQL,\n  ai_research_score: aiScore,\n  enrichment_stage: 2\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -109,13 +109,13 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO enriched_leads (\n  lead_id,\n  products_services,\n  target_customer,\n  pain_points,\n  company_size,\n  decision_maker_access,\n  personalization_hook,\n  recent_news,\n  \n  -- NEW LINKEDIN FIELDS\n  company_linkedin_url,\n  linkedin_employee_count,\n  linkedin_followers,\n  linkedin_industry,\n  linkedin_description,\n  \n  -- NEW GROWTH SIGNALS\n  twitter_url,\n  crunchbase_url,\n  recent_funding,\n  growth_signals,\n  \n  enrichment_stage\n) VALUES (\n  {{ $json.lead_id }},\n  '{{ $json.products_services }}',\n  '{{ $json.target_customer }}',\n  ARRAY[{{ $json.pain_points.map(p => `'${p.replace(/'/g, \"''\")}'`).join(',') }}],\n  '{{ $json.company_size }}',\n  '{{ $json.decision_maker_access }}',\n  '{{ $json.personalization_hook }}',\n  '{{ $json.recent_news }}',\n  \n  -- NEW LINKEDIN DATA\n  '{{ $json.company_linkedin_url }}',\n  '{{ $json.linkedin_employee_count }}',\n  {{ $json.linkedin_followers === 'unknown' ? 'NULL' : $json.linkedin_followers }},\n  '{{ $json.linkedin_industry }}',\n  '{{ $json.linkedin_description }}',\n  \n  -- NEW GROWTH SIGNALS\n  '{{ $json.twitter_url }}',\n  '{{ $json.crunchbase_url }}',\n  '{{ $json.recent_funding }}',\n  ARRAY[{{ ($json.growth_signals || []).map(s => `'${s.replace(/'/g, \"''\")}'`).join(',') || 'NULL' }}],\n  \n  2\n)\nON CONFLICT (lead_id) DO UPDATE SET\n  products_services = EXCLUDED.products_services,\n  target_customer = EXCLUDED.target_customer,\n  pain_points = EXCLUDED.pain_points,\n  company_size = EXCLUDED.company_size,\n  decision_maker_access = EXCLUDED.decision_maker_access,\n  personalization_hook = EXCLUDED.personalization_hook,\n  recent_news = EXCLUDED.recent_news,\n  company_linkedin_url = EXCLUDED.company_linkedin_url,\n  linkedin_employee_count = EXCLUDED.linkedin_employee_count,\n  linkedin_followers = EXCLUDED.linkedin_followers,\n  linkedin_industry = EXCLUDED.linkedin_industry,\n  linkedin_description = EXCLUDED.linkedin_description,\n  twitter_url = EXCLUDED.twitter_url,\n  crunchbase_url = EXCLUDED.crunchbase_url,\n  recent_funding = EXCLUDED.recent_funding,\n  growth_signals = EXCLUDED.growth_signals,\n  enrichment_stage = 2",
+        "query": "INSERT INTO enriched_leads (\n  lead_id, products_services, target_customer,\n  pain_points, company_size, decision_maker_access,\n  personalization_hook, recent_news, company_linkedin_url,\n  linkedin_employee_count, linkedin_industry, linkedin_description,\n  twitter_url, crunchbase_url, recent_funding,\n  growth_signals, enrichment_stage\n) VALUES (\n  {{ $json.lead_id }},\n  {{ $json.products_services ? `'${$json.products_services.replace(/'/g, \"''\")}'` : 'NULL' }},\n  {{ $json.target_customer ? `'${$json.target_customer}'` : 'NULL' }},\n  {{ $json.pain_points_sql }},\n  {{ $json.company_size ? `'${$json.company_size}'` : 'NULL' }},\n  {{ $json.decision_maker_access ? `'${$json.decision_maker_access.replace(/'/g, \"''\")}'` : 'NULL' }},\n  {{ $json.personalization_hook ? `'${$json.personalization_hook.replace(/'/g, \"''\")}'` : 'NULL' }},\n  {{ $json.recent_news ? `'${$json.recent_news.replace(/'/g, \"''\")}'` : 'NULL' }},\n  {{ $json.company_linkedin_url ? `'${$json.company_linkedin_url}'` : 'NULL' }},\n  {{ $json.linkedin_employee_count ? `'${$json.linkedin_employee_count}'` : 'NULL' }},\n  {{ $json.linkedin_industry ? `'${$json.linkedin_industry.replace(/'/g, \"''\")}'` : 'NULL' }},\n  {{ $json.linkedin_description ? `'${$json.linkedin_description.replace(/'/g, \"''\")}'` : 'NULL' }},\n  {{ $json.twitter_url ? `'${$json.twitter_url}'` : 'NULL' }},\n  {{ $json.crunchbase_url ? `'${$json.crunchbase_url}'` : 'NULL' }},\n  {{ $json.recent_funding ? `'${$json.recent_funding.replace(/'/g, \"''\")}'` : 'NULL' }},\n  {{ $json.growth_signals_sql }},\n  2\n)\nON CONFLICT (lead_id) DO UPDATE SET\n  products_services = EXCLUDED.products_services,\n  target_customer = EXCLUDED.target_customer,\n  pain_points = EXCLUDED.pain_points,\n  company_size = EXCLUDED.company_size,\n  decision_maker_access = EXCLUDED.decision_maker_access,\n  personalization_hook = EXCLUDED.personalization_hook,\n  recent_news = EXCLUDED.recent_news,\n  company_linkedin_url = EXCLUDED.company_linkedin_url,\n  linkedin_employee_count = EXCLUDED.linkedin_employee_count,\n  linkedin_industry = EXCLUDED.linkedin_industry,\n  linkedin_description = EXCLUDED.linkedin_description,\n  twitter_url = EXCLUDED.twitter_url,\n  crunchbase_url = EXCLUDED.crunchbase_url,\n  recent_funding = EXCLUDED.recent_funding,\n  growth_signals = EXCLUDED.growth_signals,\n  enrichment_stage = 2",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1280,
+        1488,
         -96
       ],
       "id": "05129d86-1daf-4c7d-b90b-ec671f7ac53f",
@@ -187,10 +187,52 @@
       "name": "web Search",
       "credentials": {
         "httpHeaderAuth": {
-          "id": "SMYLTdHXdM2qnLyo",
-          "name": "Twilio API"
+          "id": "otZXZxlxwbXaObwA",
+          "name": "Serper API"
         }
       }
+    },
+    {
+      "parameters": {
+        "content": "## 🤖AI Deep Research Stage 2\n\n**Purpose**\nThe brain of the system. Uses AI with live web search to deeply research each company and gather real sales intelligence.\n\n**How it works**\nRuns every **hour** → picks Stage 1 leads → AI researches: products/services, pain points, company size, decision maker, LinkedIn URL, recent news and growth signals → saves everything to `enriched_leads`.\n\n**Key Rules**\n- Uses **Groq AI** (llama-3.3-70b) + Serper web search\n- Processes **3 leads per run** to stay within AI limits\n- After this stage we know enough to write a personalized outreach message\n- Sets `enrichment_stage = 2`",
+        "height": 560,
+        "width": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -16,
+        -592
+      ],
+      "typeVersion": 1,
+      "id": "6599e821-efe2-4c8e-aec0-ccd3ff4b7a64",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validate AI Output\nconst data = $input.first().json;\n\n// Ensure required fields exist\nreturn {\n  ...data,\n  products_services:    data.products_services    || 'Not available',\n  target_customer:      data.target_customer      || 'Unknown',\n  company_size:         data.company_size         || 'unknown',\n  decision_maker_access: data.decision_maker_access || 'Unknown',\n  personalization_hook: data.personalization_hook || null,\n  pain_points_sql:      data.pain_points_sql      || 'NULL',\n  growth_signals_sql:   data.growth_signals_sql   || 'NULL'\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1280,
+        -96
+      ],
+      "id": "d31bf682-efa0-497e-ab75-217eba34625c",
+      "name": "Validate AI Output"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      id: 1, company_name: \"Blue Bottle Coffee\",\n      email: \"info@bluebottlecoffee.com\",\n      phone: \"+14155551234\",\n      website: \"https://bluebottlecoffee.com\",\n      city: \"San Francisco\", state: \"CA\",\n      category: \"Coffee Shop\",\n      rating: 4.7, review_count: 523,\n      domain: \"bluebottlecoffee.com\",\n      detected_country: \"United States\",\n      website_description: \"Specialty coffee roaster\",\n      has_contact_form: true\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        176,
+        208
+      ],
+      "id": "d8faa4bd-dbd6-4d37-a0d8-5e6105f36e5a",
+      "name": "Mock Stage 2 Leads",
+      "disabled": true
     }
   ],
   "pinData": {},
@@ -243,7 +285,7 @@
       "main": [
         [
           {
-            "node": "Update with AI Research",
+            "node": "Validate AI Output",
             "type": "main",
             "index": 0
           }
@@ -282,13 +324,24 @@
           }
         ]
       ]
+    },
+    "Validate AI Output": {
+      "main": [
+        [
+          {
+            "node": "Update with AI Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "d5410e58-7345-467f-8b64-8f4fd9ac3489",
+  "versionId": "20fc2c7d-6318-4234-8498-6c980e05a385",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
