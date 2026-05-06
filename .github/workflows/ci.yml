@@ -1,0 +1,33 @@
+name: FYP CI Workflow
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install Dashboard Dependencies
+      run: |
+        cd dashboard
+        npm install
+
+    - name: Run Tests
+      run: |
+        cd dashboard
+        npm run test -- --watchAll=false
+
+    - name: Build Dashboard
+      run: |
+        cd dashboard
+        npm run build
