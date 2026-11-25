@@ -1,0 +1,711 @@
+[
+  {
+    "client": "fetch",
+    "mode": "default",
+    "configuration": {
+      "type": "ready",
+      "client": "fetch",
+      "mode": "default",
+      "node": "v22.19.0",
+      "autoSelectFamily": true,
+      "attemptTimeout": 250,
+      "ipv6_disabled": "0",
+      "routes": "00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n00000000000000000000000000000001 80 00000000000000000000000000000000 00 00000000000000000000000000000000 00000000 00000004 00000000 80200001       lo\n00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n",
+      "container": "lead_diag_base_20261011"
+    },
+    "requests": 50,
+    "successes": 26,
+    "errors": {
+      "TypeError": 24,
+      "EAI_AGAIN": 1,
+      "ETIMEDOUT": 23,
+      "ENETUNREACH": 23
+    },
+    "syscalls": {
+      "getaddrinfo": 1,
+      "connect": 23
+    },
+    "p50_ms": 532.5,
+    "max_ms": 8660,
+    "failure_clusters": [
+      {
+        "first_round": 1,
+        "last_round": 1,
+        "count": 1,
+        "start": "2026-10-11T18:43:53.610Z",
+        "end": "2026-10-11T18:43:53.610Z"
+      },
+      {
+        "first_round": 7,
+        "last_round": 11,
+        "count": 5,
+        "start": "2026-10-11T18:45:13.480Z",
+        "end": "2026-10-11T18:46:30.401Z"
+      },
+      {
+        "first_round": 13,
+        "last_round": 13,
+        "count": 1,
+        "start": "2026-10-11T18:47:00.209Z",
+        "end": "2026-10-11T18:47:00.209Z"
+      },
+      {
+        "first_round": 15,
+        "last_round": 16,
+        "count": 2,
+        "start": "2026-10-11T18:47:25.913Z",
+        "end": "2026-10-11T18:47:50.394Z"
+      },
+      {
+        "first_round": 18,
+        "last_round": 32,
+        "count": 15,
+        "start": "2026-10-11T18:48:21.078Z",
+        "end": "2026-10-11T18:58:27.885Z"
+      }
+    ],
+    "pre_send_evidence_candidates": 24,
+    "warning": "Raw pre_send_proven flag is a socket-error heuristic for the failed attempt, not proof that an entire pooled/retried logical request never sent bytes."
+  },
+  {
+    "client": "fetch",
+    "mode": "ipv4",
+    "configuration": {
+      "type": "ready",
+      "client": "fetch",
+      "mode": "ipv4",
+      "node": "v22.19.0",
+      "autoSelectFamily": true,
+      "attemptTimeout": 250,
+      "ipv6_disabled": "0",
+      "routes": "00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n00000000000000000000000000000001 80 00000000000000000000000000000000 00 00000000000000000000000000000000 00000000 00000004 00000000 80200001       lo\n00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n",
+      "container": "lead_diag_base_20261011"
+    },
+    "requests": 50,
+    "successes": 43,
+    "errors": {
+      "TypeError": 7,
+      "ECONNRESET": 2,
+      "UND_ERR_CONNECT_TIMEOUT": 5
+    },
+    "syscalls": {},
+    "p50_ms": 2126,
+    "max_ms": 12758,
+    "failure_clusters": [
+      {
+        "first_round": 15,
+        "last_round": 15,
+        "count": 1,
+        "start": "2026-10-11T18:47:26.437Z",
+        "end": "2026-10-11T18:47:26.437Z"
+      },
+      {
+        "first_round": 21,
+        "last_round": 21,
+        "count": 1,
+        "start": "2026-10-11T18:49:51.525Z",
+        "end": "2026-10-11T18:49:51.525Z"
+      },
+      {
+        "first_round": 27,
+        "last_round": 31,
+        "count": 5,
+        "start": "2026-10-11T18:54:20.798Z",
+        "end": "2026-10-11T18:57:40.609Z"
+      }
+    ],
+    "pre_send_evidence_candidates": 0,
+    "warning": "Raw pre_send_proven flag is a socket-error heuristic for the failed attempt, not proof that an entire pooled/retried logical request never sent bytes."
+  },
+  {
+    "client": "fetch",
+    "mode": "disabled",
+    "configuration": {
+      "type": "ready",
+      "client": "fetch",
+      "mode": "disabled",
+      "node": "v22.19.0",
+      "autoSelectFamily": false,
+      "attemptTimeout": 250,
+      "ipv6_disabled": "0",
+      "routes": "00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n00000000000000000000000000000001 80 00000000000000000000000000000000 00 00000000000000000000000000000000 00000000 00000004 00000000 80200001       lo\n00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n",
+      "container": "lead_diag_base_20261011"
+    },
+    "requests": 50,
+    "successes": 44,
+    "errors": {
+      "23": 1,
+      "TypeError": 5,
+      "UND_ERR_CONNECT_TIMEOUT": 4,
+      "ECONNRESET": 1
+    },
+    "syscalls": {},
+    "p50_ms": 1360,
+    "max_ms": 15012,
+    "failure_clusters": [
+      {
+        "first_round": 21,
+        "last_round": 21,
+        "count": 1,
+        "start": "2026-10-11T18:49:58.235Z",
+        "end": "2026-10-11T18:49:58.235Z"
+      },
+      {
+        "first_round": 24,
+        "last_round": 24,
+        "count": 1,
+        "start": "2026-10-11T18:52:10.312Z",
+        "end": "2026-10-11T18:52:10.312Z"
+      },
+      {
+        "first_round": 27,
+        "last_round": 29,
+        "count": 3,
+        "start": "2026-10-11T18:54:31.339Z",
+        "end": "2026-10-11T18:56:13.237Z"
+      },
+      {
+        "first_round": 31,
+        "last_round": 31,
+        "count": 1,
+        "start": "2026-10-11T18:57:51.117Z",
+        "end": "2026-10-11T18:57:51.117Z"
+      }
+    ],
+    "pre_send_evidence_candidates": 0,
+    "warning": "Raw pre_send_proven flag is a socket-error heuristic for the failed attempt, not proof that an entire pooled/retried logical request never sent bytes."
+  },
+  {
+    "client": "fetch",
+    "mode": "raised",
+    "configuration": {
+      "type": "ready",
+      "client": "fetch",
+      "mode": "raised",
+      "node": "v22.19.0",
+      "autoSelectFamily": true,
+      "attemptTimeout": 1500,
+      "ipv6_disabled": "0",
+      "routes": "00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n00000000000000000000000000000001 80 00000000000000000000000000000000 00 00000000000000000000000000000000 00000000 00000004 00000000 80200001       lo\n00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n",
+      "container": "lead_diag_base_20261011"
+    },
+    "requests": 50,
+    "successes": 37,
+    "errors": {
+      "TypeError": 13,
+      "ETIMEDOUT": 13,
+      "ENETUNREACH": 13
+    },
+    "syscalls": {
+      "connect": 13
+    },
+    "p50_ms": 1483,
+    "max_ms": 8366,
+    "failure_clusters": [
+      {
+        "first_round": 20,
+        "last_round": 32,
+        "count": 13,
+        "start": "2026-10-11T18:49:26.839Z",
+        "end": "2026-10-11T18:58:43.896Z"
+      }
+    ],
+    "pre_send_evidence_candidates": 13,
+    "warning": "Raw pre_send_proven flag is a socket-error heuristic for the failed attempt, not proof that an entire pooled/retried logical request never sent bytes."
+  },
+  {
+    "client": "fetch",
+    "mode": "sysctl_noipv6",
+    "configuration": {
+      "type": "ready",
+      "client": "fetch",
+      "mode": "sysctl_noipv6",
+      "node": "v22.19.0",
+      "autoSelectFamily": true,
+      "attemptTimeout": 250,
+      "ipv6_disabled": "1",
+      "routes": "00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n",
+      "container": "lead_diag_noipv6_20261011"
+    },
+    "requests": 50,
+    "successes": 46,
+    "errors": {
+      "TypeError": 4,
+      "UND_ERR_CONNECT_TIMEOUT": 4
+    },
+    "syscalls": {},
+    "p50_ms": 1550,
+    "max_ms": 13905,
+    "failure_clusters": [
+      {
+        "first_round": 23,
+        "last_round": 23,
+        "count": 1,
+        "start": "2026-10-11T18:51:31.603Z",
+        "end": "2026-10-11T18:51:31.603Z"
+      },
+      {
+        "first_round": 26,
+        "last_round": 28,
+        "count": 3,
+        "start": "2026-10-11T18:54:00.794Z",
+        "end": "2026-10-11T18:55:38.035Z"
+      }
+    ],
+    "pre_send_evidence_candidates": 0,
+    "warning": "Raw pre_send_proven flag is a socket-error heuristic for the failed attempt, not proof that an entire pooled/retried logical request never sent bytes."
+  },
+  {
+    "client": "fetch",
+    "mode": "node_options_disabled",
+    "configuration": {
+      "type": "ready",
+      "client": "fetch",
+      "mode": "node_options_disabled",
+      "node": "v22.19.0",
+      "autoSelectFamily": false,
+      "attemptTimeout": 250,
+      "ipv6_disabled": "0",
+      "routes": "00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n00000000000000000000000000000001 80 00000000000000000000000000000000 00 00000000000000000000000000000000 00000000 00000003 00000000 80200001       lo\n00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n",
+      "container": "lead_diag_nodeoff_20261011"
+    },
+    "requests": 50,
+    "successes": 45,
+    "errors": {
+      "TypeError": 5,
+      "UND_ERR_CONNECT_TIMEOUT": 3,
+      "EAI_AGAIN": 1,
+      "ECONNRESET": 1
+    },
+    "syscalls": {
+      "getaddrinfo": 1
+    },
+    "p50_ms": 1446,
+    "max_ms": 14239,
+    "failure_clusters": [
+      {
+        "first_round": 24,
+        "last_round": 24,
+        "count": 1,
+        "start": "2026-10-11T18:52:33.853Z",
+        "end": "2026-10-11T18:52:33.853Z"
+      },
+      {
+        "first_round": 26,
+        "last_round": 28,
+        "count": 3,
+        "start": "2026-10-11T18:54:11.572Z",
+        "end": "2026-10-11T18:55:48.537Z"
+      },
+      {
+        "first_round": 31,
+        "last_round": 31,
+        "count": 1,
+        "start": "2026-10-11T18:58:18.285Z",
+        "end": "2026-10-11T18:58:18.285Z"
+      }
+    ],
+    "pre_send_evidence_candidates": 1,
+    "warning": "Raw pre_send_proven flag is a socket-error heuristic for the failed attempt, not proof that an entire pooled/retried logical request never sent bytes."
+  },
+  {
+    "client": "fetch",
+    "mode": "node_options_raised",
+    "configuration": {
+      "type": "ready",
+      "client": "fetch",
+      "mode": "node_options_raised",
+      "node": "v22.19.0",
+      "autoSelectFamily": true,
+      "attemptTimeout": 1500,
+      "ipv6_disabled": "0",
+      "routes": "00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n00000000000000000000000000000001 80 00000000000000000000000000000000 00 00000000000000000000000000000000 00000000 00000003 00000000 80200001       lo\n00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n",
+      "container": "lead_diag_nodetimeout_20261011"
+    },
+    "requests": 50,
+    "successes": 37,
+    "errors": {
+      "TypeError": 13,
+      "ETIMEDOUT": 13,
+      "ENETUNREACH": 13
+    },
+    "syscalls": {
+      "connect": 13
+    },
+    "p50_ms": 1676.5,
+    "max_ms": 5874,
+    "failure_clusters": [
+      {
+        "first_round": 9,
+        "last_round": 9,
+        "count": 1,
+        "start": "2026-10-11T18:46:09.461Z",
+        "end": "2026-10-11T18:46:09.461Z"
+      },
+      {
+        "first_round": 19,
+        "last_round": 20,
+        "count": 2,
+        "start": "2026-10-11T18:49:02.206Z",
+        "end": "2026-10-11T18:49:47.655Z"
+      },
+      {
+        "first_round": 22,
+        "last_round": 31,
+        "count": 10,
+        "start": "2026-10-11T18:51:00.659Z",
+        "end": "2026-10-11T18:58:24.855Z"
+      }
+    ],
+    "pre_send_evidence_candidates": 13,
+    "warning": "Raw pre_send_proven flag is a socket-error heuristic for the failed attempt, not proof that an entire pooled/retried logical request never sent bytes."
+  },
+  {
+    "client": "n8n_http",
+    "mode": "default",
+    "configuration": {
+      "type": "ready",
+      "client": "n8n_http",
+      "mode": "default",
+      "node": "v22.19.0",
+      "autoSelectFamily": true,
+      "attemptTimeout": 250,
+      "ipv6_disabled": "0",
+      "routes": "00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n00000000000000000000000000000001 80 00000000000000000000000000000000 00 00000000000000000000000000000000 00000000 00000004 00000000 80200001       lo\n00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n",
+      "container": "lead_diag_base_20261011"
+    },
+    "requests": 50,
+    "successes": 28,
+    "errors": {
+      "ETIMEDOUT": 22,
+      "ENETUNREACH": 22
+    },
+    "syscalls": {
+      "connect": 22
+    },
+    "p50_ms": 597,
+    "max_ms": 3694,
+    "failure_clusters": [
+      {
+        "first_round": 4,
+        "last_round": 7,
+        "count": 4,
+        "start": "2026-10-11T18:45:36.181Z",
+        "end": "2026-10-11T18:46:30.161Z"
+      },
+      {
+        "first_round": 9,
+        "last_round": 9,
+        "count": 1,
+        "start": "2026-10-11T18:46:59.744Z",
+        "end": "2026-10-11T18:46:59.744Z"
+      },
+      {
+        "first_round": 11,
+        "last_round": 26,
+        "count": 16,
+        "start": "2026-10-11T18:47:35.387Z",
+        "end": "2026-10-11T18:58:21.825Z"
+      },
+      {
+        "first_round": 45,
+        "last_round": 45,
+        "count": 1,
+        "start": "2026-10-11T19:00:48.940Z",
+        "end": "2026-10-11T19:00:48.940Z"
+      }
+    ],
+    "pre_send_evidence_candidates": 22,
+    "warning": "Raw pre_send_proven flag is a socket-error heuristic for the failed attempt, not proof that an entire pooled/retried logical request never sent bytes."
+  },
+  {
+    "client": "n8n_http",
+    "mode": "ipv4",
+    "configuration": {
+      "type": "ready",
+      "client": "n8n_http",
+      "mode": "ipv4",
+      "node": "v22.19.0",
+      "autoSelectFamily": true,
+      "attemptTimeout": 250,
+      "ipv6_disabled": "0",
+      "routes": "00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n00000000000000000000000000000001 80 00000000000000000000000000000000 00 00000000000000000000000000000000 00000000 00000005 00000000 80200001       lo\n00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n",
+      "container": "lead_diag_base_20261011"
+    },
+    "requests": 50,
+    "successes": 45,
+    "errors": {
+      "ECONNRESET": 3,
+      "ERR_CANCELED": 2
+    },
+    "syscalls": {},
+    "p50_ms": 2162.5,
+    "max_ms": 15024,
+    "failure_clusters": [
+      {
+        "first_round": 19,
+        "last_round": 19,
+        "count": 1,
+        "start": "2026-10-11T18:51:31.057Z",
+        "end": "2026-10-11T18:51:31.057Z"
+      },
+      {
+        "first_round": 21,
+        "last_round": 23,
+        "count": 3,
+        "start": "2026-10-11T18:53:25.268Z",
+        "end": "2026-10-11T18:55:29.906Z"
+      },
+      {
+        "first_round": 45,
+        "last_round": 45,
+        "count": 1,
+        "start": "2026-10-11T19:00:49.915Z",
+        "end": "2026-10-11T19:00:49.915Z"
+      }
+    ],
+    "pre_send_evidence_candidates": 0,
+    "warning": "Raw pre_send_proven flag is a socket-error heuristic for the failed attempt, not proof that an entire pooled/retried logical request never sent bytes."
+  },
+  {
+    "client": "n8n_http",
+    "mode": "disabled",
+    "configuration": {
+      "type": "ready",
+      "client": "n8n_http",
+      "mode": "disabled",
+      "node": "v22.19.0",
+      "autoSelectFamily": false,
+      "attemptTimeout": 250,
+      "ipv6_disabled": "0",
+      "routes": "00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n00000000000000000000000000000001 80 00000000000000000000000000000000 00 00000000000000000000000000000000 00000000 00000005 00000000 80200001       lo\n00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n",
+      "container": "lead_diag_base_20261011"
+    },
+    "requests": 50,
+    "successes": 44,
+    "errors": {
+      "ERR_CANCELED": 5,
+      "ECONNRESET": 1
+    },
+    "syscalls": {},
+    "p50_ms": 1643,
+    "max_ms": 15339,
+    "failure_clusters": [
+      {
+        "first_round": 16,
+        "last_round": 16,
+        "count": 1,
+        "start": "2026-10-11T18:49:24.935Z",
+        "end": "2026-10-11T18:49:24.935Z"
+      },
+      {
+        "first_round": 20,
+        "last_round": 20,
+        "count": 1,
+        "start": "2026-10-11T18:52:36.286Z",
+        "end": "2026-10-11T18:52:36.286Z"
+      },
+      {
+        "first_round": 22,
+        "last_round": 25,
+        "count": 4,
+        "start": "2026-10-11T18:54:41.636Z",
+        "end": "2026-10-11T18:57:38.600Z"
+      }
+    ],
+    "pre_send_evidence_candidates": 0,
+    "warning": "Raw pre_send_proven flag is a socket-error heuristic for the failed attempt, not proof that an entire pooled/retried logical request never sent bytes."
+  },
+  {
+    "client": "n8n_http",
+    "mode": "raised",
+    "configuration": {
+      "type": "ready",
+      "client": "n8n_http",
+      "mode": "raised",
+      "node": "v22.19.0",
+      "autoSelectFamily": true,
+      "attemptTimeout": 1500,
+      "ipv6_disabled": "0",
+      "routes": "00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n00000000000000000000000000000001 80 00000000000000000000000000000000 00 00000000000000000000000000000000 00000000 00000006 00000000 80200001       lo\n00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n",
+      "container": "lead_diag_base_20261011"
+    },
+    "requests": 50,
+    "successes": 41,
+    "errors": {
+      "ETIMEDOUT": 9,
+      "ENETUNREACH": 9
+    },
+    "syscalls": {
+      "connect": 9
+    },
+    "p50_ms": 1307,
+    "max_ms": 9172,
+    "failure_clusters": [
+      {
+        "first_round": 16,
+        "last_round": 16,
+        "count": 1,
+        "start": "2026-10-11T18:49:40.365Z",
+        "end": "2026-10-11T18:49:40.365Z"
+      },
+      {
+        "first_round": 18,
+        "last_round": 20,
+        "count": 3,
+        "start": "2026-10-11T18:51:02.913Z",
+        "end": "2026-10-11T18:52:51.318Z"
+      },
+      {
+        "first_round": 22,
+        "last_round": 26,
+        "count": 5,
+        "start": "2026-10-11T18:54:56.654Z",
+        "end": "2026-10-11T18:58:43.129Z"
+      }
+    ],
+    "pre_send_evidence_candidates": 9,
+    "warning": "Raw pre_send_proven flag is a socket-error heuristic for the failed attempt, not proof that an entire pooled/retried logical request never sent bytes."
+  },
+  {
+    "client": "n8n_http",
+    "mode": "sysctl_noipv6",
+    "configuration": {
+      "type": "ready",
+      "client": "n8n_http",
+      "mode": "sysctl_noipv6",
+      "node": "v22.19.0",
+      "autoSelectFamily": true,
+      "attemptTimeout": 250,
+      "ipv6_disabled": "1",
+      "routes": "00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n",
+      "container": "lead_diag_noipv6_20261011"
+    },
+    "requests": 50,
+    "successes": 45,
+    "errors": {
+      "ECONNRESET": 3,
+      "ERR_CANCELED": 2
+    },
+    "syscalls": {},
+    "p50_ms": 1390.5,
+    "max_ms": 15037,
+    "failure_clusters": [
+      {
+        "first_round": 18,
+        "last_round": 18,
+        "count": 1,
+        "start": "2026-10-11T18:51:06.156Z",
+        "end": "2026-10-11T18:51:06.156Z"
+      },
+      {
+        "first_round": 21,
+        "last_round": 23,
+        "count": 3,
+        "start": "2026-10-11T18:53:55.194Z",
+        "end": "2026-10-11T18:56:02.971Z"
+      },
+      {
+        "first_round": 25,
+        "last_round": 25,
+        "count": 1,
+        "start": "2026-10-11T18:57:49.582Z",
+        "end": "2026-10-11T18:57:49.582Z"
+      }
+    ],
+    "pre_send_evidence_candidates": 0,
+    "warning": "Raw pre_send_proven flag is a socket-error heuristic for the failed attempt, not proof that an entire pooled/retried logical request never sent bytes."
+  },
+  {
+    "client": "n8n_http",
+    "mode": "node_options_disabled",
+    "configuration": {
+      "type": "ready",
+      "client": "n8n_http",
+      "mode": "node_options_disabled",
+      "node": "v22.19.0",
+      "autoSelectFamily": false,
+      "attemptTimeout": 250,
+      "ipv6_disabled": "0",
+      "routes": "00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n00000000000000000000000000000001 80 00000000000000000000000000000000 00 00000000000000000000000000000000 00000000 00000004 00000000 80200001       lo\n00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n",
+      "container": "lead_diag_nodeoff_20261011"
+    },
+    "requests": 50,
+    "successes": 46,
+    "errors": {
+      "ECONNRESET": 4
+    },
+    "syscalls": {},
+    "p50_ms": 1274,
+    "max_ms": 14410,
+    "failure_clusters": [
+      {
+        "first_round": 16,
+        "last_round": 16,
+        "count": 1,
+        "start": "2026-10-11T18:49:53.104Z",
+        "end": "2026-10-11T18:49:53.104Z"
+      },
+      {
+        "first_round": 19,
+        "last_round": 19,
+        "count": 1,
+        "start": "2026-10-11T18:52:12.086Z",
+        "end": "2026-10-11T18:52:12.086Z"
+      },
+      {
+        "first_round": 21,
+        "last_round": 22,
+        "count": 2,
+        "start": "2026-10-11T18:54:08.584Z",
+        "end": "2026-10-11T18:55:13.178Z"
+      }
+    ],
+    "pre_send_evidence_candidates": 0,
+    "warning": "Raw pre_send_proven flag is a socket-error heuristic for the failed attempt, not proof that an entire pooled/retried logical request never sent bytes."
+  },
+  {
+    "client": "n8n_http",
+    "mode": "node_options_raised",
+    "configuration": {
+      "type": "ready",
+      "client": "n8n_http",
+      "mode": "node_options_raised",
+      "node": "v22.19.0",
+      "autoSelectFamily": true,
+      "attemptTimeout": 1500,
+      "ipv6_disabled": "0",
+      "routes": "00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n00000000000000000000000000000001 80 00000000000000000000000000000000 00 00000000000000000000000000000000 00000000 00000004 00000000 80200001       lo\n00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n",
+      "container": "lead_diag_nodetimeout_20261011"
+    },
+    "requests": 50,
+    "successes": 38,
+    "errors": {
+      "ETIMEDOUT": 12,
+      "ENETUNREACH": 12
+    },
+    "syscalls": {
+      "connect": 12
+    },
+    "p50_ms": 1234.5,
+    "max_ms": 11775,
+    "failure_clusters": [
+      {
+        "first_round": 10,
+        "last_round": 10,
+        "count": 1,
+        "start": "2026-10-11T18:47:32.310Z",
+        "end": "2026-10-11T18:47:32.310Z"
+      },
+      {
+        "first_round": 15,
+        "last_round": 25,
+        "count": 11,
+        "start": "2026-10-11T18:49:04.548Z",
+        "end": "2026-10-11T18:58:18.782Z"
+      }
+    ],
+    "pre_send_evidence_candidates": 12,
+    "warning": "Raw pre_send_proven flag is a socket-error heuristic for the failed attempt, not proof that an entire pooled/retried logical request never sent bytes."
+  }
+]

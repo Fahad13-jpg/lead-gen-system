@@ -1,10 +1,9 @@
 {
-  "name": "9 - Reply Detection & AI Qualification",
   "nodes": [
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n  oa.id as activity_id,\n  oa.lead_id,\n  cl.user_id as org_id,\n  cl.email as lead_email,\n  cl.company_name,\n  oa.sent_at,\n  oa.external_id,\n  el.reply_received,\n  el.outreach_status\nFROM outreach_activities oa\nJOIN enriched_leads el ON oa.lead_id = el.lead_id\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nWHERE oa.channel = 'email'\nAND (el.reply_received IS NULL OR el.reply_received = FALSE)\nAND el.outreach_status = 'email_sent'\nORDER BY oa.sent_at DESC\nLIMIT 5",
+        "query": "SELECT a.id AS activity_id,a.org_id,a.lead_id,a.external_id,coalesce(nullif(a.dispatch_metadata->>'recipient_email',''),c.email) AS lead_email,\na.dispatch_metadata->>'sender_email' AS sender_email,a.dispatch_metadata->>'credential_ref' AS credential_ref,a.dispatch_metadata->'delivery_scan' AS delivery_scan\nFROM outreach_activities a JOIN cleaned_leads c ON c.id=a.lead_id AND c.org_id=a.org_id\nWHERE a.org_id=NULLIF('{{ String($json.org_id || '').replace(/'/g, \"''\") }}','')::integer\nAND a.channel='email' AND a.dispatch_metadata->>'state'='provider_accepted'\nAND a.dispatch_metadata->>'credential_ref'='{{ String($json.credential_ref || '').replace(/'/g, \"''\") }}'\nAND a.dispatch_metadata->>'sender_email'='{{ String($json.email || '').replace(/'/g, \"''\") }}'\nAND a.replied_at IS NULL AND a.bounced_at IS NULL\nORDER BY a.dispatch_metadata->'reply_scan'->>'checked_at' NULLS FIRST,a.id LIMIT 10",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -20,7 +19,8 @@
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
-      }
+      },
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -53,7 +53,8 @@
         -128
       ],
       "id": "f0631d4a-c11b-4840-b648-d28f65fb4663",
-      "name": "Any Emails to Check?"
+      "name": "Any Emails to Check?",
+      "disabled": true
     },
     {
       "parameters": {
@@ -77,7 +78,8 @@
           "id": "ErvKkvbo4c5GQjPn",
           "name": "Gmail account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -110,11 +112,13 @@
         -144
       ],
       "id": "2855e2a5-73a9-41d3-af6a-ed80031cdfcf",
-      "name": "Reply Found?"
+      "name": "Reply Found?",
+      "disabled": true
     },
     {
       "parameters": {
-        "jsCode": "const gmailMessages = $input.all();\nconst leadInfo = $('Get Recent Outreach Emails').first().json;\nconst replies = [];\n\nfor (const item of gmailMessages) {\n  const message = item.json;\n  \n  // Extract headers\n  const headers = message.payload?.headers || [];\n  const getHeader = (name) => headers.find(h => h.name === name)?.value || '';\n  \n  // Extract body\n  let body = '';\n  const parts = message.payload?.parts || [];\n  if (parts.length > 0) {\n    const textPart = parts.find(p => p.mimeType === 'text/plain');\n    if (textPart?.body?.data) {\n      body = Buffer.from(textPart.body.data, 'base64').toString('utf-8');\n    }\n  } else if (message.payload?.body?.data) {\n    body = Buffer.from(message.payload.body.data, 'base64').toString('utf-8');\n  }\n\n  replies.push({\n    lead_id: leadInfo.lead_id,\n    org_id: leadInfo.org_id,\n    company_name: leadInfo.company_name,\n    reply_from: getHeader('From'),\n    reply_to: getHeader('To'),\n    subject: getHeader('Subject'),\n    body: body || 'No body found',\n    received_at: getHeader('Date') || new Date().toISOString(),\n    thread_id: message.threadId || null,\n    message_id: message.id || null\n  });\n}\n\nreturn replies.length > 0 ? replies : [{\n  lead_id: leadInfo.lead_id,\n  org_id: leadInfo.org_id,\n  company_name: leadInfo.company_name,\n  reply_from: leadInfo.lead_email,\n  body: 'Reply detected',\n  received_at: new Date().toISOString(),\n  thread_id: null\n}];"
+        "jsCode": "const gmailMessages = $input.all();\nconst leadInfo = $('Get Recent Outreach Emails').first().json;\nconst replies = [];\n\nfor (const item of gmailMessages) {\n  const message = item.json;\n  \n  // Extract headers\n  const headers = message.payload?.headers || [];\n  const getHeader = (name) => headers.find(h => h.name === name)?.value || '';\n  \n  // Extract body\n  let body = '';\n  const parts = message.payload?.parts || [];\n  if (parts.length > 0) {\n    const textPart = parts.find(p => p.mimeType === 'text/plain');\n    if (textPart?.body?.data) {\n      body = Buffer.from(textPart.body.data, 'base64').toString('utf-8');\n    }\n  } else if (message.payload?.body?.data) {\n    body = Buffer.from(message.payload.body.data, 'base64').toString('utf-8');\n  }\n\n  replies.push({\n    lead_id: leadInfo.lead_id,\n    org_id: leadInfo.org_id,\n    company_name: leadInfo.company_name,\n    reply_from: getHeader('From'),\n    reply_to: getHeader('To'),\n    subject: getHeader('Subject'),\n    body: body || 'No body found',\n    received_at: getHeader('Date') || new Date().toISOString(),\n    thread_id: message.threadId || null,\n    message_id: message.id || null\n  });\n}\n\nreturn replies.length > 0 ? replies : [{\n  lead_id: leadInfo.lead_id,\n  org_id: leadInfo.org_id,\n  company_name: leadInfo.company_name,\n  reply_from: leadInfo.lead_email,\n  body: 'Reply detected',\n  received_at: new Date().toISOString(),\n  thread_id: null\n}];",
+        "mode": "runOnceForAllItems"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -123,7 +127,8 @@
         -160
       ],
       "id": "95810306-d5fa-42a8-b51a-7e4e3923f646",
-      "name": "Extract Reply Data"
+      "name": "Extract Reply Data",
+      "disabled": true
     },
     {
       "parameters": {
@@ -140,7 +145,8 @@
         -496
       ],
       "id": "0b9616cf-9ecf-4b6c-98fc-90e727495bc4",
-      "name": "AI - Reply Analyzer & Lead Qualifier"
+      "name": "AI - Reply Analyzer & Lead Qualifier",
+      "disabled": true
     },
     {
       "parameters": {
@@ -160,11 +166,13 @@
           "id": "QQB9yzE6weHJvRcp",
           "name": "Groq API"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
-        "jsCode": "const aiAnalysis = $input.first().json.output || {};\nconst replyData = $('Extract Reply Data').item.json;\n\n// If output exists, use it; otherwise use direct input\nconst data = aiAnalysis.lead_id ? aiAnalysis : replyData;\n\nconst qualification = {\n  lead_id: data.lead_id || $('Extract Reply Data').first().json?.lead_id || 92,\n  org_id: data.org_id || 1,\n  company_name: data.company_name || 'Unknown',\n  reply_from: data.reply_from || '',\n  reply_to: data.reply_to || '',\n  subject: data.subject || '',\n  body: data.body || '',\n  received_at: data.received_at || new Date().toISOString(),\n  thread_id: data.thread_id || null,\n  sentiment: aiAnalysis.sentiment || 'neutral',\n  intent: aiAnalysis.intent || 'unknown',\n  urgency: aiAnalysis.urgency || 'normal',\n  budget_mentioned: aiAnalysis.budget_mentioned || false,\n  budget_info: aiAnalysis.budget_info || null,\n  timeline_mentioned: aiAnalysis.timeline_mentioned || null,\n  pain_points_mentioned: aiAnalysis.pain_points || [],\n  decision_maker_confirmed: aiAnalysis.decision_maker_confirmed || false,\n  qualification_score: aiAnalysis.qualification_score || 50,\n  interest_level: aiAnalysis.interest_level || 'cold',\n  next_action: aiAnalysis.next_action || 'nurture',\n  recommended_response: aiAnalysis.recommended_response || '',\n  key_insights: aiAnalysis.key_insights || '',\n  red_flags: aiAnalysis.red_flags || [],\n  ai_confidence: aiAnalysis.confidence || 0,\n  processed: true,\n  processed_at: new Date().toISOString()\n};\n\nlet qualificationStatus;\nif (qualification.qualification_score >= 70) qualificationStatus = 'qualified';\nelse if (qualification.qualification_score >= 40) qualificationStatus = 'warm';\nelse if (qualification.sentiment === 'not_interested' || qualification.intent === 'unsubscribe') qualificationStatus = 'disqualified';\nelse qualificationStatus = 'cold';\n\nqualification.qualification_status = qualificationStatus;\nqualification.sales_ready = (\n  qualification.qualification_score >= 70 &&\n  ['interested', 'question'].includes(qualification.sentiment) &&\n  !['unsubscribe', 'decline'].includes(qualification.intent)\n);\n\nreturn qualification;"
+        "jsCode": "const aiAnalysis = $input.first().json.output || {};\nconst replyData = $('Extract Reply Data').item.json;\n\n// If output exists, use it; otherwise use direct input\nconst data = aiAnalysis.lead_id ? aiAnalysis : replyData;\n\nconst qualification = {\n  lead_id: data.lead_id || $('Extract Reply Data').first().json?.lead_id || 92,\n  org_id: data.org_id || 1,\n  company_name: data.company_name || 'Unknown',\n  reply_from: data.reply_from || '',\n  reply_to: data.reply_to || '',\n  subject: data.subject || '',\n  body: data.body || '',\n  received_at: data.received_at || new Date().toISOString(),\n  thread_id: data.thread_id || null,\n  sentiment: aiAnalysis.sentiment || 'neutral',\n  intent: aiAnalysis.intent || 'unknown',\n  urgency: aiAnalysis.urgency || 'normal',\n  budget_mentioned: aiAnalysis.budget_mentioned || false,\n  budget_info: aiAnalysis.budget_info || null,\n  timeline_mentioned: aiAnalysis.timeline_mentioned || null,\n  pain_points_mentioned: aiAnalysis.pain_points || [],\n  decision_maker_confirmed: aiAnalysis.decision_maker_confirmed || false,\n  qualification_score: aiAnalysis.qualification_score || 50,\n  interest_level: aiAnalysis.interest_level || 'cold',\n  next_action: aiAnalysis.next_action || 'nurture',\n  recommended_response: aiAnalysis.recommended_response || '',\n  key_insights: aiAnalysis.key_insights || '',\n  red_flags: aiAnalysis.red_flags || [],\n  ai_confidence: aiAnalysis.confidence || 0,\n  processed: true,\n  processed_at: new Date().toISOString()\n};\n\nlet qualificationStatus;\nif (qualification.qualification_score >= 70) qualificationStatus = 'qualified';\nelse if (qualification.qualification_score >= 40) qualificationStatus = 'warm';\nelse if (qualification.sentiment === 'not_interested' || qualification.intent === 'unsubscribe') qualificationStatus = 'disqualified';\nelse qualificationStatus = 'cold';\n\nqualification.qualification_status = qualificationStatus;\nqualification.sales_ready = (\n  qualification.qualification_score >= 70 &&\n  ['interested', 'question'].includes(qualification.sentiment) &&\n  !['unsubscribe', 'decline'].includes(qualification.intent)\n);\n\nreturn qualification;",
+        "mode": "runOnceForAllItems"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -173,7 +181,8 @@
         -128
       ],
       "id": "4b50c055-1577-4f14-b1ea-1f8cc64b78b4",
-      "name": "Prepare Qualification Data"
+      "name": "Prepare Qualification Data",
+      "disabled": true
     },
     {
       "parameters": {
@@ -194,7 +203,9 @@
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
-      }
+      },
+      "disabled": true,
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -215,7 +226,9 @@
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
-      }
+      },
+      "disabled": true,
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -236,7 +249,9 @@
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
-      }
+      },
+      "disabled": true,
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -329,7 +344,8 @@
         -144
       ],
       "id": "048a79f9-f0a9-4b9e-be8e-61f14db73a80",
-      "name": "Route by Qualification"
+      "name": "Route by Qualification",
+      "disabled": true
     },
     {
       "parameters": {
@@ -350,7 +366,9 @@
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
-      }
+      },
+      "disabled": true,
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -371,7 +389,9 @@
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
-      }
+      },
+      "disabled": true,
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -400,7 +420,8 @@
         176
       ],
       "id": "7008234b-09ed-466a-a680-2938e73fdfba",
-      "name": "Continue Nurturing"
+      "name": "Continue Nurturing",
+      "disabled": true
     },
     {
       "parameters": {},
@@ -416,7 +437,8 @@
     },
     {
       "parameters": {
-        "jsCode": "const error = $input.first().json;\n\nconsole.error('Reply Detection Error:', {\n  workflow: 'Reply Detection',\n  node: error.node?.name,\n  error: error.error?.message,\n  timestamp: new Date().toISOString()\n});\n\n// Could also insert to error log table\nreturn {\n  workflow: 'Reply Detection',\n  error_message: error.error?.message,\n  node_name: error.node?.name,\n  timestamp: new Date().toISOString()\n};"
+        "mode": "runOnceForEachItem",
+        "jsCode": "const exec=$json;return {json:{workflow:'Reply Detection',error_message:String(exec.execution?.error?.message||'reply_check_failed').replace(/'/g,\"''\")}};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -434,7 +456,7 @@
           "interval": [
             {
               "field": "minutes",
-              "minutesInterval": 30
+              "minutesInterval": 2
             }
           ]
         }
@@ -450,7 +472,8 @@
     },
     {
       "parameters": {
-        "jsCode": "return $('Prepare Qualification Data').item.json;"
+        "jsCode": "return $('Prepare Qualification Data').item.json;",
+        "mode": "runOnceForAllItems"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -459,7 +482,8 @@
         -128
       ],
       "id": "41eafc07-dbe4-4784-a050-157f222749a9",
-      "name": "Pass Data"
+      "name": "Pass Data",
+      "disabled": true
     },
     {
       "parameters": {
@@ -475,164 +499,552 @@
       "typeVersion": 1,
       "id": "2f0e7c38-0fa1-490f-bbb2-d0aa1b57f276",
       "name": "Sticky Note"
+    },
+    {
+      "id": "reply-v2-bound-mailbox-gate",
+      "name": "Bound Mailbox Gate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1600,
+        500
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Configure only after verifying the Gmail credential owner and org mapping.\n// No implicit org=1 or default sender. Closed during local development.\nreturn null;"
+      }
+    },
+    {
+      "id": "reply-v2-bind-reply-activity",
+      "name": "Bind Reply Activity",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        500
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const binding=$('Bound Mailbox Gate').item.json;\nif(binding.credential_ref!==\"ErvKkvbo4c5GQjPn\")throw Error('WORKFLOW_CREDENTIAL_MISMATCH');\nif(!$json.activity_id||String($json.org_id)!==String(binding.org_id)||$json.credential_ref!==binding.credential_ref||$json.sender_email!==binding.email)return null;\nreturn {json:{binding,activity:$json}};"
+      }
+    },
+    {
+      "id": "reply-v2-load-original-gmail-message",
+      "name": "Load Original Gmail Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1760,
+        500
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ 'https://gmail.googleapis.com/gmail/v1/users/me/messages/' + encodeURIComponent($json.activity.external_id) + '?format=full' }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "gmailOAuth2",
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ErvKkvbo4c5GQjPn",
+          "name": "Gmail account"
+        }
+      },
+      "retryOnFail": false
+    },
+    {
+      "id": "reply-v2-verify-original-context",
+      "name": "Verify Original Context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        500
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const row=$('Bind Reply Activity').item.json;\nif($json.id!==row.activity.external_id||!/^[a-f0-9]{8,64}$/i.test($json.threadId||''))throw Error('ORIGINAL_MESSAGE_UNVERIFIED');\nreturn {json:{...row,original:$json}};"
+      }
+    },
+    {
+      "id": "reply-v2-load-gmail-conversation",
+      "name": "Load Gmail Conversation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1920,
+        500
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ 'https://gmail.googleapis.com/gmail/v1/users/me/threads/' + encodeURIComponent($json.original.threadId) + '?format=full' }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "gmailOAuth2",
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ErvKkvbo4c5GQjPn",
+          "name": "Gmail account"
+        }
+      },
+      "retryOnFail": false
+    },
+    {
+      "id": "reply-v2-match-conversation-replies",
+      "name": "Match Conversation Replies",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2000,
+        500
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const helpers=(()=>{const module={exports:{}};\n'use strict';\n// Deterministic, read-only matching. Inputs must come from the bound mailbox,\n// never from dashboard-submitted Gmail IDs. No AI or network access here.\nconst gmailId = v => typeof v === 'string' && /^[a-f0-9]{8,64}$/i.test(v);\nconst positive = v => /^[1-9][0-9]*$/.test(String(v)) && Number.isSafeInteger(Number(v));\nfunction header(message, name) {\n const h = message?.payload?.headers;\n if (!Array.isArray(h)) return '';\n const values = h.filter(x => typeof x?.name === 'string' && x.name.toLowerCase() === name.toLowerCase());\n return values.length === 1 && typeof values[0].value === 'string' ? values[0].value : '';\n}\nfunction address(value) {\n if (typeof value !== 'string' || /[\\r\\n]/.test(value)) return null;\n const v = (value.match(/^[^<>]*<([^<>]+)>\\s*$/)?.[1] || value).trim();\n return /^[^\\s@,;<>]+@[^\\s@,;<>]+\\.[^\\s@,;<>]+$/.test(v) ? v.toLowerCase() : null;\n}\nfunction verifyMailbox(binding,profile,credentialRef) {\n if(!positive(binding?.org_id)||!address(binding?.email)||binding?.credential_ref!==credentialRef||!credentialRef)\n  throw Error('INVALID_SENDER_BINDING');\n if(!address(profile?.emailAddress)||address(profile.emailAddress)!==address(binding.email)||profile.error)\n  throw Error('CONNECTED_MAILBOX_MISMATCH');\n // Canonical account only; aliases need an explicit verified mapping later.\n return {...binding,email:address(profile.emailAddress)};\n}\nfunction body(message) {\n let count=0;\n function visit(part, depth) {\n  if (!part || depth>8 || ++count>100) return '';\n  if (part.mimeType==='text/plain' && typeof part.body?.data==='string') {\n   return Buffer.from(part.body.data.slice(0,22000),'base64url').toString('utf8').replace(/[\\x00-\\x08\\x0b\\x0c\\x0e-\\x1f]/g,'').slice(0,12000);\n  }\n  return Array.isArray(part.parts) ? part.parts.map(p=>visit(p,depth+1)).filter(Boolean).join('\\n').slice(0,12000) : '';\n }\n return visit(message?.payload,0);\n}\nfunction clearOptOut(text) {\n // Exact standalone request in the new text only. Never classify quoted\n // unsubscribe footers, questions, or a negated request as an opt-out.\n const fresh=String(text).split(/\\n\\s*(?:>|On .+wrote:|From:|-----Original Message-----)/i)[0].trim();\n return /^(?:unsubscribe(?: me)?|please unsubscribe(?: me)?|remove me(?: from (?:your|the) (?:list|mailing list))?|please remove me(?: from (?:your|the) (?:list|mailing list))?|stop(?: emailing me)?|do not (?:email|contact) me(?: again)?|don't (?:email|contact) me(?: again)?)[.!\\s]*$/i.test(fresh);\n}\nfunction deliveryReport(original,incoming,recipient) {\n // RFC 3464 subset: an explicit failed recipient + permanent status and a\n // returned original Message-ID. Subject text is never bounce evidence.\n const parts=[];let count=0;\n function walk(part,depth){if(!part||depth>8||++count>100)return;parts.push(part);if(Array.isArray(part.parts))for(const child of part.parts)walk(child,depth+1);}\n walk(incoming?.payload,0);\n const reports=parts.filter(p=>p.mimeType==='message/delivery-status');\n if(!reports.length)return null;\n const uncertain=reason=>({matched:false,reason});\n if(incoming.payload?.mimeType!=='multipart/report'||reports.length!==1)return uncertain('delivery_report_shape_unverified');\n const decode=p=>typeof p.body?.data==='string'&&p.body.data.length<=44000?Buffer.from(p.body.data,'base64url').toString('utf8'):null;\n function fields(text){\n  const map={};for(const line of text.replace(/\\r\\n/g,'\\n').replace(/\\n[ \\t]+/g,' ').split('\\n')){\n   const m=line.match(/^([A-Za-z0-9-]+):\\s*(.*)$/);if(!m)continue;\n   const key=m[1].toLowerCase();if(Object.hasOwn(map,key))return null;map[key]=m[2].trim();\n  }return map;\n }\n const raw=decode(reports[0]);if(raw===null)return uncertain('delivery_report_body_unavailable');\n const blocks=raw.replace(/\\r\\n/g,'\\n').trim().split(/\\n\\s*\\n/).map(fields);\n if(blocks.some(b=>!b)||!blocks[0]?.['reporting-mta'])return uncertain('delivery_report_fields_unverified');\n const recipients=blocks.slice(1).filter(b=>address(b['final-recipient']?.match(/^rfc822\\s*;\\s*(.+)$/i)?.[1])===address(recipient));\n if(recipients.length!==1)return uncertain('delivery_report_recipient_mismatch');\n const originalRef=header(original,'Message-ID'),returned=[];\n for(const p of parts.filter(p=>['text/rfc822-headers','message/rfc822'].includes(p.mimeType))){\n  const data=decode(p);if(data!==null){const h=fields(data.split(/\\r?\\n\\r?\\n/)[0]);if(h?.['message-id'])returned.push(h['message-id']);}\n  // Some Gmail payloads expose encapsulated original headers as child parts.\n  if(p.mimeType==='message/rfc822'&&Array.isArray(p.parts))for(const child of p.parts){const id=header({payload:child},'Message-ID');if(id)returned.push(id);}\n }\n if(!/^<[^<>\\s]+>$/.test(originalRef)||!returned.length||returned.some(id=>id!==originalRef))return uncertain('delivery_report_original_mismatch');\n const report=recipients[0];\n if(report.action?.toLowerCase()!=='failed'||!/^5\\.[0-9]{1,3}\\.[0-9]{1,3}$/.test(report.status||''))return uncertain('delivery_report_not_permanent_failure');\n return {matched:true,status:report.status,category:'hard_bounce'};\n}\nfunction match(binding, activity, original, incoming) {\n const review=reason=>({matched:false,reason,requires_review:true});\n if (!positive(binding?.org_id) || !binding?.credential_ref || !address(binding?.email) ||\n     !positive(activity?.activity_id) || !positive(activity?.lead_id) || !address(activity?.lead_email) ||\n     String(binding.org_id)!==String(activity?.org_id) ||\n     binding.credential_ref!==activity?.credential_ref || address(binding.email)!==address(activity?.sender_email)) return review('sender_binding_mismatch');\n if (!gmailId(original?.id) || original.id!==activity?.external_id || !gmailId(original?.threadId) ||\n     address(header(original,'From'))!==address(binding.email) ||\n     address(header(original,'To'))!==address(activity.lead_email)) return review('original_message_mismatch');\n if (!gmailId(incoming?.id) || incoming.error || incoming.id===original.id) return review('not_a_new_message');\n if (!gmailId(incoming.threadId)) return review('conversation_mismatch');\n if (Array.isArray(incoming.labelIds) && (incoming.labelIds.includes('SENT') || incoming.labelIds.includes('DRAFT')) ||\n     address(header(incoming,'From'))===address(binding.email)) return review('outgoing_message');\n const sent=Number(original.internalDate), received=Number(incoming.internalDate);\n if (!Number.isSafeInteger(sent) || !Number.isSafeInteger(received) || sent<=0 || received<=sent || received>8640000000000000) return review('message_time_invalid');\n const delivery=deliveryReport(original,incoming,activity.lead_email);\n if(delivery){\n  if(!delivery.matched)return review(delivery.reason);\n  return {matched:true,requires_review:true,category:'hard_bounce',body:'Structured delivery report: '+delivery.status,\n   subject:header(incoming,'Subject').slice(0,500),received_at:new Date(received).toISOString(),\n   thread_id:incoming.threadId,message_id:incoming.id,\n   stop_event:{org_id:Number(binding.org_id),activity_id:Number(activity.activity_id),kind:'bounce',event_id:'gmail:'+incoming.id,source_ref:'gmail-thread:'+incoming.threadId}};\n }\n if(incoming.threadId!==original.threadId)return review('conversation_mismatch');\n // Unknown senders need review; never infer a bounce from subject text.\n if (address(header(incoming,'From'))!==address(activity.lead_email)) return review('sender_requires_review');\n const originalRef=header(original,'Message-ID');\n const refs=(header(incoming,'In-Reply-To')+' '+header(incoming,'References')).match(/<[^<>\\s]+>/g)||[];\n if (!/^<[^<>\\s]+>$/.test(originalRef) || !refs.includes(originalRef)) return review('reply_reference_missing');\n const text=body(incoming);\n const automatic=header(incoming,'Auto-Submitted');\n // Automatic responses also pause conservatively; no automatic resumption.\n const category=automatic && automatic.toLowerCase()!=='no' ? 'automatic_response' : clearOptOut(text)?'opt_out':'reply';\n return {matched:true,requires_review:true,category,body:text,subject:header(incoming,'Subject').slice(0,500),\n  received_at:new Date(received).toISOString(),thread_id:incoming.threadId,message_id:incoming.id,\n  stop_event:{org_id:Number(binding.org_id),activity_id:Number(activity.activity_id),kind:category==='opt_out'?'opt_out':'reply',\n   event_id:'gmail:'+incoming.id,source_ref:'gmail-thread:'+incoming.threadId}};\n}\nasync function discoverDeliveryReports(binding,activity,original,deps,options={}) {\n if(options.enabled!==true)return {complete:false,reason:'discovery_disabled',events:[],reviews:[]};\n if(!positive(binding?.org_id)||!positive(activity?.activity_id)||String(binding.org_id)!==String(activity?.org_id)||\n binding.credential_ref!==activity?.credential_ref||!address(binding.email)||address(binding.email)!==address(activity.sender_email)||\n !address(activity.lead_email)||original?.id!==activity.external_id||!gmailId(original?.id)||\n address(header(original,'From'))!==address(binding.email)||address(header(original,'To'))!==address(activity.lead_email))\n  return {complete:false,reason:'discovery_context_mismatch',events:[],reviews:[]};\n const sent=Number(original.internalDate),until=options.now??Date.now();\n const checkpoint=options.checkedThrough===undefined?sent:Date.parse(options.checkedThrough);\n if(!Number.isSafeInteger(sent)||sent<=0||!Number.isSafeInteger(until)||until>8640000000000000||until<sent||\n !Number.isFinite(checkpoint)||checkpoint<sent||checkpoint>until)return {complete:false,reason:'invalid_discovery_window',events:[],reviews:[]};\n // Overlap by a second. Idempotent event IDs absorb repeated boundary results.\n const q='after:'+Math.max(0,Math.floor(checkpoint/1000)-1)+' before:'+(Math.floor(until/1000)+1)+' -in:sent -in:drafts';\n const events=[],reviews=[],seen=new Set(),tokens=new Set();let pageToken;\n for(let page=0;page<2;page++){\n  let list;\n  try{list=await deps.listMessages(binding,{q,maxResults:25,...(pageToken?{pageToken}:{})});}\n  catch{return {complete:false,reason:'discovery_list_failed',events,reviews};}\n  if(list?.error||!list||typeof list!=='object'||Array.isArray(list)||\n   list.messages!==undefined&&!Array.isArray(list.messages)||Array.isArray(list.messages)&&list.messages.length>25)\n   return {complete:false,reason:'invalid_discovery_page',events,reviews};\n  for(const ref of list.messages||[]){\n   if(!gmailId(ref?.id))return {complete:false,reason:'invalid_discovery_id',events,reviews};\n   if(seen.has(ref.id)||ref.id===original.id)continue;seen.add(ref.id);\n   let message;try{message=await deps.getMessage(binding,ref.id);}catch{return {complete:false,reason:'discovery_message_failed',events,reviews};}\n   if(message?.id!==ref.id||message.error)return {complete:false,reason:'discovery_message_failed',events,reviews};\n   const result=match(binding,activity,original,message);\n   if(result.matched&&result.category==='hard_bounce')events.push(result);\n   else if(result.reason?.startsWith('delivery_report_')&&!['delivery_report_recipient_mismatch','delivery_report_original_mismatch'].includes(result.reason))reviews.push({message_id:ref.id,reason:result.reason});\n  }\n  pageToken=list.nextPageToken;\n  if(!pageToken)return {complete:true,checked_through:new Date(until).toISOString(),events,reviews};\n  if(typeof pageToken!=='string'||pageToken.length>2000||tokens.has(pageToken))return {complete:false,reason:'invalid_discovery_page_token',events,reviews};\n  tokens.add(pageToken);\n }\n return {complete:false,reason:'discovery_page_budget_reached',events,reviews};\n}\nasync function poll(binding, activities, deps, options={}) {\n if(options.enabled!==true) return {state:'disabled',processed:0};\n if(!positive(binding?.org_id)||typeof binding?.credential_ref!=='string'||!binding.credential_ref||!address(binding?.email))throw Error('INVALID_SENDER_BINDING');\n if(!Array.isArray(activities)||activities.length>50)throw Error('INVALID_REPLY_BATCH');\n const results=[];\n for(const activity of activities) {\n  // Validate binding before reading a mailbox. SQL also checks scope on write.\n  if(!positive(activity?.activity_id)||!positive(activity?.lead_id)||String(activity?.org_id)!==String(binding.org_id)||activity.credential_ref!==binding.credential_ref||\n     address(activity.sender_email)!==address(binding.email)||!address(binding.email)||!gmailId(activity.external_id)) {\n   results.push({state:'review',reason:'sender_binding_mismatch'});continue;\n  }\n  let original,thread;\n  try {original=await deps.getMessage(binding,activity.external_id);\n   if(original?.id!==activity.external_id||!gmailId(original?.threadId))throw Error('invalid_original');\n   thread=await deps.getThread(binding,original.threadId);\n  } catch {results.push({state:'paused',reason:'mailbox_read_failed'});continue;}\n  if(thread?.id!==original.threadId||!Array.isArray(thread?.messages)||thread.messages.length>200){results.push({state:'review',reason:'invalid_or_oversized_thread'});continue;}\n  const seen=new Set();\n  for(const message of thread.messages){\n   if(message?.id===original.id||seen.has(message?.id))continue;\n   seen.add(message?.id);\n   const event=match(binding,activity,original,message);\n   if(!event.matched){results.push({state:'review',reason:event.reason});continue;}\n   // Stop BEFORE downstream qualification/storage. A write failure is retried\n   // on a later poll with the same deterministic event ID, never a new event.\n   try {const saved=await deps.recordStop(event.stop_event);\n    results.push(saved?.saved===true?{state:'stopped',event}:{state:'paused',reason:'stop_not_saved'});\n   } catch {results.push({state:'paused',reason:'stop_commit_unknown'});}\n  }\n }\n return {state:'checked',processed:results.length,results};\n}\nmodule.exports={header,address,body,verifyMailbox,clearOptOut,deliveryReport,discoverDeliveryReports,match,poll};\n\nreturn module.exports;})();\nconst row=$('Verify Original Context').item.json;\nif($json.id!==row.original.threadId||!Array.isArray($json.messages)||$json.messages.length>200)throw Error('CONVERSATION_UNVERIFIED');\nconst events=[],reviews=[],seen=new Set();\nfor(const message of $json.messages){if(message.id===row.original.id||seen.has(message.id))continue;seen.add(message.id);\n const result=helpers.match(row.binding,row.activity,row.original,message);\n if(result.matched)events.push(result);else if(result.reason!=='outgoing_message')reviews.push({message_id:message.id,reason:result.reason});}\nreturn {json:{...row.binding,activity_id:row.activity.activity_id,external_id:row.activity.external_id,sender_email:row.binding.email,events,reviews}};"
+      }
+    },
+    {
+      "id": "reply-v2-persist-reply-scan",
+      "name": "Persist Reply Scan",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2080,
+        500
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT outreach_reply_scan_finish('{{ JSON.stringify($json).replace(/'/g, \"''\") }}'::jsonb) AS result",
+        "options": {}
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "retryOnFail": false,
+      "alwaysOutputData": true
+    },
+    {
+      "id": "reply-v2-check-reply-persistence",
+      "name": "Check Reply Persistence",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        500
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "if($json.result?.saved!==true)throw Error('REPLY_SCAN_NOT_PERSISTED');return {json:$json.result};"
+      }
+    },
+    {
+      "id": "reply-v2-status",
+      "name": "Reply V2 Status",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        500
+      ],
+      "parameters": {
+        "width": 420,
+        "height": 340,
+        "content": "## Current local reply path\nSchedule Trigger: every 2 minutes. Explicit mailbox binding required; gate CLOSED. Original Gmail message + conversation matching; stop before qualification; migration 025 persists scan progress. Legacy AI/qualification branches retained but disabled and disconnected. Historical notes describe the old path.\n\nUNVERIFIED: authenticated Gmail HTTP nodes in installed n8n; live inbox integration. Delivery reports and unmatched replies need review. No automatic reply sending."
+      }
+    },
+    {
+      "id": "reply-v2-read-connected-mailbox",
+      "name": "Read Connected Mailbox",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2320,
+        500
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://gmail.googleapis.com/gmail/v1/users/me/profile",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "gmailOAuth2",
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ErvKkvbo4c5GQjPn",
+          "name": "Gmail account"
+        }
+      },
+      "retryOnFail": false
+    },
+    {
+      "id": "reply-v2-verify-connected-mailbox",
+      "name": "Verify Connected Mailbox",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2400,
+        500
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const helpers=(()=>{const module={exports:{}};\n'use strict';\n// Deterministic, read-only matching. Inputs must come from the bound mailbox,\n// never from dashboard-submitted Gmail IDs. No AI or network access here.\nconst gmailId = v => typeof v === 'string' && /^[a-f0-9]{8,64}$/i.test(v);\nconst positive = v => /^[1-9][0-9]*$/.test(String(v)) && Number.isSafeInteger(Number(v));\nfunction header(message, name) {\n const h = message?.payload?.headers;\n if (!Array.isArray(h)) return '';\n const values = h.filter(x => typeof x?.name === 'string' && x.name.toLowerCase() === name.toLowerCase());\n return values.length === 1 && typeof values[0].value === 'string' ? values[0].value : '';\n}\nfunction address(value) {\n if (typeof value !== 'string' || /[\\r\\n]/.test(value)) return null;\n const v = (value.match(/^[^<>]*<([^<>]+)>\\s*$/)?.[1] || value).trim();\n return /^[^\\s@,;<>]+@[^\\s@,;<>]+\\.[^\\s@,;<>]+$/.test(v) ? v.toLowerCase() : null;\n}\nfunction verifyMailbox(binding,profile,credentialRef) {\n if(!positive(binding?.org_id)||!address(binding?.email)||binding?.credential_ref!==credentialRef||!credentialRef)\n  throw Error('INVALID_SENDER_BINDING');\n if(!address(profile?.emailAddress)||address(profile.emailAddress)!==address(binding.email)||profile.error)\n  throw Error('CONNECTED_MAILBOX_MISMATCH');\n // Canonical account only; aliases need an explicit verified mapping later.\n return {...binding,email:address(profile.emailAddress)};\n}\nfunction body(message) {\n let count=0;\n function visit(part, depth) {\n  if (!part || depth>8 || ++count>100) return '';\n  if (part.mimeType==='text/plain' && typeof part.body?.data==='string') {\n   return Buffer.from(part.body.data.slice(0,22000),'base64url').toString('utf8').replace(/[\\x00-\\x08\\x0b\\x0c\\x0e-\\x1f]/g,'').slice(0,12000);\n  }\n  return Array.isArray(part.parts) ? part.parts.map(p=>visit(p,depth+1)).filter(Boolean).join('\\n').slice(0,12000) : '';\n }\n return visit(message?.payload,0);\n}\nfunction clearOptOut(text) {\n // Exact standalone request in the new text only. Never classify quoted\n // unsubscribe footers, questions, or a negated request as an opt-out.\n const fresh=String(text).split(/\\n\\s*(?:>|On .+wrote:|From:|-----Original Message-----)/i)[0].trim();\n return /^(?:unsubscribe(?: me)?|please unsubscribe(?: me)?|remove me(?: from (?:your|the) (?:list|mailing list))?|please remove me(?: from (?:your|the) (?:list|mailing list))?|stop(?: emailing me)?|do not (?:email|contact) me(?: again)?|don't (?:email|contact) me(?: again)?)[.!\\s]*$/i.test(fresh);\n}\nfunction deliveryReport(original,incoming,recipient) {\n // RFC 3464 subset: an explicit failed recipient + permanent status and a\n // returned original Message-ID. Subject text is never bounce evidence.\n const parts=[];let count=0;\n function walk(part,depth){if(!part||depth>8||++count>100)return;parts.push(part);if(Array.isArray(part.parts))for(const child of part.parts)walk(child,depth+1);}\n walk(incoming?.payload,0);\n const reports=parts.filter(p=>p.mimeType==='message/delivery-status');\n if(!reports.length)return null;\n const uncertain=reason=>({matched:false,reason});\n if(incoming.payload?.mimeType!=='multipart/report'||reports.length!==1)return uncertain('delivery_report_shape_unverified');\n const decode=p=>typeof p.body?.data==='string'&&p.body.data.length<=44000?Buffer.from(p.body.data,'base64url').toString('utf8'):null;\n function fields(text){\n  const map={};for(const line of text.replace(/\\r\\n/g,'\\n').replace(/\\n[ \\t]+/g,' ').split('\\n')){\n   const m=line.match(/^([A-Za-z0-9-]+):\\s*(.*)$/);if(!m)continue;\n   const key=m[1].toLowerCase();if(Object.hasOwn(map,key))return null;map[key]=m[2].trim();\n  }return map;\n }\n const raw=decode(reports[0]);if(raw===null)return uncertain('delivery_report_body_unavailable');\n const blocks=raw.replace(/\\r\\n/g,'\\n').trim().split(/\\n\\s*\\n/).map(fields);\n if(blocks.some(b=>!b)||!blocks[0]?.['reporting-mta'])return uncertain('delivery_report_fields_unverified');\n const recipients=blocks.slice(1).filter(b=>address(b['final-recipient']?.match(/^rfc822\\s*;\\s*(.+)$/i)?.[1])===address(recipient));\n if(recipients.length!==1)return uncertain('delivery_report_recipient_mismatch');\n const originalRef=header(original,'Message-ID'),returned=[];\n for(const p of parts.filter(p=>['text/rfc822-headers','message/rfc822'].includes(p.mimeType))){\n  const data=decode(p);if(data!==null){const h=fields(data.split(/\\r?\\n\\r?\\n/)[0]);if(h?.['message-id'])returned.push(h['message-id']);}\n  // Some Gmail payloads expose encapsulated original headers as child parts.\n  if(p.mimeType==='message/rfc822'&&Array.isArray(p.parts))for(const child of p.parts){const id=header({payload:child},'Message-ID');if(id)returned.push(id);}\n }\n if(!/^<[^<>\\s]+>$/.test(originalRef)||!returned.length||returned.some(id=>id!==originalRef))return uncertain('delivery_report_original_mismatch');\n const report=recipients[0];\n if(report.action?.toLowerCase()!=='failed'||!/^5\\.[0-9]{1,3}\\.[0-9]{1,3}$/.test(report.status||''))return uncertain('delivery_report_not_permanent_failure');\n return {matched:true,status:report.status,category:'hard_bounce'};\n}\nfunction match(binding, activity, original, incoming) {\n const review=reason=>({matched:false,reason,requires_review:true});\n if (!positive(binding?.org_id) || !binding?.credential_ref || !address(binding?.email) ||\n     !positive(activity?.activity_id) || !positive(activity?.lead_id) || !address(activity?.lead_email) ||\n     String(binding.org_id)!==String(activity?.org_id) ||\n     binding.credential_ref!==activity?.credential_ref || address(binding.email)!==address(activity?.sender_email)) return review('sender_binding_mismatch');\n if (!gmailId(original?.id) || original.id!==activity?.external_id || !gmailId(original?.threadId) ||\n     address(header(original,'From'))!==address(binding.email) ||\n     address(header(original,'To'))!==address(activity.lead_email)) return review('original_message_mismatch');\n if (!gmailId(incoming?.id) || incoming.error || incoming.id===original.id) return review('not_a_new_message');\n if (!gmailId(incoming.threadId)) return review('conversation_mismatch');\n if (Array.isArray(incoming.labelIds) && (incoming.labelIds.includes('SENT') || incoming.labelIds.includes('DRAFT')) ||\n     address(header(incoming,'From'))===address(binding.email)) return review('outgoing_message');\n const sent=Number(original.internalDate), received=Number(incoming.internalDate);\n if (!Number.isSafeInteger(sent) || !Number.isSafeInteger(received) || sent<=0 || received<=sent || received>8640000000000000) return review('message_time_invalid');\n const delivery=deliveryReport(original,incoming,activity.lead_email);\n if(delivery){\n  if(!delivery.matched)return review(delivery.reason);\n  return {matched:true,requires_review:true,category:'hard_bounce',body:'Structured delivery report: '+delivery.status,\n   subject:header(incoming,'Subject').slice(0,500),received_at:new Date(received).toISOString(),\n   thread_id:incoming.threadId,message_id:incoming.id,\n   stop_event:{org_id:Number(binding.org_id),activity_id:Number(activity.activity_id),kind:'bounce',event_id:'gmail:'+incoming.id,source_ref:'gmail-thread:'+incoming.threadId}};\n }\n if(incoming.threadId!==original.threadId)return review('conversation_mismatch');\n // Unknown senders need review; never infer a bounce from subject text.\n if (address(header(incoming,'From'))!==address(activity.lead_email)) return review('sender_requires_review');\n const originalRef=header(original,'Message-ID');\n const refs=(header(incoming,'In-Reply-To')+' '+header(incoming,'References')).match(/<[^<>\\s]+>/g)||[];\n if (!/^<[^<>\\s]+>$/.test(originalRef) || !refs.includes(originalRef)) return review('reply_reference_missing');\n const text=body(incoming);\n const automatic=header(incoming,'Auto-Submitted');\n // Automatic responses also pause conservatively; no automatic resumption.\n const category=automatic && automatic.toLowerCase()!=='no' ? 'automatic_response' : clearOptOut(text)?'opt_out':'reply';\n return {matched:true,requires_review:true,category,body:text,subject:header(incoming,'Subject').slice(0,500),\n  received_at:new Date(received).toISOString(),thread_id:incoming.threadId,message_id:incoming.id,\n  stop_event:{org_id:Number(binding.org_id),activity_id:Number(activity.activity_id),kind:category==='opt_out'?'opt_out':'reply',\n   event_id:'gmail:'+incoming.id,source_ref:'gmail-thread:'+incoming.threadId}};\n}\nasync function discoverDeliveryReports(binding,activity,original,deps,options={}) {\n if(options.enabled!==true)return {complete:false,reason:'discovery_disabled',events:[],reviews:[]};\n if(!positive(binding?.org_id)||!positive(activity?.activity_id)||String(binding.org_id)!==String(activity?.org_id)||\n binding.credential_ref!==activity?.credential_ref||!address(binding.email)||address(binding.email)!==address(activity.sender_email)||\n !address(activity.lead_email)||original?.id!==activity.external_id||!gmailId(original?.id)||\n address(header(original,'From'))!==address(binding.email)||address(header(original,'To'))!==address(activity.lead_email))\n  return {complete:false,reason:'discovery_context_mismatch',events:[],reviews:[]};\n const sent=Number(original.internalDate),until=options.now??Date.now();\n const checkpoint=options.checkedThrough===undefined?sent:Date.parse(options.checkedThrough);\n if(!Number.isSafeInteger(sent)||sent<=0||!Number.isSafeInteger(until)||until>8640000000000000||until<sent||\n !Number.isFinite(checkpoint)||checkpoint<sent||checkpoint>until)return {complete:false,reason:'invalid_discovery_window',events:[],reviews:[]};\n // Overlap by a second. Idempotent event IDs absorb repeated boundary results.\n const q='after:'+Math.max(0,Math.floor(checkpoint/1000)-1)+' before:'+(Math.floor(until/1000)+1)+' -in:sent -in:drafts';\n const events=[],reviews=[],seen=new Set(),tokens=new Set();let pageToken;\n for(let page=0;page<2;page++){\n  let list;\n  try{list=await deps.listMessages(binding,{q,maxResults:25,...(pageToken?{pageToken}:{})});}\n  catch{return {complete:false,reason:'discovery_list_failed',events,reviews};}\n  if(list?.error||!list||typeof list!=='object'||Array.isArray(list)||\n   list.messages!==undefined&&!Array.isArray(list.messages)||Array.isArray(list.messages)&&list.messages.length>25)\n   return {complete:false,reason:'invalid_discovery_page',events,reviews};\n  for(const ref of list.messages||[]){\n   if(!gmailId(ref?.id))return {complete:false,reason:'invalid_discovery_id',events,reviews};\n   if(seen.has(ref.id)||ref.id===original.id)continue;seen.add(ref.id);\n   let message;try{message=await deps.getMessage(binding,ref.id);}catch{return {complete:false,reason:'discovery_message_failed',events,reviews};}\n   if(message?.id!==ref.id||message.error)return {complete:false,reason:'discovery_message_failed',events,reviews};\n   const result=match(binding,activity,original,message);\n   if(result.matched&&result.category==='hard_bounce')events.push(result);\n   else if(result.reason?.startsWith('delivery_report_')&&!['delivery_report_recipient_mismatch','delivery_report_original_mismatch'].includes(result.reason))reviews.push({message_id:ref.id,reason:result.reason});\n  }\n  pageToken=list.nextPageToken;\n  if(!pageToken)return {complete:true,checked_through:new Date(until).toISOString(),events,reviews};\n  if(typeof pageToken!=='string'||pageToken.length>2000||tokens.has(pageToken))return {complete:false,reason:'invalid_discovery_page_token',events,reviews};\n  tokens.add(pageToken);\n }\n return {complete:false,reason:'discovery_page_budget_reached',events,reviews};\n}\nasync function poll(binding, activities, deps, options={}) {\n if(options.enabled!==true) return {state:'disabled',processed:0};\n if(!positive(binding?.org_id)||typeof binding?.credential_ref!=='string'||!binding.credential_ref||!address(binding?.email))throw Error('INVALID_SENDER_BINDING');\n if(!Array.isArray(activities)||activities.length>50)throw Error('INVALID_REPLY_BATCH');\n const results=[];\n for(const activity of activities) {\n  // Validate binding before reading a mailbox. SQL also checks scope on write.\n  if(!positive(activity?.activity_id)||!positive(activity?.lead_id)||String(activity?.org_id)!==String(binding.org_id)||activity.credential_ref!==binding.credential_ref||\n     address(activity.sender_email)!==address(binding.email)||!address(binding.email)||!gmailId(activity.external_id)) {\n   results.push({state:'review',reason:'sender_binding_mismatch'});continue;\n  }\n  let original,thread;\n  try {original=await deps.getMessage(binding,activity.external_id);\n   if(original?.id!==activity.external_id||!gmailId(original?.threadId))throw Error('invalid_original');\n   thread=await deps.getThread(binding,original.threadId);\n  } catch {results.push({state:'paused',reason:'mailbox_read_failed'});continue;}\n  if(thread?.id!==original.threadId||!Array.isArray(thread?.messages)||thread.messages.length>200){results.push({state:'review',reason:'invalid_or_oversized_thread'});continue;}\n  const seen=new Set();\n  for(const message of thread.messages){\n   if(message?.id===original.id||seen.has(message?.id))continue;\n   seen.add(message?.id);\n   const event=match(binding,activity,original,message);\n   if(!event.matched){results.push({state:'review',reason:event.reason});continue;}\n   // Stop BEFORE downstream qualification/storage. A write failure is retried\n   // on a later poll with the same deterministic event ID, never a new event.\n   try {const saved=await deps.recordStop(event.stop_event);\n    results.push(saved?.saved===true?{state:'stopped',event}:{state:'paused',reason:'stop_not_saved'});\n   } catch {results.push({state:'paused',reason:'stop_commit_unknown'});}\n  }\n }\n return {state:'checked',processed:results.length,results};\n}\nmodule.exports={header,address,body,verifyMailbox,clearOptOut,deliveryReport,discoverDeliveryReports,match,poll};\n\nreturn module.exports;})();\nreturn {json:helpers.verifyMailbox($('Bound Mailbox Gate').item.json,$json,\"ErvKkvbo4c5GQjPn\")};"
+      }
+    },
+    {
+      "id": "reply-v2-prepare-delivery-window",
+      "name": "Prepare Delivery Window",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2480,
+        500
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const context=$('Verify Original Context').item.json;\nconst previous=context.activity.delivery_scan||{};\nconst sent=Number(context.original.internalDate);\nconst continuing=previous.complete===false;\nconst from=continuing?previous.window_start:(previous.checked_through||sent);\nconst until=continuing?previous.window_end:Date.now();\nconst token=continuing?previous.next_page_token:null;\nconst restarting=continuing&&previous.restart_pending===true&&token==null;\nif(!Number.isSafeInteger(sent)||sent<=0||!Number.isSafeInteger(from)||!Number.isSafeInteger(until)||from<sent||until<from||until>Date.now()+1000||continuing&&!restarting&&(typeof token!=='string'||!token||token.length>2000))throw Error('DELIVERY_WINDOW_INVALID');\nconst q='after:'+Math.max(0,Math.floor(from/1000)-1)+' before:'+(Math.floor(until/1000)+1)+' -in:sent -in:drafts';\nreturn {json:{...context,scan:$json,previous,window_start:from,window_end:until,list_url:'https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=25&q='+encodeURIComponent(q)+(token?'&pageToken='+encodeURIComponent(token):'')}};"
+      }
+    },
+    {
+      "id": "reply-v2-list-delivery-candidates",
+      "name": "List Delivery Candidates",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2560,
+        500
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $json.list_url }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "gmailOAuth2",
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ErvKkvbo4c5GQjPn",
+          "name": "Gmail account"
+        }
+      },
+      "retryOnFail": false
+    },
+    {
+      "id": "reply-v2-expand-delivery-candidates",
+      "name": "Expand Delivery Candidates",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2640,
+        500
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const out=[];\nfor(const [i,item] of $input.all().entries()){\n const context=$('Prepare Delivery Window').itemMatching(i).json;const list=item.json;\n if(!list||list.error||list.messages!==undefined&&!Array.isArray(list.messages)||(list.messages||[]).length>25)throw Error('DELIVERY_PAGE_INVALID');\n const next=list.nextPageToken||null;\n if(next!==null&&(typeof next!=='string'||next.length>2000||next===context.previous.next_page_token))throw Error('DELIVERY_PAGE_TOKEN_INVALID');\n const ids=[...new Set((list.messages||[]).map(m=>m.id))];\n if(ids.some(id=>typeof id!=='string'||!/^[a-f0-9]{8,64}$/i.test(id)))throw Error('DELIVERY_MESSAGE_ID_INVALID');\n context.next_page_token=next;\n const candidates=ids.filter(id=>id!==context.original.id);\n for(const candidate_id of candidates.length?candidates:[null])out.push({json:{context,candidate_id},pairedItem:{item:i}});\n}return out;"
+      }
+    },
+    {
+      "id": "reply-v2-has-delivery-candidate-",
+      "name": "Has Delivery Candidate?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2720,
+        500
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "delivery-candidate",
+              "leftValue": "={{ $json.candidate_id ? 1 : 0 }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "reply-v2-load-delivery-candidate",
+      "name": "Load Delivery Candidate",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2800,
+        500
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ 'https://gmail.googleapis.com/gmail/v1/users/me/messages/' + encodeURIComponent($json.candidate_id) + '?format=full' }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "gmailOAuth2",
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ErvKkvbo4c5GQjPn",
+          "name": "Gmail account"
+        }
+      },
+      "retryOnFail": false
+    },
+    {
+      "id": "reply-v2-match-delivery-candidate",
+      "name": "Match Delivery Candidate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2880,
+        500
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const helpers=(()=>{const module={exports:{}};\n'use strict';\n// Deterministic, read-only matching. Inputs must come from the bound mailbox,\n// never from dashboard-submitted Gmail IDs. No AI or network access here.\nconst gmailId = v => typeof v === 'string' && /^[a-f0-9]{8,64}$/i.test(v);\nconst positive = v => /^[1-9][0-9]*$/.test(String(v)) && Number.isSafeInteger(Number(v));\nfunction header(message, name) {\n const h = message?.payload?.headers;\n if (!Array.isArray(h)) return '';\n const values = h.filter(x => typeof x?.name === 'string' && x.name.toLowerCase() === name.toLowerCase());\n return values.length === 1 && typeof values[0].value === 'string' ? values[0].value : '';\n}\nfunction address(value) {\n if (typeof value !== 'string' || /[\\r\\n]/.test(value)) return null;\n const v = (value.match(/^[^<>]*<([^<>]+)>\\s*$/)?.[1] || value).trim();\n return /^[^\\s@,;<>]+@[^\\s@,;<>]+\\.[^\\s@,;<>]+$/.test(v) ? v.toLowerCase() : null;\n}\nfunction verifyMailbox(binding,profile,credentialRef) {\n if(!positive(binding?.org_id)||!address(binding?.email)||binding?.credential_ref!==credentialRef||!credentialRef)\n  throw Error('INVALID_SENDER_BINDING');\n if(!address(profile?.emailAddress)||address(profile.emailAddress)!==address(binding.email)||profile.error)\n  throw Error('CONNECTED_MAILBOX_MISMATCH');\n // Canonical account only; aliases need an explicit verified mapping later.\n return {...binding,email:address(profile.emailAddress)};\n}\nfunction body(message) {\n let count=0;\n function visit(part, depth) {\n  if (!part || depth>8 || ++count>100) return '';\n  if (part.mimeType==='text/plain' && typeof part.body?.data==='string') {\n   return Buffer.from(part.body.data.slice(0,22000),'base64url').toString('utf8').replace(/[\\x00-\\x08\\x0b\\x0c\\x0e-\\x1f]/g,'').slice(0,12000);\n  }\n  return Array.isArray(part.parts) ? part.parts.map(p=>visit(p,depth+1)).filter(Boolean).join('\\n').slice(0,12000) : '';\n }\n return visit(message?.payload,0);\n}\nfunction clearOptOut(text) {\n // Exact standalone request in the new text only. Never classify quoted\n // unsubscribe footers, questions, or a negated request as an opt-out.\n const fresh=String(text).split(/\\n\\s*(?:>|On .+wrote:|From:|-----Original Message-----)/i)[0].trim();\n return /^(?:unsubscribe(?: me)?|please unsubscribe(?: me)?|remove me(?: from (?:your|the) (?:list|mailing list))?|please remove me(?: from (?:your|the) (?:list|mailing list))?|stop(?: emailing me)?|do not (?:email|contact) me(?: again)?|don't (?:email|contact) me(?: again)?)[.!\\s]*$/i.test(fresh);\n}\nfunction deliveryReport(original,incoming,recipient) {\n // RFC 3464 subset: an explicit failed recipient + permanent status and a\n // returned original Message-ID. Subject text is never bounce evidence.\n const parts=[];let count=0;\n function walk(part,depth){if(!part||depth>8||++count>100)return;parts.push(part);if(Array.isArray(part.parts))for(const child of part.parts)walk(child,depth+1);}\n walk(incoming?.payload,0);\n const reports=parts.filter(p=>p.mimeType==='message/delivery-status');\n if(!reports.length)return null;\n const uncertain=reason=>({matched:false,reason});\n if(incoming.payload?.mimeType!=='multipart/report'||reports.length!==1)return uncertain('delivery_report_shape_unverified');\n const decode=p=>typeof p.body?.data==='string'&&p.body.data.length<=44000?Buffer.from(p.body.data,'base64url').toString('utf8'):null;\n function fields(text){\n  const map={};for(const line of text.replace(/\\r\\n/g,'\\n').replace(/\\n[ \\t]+/g,' ').split('\\n')){\n   const m=line.match(/^([A-Za-z0-9-]+):\\s*(.*)$/);if(!m)continue;\n   const key=m[1].toLowerCase();if(Object.hasOwn(map,key))return null;map[key]=m[2].trim();\n  }return map;\n }\n const raw=decode(reports[0]);if(raw===null)return uncertain('delivery_report_body_unavailable');\n const blocks=raw.replace(/\\r\\n/g,'\\n').trim().split(/\\n\\s*\\n/).map(fields);\n if(blocks.some(b=>!b)||!blocks[0]?.['reporting-mta'])return uncertain('delivery_report_fields_unverified');\n const recipients=blocks.slice(1).filter(b=>address(b['final-recipient']?.match(/^rfc822\\s*;\\s*(.+)$/i)?.[1])===address(recipient));\n if(recipients.length!==1)return uncertain('delivery_report_recipient_mismatch');\n const originalRef=header(original,'Message-ID'),returned=[];\n for(const p of parts.filter(p=>['text/rfc822-headers','message/rfc822'].includes(p.mimeType))){\n  const data=decode(p);if(data!==null){const h=fields(data.split(/\\r?\\n\\r?\\n/)[0]);if(h?.['message-id'])returned.push(h['message-id']);}\n  // Some Gmail payloads expose encapsulated original headers as child parts.\n  if(p.mimeType==='message/rfc822'&&Array.isArray(p.parts))for(const child of p.parts){const id=header({payload:child},'Message-ID');if(id)returned.push(id);}\n }\n if(!/^<[^<>\\s]+>$/.test(originalRef)||!returned.length||returned.some(id=>id!==originalRef))return uncertain('delivery_report_original_mismatch');\n const report=recipients[0];\n if(report.action?.toLowerCase()!=='failed'||!/^5\\.[0-9]{1,3}\\.[0-9]{1,3}$/.test(report.status||''))return uncertain('delivery_report_not_permanent_failure');\n return {matched:true,status:report.status,category:'hard_bounce'};\n}\nfunction match(binding, activity, original, incoming) {\n const review=reason=>({matched:false,reason,requires_review:true});\n if (!positive(binding?.org_id) || !binding?.credential_ref || !address(binding?.email) ||\n     !positive(activity?.activity_id) || !positive(activity?.lead_id) || !address(activity?.lead_email) ||\n     String(binding.org_id)!==String(activity?.org_id) ||\n     binding.credential_ref!==activity?.credential_ref || address(binding.email)!==address(activity?.sender_email)) return review('sender_binding_mismatch');\n if (!gmailId(original?.id) || original.id!==activity?.external_id || !gmailId(original?.threadId) ||\n     address(header(original,'From'))!==address(binding.email) ||\n     address(header(original,'To'))!==address(activity.lead_email)) return review('original_message_mismatch');\n if (!gmailId(incoming?.id) || incoming.error || incoming.id===original.id) return review('not_a_new_message');\n if (!gmailId(incoming.threadId)) return review('conversation_mismatch');\n if (Array.isArray(incoming.labelIds) && (incoming.labelIds.includes('SENT') || incoming.labelIds.includes('DRAFT')) ||\n     address(header(incoming,'From'))===address(binding.email)) return review('outgoing_message');\n const sent=Number(original.internalDate), received=Number(incoming.internalDate);\n if (!Number.isSafeInteger(sent) || !Number.isSafeInteger(received) || sent<=0 || received<=sent || received>8640000000000000) return review('message_time_invalid');\n const delivery=deliveryReport(original,incoming,activity.lead_email);\n if(delivery){\n  if(!delivery.matched)return review(delivery.reason);\n  return {matched:true,requires_review:true,category:'hard_bounce',body:'Structured delivery report: '+delivery.status,\n   subject:header(incoming,'Subject').slice(0,500),received_at:new Date(received).toISOString(),\n   thread_id:incoming.threadId,message_id:incoming.id,\n   stop_event:{org_id:Number(binding.org_id),activity_id:Number(activity.activity_id),kind:'bounce',event_id:'gmail:'+incoming.id,source_ref:'gmail-thread:'+incoming.threadId}};\n }\n if(incoming.threadId!==original.threadId)return review('conversation_mismatch');\n // Unknown senders need review; never infer a bounce from subject text.\n if (address(header(incoming,'From'))!==address(activity.lead_email)) return review('sender_requires_review');\n const originalRef=header(original,'Message-ID');\n const refs=(header(incoming,'In-Reply-To')+' '+header(incoming,'References')).match(/<[^<>\\s]+>/g)||[];\n if (!/^<[^<>\\s]+>$/.test(originalRef) || !refs.includes(originalRef)) return review('reply_reference_missing');\n const text=body(incoming);\n const automatic=header(incoming,'Auto-Submitted');\n // Automatic responses also pause conservatively; no automatic resumption.\n const category=automatic && automatic.toLowerCase()!=='no' ? 'automatic_response' : clearOptOut(text)?'opt_out':'reply';\n return {matched:true,requires_review:true,category,body:text,subject:header(incoming,'Subject').slice(0,500),\n  received_at:new Date(received).toISOString(),thread_id:incoming.threadId,message_id:incoming.id,\n  stop_event:{org_id:Number(binding.org_id),activity_id:Number(activity.activity_id),kind:category==='opt_out'?'opt_out':'reply',\n   event_id:'gmail:'+incoming.id,source_ref:'gmail-thread:'+incoming.threadId}};\n}\nasync function discoverDeliveryReports(binding,activity,original,deps,options={}) {\n if(options.enabled!==true)return {complete:false,reason:'discovery_disabled',events:[],reviews:[]};\n if(!positive(binding?.org_id)||!positive(activity?.activity_id)||String(binding.org_id)!==String(activity?.org_id)||\n binding.credential_ref!==activity?.credential_ref||!address(binding.email)||address(binding.email)!==address(activity.sender_email)||\n !address(activity.lead_email)||original?.id!==activity.external_id||!gmailId(original?.id)||\n address(header(original,'From'))!==address(binding.email)||address(header(original,'To'))!==address(activity.lead_email))\n  return {complete:false,reason:'discovery_context_mismatch',events:[],reviews:[]};\n const sent=Number(original.internalDate),until=options.now??Date.now();\n const checkpoint=options.checkedThrough===undefined?sent:Date.parse(options.checkedThrough);\n if(!Number.isSafeInteger(sent)||sent<=0||!Number.isSafeInteger(until)||until>8640000000000000||until<sent||\n !Number.isFinite(checkpoint)||checkpoint<sent||checkpoint>until)return {complete:false,reason:'invalid_discovery_window',events:[],reviews:[]};\n // Overlap by a second. Idempotent event IDs absorb repeated boundary results.\n const q='after:'+Math.max(0,Math.floor(checkpoint/1000)-1)+' before:'+(Math.floor(until/1000)+1)+' -in:sent -in:drafts';\n const events=[],reviews=[],seen=new Set(),tokens=new Set();let pageToken;\n for(let page=0;page<2;page++){\n  let list;\n  try{list=await deps.listMessages(binding,{q,maxResults:25,...(pageToken?{pageToken}:{})});}\n  catch{return {complete:false,reason:'discovery_list_failed',events,reviews};}\n  if(list?.error||!list||typeof list!=='object'||Array.isArray(list)||\n   list.messages!==undefined&&!Array.isArray(list.messages)||Array.isArray(list.messages)&&list.messages.length>25)\n   return {complete:false,reason:'invalid_discovery_page',events,reviews};\n  for(const ref of list.messages||[]){\n   if(!gmailId(ref?.id))return {complete:false,reason:'invalid_discovery_id',events,reviews};\n   if(seen.has(ref.id)||ref.id===original.id)continue;seen.add(ref.id);\n   let message;try{message=await deps.getMessage(binding,ref.id);}catch{return {complete:false,reason:'discovery_message_failed',events,reviews};}\n   if(message?.id!==ref.id||message.error)return {complete:false,reason:'discovery_message_failed',events,reviews};\n   const result=match(binding,activity,original,message);\n   if(result.matched&&result.category==='hard_bounce')events.push(result);\n   else if(result.reason?.startsWith('delivery_report_')&&!['delivery_report_recipient_mismatch','delivery_report_original_mismatch'].includes(result.reason))reviews.push({message_id:ref.id,reason:result.reason});\n  }\n  pageToken=list.nextPageToken;\n  if(!pageToken)return {complete:true,checked_through:new Date(until).toISOString(),events,reviews};\n  if(typeof pageToken!=='string'||pageToken.length>2000||tokens.has(pageToken))return {complete:false,reason:'invalid_discovery_page_token',events,reviews};\n  tokens.add(pageToken);\n }\n return {complete:false,reason:'discovery_page_budget_reached',events,reviews};\n}\nasync function poll(binding, activities, deps, options={}) {\n if(options.enabled!==true) return {state:'disabled',processed:0};\n if(!positive(binding?.org_id)||typeof binding?.credential_ref!=='string'||!binding.credential_ref||!address(binding?.email))throw Error('INVALID_SENDER_BINDING');\n if(!Array.isArray(activities)||activities.length>50)throw Error('INVALID_REPLY_BATCH');\n const results=[];\n for(const activity of activities) {\n  // Validate binding before reading a mailbox. SQL also checks scope on write.\n  if(!positive(activity?.activity_id)||!positive(activity?.lead_id)||String(activity?.org_id)!==String(binding.org_id)||activity.credential_ref!==binding.credential_ref||\n     address(activity.sender_email)!==address(binding.email)||!address(binding.email)||!gmailId(activity.external_id)) {\n   results.push({state:'review',reason:'sender_binding_mismatch'});continue;\n  }\n  let original,thread;\n  try {original=await deps.getMessage(binding,activity.external_id);\n   if(original?.id!==activity.external_id||!gmailId(original?.threadId))throw Error('invalid_original');\n   thread=await deps.getThread(binding,original.threadId);\n  } catch {results.push({state:'paused',reason:'mailbox_read_failed'});continue;}\n  if(thread?.id!==original.threadId||!Array.isArray(thread?.messages)||thread.messages.length>200){results.push({state:'review',reason:'invalid_or_oversized_thread'});continue;}\n  const seen=new Set();\n  for(const message of thread.messages){\n   if(message?.id===original.id||seen.has(message?.id))continue;\n   seen.add(message?.id);\n   const event=match(binding,activity,original,message);\n   if(!event.matched){results.push({state:'review',reason:event.reason});continue;}\n   // Stop BEFORE downstream qualification/storage. A write failure is retried\n   // on a later poll with the same deterministic event ID, never a new event.\n   try {const saved=await deps.recordStop(event.stop_event);\n    results.push(saved?.saved===true?{state:'stopped',event}:{state:'paused',reason:'stop_not_saved'});\n   } catch {results.push({state:'paused',reason:'stop_commit_unknown'});}\n  }\n }\n return {state:'checked',processed:results.length,results};\n}\nmodule.exports={header,address,body,verifyMailbox,clearOptOut,deliveryReport,discoverDeliveryReports,match,poll};\n\nreturn module.exports;})();\nconst row=$('Expand Delivery Candidates').item.json;\nif($json.id!==row.candidate_id||$json.error)throw Error('DELIVERY_MESSAGE_UNAVAILABLE');\nconst c=row.context;const result=helpers.match(c.binding,c.activity,c.original,$json);\nconst event=result.matched&&result.category==='hard_bounce'?result:null;\nconst review=result.reason?.startsWith('delivery_report_')&&!['delivery_report_recipient_mismatch','delivery_report_original_mismatch'].includes(result.reason)?{message_id:row.candidate_id,reason:result.reason}:null;\nreturn {json:{...row,event,review}};"
+      }
+    },
+    {
+      "id": "reply-v2-assemble-delivery-scan",
+      "name": "Assemble Delivery Scan",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2960,
+        500
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const groups=new Map();\nfor(const [i,item] of $input.all().entries()){\n const r=item.json,c=r.context,key=c.binding.org_id+':'+c.activity.activity_id;\n if(!groups.has(key))groups.set(key,{context:c,events:[...c.scan.events],reviews:[...c.scan.reviews],pairedItem:{item:i}});\n const g=groups.get(key);if(r.event)g.events.push(r.event);if(r.review)g.reviews.push(r.review);\n}\nreturn [...groups.values()].map(g=>{const c=g.context;const events=[...new Map(g.events.map(e=>[e.stop_event.event_id,e])).values()];\n const review_required=c.previous.review_required===true||g.reviews.length>0;\n return {json:{...c.scan,events,reviews:g.reviews,delivery_scan_previous:c.previous,delivery_scan_next:{window_start:c.window_start,window_end:c.window_end,\n complete:!c.next_page_token,next_page_token:c.next_page_token,checked_through:c.next_page_token?(c.previous.checked_through||null):c.window_end,review_required}},pairedItem:g.pairedItem};});"
+      }
     }
   ],
-  "pinData": {},
   "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Bound Mailbox Gate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bound Mailbox Gate": {
+      "main": [
+        [
+          {
+            "node": "Read Connected Mailbox",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Connected Mailbox": {
+      "main": [
+        [
+          {
+            "node": "Verify Connected Mailbox",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify Connected Mailbox": {
+      "main": [
+        [
+          {
+            "node": "Get Recent Outreach Emails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Get Recent Outreach Emails": {
       "main": [
         [
           {
-            "node": "Any Emails to Check?",
+            "node": "Bind Reply Activity",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Any Emails to Check?": {
+    "Bind Reply Activity": {
       "main": [
         [
           {
-            "node": "Check Gmail Inbox",
+            "node": "Load Original Gmail Message",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Check Gmail Inbox": {
+    "Load Original Gmail Message": {
       "main": [
         [
           {
-            "node": "Reply Found?",
+            "node": "Verify Original Context",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Reply Found?": {
+    "Verify Original Context": {
       "main": [
         [
           {
-            "node": "Extract Reply Data",
+            "node": "Load Gmail Conversation",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Extract Reply Data": {
+    "Load Gmail Conversation": {
       "main": [
         [
           {
-            "node": "AI - Reply Analyzer & Lead Qualifier",
+            "node": "Match Conversation Replies",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Groq Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI - Reply Analyzer & Lead Qualifier",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "AI - Reply Analyzer & Lead Qualifier": {
+    "Match Conversation Replies": {
       "main": [
         [
           {
-            "node": "Prepare Qualification Data",
+            "node": "Prepare Delivery Window",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Prepare Qualification Data": {
+    "Prepare Delivery Window": {
       "main": [
         [
           {
-            "node": "Insert Reply Record",
+            "node": "List Delivery Candidates",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Insert Reply Record": {
+    "List Delivery Candidates": {
       "main": [
         [
           {
-            "node": "Update Lead with Reply",
+            "node": "Expand Delivery Candidates",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Update Lead with Reply": {
+    "Expand Delivery Candidates": {
       "main": [
         [
           {
-            "node": "Log Qualification Event",
+            "node": "Has Delivery Candidate?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Log Qualification Event": {
+    "Has Delivery Candidate?": {
       "main": [
         [
           {
-            "node": "Pass Data",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Route by Qualification": {
-      "main": [
-        [
-          {
-            "node": "Add to Sales Queue",
+            "node": "Load Delivery Candidate",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Stop All Outreach",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Continue Nurturing",
+            "node": "Assemble Delivery Scan",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Continue Nurturing": {
+    "Load Delivery Candidate": {
       "main": [
-        []
+        [
+          {
+            "node": "Match Delivery Candidate",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
-    "Add to Sales Queue": {
+    "Match Delivery Candidate": {
       "main": [
-        []
+        [
+          {
+            "node": "Assemble Delivery Scan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assemble Delivery Scan": {
+      "main": [
+        [
+          {
+            "node": "Persist Reply Scan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Persist Reply Scan": {
+      "main": [
+        [
+          {
+            "node": "Check Reply Persistence",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Error Handler": {
@@ -645,39 +1057,12 @@
           }
         ]
       ]
-    },
-    "Schedule Trigger": {
-      "main": [
-        [
-          {
-            "node": "Get Recent Outreach Emails",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Pass Data": {
-      "main": [
-        [
-          {
-            "node": "Route by Qualification",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
-  "active": false,
-  "settings": {
-    "executionOrder": "v1"
-  },
-  "versionId": "45bb4685-f5a6-4798-9dac-c91a4b5bafe5",
+  "pinData": {},
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
   },
-  "id": "TrgeZrs4ILZnrXuJ",
-  "tags": []
+  "active": false
 }

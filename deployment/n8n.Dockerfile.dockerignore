@@ -1,0 +1,6 @@
+**
+!scripts/
+!scripts/operations/
+!scripts/operations/n8n-entry.cjs
+!scripts/network/
+!scripts/network/gmail-ipv4.cjs

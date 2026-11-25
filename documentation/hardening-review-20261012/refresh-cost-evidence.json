@@ -1,0 +1,1581 @@
+{
+  "controls": [
+    {
+      "id": true,
+      "enabled": true,
+      "lead_ids": null
+    }
+  ],
+  "ai": [
+    {
+      "id": true,
+      "enabled": false,
+      "cooldown_until": null,
+      "monthly_request_limit": 0
+    }
+  ],
+  "ai_usage": [
+    {
+      "monthly": 0
+    }
+  ],
+  "linkedin": [
+    {
+      "id": true,
+      "enabled": true,
+      "monthly_cap_usd": 0.5
+    }
+  ],
+  "policies": [
+    {
+      "org_id": 1,
+      "enabled": true,
+      "account_id": 1
+    }
+  ],
+  "accounts": [
+    {
+      "id": 2,
+      "mode": "byok",
+      "spent": 0,
+      "org_id": 1,
+      "enabled": true,
+      "price_multiplier": 1,
+      "monthly_budget_usd": 5000
+    },
+    {
+      "id": 1,
+      "mode": "platform",
+      "spent": 0.0421,
+      "org_id": null,
+      "enabled": true,
+      "price_multiplier": 1,
+      "monthly_budget_usd": 5
+    }
+  ],
+  "profiles": [
+    {
+      "org_id": 1,
+      "stored": "7a0dc5637ab34206451be1fd265433fc",
+      "lead_id": 159,
+      "website": "https://techlio.co/",
+      "computed": "59eccd1546a906e1fb40cb12f03bcea4",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "26cd5bf378ed7b177979abb5aca16725",
+      "lead_id": 161,
+      "website": "https://fwf.punjab.gov.pk/gis_lab",
+      "computed": "de299500a94a802ee218b5df32fd4d8f",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "6753439cc10ed0f913a8fb53d06bd5b0",
+      "lead_id": 162,
+      "website": "https://www.astoecompany.com/",
+      "computed": "2a4a84e70b20b4e8d24b95811a527e71",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "09fface95d22e91f021f9e173f735cbf",
+      "lead_id": 163,
+      "website": "https://peakrisetech.com/",
+      "computed": "f8199164cb86c38d92c7cc1e78e60df3",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "209fab10d42d32c9b7414bc89944e82d",
+      "lead_id": 164,
+      "website": "https://webgeniee.com/",
+      "computed": "3dbd78bdc232732666e1cded7834cff3",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "e4f2e67b1701d77970deb6a7098bbccb",
+      "lead_id": 165,
+      "website": "https://endevsols.com/",
+      "computed": "153887704abf897c3f7e5d9199ff87f5",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "4530f6d85acca18358abb3e94cea5cb1",
+      "lead_id": 166,
+      "website": "http://its4u.com/",
+      "computed": "ef7b4aa880f55509f4e79e3ccca705b6",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "ab353d8b65bab3c01dc62e98299b7d93",
+      "lead_id": 167,
+      "website": "https://fiazdentalcare.com/",
+      "computed": "2abda518ea7dccf72806960374af48f7",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "4391e2b4afbbff7934bd5674cc5f3b9c",
+      "lead_id": 168,
+      "website": "https://alledelectricil.com",
+      "computed": "d64296750df1eb559c100834e336f6d3",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "345aea11181377775824aba399f8838e",
+      "lead_id": 169,
+      "website": "https://shop.wellsplumbing.com/locations.HTML",
+      "computed": "a0f1fec9ef63f2fa63a76c13be505a0b",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "7a05bc7a73d6128c15020c9991565b14",
+      "lead_id": 170,
+      "website": "http://www.landascleaning.com",
+      "computed": "9349121444c98f4c76eb37b5f42d08ce",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "bedc5bde64fce519cda9f0adfb00d504",
+      "lead_id": 171,
+      "website": "https://www.halstedplumbing.com",
+      "computed": "b9767ac6fc2b8526089a8ffa73106793",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "0ceb45c15f42c3671f0a07ef5421bab4",
+      "lead_id": 172,
+      "website": "https://obannonplumbingandsewer.com/?utm_source=GBP&utm_medium=organic&utm_campaign=website",
+      "computed": "e9bde78a09a3cf592914ab6f213ed9fd",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "740b9b78b08764f83af02ed095a08aae",
+      "lead_id": 230,
+      "website": null,
+      "computed": "9c2884758febc5a83a8e883f8cfee6f3",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "c6f763d9ecab93d4f9835c496c7adf46",
+      "lead_id": 231,
+      "website": null,
+      "computed": "321a7a905c8fe595aa034575c3565ebf",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "2b7ce26f7221560115d38b70f8745172",
+      "lead_id": 445,
+      "website": null,
+      "computed": "e32a957aa86fd2fcfcd53d246e0e555d",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "91c724a112aa5a030671054b3c24a7c8",
+      "lead_id": 446,
+      "website": null,
+      "computed": "a01c8a81ab1597236f23c44e35b2ff39",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "eabdae84fcbf82ad2e01101a88d89d33",
+      "lead_id": 447,
+      "website": null,
+      "computed": "af8d52c7c17b478d9cc738b5acecf22d",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "e3f0b95540987fe246dd1336431e3663",
+      "lead_id": 448,
+      "website": null,
+      "computed": "f59d71c5fb75c2025b9fe54f317c0f2e",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "2ab34df3df39bd441ee0f2a723a8db36",
+      "lead_id": 449,
+      "website": "https://ziadentalconsultants.me",
+      "computed": "665d95f66c5f2ae61df79b4e0849a31b",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "c6cf437f8114a595fad259c5f26910ed",
+      "lead_id": 450,
+      "website": null,
+      "computed": "2aaa6be735fdb32bfffc7fa50f0b739c",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "593a5a95ab7ef268d4edf256543fa06f",
+      "lead_id": 451,
+      "website": null,
+      "computed": "e9a25ac584254eeb9b2a78c94696475c",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "f909dec9238a99301bf6b5f048aa78e0",
+      "lead_id": 452,
+      "website": null,
+      "computed": "99045bb569a7e5c9154c82c8ff7b595c",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "c8617dec01f3fc3adef55a0c81ca68b0",
+      "lead_id": 453,
+      "website": null,
+      "computed": "df8b7f5de2ceeb07dd33bf90c51bf531",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "32c8ade5646c079e2751cb6fdb3a8765",
+      "lead_id": 454,
+      "website": null,
+      "computed": "d3aa3e4dfed96d0acb29c1277d8aa7d9",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "83e262959ff80bac889f83104a3a1ac6",
+      "lead_id": 455,
+      "website": null,
+      "computed": "5e691e4044c068bac533cac445a73c75",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "b86a44c5a93cbbed9d56b87c974c8b66",
+      "lead_id": 456,
+      "website": null,
+      "computed": "42f83192270563f2a59773fb801879b1",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "87cc08b9b70cc3249766979ff3e0df2f",
+      "lead_id": 457,
+      "website": null,
+      "computed": "aa147c00f3a845427953c8a7a3a2975c",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "64f154f14668105fc0c032065ab7c58c",
+      "lead_id": 458,
+      "website": null,
+      "computed": "f8dbe38373b88340a9b0d5b8fc452edb",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "fb7ce922ada485080b3f10b04a4a0a2a",
+      "lead_id": 459,
+      "website": null,
+      "computed": "117e9b6b74f75570fce1f4c604246131",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "d117627a841881ffd6564ba3e889e23b",
+      "lead_id": 460,
+      "website": null,
+      "computed": "5a07d126368bad8ced20845a300e4a45",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "96c896da4c85d87e94555e1844b2a0be",
+      "lead_id": 461,
+      "website": null,
+      "computed": "1dc038fdb3d75688a14c1c3e2cfc804a",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "328bfc116ab57439ef30019c7552b677",
+      "lead_id": 462,
+      "website": null,
+      "computed": "8a1bc0b2f4d64d9de0ce95a893ccee7f",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "a4cd6cb71832503eb7ce47098158a697",
+      "lead_id": 463,
+      "website": "https://www.rotorooter.com/chicago/?utm_source=iyp&utm_medium=paid&utm_campaign=iyp",
+      "computed": "1543dd90a54eb2095dd071485dd4dd3a",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "445f21fd5109947c963f30481c409fea",
+      "lead_id": 464,
+      "website": "http://emjmetals.com",
+      "computed": "f718ee7a0ffdba942d9a817680005bf8",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "9371ba1f888c38084d6c5e4a9380b02e",
+      "lead_id": 465,
+      "website": "http://chicagoplumbingcontractors.localsearch.com",
+      "computed": "c885886e44dd3c51344440045034d4ae",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "9c11430ba963f6a51813b3139b6092ea",
+      "lead_id": 466,
+      "website": "http://localplumberschicagoil.localsearch.com",
+      "computed": "2d2cde2e3309715b94756f648805f39e",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "b978e281eb7909945eb2e7410c65aa31",
+      "lead_id": 467,
+      "website": "http://plumbinginspectionchicagoil.localsearch.com",
+      "computed": "8ffc4c2d4e44b51e90d1412e008a5e73",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "522e9a19c2ea82e29cd0c86b72903566",
+      "lead_id": 468,
+      "website": "http://waterheaterrepairchicagoil.localsearch.com",
+      "computed": "acd1fed94cb0731068c3c7e693cd7d98",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "76ae911754fff413ea1d8616b0965ba5",
+      "lead_id": 469,
+      "website": "http://calumetriver-licensedplumber.com/",
+      "computed": "50d7252f0d2064a826ff7f9b763c2dfc",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "c1ba9bf1f3c18030cb97603404d3bc15",
+      "lead_id": 470,
+      "website": "https://www.burrisandsons.com/",
+      "computed": "abdccf629fb6642a75ab667c46257ab1",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "b8065c82e6d333fe0ed8f472e7379500",
+      "lead_id": 471,
+      "website": null,
+      "computed": "47447b17c8f140b430a26df40d1eaa5b",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    },
+    {
+      "org_id": 1,
+      "stored": "f08cf849917becc1fb9a6175189715a8",
+      "lead_id": 472,
+      "website": "https://www.allproplumbingchicago.com/",
+      "computed": "bc20bd741c325777c8a3db1f1e6308d9",
+      "eligible": true,
+      "has_basic": true,
+      "has_research": true
+    }
+  ],
+  "tasks": [
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 446,
+      "attempts": 1,
+      "fingerprint": "91c724a112aa5a030671054b3c24a7c8",
+      "next_attempt": "2026-10-03T17:05:08.986719+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 231,
+      "attempts": 1,
+      "fingerprint": "ccdca7ce258e4134dc1d594c9b30bb7c",
+      "next_attempt": "2026-10-10T17:25:54.088261+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "complete",
+      "lead_id": 159,
+      "attempts": 1,
+      "fingerprint": "7a0dc5637ab34206451be1fd265433fc",
+      "next_attempt": "2026-10-03T16:08:02.404417+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 168,
+      "attempts": 1,
+      "fingerprint": "4391e2b4afbbff7934bd5674cc5f3b9c",
+      "next_attempt": "2026-10-03T16:08:12.097912+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 448,
+      "attempts": 1,
+      "fingerprint": "e3f0b95540987fe246dd1336431e3663",
+      "next_attempt": "2026-10-03T17:10:12.991429+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 463,
+      "attempts": 1,
+      "fingerprint": "a4cd6cb71832503eb7ce47098158a697",
+      "next_attempt": "2026-10-03T16:08:19.697172+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 450,
+      "attempts": 1,
+      "fingerprint": "c6cf437f8114a595fad259c5f26910ed",
+      "next_attempt": "2026-10-03T17:15:10.15523+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 452,
+      "attempts": 1,
+      "fingerprint": "f909dec9238a99301bf6b5f048aa78e0",
+      "next_attempt": "2026-10-03T17:20:09.09954+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 467,
+      "attempts": 1,
+      "fingerprint": "b978e281eb7909945eb2e7410c65aa31",
+      "next_attempt": "2026-10-03T17:55:08.69063+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 454,
+      "attempts": 1,
+      "fingerprint": "32c8ade5646c079e2751cb6fdb3a8765",
+      "next_attempt": "2026-10-03T17:25:09.276673+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 462,
+      "attempts": 1,
+      "fingerprint": "61cc82cc5b9a71ad1221d39cc80cf75b",
+      "next_attempt": "2026-10-10T18:05:55.429864+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 465,
+      "attempts": 1,
+      "fingerprint": "fc5ffe823647f048a2df379b27d1b277",
+      "next_attempt": "2026-10-10T18:10:53.278452+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 458,
+      "attempts": 1,
+      "fingerprint": "64f154f14668105fc0c032065ab7c58c",
+      "next_attempt": "2026-10-03T17:35:08.649508+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 467,
+      "attempts": 1,
+      "fingerprint": "0f090098a14949162ec23aedd6be0b3c",
+      "next_attempt": "2026-10-10T18:15:53.65047+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 460,
+      "attempts": 1,
+      "fingerprint": "d117627a841881ffd6564ba3e889e23b",
+      "next_attempt": "2026-10-03T17:40:08.75948+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 462,
+      "attempts": 1,
+      "fingerprint": "328bfc116ab57439ef30019c7552b677",
+      "next_attempt": "2026-10-03T17:45:09.082259+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 471,
+      "attempts": 1,
+      "fingerprint": "b8065c82e6d333fe0ed8f472e7379500",
+      "next_attempt": "2026-10-03T18:05:08.682902+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 463,
+      "attempts": 1,
+      "fingerprint": "39485a76b1404f0a9ea4daf65a05fe45",
+      "next_attempt": "2026-10-10T16:55:57.339039+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 161,
+      "attempts": 1,
+      "fingerprint": "55c366d2758dded78eb0c893f45b8c9a",
+      "next_attempt": "2026-10-10T16:55:57.423254+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 170,
+      "attempts": 1,
+      "fingerprint": "293281d93c168555d04c5a24c1b857a9",
+      "next_attempt": "2026-10-10T17:15:57.19947+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 171,
+      "attempts": 1,
+      "fingerprint": "d18d2efc18e4b20142365875ad4df721",
+      "next_attempt": "2026-10-10T17:15:57.265913+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 172,
+      "attempts": 1,
+      "fingerprint": "1326f6721193c15ae57146c3813a9aec",
+      "next_attempt": "2026-10-10T17:20:54.911938+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 161,
+      "attempts": 1,
+      "fingerprint": "26cd5bf378ed7b177979abb5aca16725",
+      "next_attempt": "2026-10-03T16:30:48.574891+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "complete",
+      "lead_id": 162,
+      "attempts": 1,
+      "fingerprint": "6753439cc10ed0f913a8fb53d06bd5b0",
+      "next_attempt": "2026-10-03T16:30:48.811729+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 163,
+      "attempts": 1,
+      "fingerprint": "09fface95d22e91f021f9e173f735cbf",
+      "next_attempt": "2026-10-03T16:35:33.652505+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 164,
+      "attempts": 1,
+      "fingerprint": "209fab10d42d32c9b7414bc89944e82d",
+      "next_attempt": "2026-10-03T16:35:33.836175+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 165,
+      "attempts": 1,
+      "fingerprint": "e4f2e67b1701d77970deb6a7098bbccb",
+      "next_attempt": "2026-10-03T16:40:21.323512+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 166,
+      "attempts": 1,
+      "fingerprint": "4530f6d85acca18358abb3e94cea5cb1",
+      "next_attempt": "2026-10-03T16:40:21.373394+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 169,
+      "attempts": 1,
+      "fingerprint": "345aea11181377775824aba399f8838e",
+      "next_attempt": "2026-10-03T16:46:25.548005+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 170,
+      "attempts": 1,
+      "fingerprint": "7a05bc7a73d6128c15020c9991565b14",
+      "next_attempt": "2026-10-03T16:50:19.117062+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 171,
+      "attempts": 1,
+      "fingerprint": "bedc5bde64fce519cda9f0adfb00d504",
+      "next_attempt": "2026-10-03T16:50:19.145542+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 172,
+      "attempts": 1,
+      "fingerprint": "0ceb45c15f42c3671f0a07ef5421bab4",
+      "next_attempt": "2026-10-03T16:55:09.366989+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 230,
+      "attempts": 1,
+      "fingerprint": "740b9b78b08764f83af02ed095a08aae",
+      "next_attempt": "2026-10-03T16:55:09.399152+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 231,
+      "attempts": 1,
+      "fingerprint": "c6f763d9ecab93d4f9835c496c7adf46",
+      "next_attempt": "2026-10-03T17:00:09.125253+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 445,
+      "attempts": 1,
+      "fingerprint": "2b7ce26f7221560115d38b70f8745172",
+      "next_attempt": "2026-10-03T17:00:09.185868+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 447,
+      "attempts": 1,
+      "fingerprint": "eabdae84fcbf82ad2e01101a88d89d33",
+      "next_attempt": "2026-10-03T17:05:09.031198+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 470,
+      "attempts": 1,
+      "fingerprint": "699bccd36a7ef22d98629290fde85425",
+      "next_attempt": "2026-10-10T18:25:53.649874+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 471,
+      "attempts": 1,
+      "fingerprint": "6e849965f21ab3f0cb1713d75fac374b",
+      "next_attempt": "2026-10-10T18:25:53.66725+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 445,
+      "attempts": 1,
+      "fingerprint": "26f65c96cbf9a71425187fe6a7d01767",
+      "next_attempt": "2026-10-10T17:25:54.109996+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 472,
+      "attempts": 1,
+      "fingerprint": "7bc6d6b427370f9041a27f0293eb7d43",
+      "next_attempt": "2026-10-10T18:30:52.802954+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 465,
+      "attempts": 1,
+      "fingerprint": "9371ba1f888c38084d6c5e4a9380b02e",
+      "next_attempt": "2026-10-03T17:50:08.762445+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 466,
+      "attempts": 1,
+      "fingerprint": "9c11430ba963f6a51813b3139b6092ea",
+      "next_attempt": "2026-10-03T17:50:08.776237+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 446,
+      "attempts": 1,
+      "fingerprint": "95e556f6cb066144c6d2c1bb061b82f8",
+      "next_attempt": "2026-10-10T17:30:53.184739+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 447,
+      "attempts": 1,
+      "fingerprint": "433779b9e4db21f7c2a1e3b18e2d33b3",
+      "next_attempt": "2026-10-10T17:30:53.367926+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 451,
+      "attempts": 1,
+      "fingerprint": "593a5a95ab7ef268d4edf256543fa06f",
+      "next_attempt": "2026-10-03T17:15:10.181191+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 468,
+      "attempts": 1,
+      "fingerprint": "522e9a19c2ea82e29cd0c86b72903566",
+      "next_attempt": "2026-10-03T17:55:08.701179+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 448,
+      "attempts": 1,
+      "fingerprint": "926a805d8b4f80848531247c3467dd1c",
+      "next_attempt": "2026-10-10T17:35:53.511621+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 450,
+      "attempts": 1,
+      "fingerprint": "523b9efcbed9c88128fb3a6a833752f0",
+      "next_attempt": "2026-10-10T17:35:53.539457+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 453,
+      "attempts": 1,
+      "fingerprint": "c8617dec01f3fc3adef55a0c81ca68b0",
+      "next_attempt": "2026-10-03T17:20:09.134437+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 451,
+      "attempts": 1,
+      "fingerprint": "c5d58e0b8f3d383bcd8b721a963e9b3b",
+      "next_attempt": "2026-10-10T17:40:53.047987+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 455,
+      "attempts": 1,
+      "fingerprint": "83e262959ff80bac889f83104a3a1ac6",
+      "next_attempt": "2026-10-03T17:25:09.319744+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 469,
+      "attempts": 1,
+      "fingerprint": "76ae911754fff413ea1d8616b0965ba5",
+      "next_attempt": "2026-10-03T18:00:08.817871+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 470,
+      "attempts": 1,
+      "fingerprint": "c1ba9bf1f3c18030cb97603404d3bc15",
+      "next_attempt": "2026-10-03T18:00:08.867423+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 452,
+      "attempts": 1,
+      "fingerprint": "fd6c9b5d0cc2a8b51f1202ba43a4d95d",
+      "next_attempt": "2026-10-10T17:40:53.074287+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 456,
+      "attempts": 1,
+      "fingerprint": "b86a44c5a93cbbed9d56b87c974c8b66",
+      "next_attempt": "2026-10-03T17:30:08.667723+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 457,
+      "attempts": 1,
+      "fingerprint": "87cc08b9b70cc3249766979ff3e0df2f",
+      "next_attempt": "2026-10-03T17:30:08.685594+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 472,
+      "attempts": 1,
+      "fingerprint": "f08cf849917becc1fb9a6175189715a8",
+      "next_attempt": "2026-10-03T18:05:08.696442+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 453,
+      "attempts": 1,
+      "fingerprint": "a2214e0928650a89470454ad5e4af132",
+      "next_attempt": "2026-10-10T17:45:52.889026+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 459,
+      "attempts": 1,
+      "fingerprint": "fb7ce922ada485080b3f10b04a4a0a2a",
+      "next_attempt": "2026-10-03T17:35:08.670231+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 454,
+      "attempts": 1,
+      "fingerprint": "cf904e01a1801bf638e8a497a32281df",
+      "next_attempt": "2026-10-10T17:45:52.953456+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 461,
+      "attempts": 1,
+      "fingerprint": "96c896da4c85d87e94555e1844b2a0be",
+      "next_attempt": "2026-10-03T17:40:08.783894+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 455,
+      "attempts": 1,
+      "fingerprint": "73f57137d8d8d6c311371177551734d5",
+      "next_attempt": "2026-10-10T17:50:53.491235+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 456,
+      "attempts": 1,
+      "fingerprint": "5abb3fb86b637c9e65edc65aa5626173",
+      "next_attempt": "2026-10-10T17:50:53.534348+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 464,
+      "attempts": 1,
+      "fingerprint": "445f21fd5109947c963f30481c409fea",
+      "next_attempt": "2026-10-03T17:45:09.10128+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "complete",
+      "lead_id": 167,
+      "attempts": 1,
+      "fingerprint": "ab353d8b65bab3c01dc62e98299b7d93",
+      "next_attempt": "2026-10-10T11:39:28.616604+00:00"
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "status": "complete",
+      "lead_id": 449,
+      "attempts": 1,
+      "fingerprint": "2ab34df3df39bd441ee0f2a723a8db36",
+      "next_attempt": "2026-10-10T11:39:36.696682+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "complete",
+      "lead_id": 167,
+      "attempts": 1,
+      "fingerprint": "9375d690002a460b81da242236dd7971",
+      "next_attempt": "2026-10-10T11:39:37.092066+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "complete",
+      "lead_id": 449,
+      "attempts": 1,
+      "fingerprint": "ea2fc957b4b4efbaf354ca13c3b5210a",
+      "next_attempt": "2026-10-10T11:39:37.680091+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 457,
+      "attempts": 1,
+      "fingerprint": "bed66c77ea08d21ebc88f4da2e84439a",
+      "next_attempt": "2026-10-10T17:55:53.644643+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 458,
+      "attempts": 1,
+      "fingerprint": "8de89961ebee21b2bfc3b8d83d73b508",
+      "next_attempt": "2026-10-10T17:55:53.662811+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 164,
+      "attempts": 1,
+      "fingerprint": "c30391541e5a24d60ef1c1615da55b12",
+      "next_attempt": "2026-10-10T17:05:53.319593+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 459,
+      "attempts": 1,
+      "fingerprint": "530a182b8b84043bf2a3bb6d5798dfe4",
+      "next_attempt": "2026-10-10T18:00:55.146919+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 460,
+      "attempts": 1,
+      "fingerprint": "a543c6ca7cf147c3fc038cfdb8fb0762",
+      "next_attempt": "2026-10-10T18:00:55.220044+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 461,
+      "attempts": 1,
+      "fingerprint": "dcf3be1792d75c54e8b0b2be587df5cd",
+      "next_attempt": "2026-10-10T18:05:54.428785+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 464,
+      "attempts": 1,
+      "fingerprint": "6483d93b0f73fd1b6cacf32c460cfa81",
+      "next_attempt": "2026-10-10T18:10:53.257474+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 466,
+      "attempts": 1,
+      "fingerprint": "d8ff2cb224f879f6171b75bb907975be",
+      "next_attempt": "2026-10-10T18:15:53.621976+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 468,
+      "attempts": 1,
+      "fingerprint": "161b703f17e3a793d0013c1e0c9b528c",
+      "next_attempt": "2026-10-10T18:20:53.555064+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 469,
+      "attempts": 1,
+      "fingerprint": "acc0836f399c89751aae45b2d8671985",
+      "next_attempt": "2026-10-10T18:20:53.583344+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "complete",
+      "lead_id": 159,
+      "attempts": 1,
+      "fingerprint": "d7c7e5513dfe2844c4cd10bf307eae63",
+      "next_attempt": "2026-10-10T16:54:17.78113+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 168,
+      "attempts": 1,
+      "fingerprint": "b2ff8f48083190b27a76880f7450af55",
+      "next_attempt": "2026-10-10T16:54:17.902853+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "complete",
+      "lead_id": 162,
+      "attempts": 1,
+      "fingerprint": "3f3bce29658400f1387ae18ef40fd678",
+      "next_attempt": "2026-10-10T17:00:56.899831+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 163,
+      "attempts": 1,
+      "fingerprint": "0e354d65aa9ce91980401dc5dce02637",
+      "next_attempt": "2026-10-10T17:00:56.946799+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 165,
+      "attempts": 1,
+      "fingerprint": "db7a76ed0afb06bcb52a0d0b2207fad3",
+      "next_attempt": "2026-10-10T17:05:53.478386+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 166,
+      "attempts": 1,
+      "fingerprint": "309a22ac832de36c85953f4fdd036be8",
+      "next_attempt": "2026-10-10T17:10:58.800478+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 169,
+      "attempts": 1,
+      "fingerprint": "2fe5d901cc6667d22a6f2928031d9aa6",
+      "next_attempt": "2026-10-10T17:10:58.851805+00:00"
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "status": "partial",
+      "lead_id": 230,
+      "attempts": 1,
+      "fingerprint": "f09d3618e1678d3d92cce8d4d612ac40",
+      "next_attempt": "2026-10-10T17:20:54.949705+00:00"
+    }
+  ],
+  "linkedin_jobs": [
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "budget_blocked",
+      "lead_id": 463,
+      "fingerprint": "a4cd6cb71832503eb7ce47098158a697"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 460,
+      "fingerprint": "d117627a841881ffd6564ba3e889e23b"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 461,
+      "fingerprint": "96c896da4c85d87e94555e1844b2a0be"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 161,
+      "fingerprint": "26cd5bf378ed7b177979abb5aca16725"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 162,
+      "fingerprint": "6753439cc10ed0f913a8fb53d06bd5b0"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 163,
+      "fingerprint": "09fface95d22e91f021f9e173f735cbf"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 164,
+      "fingerprint": "209fab10d42d32c9b7414bc89944e82d"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 231,
+      "fingerprint": "c6f763d9ecab93d4f9835c496c7adf46"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 445,
+      "fingerprint": "2b7ce26f7221560115d38b70f8745172"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 450,
+      "fingerprint": "c6cf437f8114a595fad259c5f26910ed"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 165,
+      "fingerprint": "e4f2e67b1701d77970deb6a7098bbccb"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 166,
+      "fingerprint": "4530f6d85acca18358abb3e94cea5cb1"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 451,
+      "fingerprint": "593a5a95ab7ef268d4edf256543fa06f"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 446,
+      "fingerprint": "91c724a112aa5a030671054b3c24a7c8"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 447,
+      "fingerprint": "eabdae84fcbf82ad2e01101a88d89d33"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 454,
+      "fingerprint": "32c8ade5646c079e2751cb6fdb3a8765"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 455,
+      "fingerprint": "83e262959ff80bac889f83104a3a1ac6"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 167,
+      "fingerprint": "ab353d8b65bab3c01dc62e98299b7d93"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 169,
+      "fingerprint": "345aea11181377775824aba399f8838e"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 170,
+      "fingerprint": "7a05bc7a73d6128c15020c9991565b14"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 171,
+      "fingerprint": "bedc5bde64fce519cda9f0adfb00d504"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 456,
+      "fingerprint": "b86a44c5a93cbbed9d56b87c974c8b66"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 457,
+      "fingerprint": "87cc08b9b70cc3249766979ff3e0df2f"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 452,
+      "fingerprint": "f909dec9238a99301bf6b5f048aa78e0"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 172,
+      "fingerprint": "0ceb45c15f42c3671f0a07ef5421bab4"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 230,
+      "fingerprint": "740b9b78b08764f83af02ed095a08aae"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 458,
+      "fingerprint": "64f154f14668105fc0c032065ab7c58c"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 448,
+      "fingerprint": "e3f0b95540987fe246dd1336431e3663"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 449,
+      "fingerprint": "2ab34df3df39bd441ee0f2a723a8db36"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 453,
+      "fingerprint": "c8617dec01f3fc3adef55a0c81ca68b0"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 462,
+      "fingerprint": "328bfc116ab57439ef30019c7552b677"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 459,
+      "fingerprint": "fb7ce922ada485080b3f10b04a4a0a2a"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 464,
+      "fingerprint": "445f21fd5109947c963f30481c409fea"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 465,
+      "fingerprint": "9371ba1f888c38084d6c5e4a9380b02e"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 466,
+      "fingerprint": "9c11430ba963f6a51813b3139b6092ea"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 467,
+      "fingerprint": "b978e281eb7909945eb2e7410c65aa31"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 468,
+      "fingerprint": "522e9a19c2ea82e29cd0c86b72903566"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 469,
+      "fingerprint": "76ae911754fff413ea1d8616b0965ba5"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 470,
+      "fingerprint": "c1ba9bf1f3c18030cb97603404d3bc15"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 471,
+      "fingerprint": "b8065c82e6d333fe0ed8f472e7379500"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "pending",
+      "lead_id": 472,
+      "fingerprint": "f08cf849917becc1fb9a6175189715a8"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "budget_blocked",
+      "lead_id": 159,
+      "fingerprint": "7a0dc5637ab34206451be1fd265433fc"
+    },
+    {
+      "kind": "company",
+      "org_id": 1,
+      "status": "budget_blocked",
+      "lead_id": 168,
+      "fingerprint": "4391e2b4afbbff7934bd5674cc5f3b9c"
+    }
+  ],
+  "linkedin_spend": [
+    {
+      "used": 0.0421
+    }
+  ],
+  "wallets": [],
+  "reservations": [
+    {
+      "org_id": 1,
+      "wallet_reserved": null,
+      "provider_reserved": null,
+      "provider_account_id": null
+    }
+  ]
+}

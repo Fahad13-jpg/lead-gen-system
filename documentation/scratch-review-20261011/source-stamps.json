@@ -1,0 +1,1690 @@
+{
+  "counts": {
+    "maps_listing:none_found": 30,
+    "maps_listing:present": 40,
+    "maps_listing:unknown": 4,
+    "yellow_pages:present": 10
+  },
+  "rows": [
+    {
+      "staging_id": 1,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Jewellery%20Software%20House%20in%20Lahore%2CPakistan&query_place_id=ChIJZ2pMrmAbGTkRt7DBItRUTdg",
+      "observed_at": "2026-04-18T03:53:02.985Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.6,
+      "reviews": 111,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 2,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Toheed%20Soft%20-%20Software%20House&query_place_id=ChIJAWOBB0sbGTkRJ2jhqCketPg",
+      "observed_at": "2026-04-18T03:53:02.987Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.9,
+      "reviews": 229,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 3,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Techlogix%20Pakistan%20(Pvt.)%20Ltd.&query_place_id=ChIJJxACX7UEGTkRtUvGGNIExME",
+      "observed_at": "2026-04-18T03:53:02.987Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.5,
+      "reviews": 235,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 7,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Visnext%20Software%20Solutions%2C%20Lahore&query_place_id=ChIJ55Pwe7wFGTkR3FnVU76oQHU",
+      "observed_at": "2026-04-22T11:23:52.066Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.3,
+      "reviews": 83,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 8,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=SDSol%20Technologies%20(Pvt)%20Ltd&query_place_id=ChIJv-M850obGTkRUpK6WDRW9-s",
+      "observed_at": "2026-04-22T11:23:52.066Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4,
+      "reviews": 33,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 11,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Connect%20Bricks%20Private%20Limited&query_place_id=ChIJzVf79oUJGTkRCezIGZD8ZL8",
+      "observed_at": "2026-04-22T14:57:54.412Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": false,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": null,
+      "reviews": null,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 12,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=United%20Software%20-%20IT%20Company%2C%20Software%20Solutions&query_place_id=ChIJI5uX8tgEGTkRV_vHuaB4Kss",
+      "observed_at": "2026-04-22T14:57:54.412Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.5,
+      "reviews": 52,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 13,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=SHE%20Technologies%20Pvt.Ltd&query_place_id=ChIJhZjvc04DGTkRh9Ulhs0o4fQ",
+      "observed_at": "2026-04-22T15:01:24.210Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.5,
+      "reviews": 35,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 14,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Green%20Softech%20Limited&query_place_id=ChIJL2JNi8gDGTkRskCTYXbl7TM",
+      "observed_at": "2026-04-22T15:01:24.211Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 19,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 15,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Royal%20Software%20House&query_place_id=ChIJte0BE1IDGTkREmWswLEwpH0",
+      "observed_at": "2026-04-22T15:01:24.212Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 3.8,
+      "reviews": 20,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 16,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=UnionLogix&query_place_id=ChIJ3YwjpuoDGTkRG1i-Zudo8cY",
+      "observed_at": "2026-04-22T15:01:24.212Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.7,
+      "reviews": 9,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 18,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=NKU%20Technologies%20(Pvt)%20Ltd&query_place_id=ChIJv_NDye0EGTkRPG9fCo3y4SE",
+      "observed_at": "2026-04-22T15:09:20.432Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.2,
+      "reviews": 69,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 20,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=GSOFT%20-%20Business%20Solutions%20Provider&query_place_id=ChIJhW9ik9cEGTkRzbYSXzbkAE0",
+      "observed_at": "2026-04-22T15:09:20.432Z",
+      "website_result": "unknown",
+      "reason": "insufficient_detail_or_unverified_source",
+      "detail_level": false,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": null,
+      "reviews": null,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 21,
+      "lead_id": 159,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Techlio%20Pvt.%20Limited&query_place_id=ChIJgdopFs4FGTkR9IQbolprWrI",
+      "observed_at": "2026-04-22T15:09:20.433Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.8,
+      "reviews": 26,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 22,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=WebAwesome%20Consult%20UK&query_place_id=ChIJbUbgzW2v2EcR1W5yi2m7wPA",
+      "observed_at": "2026-04-22T15:58:03.024Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 56,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 23,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Purple%20Cloud%20IT&query_place_id=ChIJWx5qwFev2EcRwXV8sANU4uQ",
+      "observed_at": "2026-04-22T15:58:03.025Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 5,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 24,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Tech%20Check%20LDN&query_place_id=ChIJk5FodeOz2EcRC8XB9Nv8jLQ",
+      "observed_at": "2026-04-22T15:58:03.025Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 2,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 25,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Junaid%20Tea%20Stall&query_place_id=ChIJXfskVYoDGTkRGfbBN5C8XTY",
+      "observed_at": "2026-04-23T03:26:29.505Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.3,
+      "reviews": 3,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 26,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Quetta%20chai&query_place_id=ChIJDxuEWAADGTkRlHegXujz_SE",
+      "observed_at": "2026-04-23T03:26:29.507Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 1,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 27,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Al%20khear%20Restaurant&query_place_id=ChIJ6_8wKQADGTkRwZHhDOJkBLI",
+      "observed_at": "2026-04-23T03:26:29.507Z",
+      "website_result": "unknown",
+      "reason": "insufficient_detail_or_unverified_source",
+      "detail_level": false,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": null,
+      "reviews": null,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 28,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=HalalXtreme%20Grill&query_place_id=ChIJRf4qG1RnwokRTK68E4_b7iQ",
+      "observed_at": "2026-04-23T03:35:26.324Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.7,
+      "reviews": 237,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 29,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Moon%20Cheese%20Restaurant&query_place_id=ChIJ101DLXNfwokRHsFnwAPNyWY",
+      "observed_at": "2026-04-23T03:35:26.447Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.8,
+      "reviews": 1071,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 30,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=HS%20BUILDERS&query_place_id=ChIJ3cKn5KtLsz4RDjmYE5Jsk6E",
+      "observed_at": "2026-04-23T03:42:38.477Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.8,
+      "reviews": 26,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 31,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Anees%20IT%20Firm%20Computer%20Courses&query_place_id=ChIJvVQZXW5Bsz4RxCg8SaF4xZ8",
+      "observed_at": "2026-04-23T03:42:38.479Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.6,
+      "reviews": 43,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 32,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Allied%20Computer%20Technologies%20(ACTECH)&query_place_id=ChIJ8xfQ50E8sz4REB-4e_kPEO4",
+      "observed_at": "2026-04-23T03:42:43.900Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.8,
+      "reviews": 21,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 42,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=GraceSol%20Technologies%20-%20Lahore%2C%20Pakistan&query_place_id=ChIJAQAAAE8EGTkRs-9gRk2u7U0",
+      "observed_at": "2026-04-23T05:29:44.582Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.8,
+      "reviews": 16,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 43,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Zubaida%20Dental%20Hospital&query_place_id=ChIJdyGpk8NLsz4RvsuV_-SWAY4",
+      "observed_at": "2026-04-23T06:10:43.398Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.7,
+      "reviews": 40,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 44,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Roots%20Dental%20%26%20Asthetic%20Clinic&query_place_id=ChIJNeYgbABHsz4RNnL9UvNQrJg",
+      "observed_at": "2026-04-23T06:10:53.679Z",
+      "website_result": "unknown",
+      "reason": "insufficient_detail_or_unverified_source",
+      "detail_level": false,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 7,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 45,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=The%20Dental%20Empire&query_place_id=ChIJ2UjgvMZLsz4RffY6SolMzkI",
+      "observed_at": "2026-04-23T06:10:55.177Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 88,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 46,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Dental%20Care%20by%20Dr.%20Hamza&query_place_id=ChIJk_dbhhlLsz4RREXF62sn_IA",
+      "observed_at": "2026-04-23T06:10:52.261Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 99,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 47,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Bella%20Smile%20Dental%20and%20Aesthetics%20Clinic&query_place_id=ChIJHRXH2DVLsz4R8kngKICLQ8s",
+      "observed_at": "2026-04-23T06:13:27.537Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.8,
+      "reviews": 28,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 49,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Smile%20Studio%20Dental%20and%20Aesthetics%20Clinic&query_place_id=ChIJBa_tfeVLsz4ROV651mPpFSA",
+      "observed_at": "2026-04-23T12:02:39.091Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 29,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 54,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Lizben%20Consult%20Limited%20-%20Architectural%20Designer%20and%20Consultant%20London&query_place_id=ChIJ6YSuwU6k2EcRxkF97vTdyic",
+      "observed_at": "2026-04-23T14:30:35.963Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 41,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 55,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Avalon%20Consulting&query_place_id=ChIJQaB-y7S72EcRJv46uKLhrnE",
+      "observed_at": "2026-04-23T14:30:35.963Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 1,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 56,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Hatigen%20Consulting%20Services%20Pvt.%20Ltd.&query_place_id=ChIJmciqMO2l2EcRVEONYZDjgFU",
+      "observed_at": "2026-04-23T14:30:35.963Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.9,
+      "reviews": 26,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 57,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=EFJ%20Consulting-%20Accountants%20%26%20Tax%20Advisers&query_place_id=ChIJmzrN0RCv2EcRfP3NsvAkbF0",
+      "observed_at": "2026-04-23T14:30:35.964Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 30,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 63,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Noor%20Al%20zahra%20dental%20clinic&query_place_id=ChIJjc6RMrlDXz4RLTpfMOfdung",
+      "observed_at": "2026-04-23T22:06:55.365Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.9,
+      "reviews": 333,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 64,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=iSmile%20Dental%20Clinic%20LLC&query_place_id=ChIJd_Lhp5hDXz4RM7NGtTvuVsE",
+      "observed_at": "2026-04-23T22:06:55.366Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.9,
+      "reviews": 1128,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 65,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Presidents%20Dental%20and%20Aesthetic%20clinics%20LLC&query_place_id=ChIJ5-geSVFDXz4R0u_iK5F1H9A",
+      "observed_at": "2026-04-23T22:06:55.366Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 86,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 66,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Al%20Abrah%20Clinic%20-%20Dental%20%7C%20Medical%20%7C%20Dermatology%20%7C%20Home%20healthcare&query_place_id=ChIJLZvahkFDXz4R9foAI2Nsep4",
+      "observed_at": "2026-04-23T22:06:55.366Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.8,
+      "reviews": 192,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 67,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Noor%20Al%20Inaya%20Dental%20Clinic&query_place_id=ChIJYYptFKBDXz4RJWa56IV6ruA",
+      "observed_at": "2026-04-23T22:06:55.366Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 623,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 75,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Desol%20Int.&query_place_id=ChIJYbNREwEdGTkRxxZMRpx2Dvc",
+      "observed_at": "2026-04-24T14:24:14.770Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.7,
+      "reviews": 9,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 77,
+      "lead_id": 161,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=GIS%20Lab%20Forest%20Department&query_place_id=ChIJ0-Q95XwcGTkREt0WPSlabIM",
+      "observed_at": "2026-04-24T14:24:14.770Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.1,
+      "reviews": 55,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 86,
+      "lead_id": 162,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Astoe%20Company&query_place_id=ChIJY7LUOWQDGTkRa-kRWtsFtd0",
+      "observed_at": "2026-04-24T18:31:24.291Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.8,
+      "reviews": 86,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 88,
+      "lead_id": 450,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Khao%20Piyo%20Niklo&query_place_id=ChIJyc5YBUtLsz4RkhqZRAyc31M",
+      "observed_at": "2026-04-24T22:49:06.810Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.7,
+      "reviews": 19,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 89,
+      "lead_id": 451,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Zims%20Kitchen&query_place_id=ChIJo2UL1bBNsz4RLCWlRXtbz2U",
+      "observed_at": "2026-04-24T22:49:06.812Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.8,
+      "reviews": 51,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 90,
+      "lead_id": 452,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Cafe%20Chiraag&query_place_id=ChIJSyXEqtZLsz4Rru5TpUMrXdg",
+      "observed_at": "2026-04-24T22:49:06.814Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.4,
+      "reviews": 45,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 91,
+      "lead_id": 453,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Desi%20perdesi&query_place_id=ChIJRYQRPgBLsz4RnE59qLOvLsc",
+      "observed_at": "2026-04-24T22:49:06.814Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.5,
+      "reviews": 32,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 92,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Aashiyana%20restaurant&query_place_id=ChIJnS9gMJZLsz4Ra95W9qEkFw4",
+      "observed_at": "2026-04-24T22:49:06.814Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.6,
+      "reviews": 5,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 93,
+      "lead_id": 454,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Super%20Gabol%20Restaurant&query_place_id=ChIJzSjr-0ZLsz4RD5LFeY76sqQ",
+      "observed_at": "2026-04-24T22:49:06.814Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.2,
+      "reviews": 20,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 94,
+      "lead_id": 455,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=DK%20Grill.%2C%20est.%202020%20-%20Best%20Food%20in%20Bahria%20Town%20Karachi&query_place_id=ChIJowxwO3FNsz4Rf6cU6G9_iwg",
+      "observed_at": "2026-04-24T22:49:06.815Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.7,
+      "reviews": 355,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 95,
+      "lead_id": 456,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Aashiyana%20Hotel&query_place_id=ChIJO7JUs5RLsz4RUmKs2slwUeU",
+      "observed_at": "2026-04-24T22:49:06.815Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.4,
+      "reviews": 38,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 96,
+      "lead_id": 457,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=VASCO'S%20RESTAURANT&query_place_id=ChIJZxYlQ1NLsz4RZpg_d19g4ns",
+      "observed_at": "2026-04-24T22:49:06.815Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4,
+      "reviews": 32,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 97,
+      "lead_id": 458,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=New%20Al%20Jeddah%20Restaurant&query_place_id=ChIJH7oylldLsz4RHat-Xz-bdoY",
+      "observed_at": "2026-04-24T22:49:06.815Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.1,
+      "reviews": 7,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 108,
+      "lead_id": 163,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Peakrise%20Technologies&query_place_id=ChIJ5SYRkPkZ3zgR1_vm84mn6C4",
+      "observed_at": "2026-04-28T09:30:42.216Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 56,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 109,
+      "lead_id": 164,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Web%20Geniee%20Website%20Design%20%26%20Development&query_place_id=ChIJRxrg0TcZ3zgRCFsj8K-4otE",
+      "observed_at": "2026-04-28T09:30:42.217Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 84,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 110,
+      "lead_id": 165,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=EnDevSols%20(Pvt.)%20Ltd.&query_place_id=ChIJacBp7Ybr3zgRYmIfUeZ05z4",
+      "observed_at": "2026-04-28T09:30:42.217Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": false,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": null,
+      "reviews": null,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 111,
+      "lead_id": 166,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=ITS4U%20Computers%20and%20Mobiles&query_place_id=ChIJRxF1FD4Y3zgRwjc7fiNanwI",
+      "observed_at": "2026-04-28T09:30:42.218Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.2,
+      "reviews": 199,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 112,
+      "lead_id": 459,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Upwasoft&query_place_id=ChIJY3J65zsY3zgR-_8yw2PGTaY",
+      "observed_at": "2026-04-28T09:32:21.674Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 3,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 113,
+      "lead_id": 460,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Attique%20Dental%20Clinic&query_place_id=ChIJidNXHoobGTkRPons0_epQN0",
+      "observed_at": "2026-08-07T04:46:15.891Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 3,
+      "reviews": 2,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 114,
+      "lead_id": 461,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Smile%20Buds%20Dental%20Clinic&query_place_id=ChIJn9rQj9EbGTkRk1kBIbagOn8",
+      "observed_at": "2026-08-07T04:46:20.549Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 47,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 115,
+      "lead_id": 167,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Fiaz%20Dental%20Care&query_place_id=ChIJpRV2KrMdGTkRDyevJgm3WyQ",
+      "observed_at": "2026-08-07T04:46:20.817Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 92,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 116,
+      "lead_id": 462,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=FAROOQ%20DENTAL%20Care%20Centre&query_place_id=ChIJj0ecUwAbGTkRBEuxZRxwPcc",
+      "observed_at": "2026-08-07T04:46:21.200Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 2,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 117,
+      "lead_id": null,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Smile%20architect&query_place_id=ChIJ3dDGSgQbGTkRCcktZ-7tzyw",
+      "observed_at": "2026-08-07T04:46:23.580Z",
+      "website_result": "unknown",
+      "reason": "insufficient_detail_or_unverified_source",
+      "detail_level": false,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": null,
+      "reviews": null,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 133,
+      "lead_id": 469,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Calumet%20River%20Licensed%20Plumber%20Co&query_place_id=ChIJTbDtc5EnDogR6vvF5rXNS0E",
+      "observed_at": "2026-08-13T09:07:58.736Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": false,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": null,
+      "reviews": null,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 134,
+      "lead_id": 172,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=O'Bannon%20Plumbing%20%26%20Sewer&query_place_id=ChIJOfmDOjfZEYgRmtiJ9wAxXkM",
+      "observed_at": "2026-08-13T09:07:59.799Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": false,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.8,
+      "reviews": 57,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 135,
+      "lead_id": 470,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Burris%20%26%20Sons%20Heating%2C%20Cooling%20%26%20Plumbing&query_place_id=ChIJMYt-AmsoDogRLPIgHRSgw-o",
+      "observed_at": "2026-08-13T09:08:02.505Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.8,
+      "reviews": 506,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 136,
+      "lead_id": 471,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=South%20Chicago%20Plumbing%20And%20Heating%20Supply&query_place_id=ChIJmV9cGOUnDogRXppE-TmkniA",
+      "observed_at": "2026-08-13T09:08:02.899Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.7,
+      "reviews": 132,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 137,
+      "lead_id": 472,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=All%20Pro%20Plumbing&query_place_id=ChIJb2fULHLYEYgR9Qaw5J3NZp8",
+      "observed_at": "2026-08-13T09:08:05.621Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.7,
+      "reviews": 162,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 150,
+      "lead_id": 445,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Islamabad%20Dental%20Clinic&query_place_id=ChIJFdsB6Sy_3zgRylw6vcZMKbM",
+      "observed_at": "2026-09-26T08:25:18.688Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 3.8,
+      "reviews": 4,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 151,
+      "lead_id": 446,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Luminosity%20Dental%20Clinic&query_place_id=ChIJtYIuK4zB3zgRhCfPj9mNPNg",
+      "observed_at": "2026-09-26T08:25:18.689Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 22,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 152,
+      "lead_id": 447,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=The%20Dental%20Care%20Clinic%20(%20Dr.Shahnawaz%20Ahmed)&query_place_id=ChIJw0r1b1-_3zgRY0YMatEk-UQ",
+      "observed_at": "2026-09-26T08:25:18.689Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.9,
+      "reviews": 167,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 153,
+      "lead_id": 448,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Odontologia-Dental%20Setup&query_place_id=ChIJCRl4gYnB3zgRrKLqwBuHObg",
+      "observed_at": "2026-09-26T08:25:18.689Z",
+      "website_result": "none_found",
+      "reason": "maps_detail_record_no_website_listed",
+      "detail_level": true,
+      "website_field": "missing",
+      "social_profiles": [],
+      "rating": 4.9,
+      "reviews": 62,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 154,
+      "lead_id": 449,
+      "source": "maps_listing",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.google.com/maps/search/?api=1&query=Zia%20Dental%20Consultants&query_place_id=ChIJX6DJN4a_3zgRLHPAx0ICgC4",
+      "observed_at": "2026-09-26T08:25:18.690Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 4.4,
+      "reviews": 19,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 118,
+      "lead_id": 168,
+      "source": "yellow_pages",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.yellowpages.com/chicago-il/mip/all-ed-electric-579608019?lid=1002195574696",
+      "observed_at": "2026-08-08T13:35:45Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": null,
+      "reviews": 0,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 119,
+      "lead_id": 169,
+      "source": "yellow_pages",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.yellowpages.com/chicago-il/mip/wells-plumbing-heating-4718716?lid=1002166423741",
+      "observed_at": "2026-08-08T13:35:45Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": 5,
+      "reviews": 1,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 120,
+      "lead_id": 170,
+      "source": "yellow_pages",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.yellowpages.com/chicago-il/mip/landas-carpet-and-upholstery-cleaning-23055083?lid=1002163686941",
+      "observed_at": "2026-08-08T13:35:45Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": null,
+      "reviews": 0,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 121,
+      "lead_id": 171,
+      "source": "yellow_pages",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.yellowpages.com/chicago-il/mip/halsted-plumbing-sewer-10195927?lid=1002195564636",
+      "observed_at": "2026-08-08T13:35:45Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": null,
+      "reviews": 0,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 122,
+      "lead_id": 463,
+      "source": "yellow_pages",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.yellowpages.com/chicago-il/mip/roto-rooter-plumbing-water-cleanup-562623075?lid=1002194257059",
+      "observed_at": "2026-08-08T13:35:45Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": null,
+      "reviews": 0,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 123,
+      "lead_id": 464,
+      "source": "yellow_pages",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.yellowpages.com/chicago-il/mip/erics-plumbing-heating-14280493",
+      "observed_at": "2026-08-13T09:00:46Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": null,
+      "reviews": 0,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 124,
+      "lead_id": 465,
+      "source": "yellow_pages",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.yellowpages.com/chicago-il/mip/chicago-plumbing-contractors-562998918",
+      "observed_at": "2026-08-13T09:00:46Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": null,
+      "reviews": 0,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 125,
+      "lead_id": 466,
+      "source": "yellow_pages",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.yellowpages.com/chicago-il/mip/local-plumbers-chicago-il-555558763",
+      "observed_at": "2026-08-13T09:00:46Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": null,
+      "reviews": 0,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 126,
+      "lead_id": 467,
+      "source": "yellow_pages",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.yellowpages.com/chicago-il/mip/plumbing-inspection-chicago-il-561207410",
+      "observed_at": "2026-08-13T09:00:46Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": null,
+      "reviews": 0,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    },
+    {
+      "staging_id": 127,
+      "lead_id": 468,
+      "source": "yellow_pages",
+      "stamp_version": "source_website_check_v1",
+      "status": "checked",
+      "source_url": "https://www.yellowpages.com/chicago-il/mip/water-heater-repair-chicago-il-555563941",
+      "observed_at": "2026-08-13T09:00:46Z",
+      "website_result": "present",
+      "reason": "explicit_website",
+      "detail_level": true,
+      "website_field": "present",
+      "social_profiles": [],
+      "rating": null,
+      "reviews": 0,
+      "limitations": [
+        "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+        "none_found means no website listed in the checked record, not no website anywhere."
+      ]
+    }
+  ]
+}

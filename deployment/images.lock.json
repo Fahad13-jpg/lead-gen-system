@@ -1,0 +1,13 @@
+{
+  "recorded_at": "2026-11-17",
+  "postgres": "postgres@sha256:98fe06b500b5eb29e45bf8c073eb0ca399790ce17b1d586448edc4203627d342",
+  "n8n": "n8nio/n8n@sha256:d055b7a9ea7da77fbcac60f17ba8517657648b0915a36dde818e44892a718964",
+  "n8n_version": "1.111.1",
+  "note": "Tested base digests and locally built release images. Target configuration, database grants, HTTPS callbacks and a full staging boot are still required; no registry publication or public deployment has occurred.",
+  "credential_adapter_local_image": "leadgen-credential-adapter:20261117",
+  "credential_adapter_local_id": "sha256:a2e7343aea1979b6022bb6195bbe2129132401a2d0b7982ed42b1b53a864ce70",
+  "gateway_local_image": "leadgen-gateway:20261117",
+  "gateway_local_id": "sha256:de4632bbb661c98de0ef1dff99d8a87fc0fc1bdd7c467b61b384a2b2bdf8f204",
+  "n8n_release_local_image": "leadgen-n8n:20261117",
+  "n8n_release_local_id": "sha256:6ff1249e8e8dce6ad5f128e7407133e72b1b5c7c7a595e9d99b5903db5d6f5b4"
+}

@@ -1,0 +1,120 @@
+{
+  "id": "managedSmtpcheck",
+  "name": "Managed SMTP - check",
+  "active": false,
+  "nodes": [
+    {
+      "id": "trigger",
+      "name": "Manual Connection Check",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "sender",
+      "name": "Managed SMTP Sender",
+      "type": "CUSTOM.managedSender",
+      "typeVersion": 1,
+      "position": [
+        260,
+        0
+      ],
+      "retryOnFail": false,
+      "parameters": {
+        "operation": "check",
+        "binding": "{\"org_id\":1,\"connection_id\":\"configure-me\"}",
+        "release": "null"
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "id": "note",
+      "name": "Setup and release gates",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -260
+      ],
+      "parameters": {
+        "width": 600,
+        "height": 210,
+        "content": "Inactive setup template. Select organization-owned SMTP + IMAP credentials and the matching registry connection. Check connection without sending. Dispatch additionally needs approved campaign policy, a hash-bound plan, current membership/readiness, and an operator-issued bounded release. No automatic resend on ambiguous SMTP acceptance. Customer login integration is not exposed."
+      }
+    },
+    {
+      "id": "check-schedule",
+      "name": "Check pending sender every minute",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        220
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "automatic-check-note",
+      "name": "Automatic recheck limits",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        650,
+        -260
+      ],
+      "parameters": {
+        "width": 560,
+        "height": 240,
+        "content": "Check-only schedule. The fixed org/connection and SMTP+IMAP credentials must match the registry. Only pending_check triggers provider access; ready senders stay idle. A session advisory lock prevents overlap. Failed checks become reconnect_required using the existing version-fenced function, so a fresh user recheck request is required. No sending, reply polling, new credentials or paid model calls. Keep inactive until the updated worker is installed and binding reviewed."
+      }
+    }
+  ],
+  "connections": {
+    "Manual Connection Check": {
+      "main": [
+        [
+          {
+            "node": "Managed SMTP Sender",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check pending sender every minute": {
+      "main": [
+        [
+          {
+            "node": "Managed SMTP Sender",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "none",
+    "saveManualExecutions": false
+  }
+}

@@ -1,0 +1,14 @@
+'use strict';
+const fs=require('fs'),cp=require('child_process'),path=require('path');const dir=process.env.LEAD_SQL_REPORT_DIR||'documentation/permissions-fuzz-review-20261012';
+if(process.env.LEAD_SQL_REPORT_DIR&&!path.resolve(dir).startsWith(path.resolve('.local')+path.sep))throw Error('SCRATCH_REPORT_DIRECTORY_REQUIRED');fs.mkdirSync(dir,{recursive:true});
+function sql(container,db,query){const r=cp.spawnSync('docker',['exec','-i',container,'psql','-X','-v','ON_ERROR_STOP=1','-U','n8n_user','-d',db,'-At'],{input:query,encoding:'utf8',maxBuffer:10e6});if(r.status!==0)throw Error('Database diagnostic failed; '+r.stderr.replace(/password[^\n]*/gi,'[redacted]'));return r.stdout.trim()}
+const query=`SELECT coalesce(jsonb_agg(jsonb_build_object('signature',p.oid::regprocedure::text,'owner',pg_get_userbyid(p.proowner),'security_definer',p.prosecdef,'acl',p.proacl::text) ORDER BY p.proname),'[]') FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='public' AND (p.proname LIKE 'enrichment\\_%' ESCAPE '\\' OR p.proname LIKE 'lead\\_trust\\_%' ESCAPE '\\')`;
+if(process.argv[2]==='inventory'){
+ const output={production_functions:JSON.parse(sql('postgres_db','lead_db',query)),production_role:JSON.parse(sql('postgres_db','lead_db',"SELECT jsonb_build_object('name',rolname,'superuser',rolsuper,'createdb',rolcreatedb,'createrole',rolcreaterole) FROM pg_roles WHERE rolname='n8n_user'")),scratch_functions:JSON.parse(sql('lead_diag_pg_20261011','scratch_lead_diag_20261011',query))};
+ const r=cp.spawnSync('docker',['exec','n8n','node','-e',"console.log(JSON.stringify({role:process.env.DB_POSTGRESDB_USER,database:process.env.DB_POSTGRESDB_DATABASE,host:process.env.DB_POSTGRESDB_HOST}))"],{encoding:'utf8'});if(r.status===0)output.n8n_environment=JSON.parse(r.stdout);
+ // Capture decrypted credentials only in memory; emit only database username/type, never values such as password.
+ const creds=cp.spawnSync('docker',['exec','n8n','n8n','export:credentials','--all','--decrypted'],{encoding:'utf8',maxBuffer:5e6});
+ if(creds.status===0){let decoded;for(let i=0;i<creds.stdout.length;i++){if(creds.stdout[i]!=='[')continue;try{decoded=JSON.parse(creds.stdout.slice(i,creds.stdout.lastIndexOf(']')+1));break}catch{}}try{output.postgres_credentials=decoded.filter(c=>c.type==='postgres').map(c=>({id:c.id,name:c.name,role:c.data.user,database:c.data.database,host:c.data.host}));}catch{output.postgres_credentials='UNVERIFIED: output was not parseable; credentials withheld';}}else output.postgres_credentials='UNVERIFIED: read-only credential export failed; details withheld';
+ fs.writeFileSync(dir+'/function-roles.json',JSON.stringify(output,null,2));console.log(JSON.stringify({production_functions:output.production_functions.length,scratch_functions:output.scratch_functions.length,role:output.production_role,postgres_credentials:output.postgres_credentials}));
+}
+module.exports={sql,dir};

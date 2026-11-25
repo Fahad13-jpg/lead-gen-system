@@ -1,0 +1,2190 @@
+{
+  "label": "DEMONSTRATION ONLY: fictional product and sender, real existing leads; no messages sent, no model calls, no database writes",
+  "campaign": {
+    "name": "DEMONSTRATION ONLY — clinic website",
+    "mode": "hybrid",
+    "language": "en",
+    "channels": [
+      "email",
+      "linkedin",
+      "call"
+    ],
+    "sender": {
+      "name": "Alex (sample sender)",
+      "company": "Example Web Studio (sample)",
+      "signature": ""
+    },
+    "offer": {
+      "name": "Clinic website demonstration",
+      "description": "We build mobile-friendly clinic websites with clear service pages.",
+      "approved_points": [
+        "An appointment-request form lets visitors send a request to your team.",
+        "Service pages present the treatments your clinic offers."
+      ],
+      "prohibited_claims": [
+        "guaranteed bookings",
+        "double your revenue"
+      ]
+    },
+    "cta": {
+      "text": "Would you like to see a sample website?",
+      "url": ""
+    },
+    "target_terms": [
+      "dental",
+      "dentist"
+    ],
+    "locations": [
+      "Islamabad"
+    ],
+    "exclude_terms": [],
+    "templates": {},
+    "sequence": [
+      {
+        "step": 1,
+        "channel": "email",
+        "delay_days": 0,
+        "condition": "initial",
+        "stop_on": [
+          "reply",
+          "opt_out",
+          "bounce",
+          "wrong_person",
+          "meeting_booked"
+        ]
+      },
+      {
+        "step": 2,
+        "channel": "email",
+        "delay_days": 3,
+        "condition": "no_reply_after_previous_confirmed_send",
+        "stop_on": [
+          "reply",
+          "opt_out",
+          "bounce",
+          "wrong_person",
+          "meeting_booked"
+        ]
+      },
+      {
+        "step": 3,
+        "channel": "email",
+        "delay_days": 4,
+        "condition": "no_reply_after_previous_confirmed_send",
+        "stop_on": [
+          "reply",
+          "opt_out",
+          "bounce",
+          "wrong_person",
+          "meeting_booked"
+        ]
+      }
+    ],
+    "timezone": "Asia/Karachi",
+    "sending_window": {
+      "start_hour": 9,
+      "end_hour": 17,
+      "weekdays": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "max_attempts": 3,
+    "expiry_days": 7,
+    "tone": "professional",
+    "offer_fit_rules": [
+      {
+        "evidence_terms": [
+          "dental",
+          "dentist"
+        ],
+        "approved_point_index": 1
+      }
+    ]
+  },
+  "results": [
+    {
+      "lead_id": 167,
+      "company_name": "Fiaz Dental Care",
+      "plan": {
+        "version": "strategy_v1",
+        "scores": {
+          "version": "lead_scores_v1",
+          "method": "fixed_rules_not_conversion_probability",
+          "product_fit": {
+            "score": 40,
+            "max_score": 100,
+            "coverage_percent": 60,
+            "unknown_weight": 40,
+            "components": [
+              {
+                "name": "industry_match",
+                "weight": 40,
+                "status": "supported",
+                "points": 40,
+                "reason": "Recorded category compared with campaign target terms."
+              },
+              {
+                "name": "location_match",
+                "weight": 20,
+                "status": "not_supported",
+                "points": 0,
+                "reason": "Recorded city compared with campaign locations."
+              },
+              {
+                "name": "offer_evidence_match",
+                "weight": 40,
+                "status": "unknown",
+                "points": null,
+                "reason": "No supported offer-fit rule match; business need remains unknown."
+              }
+            ],
+            "missing_information": [
+              "No supported offer-fit rule match; business need remains unknown."
+            ],
+            "blockers": [
+              "location_mismatch"
+            ],
+            "interpretation": "Documented support points; unknown information is not a negative finding. Compare coverage as well as score."
+          },
+          "data_confidence": {
+            "score": 25,
+            "max_score": 100,
+            "coverage_percent": 25,
+            "unknown_weight": 75,
+            "components": [
+              {
+                "name": "identity_corroboration",
+                "weight": 30,
+                "status": "unknown",
+                "points": null,
+                "reason": "Source correlation is not independent identity verification."
+              },
+              {
+                "name": "observed_website",
+                "weight": 25,
+                "status": "supported",
+                "points": 25,
+                "reason": "Requires current observed website pages; ownership remains unverified."
+              },
+              {
+                "name": "fresh_research",
+                "weight": 20,
+                "status": "unknown",
+                "points": null,
+                "reason": "Requires current research containing matched profiles or usable outreach evidence; an empty completed job earns no points."
+              },
+              {
+                "name": "verified_email",
+                "weight": 25,
+                "status": "unknown",
+                "points": null,
+                "reason": "Requires fresh provider verification of the selected email; other contact verification remains unknown."
+              }
+            ],
+            "missing_information": [
+              "Source correlation is not independent identity verification.",
+              "Requires current research containing matched profiles or usable outreach evidence; an empty completed job earns no points.",
+              "Requires fresh provider verification of the selected email; other contact verification remains unknown."
+            ],
+            "blockers": [],
+            "interpretation": "Documented support points; unknown information is not a negative finding. Compare coverage as well as score."
+          },
+          "outreach_readiness": {
+            "score": 0,
+            "max_score": 100,
+            "method": "100 only when at least one channel has no readiness blockers; otherwise 0",
+            "per_channel": {
+              "email": {
+                "score": 0,
+                "status": "blocked",
+                "blockers": [
+                  "location_mismatch",
+                  "email_not_freshly_verified",
+                  "executor_not_integrated"
+                ]
+              },
+              "linkedin": {
+                "score": 0,
+                "status": "blocked",
+                "blockers": [
+                  "location_mismatch",
+                  "matched_person_missing",
+                  "executor_not_integrated"
+                ]
+              },
+              "call": {
+                "score": 0,
+                "status": "blocked",
+                "blockers": [
+                  "location_mismatch",
+                  "phone_ownership_and_channel_permission_unconfirmed",
+                  "executor_not_integrated"
+                ]
+              }
+            },
+            "execution_authorized": false
+          },
+          "automatic_prioritization": false
+        },
+        "campaign_version": 1,
+        "mode": "hybrid",
+        "generation": {
+          "method": "deterministic_template",
+          "ai_status": "ai_disabled"
+        },
+        "fit": {
+          "industry_match": true,
+          "location_match": false,
+          "excluded": false,
+          "method": "explicit_campaign_rules",
+          "buying_intent": "unknown",
+          "response_probability": null
+        },
+        "offer_fit": {
+          "matches": [],
+          "status": "insufficient_evidence",
+          "confirmed_need": false
+        },
+        "brief_suggestions": [
+          {
+            "field": "cta.url",
+            "reason": "Add an approved demo or product link if the campaign needs one."
+          }
+        ],
+        "quality_review": [
+          {
+            "step": 1,
+            "channel": "email",
+            "warnings": [
+              "no_source_personalization"
+            ],
+            "automatic_checks": "length, references, approved URLs, prohibited phrases; not semantic proof of every sentence"
+          },
+          {
+            "step": 2,
+            "channel": "email",
+            "warnings": [
+              "no_source_personalization"
+            ],
+            "automatic_checks": "length, references, approved URLs, prohibited phrases; not semantic proof of every sentence"
+          },
+          {
+            "step": 3,
+            "channel": "email",
+            "warnings": [
+              "no_source_personalization"
+            ],
+            "automatic_checks": "length, references, approved URLs, prohibited phrases; not semantic proof of every sentence"
+          }
+        ],
+        "evidence": [],
+        "channel_readiness": {
+          "email": {
+            "status": "blocked",
+            "reasons": [
+              "location_mismatch",
+              "email_not_freshly_verified",
+              "executor_not_integrated"
+            ],
+            "draft_available": true
+          },
+          "linkedin": {
+            "status": "blocked",
+            "reasons": [
+              "location_mismatch",
+              "matched_person_missing",
+              "executor_not_integrated"
+            ],
+            "draft_available": true
+          },
+          "call": {
+            "status": "blocked",
+            "reasons": [
+              "location_mismatch",
+              "phone_ownership_and_channel_permission_unconfirmed",
+              "executor_not_integrated"
+            ],
+            "draft_available": true
+          }
+        },
+        "messages": [
+          {
+            "channel": "email",
+            "plan_role": "sequence_draft",
+            "subject": "Clinic website demonstration for Fiaz Dental Care",
+            "body": "Hello Fiaz Dental Care,\n\nWe build mobile-friendly clinic websites with clear service pages.\n\nWould you like to see a sample website?\n\nAlex (sample sender)\nExample Web Studio (sample)\n\nReply STOP to opt out of further emails.",
+            "character_count": 224,
+            "template_preserved": false,
+            "evidence_ids": [],
+            "claims": [],
+            "ai_written": false,
+            "warning_codes": [],
+            "requires_review": true
+          },
+          {
+            "channel": "linkedin",
+            "plan_role": "blocked_alternative_not_scheduled",
+            "subject": null,
+            "body": "Hello Fiaz Dental Care, We build mobile-friendly clinic websites with clear service pages. Would you like to see a sample website?",
+            "character_count": 130,
+            "template_preserved": false,
+            "evidence_ids": [],
+            "claims": [],
+            "ai_written": false,
+            "warning_codes": [],
+            "requires_review": true
+          },
+          {
+            "channel": "call",
+            "plan_role": "blocked_alternative_not_scheduled",
+            "subject": null,
+            "body": "Hello, this is Alex (sample sender) from Example Web Studio (sample). Am I speaking with someone who handles website enquiries for Fiaz Dental Care?",
+            "character_count": 148,
+            "template_preserved": false,
+            "evidence_ids": [],
+            "claims": [],
+            "ai_written": false,
+            "warning_codes": [],
+            "requires_review": true
+          }
+        ],
+        "sequence": [
+          {
+            "step": 1,
+            "channel": "email",
+            "delay_days": 0,
+            "condition": "initial",
+            "stop_on": [
+              "reply",
+              "opt_out",
+              "bounce",
+              "wrong_person",
+              "meeting_booked"
+            ],
+            "purpose": "introduction",
+            "message_channel": "email",
+            "message": {
+              "channel": "email",
+              "plan_role": "sequence_draft",
+              "subject": "Clinic website demonstration for Fiaz Dental Care",
+              "body": "Hello Fiaz Dental Care,\n\nWe build mobile-friendly clinic websites with clear service pages.\n\nWould you like to see a sample website?\n\nAlex (sample sender)\nExample Web Studio (sample)\n\nReply STOP to opt out of further emails.",
+              "character_count": 224,
+              "template_preserved": false,
+              "evidence_ids": [],
+              "claims": [],
+              "ai_written": false,
+              "warning_codes": [],
+              "requires_review": true
+            },
+            "delay_basis": "previous_confirmed_send",
+            "timezone": "Asia/Karachi",
+            "sending_window": {
+              "start_hour": 9,
+              "end_hour": 17,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "step": 2,
+            "channel": "email",
+            "delay_days": 3,
+            "condition": "no_reply_after_previous_confirmed_send",
+            "stop_on": [
+              "reply",
+              "opt_out",
+              "bounce",
+              "wrong_person",
+              "meeting_booked"
+            ],
+            "purpose": "approved_benefit",
+            "message_channel": "email",
+            "message": {
+              "channel": "email",
+              "plan_role": "sequence_draft",
+              "subject": "Clinic website demonstration for Fiaz Dental Care",
+              "body": "Hello Fiaz Dental Care,\n\nA detail about Clinic website demonstration that may be useful:\n\nAn appointment-request form lets visitors send a request to your team.\n\nWould you like to see a sample website?\n\nAlex (sample sender) — Example Web Studio (sample)\n\nReply STOP to opt out.",
+              "character_count": 277,
+              "template_preserved": false,
+              "evidence_ids": [],
+              "claims": [],
+              "ai_written": false,
+              "warning_codes": [],
+              "requires_review": true
+            },
+            "delay_basis": "previous_confirmed_send",
+            "timezone": "Asia/Karachi",
+            "sending_window": {
+              "start_hour": 9,
+              "end_hour": 17,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "step": 3,
+            "channel": "email",
+            "delay_days": 4,
+            "condition": "no_reply_after_previous_confirmed_send",
+            "stop_on": [
+              "reply",
+              "opt_out",
+              "bounce",
+              "wrong_person",
+              "meeting_booked"
+            ],
+            "purpose": "close_loop",
+            "message_channel": "email",
+            "message": {
+              "channel": "email",
+              "plan_role": "sequence_draft",
+              "subject": "Clinic website demonstration for Fiaz Dental Care",
+              "body": "Hello Fiaz Dental Care,\n\nClosing the loop on Clinic website demonstration.\n\nService pages present the treatments your clinic offers.\n\nIf this is not a priority, I can leave it here.\n\nWould you like to see a sample website?\n\nAlex (sample sender) — Example Web Studio (sample)\n\nReply STOP to opt out.",
+              "character_count": 298,
+              "template_preserved": false,
+              "evidence_ids": [],
+              "claims": [],
+              "ai_written": false,
+              "warning_codes": [],
+              "requires_review": true
+            },
+            "delay_basis": "previous_confirmed_send",
+            "timezone": "Asia/Karachi",
+            "sending_window": {
+              "start_hour": 9,
+              "end_hour": 17,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "call_brief": {
+          "opening": "Hello, this is Alex (sample sender) from Example Web Studio (sample). Am I speaking with someone who handles website enquiries for Fiaz Dental Care?",
+          "permission_question": "Is now a suitable time for a brief explanation?",
+          "after_permission": "We build mobile-friendly clinic websites with clear service pages. Would you like to see a sample website?",
+          "evidence_ids": [],
+          "branches": {
+            "interested": "Offer the approved demo or a human handoff; do not invent a demo link.",
+            "busy": "Ask whether they want a follow-up and record only the time they provide.",
+            "wrong_person": "End politely; do not assume or invent a decision-maker.",
+            "opt_out": "Stop and record the request before any further contact.",
+            "unknown_question": "Explain that a team member can answer; do not guess."
+          },
+          "objective": "Would you like to see a sample website?",
+          "offer": "We build mobile-friendly clinic websites with clear service pages.",
+          "approved_points": [
+            "An appointment-request form lets visitors send a request to your team.",
+            "Service pages present the treatments your clinic offers."
+          ],
+          "prohibited_claims": [
+            "guaranteed bookings",
+            "double your revenue"
+          ],
+          "stop_on": [
+            "opt_out",
+            "wrong_person",
+            "human_requested"
+          ],
+          "human_handoff": "required_on_request",
+          "integration": "retell_not_connected"
+        },
+        "validation_errors": [],
+        "blocking_reasons": [
+          "location_mismatch"
+        ],
+        "approval_required": true,
+        "execution_authorized": false
+      }
+    },
+    {
+      "lead_id": 445,
+      "company_name": "Islamabad Dental Clinic",
+      "plan": {
+        "version": "strategy_v1",
+        "scores": {
+          "version": "lead_scores_v1",
+          "method": "fixed_rules_not_conversion_probability",
+          "product_fit": {
+            "score": 20,
+            "max_score": 100,
+            "coverage_percent": 60,
+            "unknown_weight": 40,
+            "components": [
+              {
+                "name": "industry_match",
+                "weight": 40,
+                "status": "not_supported",
+                "points": 0,
+                "reason": "Recorded category compared with campaign target terms."
+              },
+              {
+                "name": "location_match",
+                "weight": 20,
+                "status": "supported",
+                "points": 20,
+                "reason": "Recorded city compared with campaign locations."
+              },
+              {
+                "name": "offer_evidence_match",
+                "weight": 40,
+                "status": "unknown",
+                "points": null,
+                "reason": "No supported offer-fit rule match; business need remains unknown."
+              }
+            ],
+            "missing_information": [
+              "No supported offer-fit rule match; business need remains unknown."
+            ],
+            "blockers": [
+              "industry_mismatch"
+            ],
+            "interpretation": "Documented support points; unknown information is not a negative finding. Compare coverage as well as score."
+          },
+          "data_confidence": {
+            "score": null,
+            "max_score": 100,
+            "coverage_percent": 0,
+            "unknown_weight": 100,
+            "components": [
+              {
+                "name": "identity_corroboration",
+                "weight": 30,
+                "status": "unknown",
+                "points": null,
+                "reason": "Source correlation is not independent identity verification."
+              },
+              {
+                "name": "observed_website",
+                "weight": 25,
+                "status": "unknown",
+                "points": null,
+                "reason": "Requires current observed website pages; ownership remains unverified."
+              },
+              {
+                "name": "fresh_research",
+                "weight": 20,
+                "status": "unknown",
+                "points": null,
+                "reason": "Requires current research containing matched profiles or usable outreach evidence; an empty completed job earns no points."
+              },
+              {
+                "name": "verified_email",
+                "weight": 25,
+                "status": "unknown",
+                "points": null,
+                "reason": "Requires fresh provider verification of the selected email; other contact verification remains unknown."
+              }
+            ],
+            "missing_information": [
+              "Source correlation is not independent identity verification.",
+              "Requires current observed website pages; ownership remains unverified.",
+              "Requires current research containing matched profiles or usable outreach evidence; an empty completed job earns no points.",
+              "Requires fresh provider verification of the selected email; other contact verification remains unknown."
+            ],
+            "blockers": [],
+            "interpretation": "Documented support points; unknown information is not a negative finding. Compare coverage as well as score."
+          },
+          "outreach_readiness": {
+            "score": 0,
+            "max_score": 100,
+            "method": "100 only when at least one channel has no readiness blockers; otherwise 0",
+            "per_channel": {
+              "email": {
+                "score": 0,
+                "status": "blocked",
+                "blockers": [
+                  "industry_mismatch",
+                  "email_not_freshly_verified",
+                  "executor_not_integrated"
+                ]
+              },
+              "linkedin": {
+                "score": 0,
+                "status": "blocked",
+                "blockers": [
+                  "industry_mismatch",
+                  "matched_person_missing",
+                  "executor_not_integrated"
+                ]
+              },
+              "call": {
+                "score": 0,
+                "status": "blocked",
+                "blockers": [
+                  "industry_mismatch",
+                  "phone_ownership_and_channel_permission_unconfirmed",
+                  "executor_not_integrated"
+                ]
+              }
+            },
+            "execution_authorized": false
+          },
+          "automatic_prioritization": false
+        },
+        "campaign_version": 1,
+        "mode": "hybrid",
+        "generation": {
+          "method": "deterministic_template",
+          "ai_status": "ai_disabled"
+        },
+        "fit": {
+          "industry_match": false,
+          "location_match": true,
+          "excluded": false,
+          "method": "explicit_campaign_rules",
+          "buying_intent": "unknown",
+          "response_probability": null
+        },
+        "offer_fit": {
+          "matches": [],
+          "status": "insufficient_evidence",
+          "confirmed_need": false
+        },
+        "brief_suggestions": [
+          {
+            "field": "cta.url",
+            "reason": "Add an approved demo or product link if the campaign needs one."
+          }
+        ],
+        "quality_review": [
+          {
+            "step": 1,
+            "channel": "email",
+            "warnings": [
+              "no_source_personalization"
+            ],
+            "automatic_checks": "length, references, approved URLs, prohibited phrases; not semantic proof of every sentence"
+          },
+          {
+            "step": 2,
+            "channel": "email",
+            "warnings": [
+              "no_source_personalization"
+            ],
+            "automatic_checks": "length, references, approved URLs, prohibited phrases; not semantic proof of every sentence"
+          },
+          {
+            "step": 3,
+            "channel": "email",
+            "warnings": [
+              "no_source_personalization"
+            ],
+            "automatic_checks": "length, references, approved URLs, prohibited phrases; not semantic proof of every sentence"
+          }
+        ],
+        "evidence": [],
+        "channel_readiness": {
+          "email": {
+            "status": "blocked",
+            "reasons": [
+              "industry_mismatch",
+              "email_not_freshly_verified",
+              "executor_not_integrated"
+            ],
+            "draft_available": true
+          },
+          "linkedin": {
+            "status": "blocked",
+            "reasons": [
+              "industry_mismatch",
+              "matched_person_missing",
+              "executor_not_integrated"
+            ],
+            "draft_available": true
+          },
+          "call": {
+            "status": "blocked",
+            "reasons": [
+              "industry_mismatch",
+              "phone_ownership_and_channel_permission_unconfirmed",
+              "executor_not_integrated"
+            ],
+            "draft_available": true
+          }
+        },
+        "messages": [
+          {
+            "channel": "email",
+            "plan_role": "sequence_draft",
+            "subject": "Clinic website demonstration for Islamabad Dental Clinic",
+            "body": "Hello Islamabad Dental Clinic,\n\nWe build mobile-friendly clinic websites with clear service pages.\n\nWould you like to see a sample website?\n\nAlex (sample sender)\nExample Web Studio (sample)\n\nReply STOP to opt out of further emails.",
+            "character_count": 231,
+            "template_preserved": false,
+            "evidence_ids": [],
+            "claims": [],
+            "ai_written": false,
+            "warning_codes": [],
+            "requires_review": true
+          },
+          {
+            "channel": "linkedin",
+            "plan_role": "blocked_alternative_not_scheduled",
+            "subject": null,
+            "body": "Hello Islamabad Dental Clinic, We build mobile-friendly clinic websites with clear service pages. Would you like to see a sample website?",
+            "character_count": 137,
+            "template_preserved": false,
+            "evidence_ids": [],
+            "claims": [],
+            "ai_written": false,
+            "warning_codes": [],
+            "requires_review": true
+          },
+          {
+            "channel": "call",
+            "plan_role": "blocked_alternative_not_scheduled",
+            "subject": null,
+            "body": "Hello, this is Alex (sample sender) from Example Web Studio (sample). Am I speaking with someone who handles website enquiries for Islamabad Dental Clinic?",
+            "character_count": 155,
+            "template_preserved": false,
+            "evidence_ids": [],
+            "claims": [],
+            "ai_written": false,
+            "warning_codes": [],
+            "requires_review": true
+          }
+        ],
+        "sequence": [
+          {
+            "step": 1,
+            "channel": "email",
+            "delay_days": 0,
+            "condition": "initial",
+            "stop_on": [
+              "reply",
+              "opt_out",
+              "bounce",
+              "wrong_person",
+              "meeting_booked"
+            ],
+            "purpose": "introduction",
+            "message_channel": "email",
+            "message": {
+              "channel": "email",
+              "plan_role": "sequence_draft",
+              "subject": "Clinic website demonstration for Islamabad Dental Clinic",
+              "body": "Hello Islamabad Dental Clinic,\n\nWe build mobile-friendly clinic websites with clear service pages.\n\nWould you like to see a sample website?\n\nAlex (sample sender)\nExample Web Studio (sample)\n\nReply STOP to opt out of further emails.",
+              "character_count": 231,
+              "template_preserved": false,
+              "evidence_ids": [],
+              "claims": [],
+              "ai_written": false,
+              "warning_codes": [],
+              "requires_review": true
+            },
+            "delay_basis": "previous_confirmed_send",
+            "timezone": "Asia/Karachi",
+            "sending_window": {
+              "start_hour": 9,
+              "end_hour": 17,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "step": 2,
+            "channel": "email",
+            "delay_days": 3,
+            "condition": "no_reply_after_previous_confirmed_send",
+            "stop_on": [
+              "reply",
+              "opt_out",
+              "bounce",
+              "wrong_person",
+              "meeting_booked"
+            ],
+            "purpose": "approved_benefit",
+            "message_channel": "email",
+            "message": {
+              "channel": "email",
+              "plan_role": "sequence_draft",
+              "subject": "Clinic website demonstration for Islamabad Dental Clinic",
+              "body": "Hello Islamabad Dental Clinic,\n\nA detail about Clinic website demonstration that may be useful:\n\nAn appointment-request form lets visitors send a request to your team.\n\nWould you like to see a sample website?\n\nAlex (sample sender) — Example Web Studio (sample)\n\nReply STOP to opt out.",
+              "character_count": 284,
+              "template_preserved": false,
+              "evidence_ids": [],
+              "claims": [],
+              "ai_written": false,
+              "warning_codes": [],
+              "requires_review": true
+            },
+            "delay_basis": "previous_confirmed_send",
+            "timezone": "Asia/Karachi",
+            "sending_window": {
+              "start_hour": 9,
+              "end_hour": 17,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "step": 3,
+            "channel": "email",
+            "delay_days": 4,
+            "condition": "no_reply_after_previous_confirmed_send",
+            "stop_on": [
+              "reply",
+              "opt_out",
+              "bounce",
+              "wrong_person",
+              "meeting_booked"
+            ],
+            "purpose": "close_loop",
+            "message_channel": "email",
+            "message": {
+              "channel": "email",
+              "plan_role": "sequence_draft",
+              "subject": "Clinic website demonstration for Islamabad Dental Clinic",
+              "body": "Hello Islamabad Dental Clinic,\n\nClosing the loop on Clinic website demonstration.\n\nService pages present the treatments your clinic offers.\n\nIf this is not a priority, I can leave it here.\n\nWould you like to see a sample website?\n\nAlex (sample sender) — Example Web Studio (sample)\n\nReply STOP to opt out.",
+              "character_count": 305,
+              "template_preserved": false,
+              "evidence_ids": [],
+              "claims": [],
+              "ai_written": false,
+              "warning_codes": [],
+              "requires_review": true
+            },
+            "delay_basis": "previous_confirmed_send",
+            "timezone": "Asia/Karachi",
+            "sending_window": {
+              "start_hour": 9,
+              "end_hour": 17,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "call_brief": {
+          "opening": "Hello, this is Alex (sample sender) from Example Web Studio (sample). Am I speaking with someone who handles website enquiries for Islamabad Dental Clinic?",
+          "permission_question": "Is now a suitable time for a brief explanation?",
+          "after_permission": "We build mobile-friendly clinic websites with clear service pages. Would you like to see a sample website?",
+          "evidence_ids": [],
+          "branches": {
+            "interested": "Offer the approved demo or a human handoff; do not invent a demo link.",
+            "busy": "Ask whether they want a follow-up and record only the time they provide.",
+            "wrong_person": "End politely; do not assume or invent a decision-maker.",
+            "opt_out": "Stop and record the request before any further contact.",
+            "unknown_question": "Explain that a team member can answer; do not guess."
+          },
+          "objective": "Would you like to see a sample website?",
+          "offer": "We build mobile-friendly clinic websites with clear service pages.",
+          "approved_points": [
+            "An appointment-request form lets visitors send a request to your team.",
+            "Service pages present the treatments your clinic offers."
+          ],
+          "prohibited_claims": [
+            "guaranteed bookings",
+            "double your revenue"
+          ],
+          "stop_on": [
+            "opt_out",
+            "wrong_person",
+            "human_requested"
+          ],
+          "human_handoff": "required_on_request",
+          "integration": "retell_not_connected"
+        },
+        "validation_errors": [],
+        "blocking_reasons": [
+          "industry_mismatch"
+        ],
+        "approval_required": true,
+        "execution_authorized": false
+      }
+    },
+    {
+      "lead_id": 446,
+      "company_name": "Luminosity Dental Clinic",
+      "plan": {
+        "version": "strategy_v1",
+        "scores": {
+          "version": "lead_scores_v1",
+          "method": "fixed_rules_not_conversion_probability",
+          "product_fit": {
+            "score": 60,
+            "max_score": 100,
+            "coverage_percent": 60,
+            "unknown_weight": 40,
+            "components": [
+              {
+                "name": "industry_match",
+                "weight": 40,
+                "status": "supported",
+                "points": 40,
+                "reason": "Recorded category compared with campaign target terms."
+              },
+              {
+                "name": "location_match",
+                "weight": 20,
+                "status": "supported",
+                "points": 20,
+                "reason": "Recorded city compared with campaign locations."
+              },
+              {
+                "name": "offer_evidence_match",
+                "weight": 40,
+                "status": "unknown",
+                "points": null,
+                "reason": "No supported offer-fit rule match; business need remains unknown."
+              }
+            ],
+            "missing_information": [
+              "No supported offer-fit rule match; business need remains unknown."
+            ],
+            "blockers": [],
+            "interpretation": "Documented support points; unknown information is not a negative finding. Compare coverage as well as score."
+          },
+          "data_confidence": {
+            "score": null,
+            "max_score": 100,
+            "coverage_percent": 0,
+            "unknown_weight": 100,
+            "components": [
+              {
+                "name": "identity_corroboration",
+                "weight": 30,
+                "status": "unknown",
+                "points": null,
+                "reason": "Source correlation is not independent identity verification."
+              },
+              {
+                "name": "observed_website",
+                "weight": 25,
+                "status": "unknown",
+                "points": null,
+                "reason": "Requires current observed website pages; ownership remains unverified."
+              },
+              {
+                "name": "fresh_research",
+                "weight": 20,
+                "status": "unknown",
+                "points": null,
+                "reason": "Requires current research containing matched profiles or usable outreach evidence; an empty completed job earns no points."
+              },
+              {
+                "name": "verified_email",
+                "weight": 25,
+                "status": "unknown",
+                "points": null,
+                "reason": "Requires fresh provider verification of the selected email; other contact verification remains unknown."
+              }
+            ],
+            "missing_information": [
+              "Source correlation is not independent identity verification.",
+              "Requires current observed website pages; ownership remains unverified.",
+              "Requires current research containing matched profiles or usable outreach evidence; an empty completed job earns no points.",
+              "Requires fresh provider verification of the selected email; other contact verification remains unknown."
+            ],
+            "blockers": [],
+            "interpretation": "Documented support points; unknown information is not a negative finding. Compare coverage as well as score."
+          },
+          "outreach_readiness": {
+            "score": 0,
+            "max_score": 100,
+            "method": "100 only when at least one channel has no readiness blockers; otherwise 0",
+            "per_channel": {
+              "email": {
+                "score": 0,
+                "status": "blocked",
+                "blockers": [
+                  "email_not_freshly_verified",
+                  "executor_not_integrated"
+                ]
+              },
+              "linkedin": {
+                "score": 0,
+                "status": "blocked",
+                "blockers": [
+                  "matched_person_missing",
+                  "executor_not_integrated"
+                ]
+              },
+              "call": {
+                "score": 0,
+                "status": "blocked",
+                "blockers": [
+                  "phone_ownership_and_channel_permission_unconfirmed",
+                  "executor_not_integrated"
+                ]
+              }
+            },
+            "execution_authorized": false
+          },
+          "automatic_prioritization": false
+        },
+        "campaign_version": 1,
+        "mode": "hybrid",
+        "generation": {
+          "method": "deterministic_template",
+          "ai_status": "ai_disabled"
+        },
+        "fit": {
+          "industry_match": true,
+          "location_match": true,
+          "excluded": false,
+          "method": "explicit_campaign_rules",
+          "buying_intent": "unknown",
+          "response_probability": null
+        },
+        "offer_fit": {
+          "matches": [],
+          "status": "insufficient_evidence",
+          "confirmed_need": false
+        },
+        "brief_suggestions": [
+          {
+            "field": "cta.url",
+            "reason": "Add an approved demo or product link if the campaign needs one."
+          }
+        ],
+        "quality_review": [
+          {
+            "step": 1,
+            "channel": "email",
+            "warnings": [
+              "no_source_personalization"
+            ],
+            "automatic_checks": "length, references, approved URLs, prohibited phrases; not semantic proof of every sentence"
+          },
+          {
+            "step": 2,
+            "channel": "email",
+            "warnings": [
+              "no_source_personalization"
+            ],
+            "automatic_checks": "length, references, approved URLs, prohibited phrases; not semantic proof of every sentence"
+          },
+          {
+            "step": 3,
+            "channel": "email",
+            "warnings": [
+              "no_source_personalization"
+            ],
+            "automatic_checks": "length, references, approved URLs, prohibited phrases; not semantic proof of every sentence"
+          }
+        ],
+        "evidence": [],
+        "channel_readiness": {
+          "email": {
+            "status": "blocked",
+            "reasons": [
+              "email_not_freshly_verified",
+              "executor_not_integrated"
+            ],
+            "draft_available": true
+          },
+          "linkedin": {
+            "status": "blocked",
+            "reasons": [
+              "matched_person_missing",
+              "executor_not_integrated"
+            ],
+            "draft_available": true
+          },
+          "call": {
+            "status": "blocked",
+            "reasons": [
+              "phone_ownership_and_channel_permission_unconfirmed",
+              "executor_not_integrated"
+            ],
+            "draft_available": true
+          }
+        },
+        "messages": [
+          {
+            "channel": "email",
+            "plan_role": "sequence_draft",
+            "subject": "Clinic website demonstration for Luminosity Dental Clinic",
+            "body": "Hello Luminosity Dental Clinic,\n\nWe build mobile-friendly clinic websites with clear service pages.\n\nWould you like to see a sample website?\n\nAlex (sample sender)\nExample Web Studio (sample)\n\nReply STOP to opt out of further emails.",
+            "character_count": 232,
+            "template_preserved": false,
+            "evidence_ids": [],
+            "claims": [],
+            "ai_written": false,
+            "warning_codes": [],
+            "requires_review": true
+          },
+          {
+            "channel": "linkedin",
+            "plan_role": "blocked_alternative_not_scheduled",
+            "subject": null,
+            "body": "Hello Luminosity Dental Clinic, We build mobile-friendly clinic websites with clear service pages. Would you like to see a sample website?",
+            "character_count": 138,
+            "template_preserved": false,
+            "evidence_ids": [],
+            "claims": [],
+            "ai_written": false,
+            "warning_codes": [],
+            "requires_review": true
+          },
+          {
+            "channel": "call",
+            "plan_role": "blocked_alternative_not_scheduled",
+            "subject": null,
+            "body": "Hello, this is Alex (sample sender) from Example Web Studio (sample). Am I speaking with someone who handles website enquiries for Luminosity Dental Clinic?",
+            "character_count": 156,
+            "template_preserved": false,
+            "evidence_ids": [],
+            "claims": [],
+            "ai_written": false,
+            "warning_codes": [],
+            "requires_review": true
+          }
+        ],
+        "sequence": [
+          {
+            "step": 1,
+            "channel": "email",
+            "delay_days": 0,
+            "condition": "initial",
+            "stop_on": [
+              "reply",
+              "opt_out",
+              "bounce",
+              "wrong_person",
+              "meeting_booked"
+            ],
+            "purpose": "introduction",
+            "message_channel": "email",
+            "message": {
+              "channel": "email",
+              "plan_role": "sequence_draft",
+              "subject": "Clinic website demonstration for Luminosity Dental Clinic",
+              "body": "Hello Luminosity Dental Clinic,\n\nWe build mobile-friendly clinic websites with clear service pages.\n\nWould you like to see a sample website?\n\nAlex (sample sender)\nExample Web Studio (sample)\n\nReply STOP to opt out of further emails.",
+              "character_count": 232,
+              "template_preserved": false,
+              "evidence_ids": [],
+              "claims": [],
+              "ai_written": false,
+              "warning_codes": [],
+              "requires_review": true
+            },
+            "delay_basis": "previous_confirmed_send",
+            "timezone": "Asia/Karachi",
+            "sending_window": {
+              "start_hour": 9,
+              "end_hour": 17,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "step": 2,
+            "channel": "email",
+            "delay_days": 3,
+            "condition": "no_reply_after_previous_confirmed_send",
+            "stop_on": [
+              "reply",
+              "opt_out",
+              "bounce",
+              "wrong_person",
+              "meeting_booked"
+            ],
+            "purpose": "approved_benefit",
+            "message_channel": "email",
+            "message": {
+              "channel": "email",
+              "plan_role": "sequence_draft",
+              "subject": "Clinic website demonstration for Luminosity Dental Clinic",
+              "body": "Hello Luminosity Dental Clinic,\n\nA detail about Clinic website demonstration that may be useful:\n\nAn appointment-request form lets visitors send a request to your team.\n\nWould you like to see a sample website?\n\nAlex (sample sender) — Example Web Studio (sample)\n\nReply STOP to opt out.",
+              "character_count": 285,
+              "template_preserved": false,
+              "evidence_ids": [],
+              "claims": [],
+              "ai_written": false,
+              "warning_codes": [],
+              "requires_review": true
+            },
+            "delay_basis": "previous_confirmed_send",
+            "timezone": "Asia/Karachi",
+            "sending_window": {
+              "start_hour": 9,
+              "end_hour": 17,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "step": 3,
+            "channel": "email",
+            "delay_days": 4,
+            "condition": "no_reply_after_previous_confirmed_send",
+            "stop_on": [
+              "reply",
+              "opt_out",
+              "bounce",
+              "wrong_person",
+              "meeting_booked"
+            ],
+            "purpose": "close_loop",
+            "message_channel": "email",
+            "message": {
+              "channel": "email",
+              "plan_role": "sequence_draft",
+              "subject": "Clinic website demonstration for Luminosity Dental Clinic",
+              "body": "Hello Luminosity Dental Clinic,\n\nClosing the loop on Clinic website demonstration.\n\nService pages present the treatments your clinic offers.\n\nIf this is not a priority, I can leave it here.\n\nWould you like to see a sample website?\n\nAlex (sample sender) — Example Web Studio (sample)\n\nReply STOP to opt out.",
+              "character_count": 306,
+              "template_preserved": false,
+              "evidence_ids": [],
+              "claims": [],
+              "ai_written": false,
+              "warning_codes": [],
+              "requires_review": true
+            },
+            "delay_basis": "previous_confirmed_send",
+            "timezone": "Asia/Karachi",
+            "sending_window": {
+              "start_hour": 9,
+              "end_hour": 17,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "call_brief": {
+          "opening": "Hello, this is Alex (sample sender) from Example Web Studio (sample). Am I speaking with someone who handles website enquiries for Luminosity Dental Clinic?",
+          "permission_question": "Is now a suitable time for a brief explanation?",
+          "after_permission": "We build mobile-friendly clinic websites with clear service pages. Would you like to see a sample website?",
+          "evidence_ids": [],
+          "branches": {
+            "interested": "Offer the approved demo or a human handoff; do not invent a demo link.",
+            "busy": "Ask whether they want a follow-up and record only the time they provide.",
+            "wrong_person": "End politely; do not assume or invent a decision-maker.",
+            "opt_out": "Stop and record the request before any further contact.",
+            "unknown_question": "Explain that a team member can answer; do not guess."
+          },
+          "objective": "Would you like to see a sample website?",
+          "offer": "We build mobile-friendly clinic websites with clear service pages.",
+          "approved_points": [
+            "An appointment-request form lets visitors send a request to your team.",
+            "Service pages present the treatments your clinic offers."
+          ],
+          "prohibited_claims": [
+            "guaranteed bookings",
+            "double your revenue"
+          ],
+          "stop_on": [
+            "opt_out",
+            "wrong_person",
+            "human_requested"
+          ],
+          "human_handoff": "required_on_request",
+          "integration": "retell_not_connected"
+        },
+        "validation_errors": [],
+        "blocking_reasons": [],
+        "approval_required": true,
+        "execution_authorized": false
+      }
+    },
+    {
+      "lead_id": 447,
+      "company_name": "The Dental Care Clinic ( Dr.Shahnawaz Ahmed)",
+      "plan": {
+        "version": "strategy_v1",
+        "scores": {
+          "version": "lead_scores_v1",
+          "method": "fixed_rules_not_conversion_probability",
+          "product_fit": {
+            "score": 60,
+            "max_score": 100,
+            "coverage_percent": 60,
+            "unknown_weight": 40,
+            "components": [
+              {
+                "name": "industry_match",
+                "weight": 40,
+                "status": "supported",
+                "points": 40,
+                "reason": "Recorded category compared with campaign target terms."
+              },
+              {
+                "name": "location_match",
+                "weight": 20,
+                "status": "supported",
+                "points": 20,
+                "reason": "Recorded city compared with campaign locations."
+              },
+              {
+                "name": "offer_evidence_match",
+                "weight": 40,
+                "status": "unknown",
+                "points": null,
+                "reason": "No supported offer-fit rule match; business need remains unknown."
+              }
+            ],
+            "missing_information": [
+              "No supported offer-fit rule match; business need remains unknown."
+            ],
+            "blockers": [],
+            "interpretation": "Documented support points; unknown information is not a negative finding. Compare coverage as well as score."
+          },
+          "data_confidence": {
+            "score": null,
+            "max_score": 100,
+            "coverage_percent": 0,
+            "unknown_weight": 100,
+            "components": [
+              {
+                "name": "identity_corroboration",
+                "weight": 30,
+                "status": "unknown",
+                "points": null,
+                "reason": "Source correlation is not independent identity verification."
+              },
+              {
+                "name": "observed_website",
+                "weight": 25,
+                "status": "unknown",
+                "points": null,
+                "reason": "Requires current observed website pages; ownership remains unverified."
+              },
+              {
+                "name": "fresh_research",
+                "weight": 20,
+                "status": "unknown",
+                "points": null,
+                "reason": "Requires current research containing matched profiles or usable outreach evidence; an empty completed job earns no points."
+              },
+              {
+                "name": "verified_email",
+                "weight": 25,
+                "status": "unknown",
+                "points": null,
+                "reason": "Requires fresh provider verification of the selected email; other contact verification remains unknown."
+              }
+            ],
+            "missing_information": [
+              "Source correlation is not independent identity verification.",
+              "Requires current observed website pages; ownership remains unverified.",
+              "Requires current research containing matched profiles or usable outreach evidence; an empty completed job earns no points.",
+              "Requires fresh provider verification of the selected email; other contact verification remains unknown."
+            ],
+            "blockers": [],
+            "interpretation": "Documented support points; unknown information is not a negative finding. Compare coverage as well as score."
+          },
+          "outreach_readiness": {
+            "score": 0,
+            "max_score": 100,
+            "method": "100 only when at least one channel has no readiness blockers; otherwise 0",
+            "per_channel": {
+              "email": {
+                "score": 0,
+                "status": "blocked",
+                "blockers": [
+                  "email_not_freshly_verified",
+                  "executor_not_integrated"
+                ]
+              },
+              "linkedin": {
+                "score": 0,
+                "status": "blocked",
+                "blockers": [
+                  "matched_person_missing",
+                  "executor_not_integrated"
+                ]
+              },
+              "call": {
+                "score": 0,
+                "status": "blocked",
+                "blockers": [
+                  "phone_ownership_and_channel_permission_unconfirmed",
+                  "executor_not_integrated"
+                ]
+              }
+            },
+            "execution_authorized": false
+          },
+          "automatic_prioritization": false
+        },
+        "campaign_version": 1,
+        "mode": "hybrid",
+        "generation": {
+          "method": "deterministic_template",
+          "ai_status": "ai_disabled"
+        },
+        "fit": {
+          "industry_match": true,
+          "location_match": true,
+          "excluded": false,
+          "method": "explicit_campaign_rules",
+          "buying_intent": "unknown",
+          "response_probability": null
+        },
+        "offer_fit": {
+          "matches": [],
+          "status": "insufficient_evidence",
+          "confirmed_need": false
+        },
+        "brief_suggestions": [
+          {
+            "field": "cta.url",
+            "reason": "Add an approved demo or product link if the campaign needs one."
+          }
+        ],
+        "quality_review": [
+          {
+            "step": 1,
+            "channel": "email",
+            "warnings": [
+              "no_source_personalization"
+            ],
+            "automatic_checks": "length, references, approved URLs, prohibited phrases; not semantic proof of every sentence"
+          },
+          {
+            "step": 2,
+            "channel": "email",
+            "warnings": [
+              "no_source_personalization"
+            ],
+            "automatic_checks": "length, references, approved URLs, prohibited phrases; not semantic proof of every sentence"
+          },
+          {
+            "step": 3,
+            "channel": "email",
+            "warnings": [
+              "no_source_personalization"
+            ],
+            "automatic_checks": "length, references, approved URLs, prohibited phrases; not semantic proof of every sentence"
+          }
+        ],
+        "evidence": [],
+        "channel_readiness": {
+          "email": {
+            "status": "blocked",
+            "reasons": [
+              "email_not_freshly_verified",
+              "executor_not_integrated"
+            ],
+            "draft_available": true
+          },
+          "linkedin": {
+            "status": "blocked",
+            "reasons": [
+              "matched_person_missing",
+              "executor_not_integrated"
+            ],
+            "draft_available": true
+          },
+          "call": {
+            "status": "blocked",
+            "reasons": [
+              "phone_ownership_and_channel_permission_unconfirmed",
+              "executor_not_integrated"
+            ],
+            "draft_available": true
+          }
+        },
+        "messages": [
+          {
+            "channel": "email",
+            "plan_role": "sequence_draft",
+            "subject": "Clinic website demonstration for The Dental Care Clinic ( Dr.Shahnawaz Ahmed)",
+            "body": "Hello The Dental Care Clinic ( Dr.Shahnawaz Ahmed),\n\nWe build mobile-friendly clinic websites with clear service pages.\n\nWould you like to see a sample website?\n\nAlex (sample sender)\nExample Web Studio (sample)\n\nReply STOP to opt out of further emails.",
+            "character_count": 252,
+            "template_preserved": false,
+            "evidence_ids": [],
+            "claims": [],
+            "ai_written": false,
+            "warning_codes": [],
+            "requires_review": true
+          },
+          {
+            "channel": "linkedin",
+            "plan_role": "blocked_alternative_not_scheduled",
+            "subject": null,
+            "body": "Hello The Dental Care Clinic ( Dr.Shahnawaz Ahmed), We build mobile-friendly clinic websites with clear service pages. Would you like to see a sample website?",
+            "character_count": 158,
+            "template_preserved": false,
+            "evidence_ids": [],
+            "claims": [],
+            "ai_written": false,
+            "warning_codes": [],
+            "requires_review": true
+          },
+          {
+            "channel": "call",
+            "plan_role": "blocked_alternative_not_scheduled",
+            "subject": null,
+            "body": "Hello, this is Alex (sample sender) from Example Web Studio (sample). Am I speaking with someone who handles website enquiries for The Dental Care Clinic ( Dr.Shahnawaz Ahmed)?",
+            "character_count": 176,
+            "template_preserved": false,
+            "evidence_ids": [],
+            "claims": [],
+            "ai_written": false,
+            "warning_codes": [],
+            "requires_review": true
+          }
+        ],
+        "sequence": [
+          {
+            "step": 1,
+            "channel": "email",
+            "delay_days": 0,
+            "condition": "initial",
+            "stop_on": [
+              "reply",
+              "opt_out",
+              "bounce",
+              "wrong_person",
+              "meeting_booked"
+            ],
+            "purpose": "introduction",
+            "message_channel": "email",
+            "message": {
+              "channel": "email",
+              "plan_role": "sequence_draft",
+              "subject": "Clinic website demonstration for The Dental Care Clinic ( Dr.Shahnawaz Ahmed)",
+              "body": "Hello The Dental Care Clinic ( Dr.Shahnawaz Ahmed),\n\nWe build mobile-friendly clinic websites with clear service pages.\n\nWould you like to see a sample website?\n\nAlex (sample sender)\nExample Web Studio (sample)\n\nReply STOP to opt out of further emails.",
+              "character_count": 252,
+              "template_preserved": false,
+              "evidence_ids": [],
+              "claims": [],
+              "ai_written": false,
+              "warning_codes": [],
+              "requires_review": true
+            },
+            "delay_basis": "previous_confirmed_send",
+            "timezone": "Asia/Karachi",
+            "sending_window": {
+              "start_hour": 9,
+              "end_hour": 17,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "step": 2,
+            "channel": "email",
+            "delay_days": 3,
+            "condition": "no_reply_after_previous_confirmed_send",
+            "stop_on": [
+              "reply",
+              "opt_out",
+              "bounce",
+              "wrong_person",
+              "meeting_booked"
+            ],
+            "purpose": "approved_benefit",
+            "message_channel": "email",
+            "message": {
+              "channel": "email",
+              "plan_role": "sequence_draft",
+              "subject": "Clinic website demonstration for The Dental Care Clinic ( Dr.Shahnawaz Ahmed)",
+              "body": "Hello The Dental Care Clinic ( Dr.Shahnawaz Ahmed),\n\nA detail about Clinic website demonstration that may be useful:\n\nAn appointment-request form lets visitors send a request to your team.\n\nWould you like to see a sample website?\n\nAlex (sample sender) — Example Web Studio (sample)\n\nReply STOP to opt out.",
+              "character_count": 305,
+              "template_preserved": false,
+              "evidence_ids": [],
+              "claims": [],
+              "ai_written": false,
+              "warning_codes": [],
+              "requires_review": true
+            },
+            "delay_basis": "previous_confirmed_send",
+            "timezone": "Asia/Karachi",
+            "sending_window": {
+              "start_hour": 9,
+              "end_hour": 17,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "step": 3,
+            "channel": "email",
+            "delay_days": 4,
+            "condition": "no_reply_after_previous_confirmed_send",
+            "stop_on": [
+              "reply",
+              "opt_out",
+              "bounce",
+              "wrong_person",
+              "meeting_booked"
+            ],
+            "purpose": "close_loop",
+            "message_channel": "email",
+            "message": {
+              "channel": "email",
+              "plan_role": "sequence_draft",
+              "subject": "Clinic website demonstration for The Dental Care Clinic ( Dr.Shahnawaz Ahmed)",
+              "body": "Hello The Dental Care Clinic ( Dr.Shahnawaz Ahmed),\n\nClosing the loop on Clinic website demonstration.\n\nService pages present the treatments your clinic offers.\n\nIf this is not a priority, I can leave it here.\n\nWould you like to see a sample website?\n\nAlex (sample sender) — Example Web Studio (sample)\n\nReply STOP to opt out.",
+              "character_count": 326,
+              "template_preserved": false,
+              "evidence_ids": [],
+              "claims": [],
+              "ai_written": false,
+              "warning_codes": [],
+              "requires_review": true
+            },
+            "delay_basis": "previous_confirmed_send",
+            "timezone": "Asia/Karachi",
+            "sending_window": {
+              "start_hour": 9,
+              "end_hour": 17,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "call_brief": {
+          "opening": "Hello, this is Alex (sample sender) from Example Web Studio (sample). Am I speaking with someone who handles website enquiries for The Dental Care Clinic ( Dr.Shahnawaz Ahmed)?",
+          "permission_question": "Is now a suitable time for a brief explanation?",
+          "after_permission": "We build mobile-friendly clinic websites with clear service pages. Would you like to see a sample website?",
+          "evidence_ids": [],
+          "branches": {
+            "interested": "Offer the approved demo or a human handoff; do not invent a demo link.",
+            "busy": "Ask whether they want a follow-up and record only the time they provide.",
+            "wrong_person": "End politely; do not assume or invent a decision-maker.",
+            "opt_out": "Stop and record the request before any further contact.",
+            "unknown_question": "Explain that a team member can answer; do not guess."
+          },
+          "objective": "Would you like to see a sample website?",
+          "offer": "We build mobile-friendly clinic websites with clear service pages.",
+          "approved_points": [
+            "An appointment-request form lets visitors send a request to your team.",
+            "Service pages present the treatments your clinic offers."
+          ],
+          "prohibited_claims": [
+            "guaranteed bookings",
+            "double your revenue"
+          ],
+          "stop_on": [
+            "opt_out",
+            "wrong_person",
+            "human_requested"
+          ],
+          "human_handoff": "required_on_request",
+          "integration": "retell_not_connected"
+        },
+        "validation_errors": [],
+        "blocking_reasons": [],
+        "approval_required": true,
+        "execution_authorized": false
+      }
+    },
+    {
+      "lead_id": 449,
+      "company_name": "Zia Dental Consultants",
+      "plan": {
+        "version": "strategy_v1",
+        "scores": {
+          "version": "lead_scores_v1",
+          "method": "fixed_rules_not_conversion_probability",
+          "product_fit": {
+            "score": 100,
+            "max_score": 100,
+            "coverage_percent": 100,
+            "unknown_weight": 0,
+            "components": [
+              {
+                "name": "industry_match",
+                "weight": 40,
+                "status": "supported",
+                "points": 40,
+                "reason": "Recorded category compared with campaign target terms."
+              },
+              {
+                "name": "location_match",
+                "weight": 20,
+                "status": "supported",
+                "points": 20,
+                "reason": "Recorded city compared with campaign locations."
+              },
+              {
+                "name": "offer_evidence_match",
+                "weight": 40,
+                "status": "supported",
+                "points": 40,
+                "reason": "Current evidence matches a customer-defined benefit rule."
+              }
+            ],
+            "missing_information": [],
+            "blockers": [],
+            "interpretation": "Documented support points; unknown information is not a negative finding. Compare coverage as well as score."
+          },
+          "data_confidence": {
+            "score": 25,
+            "max_score": 100,
+            "coverage_percent": 25,
+            "unknown_weight": 75,
+            "components": [
+              {
+                "name": "identity_corroboration",
+                "weight": 30,
+                "status": "unknown",
+                "points": null,
+                "reason": "Source correlation is not independent identity verification."
+              },
+              {
+                "name": "observed_website",
+                "weight": 25,
+                "status": "supported",
+                "points": 25,
+                "reason": "Requires current observed website pages; ownership remains unverified."
+              },
+              {
+                "name": "fresh_research",
+                "weight": 20,
+                "status": "unknown",
+                "points": null,
+                "reason": "Requires current research containing matched profiles or usable outreach evidence; an empty completed job earns no points."
+              },
+              {
+                "name": "verified_email",
+                "weight": 25,
+                "status": "unknown",
+                "points": null,
+                "reason": "Requires fresh provider verification of the selected email; other contact verification remains unknown."
+              }
+            ],
+            "missing_information": [
+              "Source correlation is not independent identity verification.",
+              "Requires current research containing matched profiles or usable outreach evidence; an empty completed job earns no points.",
+              "Requires fresh provider verification of the selected email; other contact verification remains unknown."
+            ],
+            "blockers": [],
+            "interpretation": "Documented support points; unknown information is not a negative finding. Compare coverage as well as score."
+          },
+          "outreach_readiness": {
+            "score": 0,
+            "max_score": 100,
+            "method": "100 only when at least one channel has no readiness blockers; otherwise 0",
+            "per_channel": {
+              "email": {
+                "score": 0,
+                "status": "blocked",
+                "blockers": [
+                  "email_not_freshly_verified",
+                  "executor_not_integrated"
+                ]
+              },
+              "linkedin": {
+                "score": 0,
+                "status": "blocked",
+                "blockers": [
+                  "matched_person_missing",
+                  "executor_not_integrated"
+                ]
+              },
+              "call": {
+                "score": 0,
+                "status": "blocked",
+                "blockers": [
+                  "phone_ownership_and_channel_permission_unconfirmed",
+                  "executor_not_integrated"
+                ]
+              }
+            },
+            "execution_authorized": false
+          },
+          "automatic_prioritization": false
+        },
+        "campaign_version": 1,
+        "mode": "hybrid",
+        "generation": {
+          "method": "deterministic_template",
+          "ai_status": "ai_disabled"
+        },
+        "fit": {
+          "industry_match": true,
+          "location_match": true,
+          "excluded": false,
+          "method": "explicit_campaign_rules",
+          "buying_intent": "unknown",
+          "response_probability": null
+        },
+        "offer_fit": {
+          "matches": [
+            {
+              "evidence_id": "e3",
+              "observed_fact": "Cosmetic dentistry",
+              "source_url": "https://ziadentalconsultants.me/",
+              "approved_benefit": "Service pages present the treatments your clinic offers.",
+              "interpretation": "Potential relevance based on a customer-defined rule; need and buying intent are unconfirmed."
+            },
+            {
+              "evidence_id": "e4",
+              "observed_fact": "Dental implants",
+              "source_url": "https://ziadentalconsultants.me/",
+              "approved_benefit": "Service pages present the treatments your clinic offers.",
+              "interpretation": "Potential relevance based on a customer-defined rule; need and buying intent are unconfirmed."
+            }
+          ],
+          "status": "potential_fit",
+          "confirmed_need": false
+        },
+        "brief_suggestions": [
+          {
+            "field": "cta.url",
+            "reason": "Add an approved demo or product link if the campaign needs one."
+          }
+        ],
+        "quality_review": [
+          {
+            "step": 1,
+            "channel": "email",
+            "warnings": [],
+            "automatic_checks": "length, references, approved URLs, prohibited phrases; not semantic proof of every sentence"
+          },
+          {
+            "step": 2,
+            "channel": "email",
+            "warnings": [
+              "no_source_personalization"
+            ],
+            "automatic_checks": "length, references, approved URLs, prohibited phrases; not semantic proof of every sentence"
+          },
+          {
+            "step": 3,
+            "channel": "email",
+            "warnings": [
+              "no_source_personalization"
+            ],
+            "automatic_checks": "length, references, approved URLs, prohibited phrases; not semantic proof of every sentence"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "e1",
+            "source_url": "https://ziadentalconsultants.me/",
+            "quote": "Orthodontics & braces",
+            "attribution": "Your website lists",
+            "requires_review": true
+          },
+          {
+            "id": "e2",
+            "source_url": "https://ziadentalconsultants.me/",
+            "quote": "Clear aligners",
+            "attribution": "Your website lists",
+            "requires_review": true
+          },
+          {
+            "id": "e3",
+            "source_url": "https://ziadentalconsultants.me/",
+            "quote": "Cosmetic dentistry",
+            "attribution": "Your website lists",
+            "requires_review": true
+          },
+          {
+            "id": "e4",
+            "source_url": "https://ziadentalconsultants.me/",
+            "quote": "Dental implants",
+            "attribution": "Your website lists",
+            "requires_review": true
+          },
+          {
+            "id": "e5",
+            "source_url": "https://ziadentalconsultants.me/",
+            "quote": "Metal braces",
+            "attribution": "Your website lists",
+            "requires_review": true
+          },
+          {
+            "id": "e6",
+            "source_url": "https://ziadentalconsultants.me/",
+            "quote": "Braces cost in Islamabad",
+            "attribution": "Your website lists",
+            "requires_review": true
+          }
+        ],
+        "channel_readiness": {
+          "email": {
+            "status": "blocked",
+            "reasons": [
+              "email_not_freshly_verified",
+              "executor_not_integrated"
+            ],
+            "draft_available": true
+          },
+          "linkedin": {
+            "status": "blocked",
+            "reasons": [
+              "matched_person_missing",
+              "executor_not_integrated"
+            ],
+            "draft_available": true
+          },
+          "call": {
+            "status": "blocked",
+            "reasons": [
+              "phone_ownership_and_channel_permission_unconfirmed",
+              "executor_not_integrated"
+            ],
+            "draft_available": true
+          }
+        },
+        "messages": [
+          {
+            "channel": "email",
+            "plan_role": "sequence_draft",
+            "subject": "Clinic website demonstration for Zia Dental Consultants",
+            "body": "Hello Zia Dental Consultants,\n\nYour website lists: “Cosmetic dentistry”.\n\nWe build mobile-friendly clinic websites with clear service pages.\n\nWould you like to see a sample website?\n\nAlex (sample sender)\nExample Web Studio (sample)\n\nReply STOP to opt out of further emails.",
+            "character_count": 273,
+            "template_preserved": false,
+            "evidence_ids": [
+              "e3"
+            ],
+            "claims": [],
+            "ai_written": false,
+            "warning_codes": [],
+            "requires_review": true
+          },
+          {
+            "channel": "linkedin",
+            "plan_role": "blocked_alternative_not_scheduled",
+            "subject": null,
+            "body": "Hello Zia Dental Consultants, Your website lists: “Cosmetic dentistry”. We build mobile-friendly clinic websites with clear service pages. Would you like to see a sample website?",
+            "character_count": 178,
+            "template_preserved": false,
+            "evidence_ids": [
+              "e3"
+            ],
+            "claims": [],
+            "ai_written": false,
+            "warning_codes": [],
+            "requires_review": true
+          },
+          {
+            "channel": "call",
+            "plan_role": "blocked_alternative_not_scheduled",
+            "subject": null,
+            "body": "Hello, this is Alex (sample sender) from Example Web Studio (sample). Am I speaking with someone who handles website enquiries for Zia Dental Consultants?",
+            "character_count": 154,
+            "template_preserved": false,
+            "evidence_ids": [],
+            "claims": [],
+            "ai_written": false,
+            "warning_codes": [],
+            "requires_review": true
+          }
+        ],
+        "sequence": [
+          {
+            "step": 1,
+            "channel": "email",
+            "delay_days": 0,
+            "condition": "initial",
+            "stop_on": [
+              "reply",
+              "opt_out",
+              "bounce",
+              "wrong_person",
+              "meeting_booked"
+            ],
+            "purpose": "introduction",
+            "message_channel": "email",
+            "message": {
+              "channel": "email",
+              "plan_role": "sequence_draft",
+              "subject": "Clinic website demonstration for Zia Dental Consultants",
+              "body": "Hello Zia Dental Consultants,\n\nYour website lists: “Cosmetic dentistry”.\n\nWe build mobile-friendly clinic websites with clear service pages.\n\nWould you like to see a sample website?\n\nAlex (sample sender)\nExample Web Studio (sample)\n\nReply STOP to opt out of further emails.",
+              "character_count": 273,
+              "template_preserved": false,
+              "evidence_ids": [
+                "e3"
+              ],
+              "claims": [],
+              "ai_written": false,
+              "warning_codes": [],
+              "requires_review": true
+            },
+            "delay_basis": "previous_confirmed_send",
+            "timezone": "Asia/Karachi",
+            "sending_window": {
+              "start_hour": 9,
+              "end_hour": 17,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "step": 2,
+            "channel": "email",
+            "delay_days": 3,
+            "condition": "no_reply_after_previous_confirmed_send",
+            "stop_on": [
+              "reply",
+              "opt_out",
+              "bounce",
+              "wrong_person",
+              "meeting_booked"
+            ],
+            "purpose": "approved_benefit",
+            "message_channel": "email",
+            "message": {
+              "channel": "email",
+              "plan_role": "sequence_draft",
+              "subject": "Clinic website demonstration for Zia Dental Consultants",
+              "body": "Hello Zia Dental Consultants,\n\nA detail about Clinic website demonstration that may be useful:\n\nAn appointment-request form lets visitors send a request to your team.\n\nWould you like to see a sample website?\n\nAlex (sample sender) — Example Web Studio (sample)\n\nReply STOP to opt out.",
+              "character_count": 283,
+              "template_preserved": false,
+              "evidence_ids": [],
+              "claims": [],
+              "ai_written": false,
+              "warning_codes": [],
+              "requires_review": true
+            },
+            "delay_basis": "previous_confirmed_send",
+            "timezone": "Asia/Karachi",
+            "sending_window": {
+              "start_hour": 9,
+              "end_hour": 17,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "step": 3,
+            "channel": "email",
+            "delay_days": 4,
+            "condition": "no_reply_after_previous_confirmed_send",
+            "stop_on": [
+              "reply",
+              "opt_out",
+              "bounce",
+              "wrong_person",
+              "meeting_booked"
+            ],
+            "purpose": "close_loop",
+            "message_channel": "email",
+            "message": {
+              "channel": "email",
+              "plan_role": "sequence_draft",
+              "subject": "Clinic website demonstration for Zia Dental Consultants",
+              "body": "Hello Zia Dental Consultants,\n\nClosing the loop on Clinic website demonstration.\n\nService pages present the treatments your clinic offers.\n\nIf this is not a priority, I can leave it here.\n\nWould you like to see a sample website?\n\nAlex (sample sender) — Example Web Studio (sample)\n\nReply STOP to opt out.",
+              "character_count": 304,
+              "template_preserved": false,
+              "evidence_ids": [],
+              "claims": [],
+              "ai_written": false,
+              "warning_codes": [],
+              "requires_review": true
+            },
+            "delay_basis": "previous_confirmed_send",
+            "timezone": "Asia/Karachi",
+            "sending_window": {
+              "start_hour": 9,
+              "end_hour": 17,
+              "weekdays": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "call_brief": {
+          "opening": "Hello, this is Alex (sample sender) from Example Web Studio (sample). Am I speaking with someone who handles website enquiries for Zia Dental Consultants?",
+          "permission_question": "Is now a suitable time for a brief explanation?",
+          "after_permission": "Your website lists: “Cosmetic dentistry”. We build mobile-friendly clinic websites with clear service pages. Would you like to see a sample website?",
+          "evidence_ids": [
+            "e3"
+          ],
+          "branches": {
+            "interested": "Offer the approved demo or a human handoff; do not invent a demo link.",
+            "busy": "Ask whether they want a follow-up and record only the time they provide.",
+            "wrong_person": "End politely; do not assume or invent a decision-maker.",
+            "opt_out": "Stop and record the request before any further contact.",
+            "unknown_question": "Explain that a team member can answer; do not guess."
+          },
+          "objective": "Would you like to see a sample website?",
+          "offer": "We build mobile-friendly clinic websites with clear service pages.",
+          "approved_points": [
+            "An appointment-request form lets visitors send a request to your team.",
+            "Service pages present the treatments your clinic offers."
+          ],
+          "prohibited_claims": [
+            "guaranteed bookings",
+            "double your revenue"
+          ],
+          "stop_on": [
+            "opt_out",
+            "wrong_person",
+            "human_requested"
+          ],
+          "human_handoff": "required_on_request",
+          "integration": "retell_not_connected"
+        },
+        "validation_errors": [],
+        "blocking_reasons": [],
+        "approval_required": true,
+        "execution_authorized": false
+      }
+    }
+  ]
+}

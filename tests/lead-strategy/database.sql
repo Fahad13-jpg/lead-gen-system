@@ -1,0 +1,48 @@
+\set ON_ERROR_STOP on
+BEGIN;
+DO $$
+DECLARE s integer;l integer;c jsonb;j jsonb;t jsonb;f jsonb;r jsonb;cfg jsonb;plan jsonb;
+BEGIN
+ ASSERT current_database()='lead_gathering_test_20260926';
+ INSERT INTO organizations(id,org_name,status) VALUES(940070,'Strategy fixture','active');
+ INSERT INTO staging_leads(org_id,company_name,source,cleaning_status,raw_data) VALUES(940070,'Clinic','google_maps','cleaned','{}') RETURNING id INTO s;
+ INSERT INTO cleaned_leads(org_id,staging_id,company_name) VALUES(940070,s,'Clinic') RETURNING id INTO l;
+ INSERT INTO cleaning_links(staging_id,org_id,cleaned_id) VALUES(s,940070,l);
+ cfg:='{"name":"Clinic Demo","mode":"template","offer":{"description":"Demo offer"},"cta":{"text":"See demo"},"channels":["email"],"expiry_days":7}';
+ c:=strategy_campaign_save(jsonb_build_object('org_id',940070,'config',cfg));ASSERT c->>'version'='1';
+ ASSERT strategy_context(1,(c->>'campaign_id')::bigint,l) IS NULL;
+ j:=strategy_enqueue(jsonb_build_object('org_id',940070,'campaign_id',c->'campaign_id','lead_id',l,'request_id','fixture-request-1'));ASSERT j->>'http_status'='202';
+ ASSERT strategy_enqueue(jsonb_build_object('org_id',940070,'campaign_id',c->'campaign_id','lead_id',l,'request_id','fixture-request-1'))->>'replayed'='true';
+ UPDATE strategy_controls SET enabled=true;
+ SELECT value INTO t FROM strategy_claim('fixture-run',1) value;ASSERT t->>'id'=j->>'job_id';
+ ASSERT NOT EXISTS(SELECT * FROM strategy_claim('second-worker',1));
+ ASSERT strategy_ai_gate(t||'{"wants_ai":true}')->>'reason'='ai_disabled';
+ plan:='{"version":"strategy_v1","execution_authorized":false,"messages":[{"channel":"email","body":"O''Brien says hello"}],"validation_errors":[],"blocking_reasons":[]}';
+ f:=strategy_finish(t||jsonb_build_object('plan',plan));ASSERT f->>'saved'='true';
+ ASSERT strategy_finish(t||jsonb_build_object('plan',plan))->>'replayed'='true';
+ ASSERT strategy_report(1,(j->>'job_id')::bigint) IS NULL;
+ r:=strategy_report(940070,(j->>'job_id')::bigint);ASSERT r->>'current'='true';
+ ASSERT strategy_approval(jsonb_build_object('org_id',940070,'plan_id',f->'plan_id','content_hash','wrong','actor','reviewer','action','approve'))->>'error'='CONTENT_CHANGED';
+ ASSERT strategy_approval(jsonb_build_object('org_id',940070,'plan_id',f->'plan_id','content_hash',f->'content_hash','actor','reviewer','action','approve'))->>'approved_content'='true';
+ ASSERT strategy_report(940070,(j->>'job_id')::bigint)->>'execution_authorized'='false';
+ ASSERT strategy_campaign_save(jsonb_build_object('org_id',940070,'campaign_id',c->'campaign_id','expected_version',99,'config',cfg))->>'error'='VERSION_CONFLICT';
+ ASSERT strategy_campaign_save(jsonb_build_object('org_id',940070,'campaign_id',c->'campaign_id','expected_version',1,'config',cfg))->>'version'='2';
+ ASSERT strategy_report(940070,(j->>'job_id')::bigint)->>'current'='false';
+ ASSERT strategy_approval(jsonb_build_object('org_id',940070,'plan_id',f->'plan_id','content_hash',f->'content_hash','actor','reviewer','action','approve'))->>'error'='STALE_PLAN';
+ ASSERT strategy_enqueue(jsonb_build_object('org_id',940070,'campaign_id',c->'campaign_id','lead_id',l,'request_id','fixture-request-1'))->>'error'='REQUEST_ID_CONFLICT';
+ r:=strategy_enqueue_batch(jsonb_build_object('org_id',940070,'campaign_id',c->'campaign_id','lead_ids',jsonb_build_array(l),'request_id','batch-fixture'));
+ ASSERT r->'results'->0->>'http_status'='202';
+ ASSERT strategy_enqueue_batch(jsonb_build_object('org_id',940070,'campaign_id',c->'campaign_id','lead_ids',jsonb_build_array(l),'request_id','batch-fixture'))->'results'->0->>'replayed'='true';
+ SELECT value INTO t FROM strategy_claim('retry-fixture',1) value;
+ ASSERT strategy_finish(t||jsonb_build_object('lease','wrong','plan',plan))->>'reason'='stale_lease';
+ ASSERT strategy_fail(jsonb_build_object('execution_id','unrelated','message','ignore'))->>'handled'='false';
+ ASSERT strategy_fail(jsonb_build_object('execution_id','retry-fixture','message','O''Brien failure'))->>'handled'='true';
+ ASSERT (SELECT status='pending' AND error='O''Brien failure' FROM strategy_jobs WHERE id=(t->>'id')::bigint);
+ UPDATE strategy_jobs SET next_attempt=now() WHERE id=(t->>'id')::bigint;
+ SELECT value INTO t FROM strategy_claim('retry-fixture-2',1) value;
+ UPDATE strategy_jobs SET lease_until=now()-interval '1 second',attempts=3 WHERE id=(t->>'id')::bigint;
+ PERFORM strategy_claim('expiry-fixture',1);
+ ASSERT (SELECT status='failed' FROM strategy_jobs WHERE id=(t->>'id')::bigint);
+ RAISE NOTICE 'PASS strategy SQL: organization isolation, immutable versions, idempotent request/save, exclusive claims, AI disabled, approvals, stale-plan rejection and no execution authorization';
+END $$;
+ROLLBACK;

@@ -1,0 +1,4274 @@
+[
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": null,
+          "source": "cleaned_record",
+          "status": "missing"
+        },
+        "emails": [
+          {
+            "value": "contact@techlioinc.com",
+            "status": "deliverability_unknown",
+            "relevance": "review",
+            "checked_at": null,
+            "expires_at": null,
+            "source_evidence": [
+              {
+                "email": "contact@techlioinc.com",
+                "score": 80,
+                "method": "source_record",
+                "evidence": "Explicit business contact field: cleaned.email",
+                "source_url": "https://www.google.com/maps/search/?api=1&query=Techlio%20Pvt.%20Limited&query_place_id=ChIJgdopFs4FGTkR9IQbolprWrI",
+                "staging_id": 21,
+                "source_field": "cleaned.email"
+              },
+              {
+                "email": "contact@techlioinc.com",
+                "score": 30,
+                "method": "source_record",
+                "evidence": "Explicit business contact field: cleaned.email",
+                "source_url": "https://www.google.com/maps/search/?api=1&query=Techlio%20Pvt.%20Limited&query_place_id=ChIJgdopFs4FGTkR9IQbolprWrI",
+                "staging_id": 21,
+                "source_field": "cleaned.email",
+                "relevance_status": "review",
+                "relevance_reasons": [
+                  "different_email_domain"
+                ]
+              }
+            ],
+            "verification_method": "external_email_provider"
+          },
+          {
+            "value": "contact@techlio.co",
+            "status": "deliverability_unknown",
+            "relevance": "eligible",
+            "checked_at": null,
+            "expires_at": null,
+            "source_evidence": [
+              {
+                "email": "contact@techlio.co",
+                "score": 90,
+                "method": "published_website",
+                "evidence": "scovery-call__contact-label\">Email Us at: \n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t<img src=\"https://te",
+                "source_url": "https://techlio.co/about-us/",
+                "same_domain": true,
+                "relevance_status": "eligible",
+                "relevance_reasons": [
+                  "business_domain_match"
+                ]
+              }
+            ],
+            "verification_method": "external_email_provider"
+          }
+        ],
+        "website": {
+          "value": "https://techlio.co/",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "https://techlio.co/",
+              "status": 200,
+              "truncated": false
+            },
+            {
+              "url": "https://techlio.co/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=6.1.5",
+              "status": 200,
+              "truncated": false
+            },
+            {
+              "url": "https://techlio.co/about-us/",
+              "status": 200,
+              "truncated": false
+            }
+          ],
+          "observed_at": "2026-10-03T15:58:02.404417+00:00"
+        },
+        "category": {
+          "value": "Software company",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Lahore",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Techlio Pvt. Limited",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "7a0dc5637ab34206451be1fd265433fc",
+    "lead_id": 159,
+    "computed": "59eccd1546a906e1fb40cb12f03bcea4",
+    "source_checks": [
+      {
+        "rating": 4.8,
+        "reason": "explicit_website",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 26,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Techlio%20Pvt.%20Limited&query_place_id=ChIJgdopFs4FGTkR9IQbolprWrI",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-22T15:09:20.433Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+924237728098",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": "https://fwf.punjab.gov.pk/gis_lab",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "https://fwf.punjab.gov.pk/gis_lab",
+              "error": "blocked_target"
+            }
+          ],
+          "observed_at": "2026-10-03T16:20:48.574891+00:00"
+        },
+        "category": {
+          "value": "Corporate office",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Lahore",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "GIS Lab Forest Department",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "26cd5bf378ed7b177979abb5aca16725",
+    "lead_id": 161,
+    "computed": "de299500a94a802ee218b5df32fd4d8f",
+    "source_checks": [
+      {
+        "rating": 4.1,
+        "reason": "explicit_website",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 55,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=GIS%20Lab%20Forest%20Department&query_place_id=ChIJ0-Q95XwcGTkREt0WPSlabIM",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-24T14:24:14.770Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923224083545",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [
+          {
+            "value": "contact@astoecompany.com",
+            "status": "deliverability_unknown",
+            "relevance": "eligible",
+            "checked_at": null,
+            "expires_at": null,
+            "source_evidence": [
+              {
+                "email": "contact@astoecompany.com",
+                "score": 90,
+                "method": "published_website",
+                "evidence": "blank\" rel=\"noopener\">   +92 343 5347417 \n              contact@astoecompany.com \n           <i class=",
+                "source_url": "https://www.astoecompany.com/about",
+                "same_domain": true
+              },
+              {
+                "email": "contact@astoecompany.com",
+                "score": 90,
+                "method": "published_website",
+                "evidence": "enquiry has been received.  Every enquiry is read by the engineering team and answered from contact@astoecompany.com, normally within one business day. For urgent matters, send the",
+                "source_url": "https://www.astoecompany.com/contact",
+                "same_domain": true
+              },
+              {
+                "email": "contact@astoecompany.com",
+                "score": 90,
+                "method": "published_website",
+                "evidence": "enquiry has been received.  Every enquiry is read by the engineering team and answered from contact@astoecompany.com, normally within one business day. For urgent matters, send the",
+                "source_url": "https://www.astoecompany.com/contact",
+                "same_domain": true,
+                "relevance_status": "eligible",
+                "relevance_reasons": [
+                  "business_domain_match"
+                ]
+              }
+            ],
+            "verification_method": "external_email_provider"
+          },
+          {
+            "value": "name@company.com",
+            "status": "deliverability_unknown",
+            "relevance": "review",
+            "checked_at": null,
+            "expires_at": null,
+            "source_evidence": [
+              {
+                "email": "name@company.com",
+                "score": 40,
+                "method": "published_website",
+                "evidence": "/label>\n             \n              \n           \n          <div class=\"fg\"",
+                "source_url": "https://www.astoecompany.com/contact",
+                "same_domain": false
+              },
+              {
+                "email": "name@company.com",
+                "score": 30,
+                "method": "published_website",
+                "evidence": "/label>\n             \n              \n           \n          <div class=\"fg\"",
+                "source_url": "https://www.astoecompany.com/contact",
+                "same_domain": false,
+                "relevance_status": "review",
+                "relevance_reasons": [
+                  "different_email_domain",
+                  "external_website_contact"
+                ]
+              }
+            ],
+            "verification_method": "external_email_provider"
+          }
+        ],
+        "website": {
+          "value": "https://www.astoecompany.com/",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "https://www.astoecompany.com/",
+              "status": 200,
+              "truncated": false
+            },
+            {
+              "url": "https://www.astoecompany.com/contact",
+              "status": 200,
+              "truncated": false
+            },
+            {
+              "url": "https://www.astoecompany.com/about",
+              "status": 200,
+              "truncated": false
+            }
+          ],
+          "observed_at": "2026-10-03T16:20:48.811729+00:00"
+        },
+        "category": {
+          "value": "Software company",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Lahore",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Astoe Company",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "conflict_needs_review",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [
+        {
+          "code": "conflicting_phone_numbers",
+          "evidence": [
+            {
+              "value": "+923224083545",
+              "source_url": null
+            },
+            {
+              "value": "+923435347417",
+              "source_url": "https://www.astoecompany.com/"
+            }
+          ],
+          "severity": "review"
+        }
+      ],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "needs_review",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "conflicting_business_evidence",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "6753439cc10ed0f913a8fb53d06bd5b0",
+    "lead_id": 162,
+    "computed": "2a4a84e70b20b4e8d24b95811a527e71",
+    "source_checks": [
+      {
+        "rating": 4.8,
+        "reason": "explicit_website",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 86,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Astoe%20Company&query_place_id=ChIJY7LUOWQDGTkRa-kRWtsFtd0",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-24T18:31:24.291Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923049210120",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": "https://peakrisetech.com/",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "https://peakrisetech.com/",
+              "error": "ESERVFAIL"
+            }
+          ],
+          "observed_at": "2026-10-03T16:25:33.652505+00:00"
+        },
+        "category": {
+          "value": "Software company",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Attock",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Peakrise Technologies",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "09fface95d22e91f021f9e173f735cbf",
+    "lead_id": 163,
+    "computed": "f8199164cb86c38d92c7cc1e78e60df3",
+    "source_checks": [
+      {
+        "rating": 5,
+        "reason": "explicit_website",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 56,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Peakrise%20Technologies&query_place_id=ChIJ5SYRkPkZ3zgR1_vm84mn6C4",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-28T09:30:42.216Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923147600620",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": "https://webgeniee.com/",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "https://webgeniee.com/",
+              "error": "ENOTFOUND"
+            }
+          ],
+          "observed_at": "2026-10-03T16:25:33.836175+00:00"
+        },
+        "category": {
+          "value": "Software company",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Attock",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Web Geniee Website Design & Development",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "209fab10d42d32c9b7414bc89944e82d",
+    "lead_id": 164,
+    "computed": "3dbd78bdc232732666e1cded7834cff3",
+    "source_checks": [
+      {
+        "rating": 5,
+        "reason": "explicit_website",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 84,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Web%20Geniee%20Website%20Design%20%26%20Development&query_place_id=ChIJRxrg0TcZ3zgRCFsj8K-4otE",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-28T09:30:42.217Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923184985003",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [
+          {
+            "value": "info@endevsols.com",
+            "status": "deliverability_unknown",
+            "relevance": "eligible",
+            "checked_at": null,
+            "expires_at": null,
+            "source_evidence": [
+              {
+                "email": "info@endevsols.com",
+                "score": 80,
+                "method": "source_record",
+                "evidence": "Explicit business contact field: cleaned.email",
+                "source_url": "https://www.google.com/maps/search/?api=1&query=EnDevSols%20(Pvt.)%20Ltd.&query_place_id=ChIJacBp7Ybr3zgRYmIfUeZ05z4",
+                "staging_id": 110,
+                "source_field": "cleaned.email"
+              },
+              {
+                "email": "info@endevsols.com",
+                "score": 80,
+                "method": "source_record",
+                "evidence": "Explicit business contact field: cleaned.email",
+                "source_url": "https://www.google.com/maps/search/?api=1&query=EnDevSols%20(Pvt.)%20Ltd.&query_place_id=ChIJacBp7Ybr3zgRYmIfUeZ05z4",
+                "staging_id": 110,
+                "source_field": "cleaned.email",
+                "relevance_status": "eligible",
+                "relevance_reasons": [
+                  "business_domain_match"
+                ]
+              }
+            ],
+            "verification_method": "external_email_provider"
+          }
+        ],
+        "website": {
+          "value": "https://endevsols.com/",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "https://endevsols.com/",
+              "status": 200,
+              "truncated": false
+            },
+            {
+              "url": "https://endevsols.com/contact-us",
+              "status": 200,
+              "truncated": false
+            },
+            {
+              "url": "https://endevsols.com/contact",
+              "status": 404,
+              "truncated": false
+            }
+          ],
+          "observed_at": "2026-10-03T16:30:21.323512+00:00"
+        },
+        "category": {
+          "value": "Software company",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Attock",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "EnDevSols (Pvt.) Ltd.",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "e4f2e67b1701d77970deb6a7098bbccb",
+    "lead_id": 165,
+    "computed": "153887704abf897c3f7e5d9199ff87f5",
+    "source_checks": [
+      {
+        "rating": null,
+        "reason": "explicit_website",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": null,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=EnDevSols%20(Pvt.)%20Ltd.&query_place_id=ChIJacBp7Ybr3zgRYmIfUeZ05z4",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-28T09:30:42.217Z",
+        "detail_level": false,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923215768827",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": "http://its4u.com/",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "http://its4u.com/",
+              "error": "blocked_target"
+            }
+          ],
+          "observed_at": "2026-10-03T16:30:21.373394+00:00"
+        },
+        "category": {
+          "value": "Electronics store",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Attock",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "ITS4U Computers and Mobiles",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "4530f6d85acca18358abb3e94cea5cb1",
+    "lead_id": 166,
+    "computed": "ef7b4aa880f55509f4e79e3ccca705b6",
+    "source_checks": [
+      {
+        "rating": 4.2,
+        "reason": "explicit_website",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 199,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=ITS4U%20Computers%20and%20Mobiles&query_place_id=ChIJRxF1FD4Y3zgRwjc7fiNanwI",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-28T09:30:42.218Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923367612507",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": "https://fiazdentalcare.com/",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "https://fiazdentalcare.com/",
+              "status": 200,
+              "truncated": false,
+              "usable_html": true
+            },
+            {
+              "url": "https://fiazdentalcare.com/index.php/contact-us/",
+              "status": 200,
+              "truncated": false,
+              "usable_html": true
+            },
+            {
+              "url": "https://fiazdentalcare.com/index.php/about-us/",
+              "status": 200,
+              "truncated": false,
+              "usable_html": true
+            }
+          ],
+          "observed_at": "2026-10-10T11:29:28.616604+00:00"
+        },
+        "category": {
+          "value": "Dental clinic",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Lahore",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Fiaz Dental Care",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "ab353d8b65bab3c01dc62e98299b7d93",
+    "lead_id": 167,
+    "computed": "2abda518ea7dccf72806960374af48f7",
+    "source_checks": [
+      {
+        "rating": 5,
+        "reason": "explicit_website",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 92,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Fiaz%20Dental%20Care&query_place_id=ChIJpRV2KrMdGTkRDyevJgm3WyQ",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-07T04:46:20.817Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "3125499745",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [
+          {
+            "value": "info@alledelectricil.com",
+            "status": "deliverability_unknown",
+            "relevance": "eligible",
+            "checked_at": null,
+            "expires_at": null,
+            "source_evidence": [
+              {
+                "email": "info@alledelectricil.com",
+                "score": 80,
+                "method": "published_facebook",
+                "evidence": "Public business page contact field",
+                "source_url": "https://www.facebook.com/alledelectric",
+                "identity_match": true,
+                "relevance_status": "eligible",
+                "identity_evidence": {
+                  "name_match": true,
+                  "phone_match": false,
+                  "source_match": true,
+                  "website_match": true
+                },
+                "relevance_reasons": [
+                  "business_domain_match"
+                ]
+              }
+            ],
+            "verification_method": "external_email_provider"
+          }
+        ],
+        "website": {
+          "value": "https://alledelectricil.com",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "https://www.alledelectricil.com/",
+              "status": 200,
+              "truncated": false
+            },
+            {
+              "url": "https://www.alledelectricil.com/contact",
+              "status": 404,
+              "truncated": false
+            },
+            {
+              "url": "https://www.alledelectricil.com/contact-us",
+              "status": 404,
+              "truncated": false
+            }
+          ],
+          "observed_at": "2026-10-03T15:58:12.097912+00:00"
+        },
+        "category": {
+          "value": "Plumbers",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Chicago",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "United States"
+        },
+        "company_name": {
+          "value": "ALL ED ELECTRIC",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "conflict_needs_review",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [
+        {
+          "code": "possible_category_mismatch",
+          "reason": "Explicit industry terms disagree; human or enrichment review required",
+          "evidence": {
+            "category": "Plumbers",
+            "company_name": "ALL ED ELECTRIC"
+          },
+          "severity": "review"
+        }
+      ],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "needs_review",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "conflicting_business_evidence",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "4391e2b4afbbff7934bd5674cc5f3b9c",
+    "lead_id": 168,
+    "computed": "d64296750df1eb559c100834e336f6d3",
+    "source_checks": [
+      {
+        "rating": null,
+        "reason": "explicit_website",
+        "source": "yellow_pages",
+        "status": "checked",
+        "reviews": 0,
+        "source_url": "https://www.yellowpages.com/chicago-il/mip/all-ed-electric-579608019?lid=1002195574696",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-08T13:35:45Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "3128788062",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": "https://shop.wellsplumbing.com/locations.HTML",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "https://shop.wellsplumbing.com/locations.HTML",
+              "error": "ESERVFAIL"
+            }
+          ],
+          "observed_at": "2026-10-03T16:36:25.548005+00:00"
+        },
+        "category": {
+          "value": "Plumbers",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Chicago",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "United States"
+        },
+        "company_name": {
+          "value": "Wells Plumbing & Heating",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "345aea11181377775824aba399f8838e",
+    "lead_id": 169,
+    "computed": "a0f1fec9ef63f2fa63a76c13be505a0b",
+    "source_checks": [
+      {
+        "rating": 5,
+        "reason": "explicit_website",
+        "source": "yellow_pages",
+        "status": "checked",
+        "reviews": 1,
+        "source_url": "https://www.yellowpages.com/chicago-il/mip/wells-plumbing-heating-4718716?lid=1002166423741",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-08T13:35:45Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "7736832043",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [
+          {
+            "value": "sandro@landascleaning.com",
+            "status": "deliverability_unknown",
+            "relevance": "eligible",
+            "checked_at": null,
+            "expires_at": null,
+            "source_evidence": [
+              {
+                "email": "sandro@landascleaning.com",
+                "score": 80,
+                "method": "source_record",
+                "evidence": "Explicit business contact field: cleaned.email",
+                "source_url": "https://www.yellowpages.com/search?search_terms=plumbers&geo_location_terms=Chicago%2C+IL",
+                "staging_id": 120,
+                "source_field": "cleaned.email"
+              },
+              {
+                "email": "sandro@landascleaning.com",
+                "score": 80,
+                "method": "source_record",
+                "evidence": "Explicit business contact field: cleaned.email",
+                "source_url": "https://www.yellowpages.com/search?search_terms=plumbers&geo_location_terms=Chicago%2C+IL",
+                "staging_id": 120,
+                "source_field": "cleaned.email",
+                "relevance_status": "eligible",
+                "relevance_reasons": [
+                  "business_domain_match"
+                ]
+              }
+            ],
+            "verification_method": "external_email_provider"
+          }
+        ],
+        "website": {
+          "value": "http://www.landascleaning.com",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "http://www.landascleaning.com/",
+              "error": "ESERVFAIL"
+            }
+          ],
+          "observed_at": "2026-10-03T16:40:19.117062+00:00"
+        },
+        "category": {
+          "value": "Plumbers",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Chicago",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "United States"
+        },
+        "company_name": {
+          "value": "Landa's Carpet And Upholstery Cleaning",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "7a05bc7a73d6128c15020c9991565b14",
+    "lead_id": 170,
+    "computed": "9349121444c98f4c76eb37b5f42d08ce",
+    "source_checks": [
+      {
+        "rating": null,
+        "reason": "explicit_website",
+        "source": "yellow_pages",
+        "status": "checked",
+        "reviews": 0,
+        "source_url": "https://www.yellowpages.com/chicago-il/mip/landas-carpet-and-upholstery-cleaning-23055083?lid=1002163686941",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-08T13:35:45Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "7735000144",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [
+          {
+            "value": "jrhal@yahoo.com",
+            "status": "deliverability_unknown",
+            "relevance": "eligible",
+            "checked_at": null,
+            "expires_at": null,
+            "source_evidence": [
+              {
+                "email": "jrhal@yahoo.com",
+                "score": 80,
+                "method": "source_record",
+                "evidence": "Explicit business contact field: cleaned.email",
+                "source_url": "https://www.yellowpages.com/search?search_terms=plumbers&geo_location_terms=Chicago%2C+IL",
+                "staging_id": 121,
+                "source_field": "cleaned.email"
+              },
+              {
+                "email": "jrhal@yahoo.com",
+                "score": 80,
+                "method": "source_record",
+                "evidence": "Explicit business contact field: cleaned.email",
+                "source_url": "https://www.yellowpages.com/search?search_terms=plumbers&geo_location_terms=Chicago%2C+IL",
+                "staging_id": 121,
+                "source_field": "cleaned.email",
+                "relevance_status": "eligible",
+                "relevance_reasons": [
+                  "published_business_mailbox"
+                ]
+              },
+              {
+                "email": "jrhal@yahoo.com",
+                "score": 80,
+                "method": "published_facebook",
+                "evidence": "Public business page contact field",
+                "source_url": "https://www.facebook.com/halstedplumbing",
+                "identity_match": true,
+                "relevance_status": "eligible",
+                "identity_evidence": {
+                  "name_match": true,
+                  "phone_match": false,
+                  "source_match": true,
+                  "website_match": true
+                },
+                "relevance_reasons": [
+                  "published_business_mailbox"
+                ]
+              }
+            ],
+            "verification_method": "external_email_provider"
+          }
+        ],
+        "website": {
+          "value": "https://www.halstedplumbing.com",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "https://www.halstedplumbing.com/",
+              "error": "ESERVFAIL"
+            }
+          ],
+          "observed_at": "2026-10-03T16:40:19.145542+00:00"
+        },
+        "category": {
+          "value": "Plumbers",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Chicago",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "United States"
+        },
+        "company_name": {
+          "value": "Halsted Plumbing & Sewer",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "bedc5bde64fce519cda9f0adfb00d504",
+    "lead_id": 171,
+    "computed": "b9767ac6fc2b8526089a8ffa73106793",
+    "source_checks": [
+      {
+        "rating": null,
+        "reason": "explicit_website",
+        "source": "yellow_pages",
+        "status": "checked",
+        "reviews": 0,
+        "source_url": "https://www.yellowpages.com/chicago-il/mip/halsted-plumbing-sewer-10195927?lid=1002195564636",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-08T13:35:45Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "7738625112",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [
+          {
+            "value": "obannonsewer@yahoo.com",
+            "status": "deliverability_unknown",
+            "relevance": "eligible",
+            "checked_at": null,
+            "expires_at": null,
+            "source_evidence": [
+              {
+                "email": "obannonsewer@yahoo.com",
+                "score": 80,
+                "method": "source_record",
+                "evidence": "Explicit business contact field: cleaned.email",
+                "source_url": "https://www.google.com/maps/search/?api=1&query=O%27Bannon%20Plumbing%20%26%20Sewer&query_place_id=ChIJOfmDOjfZEYgRmtiJ9wAxXkM",
+                "staging_id": 134,
+                "source_field": "cleaned.email"
+              },
+              {
+                "email": "obannonsewer@yahoo.com",
+                "score": 80,
+                "method": "source_record",
+                "evidence": "Explicit business contact field: cleaned.email",
+                "source_url": "https://www.google.com/maps/search/?api=1&query=O%27Bannon%20Plumbing%20%26%20Sewer&query_place_id=ChIJOfmDOjfZEYgRmtiJ9wAxXkM",
+                "staging_id": 134,
+                "source_field": "cleaned.email",
+                "relevance_status": "eligible",
+                "relevance_reasons": [
+                  "published_business_mailbox"
+                ]
+              }
+            ],
+            "verification_method": "external_email_provider"
+          }
+        ],
+        "website": {
+          "value": "https://obannonplumbingandsewer.com/?utm_source=GBP&utm_medium=organic&utm_campaign=website",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "https://obannonplumbingandsewer.com/?utm_source=GBP&utm_medium=organic&utm_campaign=website",
+              "error": "ENOTFOUND"
+            }
+          ],
+          "observed_at": "2026-10-03T16:45:09.366989+00:00"
+        },
+        "category": {
+          "value": "Plumber",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": null,
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "Unknown"
+        },
+        "company_name": {
+          "value": "O'Bannon Plumbing & Sewer",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "0ceb45c15f42c3671f0a07ef5421bab4",
+    "lead_id": 172,
+    "computed": "e9bde78a09a3cf592914ab6f213ed9fd",
+    "source_checks": [
+      {
+        "rating": 4.8,
+        "reason": "explicit_website",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 57,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=O'Bannon%20Plumbing%20%26%20Sewer&query_place_id=ChIJOfmDOjfZEYgRmtiJ9wAxXkM",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-13T09:07:59.799Z",
+        "detail_level": false,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+15551112222",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [
+          {
+            "value": "test1@example.com",
+            "status": "deliverability_unknown",
+            "relevance": "excluded",
+            "checked_at": null,
+            "expires_at": null,
+            "source_evidence": [
+              {
+                "email": "test1@example.com",
+                "score": 80,
+                "method": "source_record",
+                "evidence": "Explicit business contact field: cleaned.email",
+                "source_url": null,
+                "staging_id": 148,
+                "source_field": "cleaned.email"
+              },
+              {
+                "email": "test1@example.com",
+                "score": 0,
+                "method": "source_record",
+                "evidence": "Explicit business contact field: cleaned.email",
+                "source_url": null,
+                "staging_id": 148,
+                "source_field": "cleaned.email",
+                "relevance_status": "excluded",
+                "relevance_reasons": [
+                  "non_contact_or_placeholder"
+                ]
+              }
+            ],
+            "verification_method": "external_email_provider"
+          }
+        ],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T16:45:09.399152+00:00"
+        },
+        "category": {
+          "value": null,
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Chicago",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "Unknown"
+        },
+        "company_name": {
+          "value": "ABC Dental Clinic",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "740b9b78b08764f83af02ed095a08aae",
+    "lead_id": 230,
+    "computed": "9c2884758febc5a83a8e883f8cfee6f3",
+    "source_checks": []
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+15553334444",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [
+          {
+            "value": "test2@example.com",
+            "status": "deliverability_unknown",
+            "relevance": "excluded",
+            "checked_at": null,
+            "expires_at": null,
+            "source_evidence": [
+              {
+                "email": "test2@example.com",
+                "score": 80,
+                "method": "source_record",
+                "evidence": "Explicit business contact field: cleaned.email",
+                "source_url": null,
+                "staging_id": 149,
+                "source_field": "cleaned.email"
+              },
+              {
+                "email": "test2@example.com",
+                "score": 0,
+                "method": "source_record",
+                "evidence": "Explicit business contact field: cleaned.email",
+                "source_url": null,
+                "staging_id": 149,
+                "source_field": "cleaned.email",
+                "relevance_status": "excluded",
+                "relevance_reasons": [
+                  "non_contact_or_placeholder"
+                ]
+              }
+            ],
+            "verification_method": "external_email_provider"
+          }
+        ],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T16:50:09.125253+00:00"
+        },
+        "category": {
+          "value": null,
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Chicago",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "Unknown"
+        },
+        "company_name": {
+          "value": "ABC Dental",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "c6f763d9ecab93d4f9835c496c7adf46",
+    "lead_id": 231,
+    "computed": "321a7a905c8fe595aa034575c3565ebf",
+    "source_checks": []
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923329367402",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T16:50:09.185868+00:00"
+        },
+        "category": {
+          "value": "Medical clinic",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Islamabad",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Islamabad Dental Clinic",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "2b7ce26f7221560115d38b70f8745172",
+    "lead_id": 445,
+    "computed": "e32a957aa86fd2fcfcd53d246e0e555d",
+    "source_checks": [
+      {
+        "rating": 3.8,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 4,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Islamabad%20Dental%20Clinic&query_place_id=ChIJFdsB6Sy_3zgRylw6vcZMKbM",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-09-26T08:25:18.688Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923218933839",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T16:55:08.986719+00:00"
+        },
+        "category": {
+          "value": "Dental clinic",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Islamabad",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Luminosity Dental Clinic",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "91c724a112aa5a030671054b3c24a7c8",
+    "lead_id": 446,
+    "computed": "a01c8a81ab1597236f23c44e35b2ff39",
+    "source_checks": [
+      {
+        "rating": 5,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 22,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Luminosity%20Dental%20Clinic&query_place_id=ChIJtYIuK4zB3zgRhCfPj9mNPNg",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-09-26T08:25:18.689Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923352114347",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T16:55:09.031198+00:00"
+        },
+        "category": {
+          "value": "Dental clinic",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Islamabad",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "The Dental Care Clinic ( Dr.Shahnawaz Ahmed)",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "eabdae84fcbf82ad2e01101a88d89d33",
+    "lead_id": 447,
+    "computed": "af8d52c7c17b478d9cc738b5acecf22d",
+    "source_checks": [
+      {
+        "rating": 4.9,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 167,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=The%20Dental%20Care%20Clinic%20(%20Dr.Shahnawaz%20Ahmed)&query_place_id=ChIJw0r1b1-_3zgRY0YMatEk-UQ",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-09-26T08:25:18.689Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923308555866",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T17:00:12.991429+00:00"
+        },
+        "category": {
+          "value": "Dental clinic",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Islamabad",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Odontologia-Dental Setup",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "e3f0b95540987fe246dd1336431e3663",
+    "lead_id": 448,
+    "computed": "f59d71c5fb75c2025b9fe54f317c0f2e",
+    "source_checks": [
+      {
+        "rating": 4.9,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 62,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Odontologia-Dental%20Setup&query_place_id=ChIJCRl4gYnB3zgRrKLqwBuHObg",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-09-26T08:25:18.689Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923335100708",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": "https://ziadentalconsultants.me",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "https://ziadentalconsultants.me/",
+              "status": 200,
+              "truncated": false,
+              "usable_html": true
+            },
+            {
+              "url": "https://ziadentalconsultants.me/contact/",
+              "status": 200,
+              "truncated": false,
+              "usable_html": true
+            },
+            {
+              "url": "https://ziadentalconsultants.me/about/",
+              "status": 200,
+              "truncated": false,
+              "usable_html": true
+            }
+          ],
+          "observed_at": "2026-10-10T11:29:36.696682+00:00"
+        },
+        "category": {
+          "value": "Dental clinic",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Islamabad",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Zia Dental Consultants",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "2ab34df3df39bd441ee0f2a723a8db36",
+    "lead_id": 449,
+    "computed": "665d95f66c5f2ae61df79b4e0849a31b",
+    "source_checks": [
+      {
+        "rating": 4.4,
+        "reason": "explicit_website",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 19,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Zia%20Dental%20Consultants&query_place_id=ChIJX6DJN4a_3zgRLHPAx0ICgC4",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-09-26T08:25:18.690Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923343470263",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T17:05:10.15523+00:00"
+        },
+        "category": {
+          "value": "Restaurant",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Karachi",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Khao Piyo Niklo",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "c6cf437f8114a595fad259c5f26910ed",
+    "lead_id": 450,
+    "computed": "2aaa6be735fdb32bfffc7fa50f0b739c",
+    "source_checks": [
+      {
+        "rating": 4.7,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 19,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Khao%20Piyo%20Niklo&query_place_id=ChIJyc5YBUtLsz4RkhqZRAyc31M",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-24T22:49:06.810Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923243186892",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T17:05:10.181191+00:00"
+        },
+        "category": {
+          "value": "Restaurant",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Noor Muhammad Goth Kathore",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Zims Kitchen",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "593a5a95ab7ef268d4edf256543fa06f",
+    "lead_id": 451,
+    "computed": "e9a25ac584254eeb9b2a78c94696475c",
+    "source_checks": [
+      {
+        "rating": 4.8,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 51,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Zims%20Kitchen&query_place_id=ChIJo2UL1bBNsz4RLCWlRXtbz2U",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-24T22:49:06.812Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923098309955",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T17:10:09.09954+00:00"
+        },
+        "category": {
+          "value": "Restaurant",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Karachi",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Cafe Chiraag",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "f909dec9238a99301bf6b5f048aa78e0",
+    "lead_id": 452,
+    "computed": "99045bb569a7e5c9154c82c8ff7b595c",
+    "source_checks": [
+      {
+        "rating": 4.4,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 45,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Cafe%20Chiraag&query_place_id=ChIJSyXEqtZLsz4Rru5TpUMrXdg",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-24T22:49:06.814Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923292148699",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T17:10:09.134437+00:00"
+        },
+        "category": {
+          "value": "Restaurant",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Karachi",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Desi perdesi",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "c8617dec01f3fc3adef55a0c81ca68b0",
+    "lead_id": 453,
+    "computed": "df8b7f5de2ceeb07dd33bf90c51bf531",
+    "source_checks": [
+      {
+        "rating": 4.5,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 32,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Desi%20perdesi&query_place_id=ChIJRYQRPgBLsz4RnE59qLOvLsc",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-24T22:49:06.814Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923047066506",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T17:15:09.276673+00:00"
+        },
+        "category": {
+          "value": "Restaurant",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Karachi",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Super Gabol Restaurant",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "32c8ade5646c079e2751cb6fdb3a8765",
+    "lead_id": 454,
+    "computed": "d3aa3e4dfed96d0acb29c1277d8aa7d9",
+    "source_checks": [
+      {
+        "rating": 4.2,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 20,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Super%20Gabol%20Restaurant&query_place_id=ChIJzSjr-0ZLsz4RD5LFeY76sqQ",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-24T22:49:06.814Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923173023777",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T17:15:09.319744+00:00"
+        },
+        "category": {
+          "value": "Restaurant",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Karachi",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "DK Grill., est. 2020 - Best Food in Bahria Town Karachi",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "83e262959ff80bac889f83104a3a1ac6",
+    "lead_id": 455,
+    "computed": "5e691e4044c068bac533cac445a73c75",
+    "source_checks": [
+      {
+        "rating": 4.7,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 355,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=DK%20Grill.%2C%20est.%202020%20-%20Best%20Food%20in%20Bahria%20Town%20Karachi&query_place_id=ChIJowxwO3FNsz4Rf6cU6G9_iwg",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-24T22:49:06.815Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923480139763",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T17:20:08.667723+00:00"
+        },
+        "category": {
+          "value": "Chicken restaurant",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Karachi",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Aashiyana Hotel",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "b86a44c5a93cbbed9d56b87c974c8b66",
+    "lead_id": 456,
+    "computed": "42f83192270563f2a59773fb801879b1",
+    "source_checks": [
+      {
+        "rating": 4.4,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 38,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Aashiyana%20Hotel&query_place_id=ChIJO7JUs5RLsz4RUmKs2slwUeU",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-24T22:49:06.815Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923240662560",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T17:20:08.685594+00:00"
+        },
+        "category": {
+          "value": "Restaurant",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Karachi",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "VASCO'S RESTAURANT",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "87cc08b9b70cc3249766979ff3e0df2f",
+    "lead_id": 457,
+    "computed": "aa147c00f3a845427953c8a7a3a2975c",
+    "source_checks": [
+      {
+        "rating": 4,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 32,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=VASCO'S%20RESTAURANT&query_place_id=ChIJZxYlQ1NLsz4RZpg_d19g4ns",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-24T22:49:06.815Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923332312143",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T17:25:08.649508+00:00"
+        },
+        "category": {
+          "value": "Restaurant",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Karachi",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "New Al Jeddah Restaurant",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "64f154f14668105fc0c032065ab7c58c",
+    "lead_id": 458,
+    "computed": "f8dbe38373b88340a9b0d5b8fc452edb",
+    "source_checks": [
+      {
+        "rating": 4.1,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 7,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=New%20Al%20Jeddah%20Restaurant&query_place_id=ChIJH7oylldLsz4RHat-Xz-bdoY",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-24T22:49:06.815Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+92572700304",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T17:25:08.670231+00:00"
+        },
+        "category": {
+          "value": "Software company",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Attock",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Upwasoft",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "fb7ce922ada485080b3f10b04a4a0a2a",
+    "lead_id": 459,
+    "computed": "117e9b6b74f75570fce1f4c604246131",
+    "source_checks": [
+      {
+        "rating": 5,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 3,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Upwasoft&query_place_id=ChIJY3J65zsY3zgR-_8yw2PGTaY",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-04-28T09:32:21.674Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923334300421",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T17:30:08.75948+00:00"
+        },
+        "category": {
+          "value": "Dental clinic",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Lahore",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Attique Dental Clinic",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "d117627a841881ffd6564ba3e889e23b",
+    "lead_id": 460,
+    "computed": "5a07d126368bad8ced20845a300e4a45",
+    "source_checks": [
+      {
+        "rating": 3,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 2,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Attique%20Dental%20Clinic&query_place_id=ChIJidNXHoobGTkRPons0_epQN0",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-07T04:46:15.891Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923070450066",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T17:30:08.783894+00:00"
+        },
+        "category": {
+          "value": "Dentist",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Lahore",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "Smile Buds Dental Clinic",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "96c896da4c85d87e94555e1844b2a0be",
+    "lead_id": 461,
+    "computed": "1dc038fdb3d75688a14c1c3e2cfc804a",
+    "source_checks": [
+      {
+        "rating": 5,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 47,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Smile%20Buds%20Dental%20Clinic&query_place_id=ChIJn9rQj9EbGTkRk1kBIbagOn8",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-07T04:46:20.549Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+923014095367",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T17:35:09.082259+00:00"
+        },
+        "category": {
+          "value": "Dentist",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Lahore",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "PK"
+        },
+        "company_name": {
+          "value": "FAROOQ DENTAL Care Centre",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "328bfc116ab57439ef30019c7552b677",
+    "lead_id": 462,
+    "computed": "8a1bc0b2f4d64d9de0ce95a893ccee7f",
+    "source_checks": [
+      {
+        "rating": 5,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 2,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=FAROOQ%20DENTAL%20Care%20Centre&query_place_id=ChIJj0ecUwAbGTkRBEuxZRxwPcc",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-07T04:46:21.200Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+12244525194",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [
+          {
+            "value": "rr.social@rrsc.com",
+            "status": "deliverability_unknown",
+            "relevance": "review",
+            "checked_at": null,
+            "expires_at": null,
+            "source_evidence": [
+              {
+                "email": "rr.social@rrsc.com",
+                "score": 30,
+                "method": "published_facebook",
+                "evidence": "Public business page contact field",
+                "source_url": "https://www.facebook.com/rotorooterchicago",
+                "identity_match": true,
+                "relevance_status": "review",
+                "identity_evidence": {
+                  "name_match": true,
+                  "phone_match": false,
+                  "source_match": true,
+                  "website_match": true
+                },
+                "relevance_reasons": [
+                  "department_relevance_uncertain",
+                  "different_email_domain"
+                ]
+              }
+            ],
+            "verification_method": "external_email_provider"
+          }
+        ],
+        "website": {
+          "value": "https://www.rotorooter.com/chicago/?utm_source=iyp&utm_medium=paid&utm_campaign=iyp",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "https://www.rotorooter.com/chicago/?utm_source=iyp&utm_medium=paid&utm_campaign=iyp",
+              "error": "ECONNRESET"
+            }
+          ],
+          "observed_at": "2026-10-03T15:58:19.697172+00:00"
+        },
+        "category": {
+          "value": "Plumbers",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Chicago",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "US"
+        },
+        "company_name": {
+          "value": "Roto-Rooter Plumbing & Water Cleanup",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "a4cd6cb71832503eb7ce47098158a697",
+    "lead_id": 463,
+    "computed": "1543dd90a54eb2095dd071485dd4dd3a",
+    "source_checks": [
+      {
+        "rating": null,
+        "reason": "explicit_website",
+        "source": "yellow_pages",
+        "status": "checked",
+        "reviews": 0,
+        "source_url": "https://www.yellowpages.com/chicago-il/mip/roto-rooter-plumbing-water-cleanup-562623075?lid=1002194257059",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-08T13:35:45Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+17737362408",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": "http://emjmetals.com",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "http://emjmetals.com/",
+              "error": "ENOTFOUND"
+            }
+          ],
+          "observed_at": "2026-10-03T17:35:09.10128+00:00"
+        },
+        "category": {
+          "value": "Plumbers",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Chicago",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "US"
+        },
+        "company_name": {
+          "value": "Eric's Plumbing & Heating",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "445f21fd5109947c963f30481c409fea",
+    "lead_id": 464,
+    "computed": "f718ee7a0ffdba942d9a817680005bf8",
+    "source_checks": [
+      {
+        "rating": null,
+        "reason": "explicit_website",
+        "source": "yellow_pages",
+        "status": "checked",
+        "reviews": 0,
+        "source_url": "https://www.yellowpages.com/chicago-il/mip/erics-plumbing-heating-14280493",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-13T09:00:46Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+17736482113",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": "http://chicagoplumbingcontractors.localsearch.com",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "http://chicagoplumbingcontractors.localsearch.com/",
+              "error": "ENOTFOUND"
+            }
+          ],
+          "observed_at": "2026-10-03T17:40:08.762445+00:00"
+        },
+        "category": {
+          "value": "Plumbers",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Chicago",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "US"
+        },
+        "company_name": {
+          "value": "Chicago Plumbing Contractors",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "9371ba1f888c38084d6c5e4a9380b02e",
+    "lead_id": 465,
+    "computed": "c885886e44dd3c51344440045034d4ae",
+    "source_checks": [
+      {
+        "rating": null,
+        "reason": "explicit_website",
+        "source": "yellow_pages",
+        "status": "checked",
+        "reviews": 0,
+        "source_url": "https://www.yellowpages.com/chicago-il/mip/chicago-plumbing-contractors-562998918",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-13T09:00:46Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+16182152204",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": "http://localplumberschicagoil.localsearch.com",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "http://localplumberschicagoil.localsearch.com/",
+              "error": "ENOTFOUND"
+            }
+          ],
+          "observed_at": "2026-10-03T17:40:08.776237+00:00"
+        },
+        "category": {
+          "value": "Plumbers",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Chicago",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "US"
+        },
+        "company_name": {
+          "value": "Local Plumbers Chicago IL",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "9c11430ba963f6a51813b3139b6092ea",
+    "lead_id": 466,
+    "computed": "2d2cde2e3309715b94756f648805f39e",
+    "source_checks": [
+      {
+        "rating": null,
+        "reason": "explicit_website",
+        "source": "yellow_pages",
+        "status": "checked",
+        "reviews": 0,
+        "source_url": "https://www.yellowpages.com/chicago-il/mip/local-plumbers-chicago-il-555558763",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-13T09:00:46Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+17736667977",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": "http://plumbinginspectionchicagoil.localsearch.com",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "http://plumbinginspectionchicagoil.localsearch.com/",
+              "error": "ENOTFOUND"
+            }
+          ],
+          "observed_at": "2026-10-03T17:45:08.69063+00:00"
+        },
+        "category": {
+          "value": "Plumbers",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Chicago",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "US"
+        },
+        "company_name": {
+          "value": "Plumbing Inspection Chicago IL",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "b978e281eb7909945eb2e7410c65aa31",
+    "lead_id": 467,
+    "computed": "8ffc4c2d4e44b51e90d1412e008a5e73",
+    "source_checks": [
+      {
+        "rating": null,
+        "reason": "explicit_website",
+        "source": "yellow_pages",
+        "status": "checked",
+        "reviews": 0,
+        "source_url": "https://www.yellowpages.com/chicago-il/mip/plumbing-inspection-chicago-il-561207410",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-13T09:00:46Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+17737295060",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": "http://waterheaterrepairchicagoil.localsearch.com",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "http://waterheaterrepairchicagoil.localsearch.com/",
+              "error": "ENOTFOUND"
+            }
+          ],
+          "observed_at": "2026-10-03T17:45:08.701179+00:00"
+        },
+        "category": {
+          "value": "Plumbers",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Chicago",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "US"
+        },
+        "company_name": {
+          "value": "Water Heater Repair Chicago, IL",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "522e9a19c2ea82e29cd0c86b72903566",
+    "lead_id": 468,
+    "computed": "acd1fed94cb0731068c3c7e693cd7d98",
+    "source_checks": [
+      {
+        "rating": null,
+        "reason": "explicit_website",
+        "source": "yellow_pages",
+        "status": "checked",
+        "reviews": 0,
+        "source_url": "https://www.yellowpages.com/chicago-il/mip/water-heater-repair-chicago-il-555563941",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-13T09:00:46Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+917738007632",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": "http://calumetriver-licensedplumber.com/",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "http://calumetriver-licensedplumber.com/",
+              "error": "ENOTFOUND"
+            }
+          ],
+          "observed_at": "2026-10-03T17:50:08.817871+00:00"
+        },
+        "category": {
+          "value": "Plumber",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Chicago",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "US"
+        },
+        "company_name": {
+          "value": "Calumet River Licensed Plumber Co",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "76ae911754fff413ea1d8616b0965ba5",
+    "lead_id": 469,
+    "computed": "50d7252f0d2064a826ff7f9b763c2dfc",
+    "source_checks": [
+      {
+        "rating": null,
+        "reason": "explicit_website",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": null,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Calumet%20River%20Licensed%20Plumber%20Co&query_place_id=ChIJTbDtc5EnDogR6vvF5rXNS0E",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-13T09:07:58.736Z",
+        "detail_level": false,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+17733754123",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": "https://www.burrisandsons.com/",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "https://www.burrisandsons.com/",
+              "error": "ENOTFOUND"
+            }
+          ],
+          "observed_at": "2026-10-03T17:50:08.867423+00:00"
+        },
+        "category": {
+          "value": "Plumber",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Chicago",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "US"
+        },
+        "company_name": {
+          "value": "Burris & Sons Heating, Cooling & Plumbing",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "c1ba9bf1f3c18030cb97603404d3bc15",
+    "lead_id": 470,
+    "computed": "abdccf629fb6642a75ab667c46257ab1",
+    "source_checks": [
+      {
+        "rating": 4.8,
+        "reason": "explicit_website",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 506,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=Burris%20%26%20Sons%20Heating%2C%20Cooling%20%26%20Plumbing&query_place_id=ChIJMYt-AmsoDogRLPIgHRSgw-o",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-13T09:08:02.505Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+17733758600",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": null,
+          "status": "missing",
+          "sources": [],
+          "observed_at": "2026-10-03T17:55:08.682902+00:00"
+        },
+        "category": {
+          "value": "Plumbing supply store",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Chicago",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "US"
+        },
+        "company_name": {
+          "value": "South Chicago Plumbing And Heating Supply",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "b8065c82e6d333fe0ed8f472e7379500",
+    "lead_id": 471,
+    "computed": "47447b17c8f140b430a26df40d1eaa5b",
+    "source_checks": [
+      {
+        "rating": 4.7,
+        "reason": "maps_detail_record_no_website_listed",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 132,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=South%20Chicago%20Plumbing%20And%20Heating%20Supply&query_place_id=ChIJmV9cGOUnDogRXppE-TmkniA",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-13T09:08:02.899Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "missing",
+        "website_result": "none_found",
+        "social_profiles": []
+      }
+    ]
+  },
+  {
+    "trust": {
+      "fields": {
+        "phone": {
+          "value": "+13125399184",
+          "source": "cleaned_record",
+          "status": "ownership_and_reachability_unknown"
+        },
+        "emails": [],
+        "website": {
+          "value": "https://www.allproplumbingchicago.com/",
+          "status": "stale_or_unchecked",
+          "sources": [
+            {
+              "url": "https://www.allproplumbingchicago.com/",
+              "error": "ENOTFOUND"
+            }
+          ],
+          "observed_at": "2026-10-03T17:55:08.696442+00:00"
+        },
+        "category": {
+          "value": "Plumber",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        },
+        "location": {
+          "city": "Chicago",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified",
+          "country": "US"
+        },
+        "company_name": {
+          "value": "All Pro Plumbing",
+          "source": "cleaned_record",
+          "status": "recorded_not_independently_verified"
+        }
+      },
+      "version": "lead_trust_v1",
+      "identity": {
+        "method": "name_and_website_matching_only",
+        "status": "unconfirmed",
+        "independent_verification": false
+      },
+      "warnings": [],
+      "ai_policy": "source_excerpts_only_no_verified_recommendations",
+      "conflicts": [],
+      "freshness": {
+        "website_current": false,
+        "research_current": false
+      },
+      "usable_for": {
+        "manual_research": false,
+        "automatic_outreach": false
+      },
+      "evaluated_at": "2026-10-11T19:38:21.202172+00:00",
+      "fully_verified": false,
+      "overall_status": "insufficient_fresh_evidence",
+      "blocking_reasons": [
+        "missing_or_stale_business_evidence",
+        "business_identity_unconfirmed",
+        "no_fresh_provider_verified_email"
+      ],
+      "website_presence": "unknown",
+      "assessment_status": "assessed",
+      "website_current_meaning": "Freshness of the website assessment, not evidence that a website exists."
+    },
+    "org_id": 1,
+    "stored": "f08cf849917becc1fb9a6175189715a8",
+    "lead_id": 472,
+    "computed": "bc20bd741c325777c8a3db1f1e6308d9",
+    "source_checks": [
+      {
+        "rating": 4.7,
+        "reason": "explicit_website",
+        "source": "maps_listing",
+        "status": "checked",
+        "reviews": 162,
+        "source_url": "https://www.google.com/maps/search/?api=1&query=All%20Pro%20Plumbing&query_place_id=ChIJb2fULHLYEYgR9Qaw5J3NZp8",
+        "limitations": [
+          "Stored source record only; live listing and provider omission semantics remain UNVERIFIED.",
+          "none_found means no website listed in the checked record, not no website anywhere."
+        ],
+        "observed_at": "2026-08-13T09:08:05.621Z",
+        "detail_level": true,
+        "stamp_version": "source_website_check_v1",
+        "website_field": "present",
+        "website_result": "present",
+        "social_profiles": []
+      }
+    ]
+  }
+]

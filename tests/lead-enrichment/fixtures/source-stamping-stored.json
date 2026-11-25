@@ -1,0 +1,3978 @@
+[
+  {
+    "staging_id": 1,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Jewellery%20Software%20House%20in%20Lahore%2CPakistan&query_place_id=ChIJZ2pMrmAbGTkRt7DBItRUTdg",
+      "scrapedAt": "2026-04-18T03:53:02.985Z",
+      "placeId": "ChIJZ2pMrmAbGTkRt7DBItRUTdg",
+      "title": "Jewellery Software House in Lahore,Pakistan",
+      "address": "Office No # 1 First Fluor, Khwaja Nassem Gold Plaza, Soha Bazar Rang Mehal,, Walled City of Lahore, Lahore, 54950, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "11 AM to 9 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "11 AM to 9 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "11 AM to 9 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "11 AM to 9 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "11 AM to 9 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "11 AM to 9 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 111,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.6
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 2,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "https://www.toheedsoft.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Toheed%20Soft%20-%20Software%20House&query_place_id=ChIJAWOBB0sbGTkRJ2jhqCketPg",
+      "scrapedAt": "2026-04-18T03:53:02.987Z",
+      "website": "https://www.toheedsoft.com/",
+      "placeId": "ChIJAWOBB0sbGTkRJ2jhqCketPg",
+      "title": "Toheed Soft - Software House",
+      "address": "G2-3, Davis Hytes, 38 Davis Road, Garhi Shahu, Lahore, 54000, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "11 AM to 8 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "11 AM to 8 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "11 AM to 8 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "11 AM to 8 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "11 AM to 8 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "11 AM to 8 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 229,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.9
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 3,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "http://www.techlogix.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Techlogix%20Pakistan%20(Pvt.)%20Ltd.&query_place_id=ChIJJxACX7UEGTkRtUvGGNIExME",
+      "scrapedAt": "2026-04-18T03:53:02.987Z",
+      "website": "http://www.techlogix.com/",
+      "placeId": "ChIJJxACX7UEGTkRtUvGGNIExME",
+      "title": "Techlogix Pakistan (Pvt.) Ltd.",
+      "address": "39 Empress Road, Commercial Area Garhi Shahu, Lahore, 54000, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "9:15 AM to 6:30 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "9:15 AM to 6:30 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "9:15 AM to 6:30 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "9:15 AM to 6:30 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "9:15 AM to 6:30 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Closed"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 235,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.5
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 7,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "http://visnext.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Visnext%20Software%20Solutions%2C%20Lahore&query_place_id=ChIJ55Pwe7wFGTkR3FnVU76oQHU",
+      "scrapedAt": "2026-04-22T11:23:52.066Z",
+      "website": "http://visnext.com/",
+      "placeId": "ChIJ55Pwe7wFGTkR3FnVU76oQHU",
+      "title": "Visnext Software Solutions, Lahore",
+      "address": "1st floor, awais chamber, Plot no.1C5, Sikandar Ali Malhi Rd, Canal Park Gulberg 2, Lahore, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Closed"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 83,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.3
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 8,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "https://sdsol.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=SDSol%20Technologies%20(Pvt)%20Ltd&query_place_id=ChIJv-M850obGTkRUpK6WDRW9-s",
+      "scrapedAt": "2026-04-22T11:23:52.066Z",
+      "website": "https://sdsol.com/",
+      "placeId": "ChIJv-M850obGTkRUpK6WDRW9-s",
+      "title": "SDSol Technologies (Pvt) Ltd",
+      "address": "Shaheen Complex، Office # 08, 08th Floor, Egerton Rd, Garhi Shahu, Lahore, 54000, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "12 to 9 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "12 to 9 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "12 to 9 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "12 to 9 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "12 to 9 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Closed"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 33,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 11,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "https://connectbricks.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Connect%20Bricks%20Private%20Limited&query_place_id=ChIJzVf79oUJGTkRCezIGZD8ZL8",
+      "scrapedAt": "2026-04-22T14:57:54.412Z",
+      "website": "https://connectbricks.com/",
+      "placeId": "ChIJzVf79oUJGTkRCezIGZD8ZL8",
+      "title": "Connect Bricks Private Limited",
+      "address": "2nd Floor, Innovista Business Hub Ravi Zone, Broadway, DHA Phase 8 Commercial, Lahore, 54000, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "9 AM to 8 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "9 AM to 8 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "9 AM to 8 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "9 AM to 8 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "9 AM to 8 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "9 AM to 3 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": null,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": null
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 12,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "https://theunitedsoftware.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=United%20Software%20-%20IT%20Company%2C%20Software%20Solutions&query_place_id=ChIJI5uX8tgEGTkRV_vHuaB4Kss",
+      "scrapedAt": "2026-04-22T14:57:54.412Z",
+      "website": "https://theunitedsoftware.com/",
+      "placeId": "ChIJI5uX8tgEGTkRV_vHuaB4Kss",
+      "title": "United Software - IT Company, Software Solutions",
+      "address": "UIG House 6-A, Upper Mall Scheme, Lahore, 54000, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "9 AM to 6 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "9 AM to 6 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "9 AM to 6 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "9 AM to 6 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "9 AM to 6 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "9 AM to 6 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 52,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.5
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 13,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "http://www.shetechnologies.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=SHE%20Technologies%20Pvt.Ltd&query_place_id=ChIJhZjvc04DGTkRh9Ulhs0o4fQ",
+      "scrapedAt": "2026-04-22T15:01:24.210Z",
+      "website": "http://www.shetechnologies.com/",
+      "placeId": "ChIJhZjvc04DGTkRh9Ulhs0o4fQ",
+      "title": "SHE Technologies Pvt.Ltd",
+      "address": "19-A, Lahore, 54000, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "9 AM to 12 AM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "12 to 6 AM, 9 AM to 12 AM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "12 to 6 AM, 9 AM to 12 AM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "12 to 6 AM, 9 AM to 12 AM"
+        },
+        {
+          "day": "Friday",
+          "hours": "12 to 6 AM, 9 AM to 12 AM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "12 to 6 AM, 9 AM to 12 AM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "12 to 6 AM"
+        }
+      ],
+      "reviewsCount": 35,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.5
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 14,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "https://www.greensoftech.pk/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Green%20Softech%20Limited&query_place_id=ChIJL2JNi8gDGTkRskCTYXbl7TM",
+      "scrapedAt": "2026-04-22T15:01:24.211Z",
+      "website": "https://www.greensoftech.pk/",
+      "placeId": "ChIJL2JNi8gDGTkRskCTYXbl7TM",
+      "title": "Green Softech Limited",
+      "address": "Chauburji Park, Shamnagar Rd, Block B New Chauburji Park, Lahore, 54000, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "9 AM to 12 AM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "12 to 7 AM, 9 AM to 7 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "9 AM to 7:30 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 19,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 15,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "http://www.royalsofts.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Royal%20Software%20House&query_place_id=ChIJte0BE1IDGTkREmWswLEwpH0",
+      "scrapedAt": "2026-04-22T15:01:24.212Z",
+      "website": "http://www.royalsofts.com/",
+      "placeId": "ChIJte0BE1IDGTkREmWswLEwpH0",
+      "title": "Royal Software House",
+      "address": "H832+79F, Bhatia St, Block B New Chauburji Park, Lahore, 54000, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "10 AM to 9:30 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "10 AM to 9:30 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "10 AM to 9:30 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "10 AM to 9:30 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "10 AM to 9:30 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Closed"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 20,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 3.8
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 16,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "https://unionlogix.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=UnionLogix&query_place_id=ChIJ3YwjpuoDGTkRG1i-Zudo8cY",
+      "scrapedAt": "2026-04-22T15:01:24.212Z",
+      "website": "https://unionlogix.com/",
+      "placeId": "ChIJ3YwjpuoDGTkRG1i-Zudo8cY",
+      "title": "UnionLogix",
+      "address": "Office #4 32-S-17/A, Main LOS Rd, near Al Habib Bank Ltd, Islamia Park, Lahore, 54000, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "11 AM to 8 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "11 AM to 8 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "11 AM to 8 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "11 AM to 8 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "11 AM to 8 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Closed"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 9,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.7
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 18,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "http://www.nkutechnologies.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=NKU%20Technologies%20(Pvt)%20Ltd&query_place_id=ChIJv_NDye0EGTkRPG9fCo3y4SE",
+      "scrapedAt": "2026-04-22T15:09:20.432Z",
+      "website": "http://www.nkutechnologies.com/",
+      "placeId": "ChIJv_NDye0EGTkRPG9fCo3y4SE",
+      "title": "NKU Technologies (Pvt) Ltd",
+      "address": "18, Lane 2 Canal Rd, Zaman Park Lahore, 54000, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Closed"
+        },
+        {
+          "day": "Sunday",
+          "hours": "9 AM to 6 PM"
+        }
+      ],
+      "reviewsCount": 69,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.2
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 20,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=GSOFT%20-%20Business%20Solutions%20Provider&query_place_id=ChIJhW9ik9cEGTkRzbYSXzbkAE0",
+      "scrapedAt": "2026-04-22T15:09:20.432Z",
+      "placeId": "ChIJhW9ik9cEGTkRzbYSXzbkAE0",
+      "title": "GSOFT - Business Solutions Provider",
+      "address": "H934+RVV, Mayo Gardens, Lahore, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [],
+      "reviewsCount": null,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": null
+    },
+    "expected": "unknown"
+  },
+  {
+    "staging_id": 21,
+    "lead_id": 159,
+    "source": "google_maps",
+    "website": "https://techlio.co/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Techlio%20Pvt.%20Limited&query_place_id=ChIJgdopFs4FGTkR9IQbolprWrI",
+      "scrapedAt": "2026-04-22T15:09:20.433Z",
+      "website": "https://techlio.co/",
+      "placeId": "ChIJgdopFs4FGTkR9IQbolprWrI",
+      "title": "Techlio Pvt. Limited",
+      "address": "Office no 1108, 11th floor, HighQ Tower, Jail Rd, Gulberg V, Lahore, 54000, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Thursday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Friday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Closed"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 26,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.8
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 22,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "http://www.webawesome.co.uk/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=WebAwesome%20Consult%20UK&query_place_id=ChIJbUbgzW2v2EcR1W5yi2m7wPA",
+      "scrapedAt": "2026-04-22T15:58:03.024Z",
+      "website": "http://www.webawesome.co.uk/",
+      "placeId": "ChIJbUbgzW2v2EcR1W5yi2m7wPA",
+      "title": "WebAwesome Consult UK",
+      "address": "47 Portmeadow Walk, London SE2 9UN, United Kingdom",
+      "categoryName": "Web hosting company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Thursday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Friday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Open 24 hours"
+        }
+      ],
+      "reviewsCount": 56,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 23,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "https://purplecloudit.com/it-support-london/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Purple%20Cloud%20IT&query_place_id=ChIJWx5qwFev2EcRwXV8sANU4uQ",
+      "scrapedAt": "2026-04-22T15:58:03.025Z",
+      "website": "https://purplecloudit.com/it-support-london/",
+      "placeId": "ChIJWx5qwFev2EcRwXV8sANU4uQ",
+      "title": "Purple Cloud IT",
+      "address": "2 Veridion Way, Kent DA18 4AL, United Kingdom",
+      "categoryName": "Computer support and services",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Closed"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 5,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 24,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Tech%20Check%20LDN&query_place_id=ChIJk5FodeOz2EcRC8XB9Nv8jLQ",
+      "scrapedAt": "2026-04-22T15:58:03.025Z",
+      "placeId": "ChIJk5FodeOz2EcRC8XB9Nv8jLQ",
+      "title": "Tech Check LDN",
+      "address": "120 Fox Hollow Dr, Bexleyheath DA7 4UR, United Kingdom",
+      "categoryName": "Computer consultant",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "8 AM to 6 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "8 AM to 6 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "8 AM to 6 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "8 AM to 6 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "8 AM to 6 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "8 AM to 6 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "8 AM to 6 PM"
+        }
+      ],
+      "reviewsCount": 2,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 25,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Junaid%20Tea%20Stall&query_place_id=ChIJXfskVYoDGTkRGfbBN5C8XTY",
+      "scrapedAt": "2026-04-23T03:26:29.505Z",
+      "placeId": "ChIJXfskVYoDGTkRGfbBN5C8XTY",
+      "title": "Junaid Tea Stall",
+      "address": "Chauburji center Multan Rd, Block B New Chauburji Park, Lahore, 54000, Pakistan",
+      "categoryName": "Coffee shop",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "8 AM to 9 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "8 AM to 9 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "8 AM to 9 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "8 AM to 9 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "8 AM to 9 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "8 AM to 9 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 3,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.3
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 26,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Quetta%20chai&query_place_id=ChIJDxuEWAADGTkRlHegXujz_SE",
+      "scrapedAt": "2026-04-23T03:26:29.507Z",
+      "placeId": "ChIJDxuEWAADGTkRlHegXujz_SE",
+      "title": "Quetta chai",
+      "address": "G8R2+FHJ, Poonch Rd, Samanabad Town, Lahore, 54000, Pakistan",
+      "categoryName": "Coffee shop",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Thursday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Friday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Open 24 hours"
+        }
+      ],
+      "reviewsCount": 1,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 27,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Al%20khear%20Restaurant&query_place_id=ChIJ6_8wKQADGTkRwZHhDOJkBLI",
+      "scrapedAt": "2026-04-23T03:26:29.507Z",
+      "placeId": "ChIJ6_8wKQADGTkRwZHhDOJkBLI",
+      "title": "Al khear Restaurant",
+      "address": "50 Khawaja Fareed Rd, D Block Block B Gulshan-e-Ravi, Lahore, 54000, Pakistan",
+      "categoryName": "Coffee shop",
+      "openingHours": [],
+      "reviewsCount": null,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": null
+    },
+    "expected": "unknown"
+  },
+  {
+    "staging_id": 28,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "https://halalxtremegrill.dine.online/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=HalalXtreme%20Grill&query_place_id=ChIJRf4qG1RnwokRTK68E4_b7iQ",
+      "scrapedAt": "2026-04-23T03:35:26.324Z",
+      "website": "https://halalxtremegrill.dine.online/",
+      "placeId": "ChIJRf4qG1RnwokRTK68E4_b7iQ",
+      "title": "HalalXtreme Grill",
+      "address": "13-04 Beach Channel Dr, Far Rockaway, NY 11691",
+      "categoryName": "Halal restaurant",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "11 AM to 11 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "11 AM to 11 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "11 AM to 11 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "11 AM to 12 AM"
+        },
+        {
+          "day": "Friday",
+          "hours": "11 AM to 1 AM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "11 AM to 1 AM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "11 AM to 11 PM"
+        }
+      ],
+      "reviewsCount": 237,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.7
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 29,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "https://mooncheeserestaurant.shop/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Moon%20Cheese%20Restaurant&query_place_id=ChIJ101DLXNfwokRHsFnwAPNyWY",
+      "scrapedAt": "2026-04-23T03:35:26.447Z",
+      "website": "https://mooncheeserestaurant.shop/",
+      "placeId": "ChIJ101DLXNfwokRHsFnwAPNyWY",
+      "title": "Moon Cheese Restaurant",
+      "address": "88-11 31st Ave, East Elmhurst, NY 11369",
+      "categoryName": "Restaurant",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "1 PM to 1 AM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "1 PM to 1 AM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "1 PM to 1 AM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "1 PM to 1 AM"
+        },
+        {
+          "day": "Friday",
+          "hours": "1 PM to 2 AM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "1 PM to 2 AM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "1 PM to 1 AM"
+        }
+      ],
+      "reviewsCount": 1071,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.8
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 30,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "http://www.youtube.com/c/HSBUILDERSHS",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=HS%20BUILDERS&query_place_id=ChIJ3cKn5KtLsz4RDjmYE5Jsk6E",
+      "scrapedAt": "2026-04-23T03:42:38.477Z",
+      "website": "http://www.youtube.com/c/HSBUILDERSHS",
+      "placeId": "ChIJ3cKn5KtLsz4RDjmYE5Jsk6E",
+      "title": "HS BUILDERS",
+      "address": "Road16 , Ali Block Precinct 12, Bahria Town Karachi, Karachi, Pakistan",
+      "categoryName": "Construction company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "8 AM to 9 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "8 AM to 9 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "8 AM to 9 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "8 AM to 9 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "8 AM to 9 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "8 AM to 9 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "10 AM to 3 PM"
+        }
+      ],
+      "reviewsCount": 26,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.8
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 31,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "https://aneesitfirm.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Anees%20IT%20Firm%20Computer%20Courses&query_place_id=ChIJvVQZXW5Bsz4RxCg8SaF4xZ8",
+      "scrapedAt": "2026-04-23T03:42:38.479Z",
+      "website": "https://aneesitfirm.com/",
+      "placeId": "ChIJvVQZXW5Bsz4RxCg8SaF4xZ8",
+      "title": "Anees IT Firm Computer Courses",
+      "address": "in front, R-64 Awan-e-tijarat, near Anda Mor Road, Sector 10 North Karachi, Karachi, 75400, Pakistan",
+      "categoryName": "Educational institution",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "2 to 9 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "2 to 9 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "2 to 9 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "2 to 9 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "2 to 9 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "2 to 9 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 43,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.6
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 32,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Allied%20Computer%20Technologies%20(ACTECH)&query_place_id=ChIJ8xfQ50E8sz4REB-4e_kPEO4",
+      "scrapedAt": "2026-04-23T03:42:43.900Z",
+      "placeId": "ChIJ8xfQ50E8sz4REB-4e_kPEO4",
+      "title": "Allied Computer Technologies (ACTECH)",
+      "address": "p11A, Loop Rd, Bahria Town Karachi, Karachi, Pakistan",
+      "categoryName": "Computer support and services",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "10 AM to 9 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "10 AM to 9 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "10 AM to 9 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "10 AM to 9 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "10 AM to 9 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "10 AM to 9 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 21,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.8
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 42,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "http://www.gracesol.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=GraceSol%20Technologies%20-%20Lahore%2C%20Pakistan&query_place_id=ChIJAQAAAE8EGTkRs-9gRk2u7U0",
+      "scrapedAt": "2026-04-23T05:29:44.582Z",
+      "website": "http://www.gracesol.com/",
+      "placeId": "ChIJAQAAAE8EGTkRs-9gRk2u7U0",
+      "title": "GraceSol Technologies - Lahore, Pakistan",
+      "address": "Haramain Mobile Center (Haramain Tower, Sodiwal Sodhiwal, Lahore, 54000, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "10 AM to 6 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "10 AM to 6 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "10 AM to 6 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "10 AM to 6 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "10 AM to 6 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "10 AM to 6 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 16,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.8
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 43,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Zubaida%20Dental%20Hospital&query_place_id=ChIJdyGpk8NLsz4RvsuV_-SWAY4",
+      "scrapedAt": "2026-04-23T06:10:43.398Z",
+      "placeId": "ChIJdyGpk8NLsz4RvsuV_-SWAY4",
+      "title": "Zubaida Dental Hospital",
+      "address": "L7-08, AQ Business Center, Jinnah Ave, Bahria Town Karachi, Karachi, 75230, Pakistan",
+      "categoryName": "Dental clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "11 AM to 2 PM, 4:30 to 8:30 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "11 AM to 2 PM, 4:30 to 8:30 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "11 AM to 2 PM, 4:30 to 8:30 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "11 AM to 2 PM, 4:30 to 8:30 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "4:30 to 8:30 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "11 AM to 2 PM, 4:30 to 8:30 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 40,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.7
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 44,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Roots%20Dental%20%26%20Asthetic%20Clinic&query_place_id=ChIJNeYgbABHsz4RNnL9UvNQrJg",
+      "scrapedAt": "2026-04-23T06:10:53.679Z",
+      "placeId": "ChIJNeYgbABHsz4RNnL9UvNQrJg",
+      "title": "Roots Dental & Asthetic Clinic",
+      "address": "QFS Trade tower Plot no 250 lane 23 P10 a, Karachi, 75340, Pakistan",
+      "categoryName": "Dental clinic",
+      "openingHours": [],
+      "reviewsCount": 7,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "unknown"
+  },
+  {
+    "staging_id": 45,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=The%20Dental%20Empire&query_place_id=ChIJ2UjgvMZLsz4RffY6SolMzkI",
+      "scrapedAt": "2026-04-23T06:10:55.177Z",
+      "placeId": "ChIJ2UjgvMZLsz4RffY6SolMzkI",
+      "title": "The Dental Empire",
+      "address": "Office #101, 1st floor, Building #239, Midway Commercial Area - B, Bahria Town Karachi, Karachi, Pakistan",
+      "categoryName": "Dental clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "4:30 to 9 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "4:30 to 9 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "4:30 to 9 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "4:30 to 9 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "4:30 to 9 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "4:30 to 9 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 88,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 46,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "https://drhamzadentalcare.pk/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Dental%20Care%20by%20Dr.%20Hamza&query_place_id=ChIJk_dbhhlLsz4RREXF62sn_IA",
+      "scrapedAt": "2026-04-23T06:10:52.261Z",
+      "website": "https://drhamzadentalcare.pk/",
+      "placeId": "ChIJk_dbhhlLsz4RREXF62sn_IA",
+      "title": "Dental Care by Dr. Hamza",
+      "address": "Office 602, Amna Heights, Midway Commercial B, Bahria Town Karachi, Karachi, 75340, Pakistan",
+      "categoryName": "Dental clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "11 AM to 2 PM, 5 to 10 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "11 AM to 2 PM, 5 to 10 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "11 AM to 2 PM, 5 to 10 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "11 AM to 2 PM, 5 to 10 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "Closed"
+        },
+        {
+          "day": "Saturday",
+          "hours": "6 to 10 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 99,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 47,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Bella%20Smile%20Dental%20and%20Aesthetics%20Clinic&query_place_id=ChIJHRXH2DVLsz4R8kngKICLQ8s",
+      "scrapedAt": "2026-04-23T06:13:27.537Z",
+      "placeId": "ChIJHRXH2DVLsz4R8kngKICLQ8s",
+      "title": "Bella Smile Dental and Aesthetics Clinic",
+      "address": "Shop 214, AQ Super Market, 216 St 16, Gadap Town, Karachi, 75340, Pakistan",
+      "categoryName": "Dental clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "12 PM to 12 AM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "12 to 10 AM, 12 to 10 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "12 to 10 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "12 to 10 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "1:30 to 10 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "12 to 10 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "12 to 10 PM"
+        }
+      ],
+      "reviewsCount": 28,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.8
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 49,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Smile%20Studio%20Dental%20and%20Aesthetics%20Clinic&query_place_id=ChIJBa_tfeVLsz4ROV651mPpFSA",
+      "scrapedAt": "2026-04-23T12:02:39.091Z",
+      "placeId": "ChIJBa_tfeVLsz4ROV651mPpFSA",
+      "title": "Smile Studio Dental and Aesthetics Clinic",
+      "address": "Commercial, Midway avenue , Midway Commercial B Midway, B, Bahria Town Karachi, Karachi, Pakistan",
+      "categoryName": "Dentist",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "4:30 to 10:30 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "4:30 to 10:30 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "4:30 to 10:30 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "4:30 to 10:30 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "6 to 10:30 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 29,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 54,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "http://lizbenconsult.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Lizben%20Consult%20Limited%20-%20Architectural%20Designer%20and%20Consultant%20London&query_place_id=ChIJ6YSuwU6k2EcRxkF97vTdyic",
+      "scrapedAt": "2026-04-23T14:30:35.963Z",
+      "website": "http://lizbenconsult.com/",
+      "placeId": "ChIJ6YSuwU6k2EcRxkF97vTdyic",
+      "title": "Lizben Consult Limited - Architectural Designer and Consultant London",
+      "address": "34 St Andrews Cl, London SE28 8NZ, United Kingdom",
+      "categoryName": "Consultant",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "2 to 5 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 41,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 55,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Avalon%20Consulting&query_place_id=ChIJQaB-y7S72EcRJv46uKLhrnE",
+      "scrapedAt": "2026-04-23T14:30:35.963Z",
+      "placeId": "ChIJQaB-y7S72EcRJv46uKLhrnE",
+      "title": "Avalon Consulting",
+      "address": "328 Upminster Rd N, Rainham RM13 9RY, United Kingdom",
+      "categoryName": "Business management consultant",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Thursday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Friday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Open 24 hours"
+        }
+      ],
+      "reviewsCount": 1,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 56,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "https://hatigen.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Hatigen%20Consulting%20Services%20Pvt.%20Ltd.&query_place_id=ChIJmciqMO2l2EcRVEONYZDjgFU",
+      "scrapedAt": "2026-04-23T14:30:35.963Z",
+      "website": "https://hatigen.com/",
+      "placeId": "ChIJmciqMO2l2EcRVEONYZDjgFU",
+      "title": "Hatigen Consulting Services Pvt. Ltd.",
+      "address": "CEME Innovation Centre, Marsh Wy, Rainham RM13 8EU, United Kingdom",
+      "categoryName": "Corporate office",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "8 AM to 7 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "8 AM to 7 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "8 AM to 7 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "8 AM to 7 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "8 AM to 7 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Closed"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 26,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.9
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 57,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "https://www.efjconsulting.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=EFJ%20Consulting-%20Accountants%20%26%20Tax%20Advisers&query_place_id=ChIJmzrN0RCv2EcRfP3NsvAkbF0",
+      "scrapedAt": "2026-04-23T14:30:35.964Z",
+      "website": "https://www.efjconsulting.com/",
+      "placeId": "ChIJmzrN0RCv2EcRfP3NsvAkbF0",
+      "title": "EFJ Consulting- Accountants & Tax Advisers",
+      "address": "137 Broadway, Bexleyheath DA6 7EZ, United Kingdom",
+      "categoryName": "Accountant",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 30,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 63,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "http://www.nooralzahradental.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Noor%20Al%20zahra%20dental%20clinic&query_place_id=ChIJjc6RMrlDXz4RLTpfMOfdung",
+      "scrapedAt": "2026-04-23T22:06:55.365Z",
+      "website": "http://www.nooralzahradental.com/",
+      "placeId": "ChIJjc6RMrlDXz4RLTpfMOfdung",
+      "title": "Noor Al zahra dental clinic",
+      "address": "Al Sabkha Rd - Al Daghaya - Deira - Dubai - United Arab Emirates",
+      "categoryName": "Dental clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "10 AM to 10:30 PM"
+        }
+      ],
+      "reviewsCount": 333,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.9
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 64,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=iSmile%20Dental%20Clinic%20LLC&query_place_id=ChIJd_Lhp5hDXz4RM7NGtTvuVsE",
+      "scrapedAt": "2026-04-23T22:06:55.366Z",
+      "placeId": "ChIJd_Lhp5hDXz4RM7NGtTvuVsE",
+      "title": "iSmile Dental Clinic LLC",
+      "address": "GCC Exchange , Nobel Showroom building - opposite Jovial Center - Al Rigga - Al Sabkha - Dubai - United Arab Emirates",
+      "categoryName": "Dental clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "10 AM to 10:30 PM"
+        }
+      ],
+      "reviewsCount": 1128,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.9
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 65,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "http://www.presidentsclinics.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Presidents%20Dental%20and%20Aesthetic%20clinics%20LLC&query_place_id=ChIJ5-geSVFDXz4R0u_iK5F1H9A",
+      "scrapedAt": "2026-04-23T22:06:55.366Z",
+      "website": "http://www.presidentsclinics.com/",
+      "placeId": "ChIJ5-geSVFDXz4R0u_iK5F1H9A",
+      "title": "Presidents Dental and Aesthetic clinics LLC",
+      "address": "Corniche road - Al Corniche - Deira - Dubai - United Arab Emirates",
+      "categoryName": "Dental clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "12 to 9 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "12 to 9 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "12 to 9 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "12 to 9 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "12 to 9 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "12 to 9 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "12 to 6 PM"
+        }
+      ],
+      "reviewsCount": 86,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 66,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "http://www.abrahclinics.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Al%20Abrah%20Clinic%20-%20Dental%20%7C%20Medical%20%7C%20Dermatology%20%7C%20Home%20healthcare&query_place_id=ChIJLZvahkFDXz4R9foAI2Nsep4",
+      "scrapedAt": "2026-04-23T22:06:55.366Z",
+      "website": "http://www.abrahclinics.com/",
+      "placeId": "ChIJLZvahkFDXz4R9foAI2Nsep4",
+      "title": "Al Abrah Clinic - Dental | Medical | Dermatology | Home healthcare",
+      "address": "Al Khor st Opposite Al Ras Metro Station Deira - Al Ras - Dubai - United Arab Emirates",
+      "categoryName": "Dental clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "9 AM to 9 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "9 AM to 9 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "9 AM to 9 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "9 AM to 9 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "9 AM to 9 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "9 AM to 9 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "1 to 9 PM"
+        }
+      ],
+      "reviewsCount": 192,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.8
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 67,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "https://www.nooralinaya.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Noor%20Al%20Inaya%20Dental%20Clinic&query_place_id=ChIJYYptFKBDXz4RJWa56IV6ruA",
+      "scrapedAt": "2026-04-23T22:06:55.366Z",
+      "website": "https://www.nooralinaya.com/",
+      "placeId": "ChIJYYptFKBDXz4RJWa56IV6ruA",
+      "title": "Noor Al Inaya Dental Clinic",
+      "address": "Dubai Pearl Building Office # 605 6th Floor 18th street - Near Baniyas Metro Station Deira , Dubai -UAE - Dubai - United Arab Emirates",
+      "categoryName": "Dental clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "10 AM to 10:30 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "10 AM to 10:30 PM"
+        }
+      ],
+      "reviewsCount": 623,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 75,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": "https://desolint.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Desol%20Int.&query_place_id=ChIJYbNREwEdGTkRxxZMRpx2Dvc",
+      "scrapedAt": "2026-04-24T14:24:14.770Z",
+      "website": "https://desolint.com/",
+      "placeId": "ChIJYbNREwEdGTkRxxZMRpx2Dvc",
+      "title": "Desol Int.",
+      "address": "First Floor#02, Commercia Block، PHA Housing Scheme, Grand Trunk Rd، near UET, Muhammadi Mohalla, Lahore, 54890, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "10 AM to 8 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "10 AM to 8 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "10 AM to 8 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "10 AM to 8 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "10 AM to 8 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Closed"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 9,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.7
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 77,
+    "lead_id": 161,
+    "source": "google_maps",
+    "website": "https://fwf.punjab.gov.pk/gis_lab",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=GIS%20Lab%20Forest%20Department&query_place_id=ChIJ0-Q95XwcGTkREt0WPSlabIM",
+      "scrapedAt": "2026-04-24T14:24:14.770Z",
+      "website": "https://fwf.punjab.gov.pk/gis_lab",
+      "placeId": "ChIJ0-Q95XwcGTkREt0WPSlabIM",
+      "title": "GIS Lab Forest Department",
+      "address": "J842+5X7, Forest Colony Lahore, Pakistan",
+      "categoryName": "Corporate office",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Closed"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 55,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.1
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 86,
+    "lead_id": 162,
+    "source": "google_maps",
+    "website": "https://www.astoecompany.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Astoe%20Company&query_place_id=ChIJY7LUOWQDGTkRa-kRWtsFtd0",
+      "scrapedAt": "2026-04-24T18:31:24.291Z",
+      "website": "https://www.astoecompany.com/",
+      "placeId": "ChIJY7LUOWQDGTkRa-kRWtsFtd0",
+      "title": "Astoe Company",
+      "address": "74 Farrukh Street, Zaildar Rd, Ichhra Lahore, 54000, Lahore, 54500, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "9 AM to 4 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "9 AM to 4 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "9 AM to 4 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "9 AM to 4 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "9 AM to 4 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Closed"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 86,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.8
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 88,
+    "lead_id": 450,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Khao%20Piyo%20Niklo&query_place_id=ChIJyc5YBUtLsz4RkhqZRAyc31M",
+      "scrapedAt": "2026-04-24T22:49:06.810Z",
+      "placeId": "ChIJyc5YBUtLsz4RkhqZRAyc31M",
+      "title": "Khao Piyo Niklo",
+      "address": "London bridge, Alidaad gabol, Bahria Precinct 27 Town, Karachi, Pakistan",
+      "categoryName": "Restaurant",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "7 AM to 10 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "7 AM to 10 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "7 AM to 10 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "7 AM to 10 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "7 AM to 10 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "7 AM to 10 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "7 AM to 10 PM"
+        }
+      ],
+      "reviewsCount": 19,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.7
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 89,
+    "lead_id": 451,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Zims%20Kitchen&query_place_id=ChIJo2UL1bBNsz4RLCWlRXtbz2U",
+      "scrapedAt": "2026-04-24T22:49:06.812Z",
+      "placeId": "ChIJo2UL1bBNsz4RLCWlRXtbz2U",
+      "title": "Zims Kitchen",
+      "address": "Gadap Town, Noor Muhammad Goth Kathore, Pakistan",
+      "categoryName": "Restaurant",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "1 to 11 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "1 to 11 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "1 to 11 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "1 to 11 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "1 to 11 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "9 AM to 11 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "9 AM to 11 PM"
+        }
+      ],
+      "reviewsCount": 51,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.8
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 90,
+    "lead_id": 452,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Cafe%20Chiraag&query_place_id=ChIJSyXEqtZLsz4Rru5TpUMrXdg",
+      "scrapedAt": "2026-04-24T22:49:06.814Z",
+      "placeId": "ChIJSyXEqtZLsz4Rru5TpUMrXdg",
+      "title": "Cafe Chiraag",
+      "address": "Ali Dad Goth, Precinct 27, near London Bridge, Gadap Town, Karachi, Pakistan",
+      "categoryName": "Restaurant",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "5 PM to 2:30 AM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "5 PM to 2:30 AM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "5 PM to 2:30 AM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "5 PM to 2:30 AM"
+        },
+        {
+          "day": "Friday",
+          "hours": "5 PM to 4:30 AM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "5 PM to 4:30 AM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "5 PM to 4:30 AM"
+        }
+      ],
+      "reviewsCount": 45,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.4
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 91,
+    "lead_id": 453,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Desi%20perdesi&query_place_id=ChIJRYQRPgBLsz4RnE59qLOvLsc",
+      "scrapedAt": "2026-04-24T22:49:06.814Z",
+      "placeId": "ChIJRYQRPgBLsz4RnE59qLOvLsc",
+      "title": "Desi perdesi",
+      "address": "London bridge, Alidaad gabol precinct 27, bahria Town, Karachi, Pakistan",
+      "categoryName": "Restaurant",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "7 AM to 11 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "7 AM to 11 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "7 AM to 11 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "7 AM to 11 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "7 AM to 11 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "7 AM to 11 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "7 AM to 11 PM"
+        }
+      ],
+      "reviewsCount": 32,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.5
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 92,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Aashiyana%20restaurant&query_place_id=ChIJnS9gMJZLsz4Ra95W9qEkFw4",
+      "scrapedAt": "2026-04-24T22:49:06.814Z",
+      "placeId": "ChIJnS9gMJZLsz4Ra95W9qEkFw4",
+      "title": "Aashiyana restaurant",
+      "address": "3972+3VP Goth drya khan gabol, Bahria Town Karachi, Karachi, Pakistan",
+      "categoryName": "Restaurant",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Thursday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Friday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Open 24 hours"
+        }
+      ],
+      "reviewsCount": 5,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.6
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 93,
+    "lead_id": 454,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Super%20Gabol%20Restaurant&query_place_id=ChIJzSjr-0ZLsz4RD5LFeY76sqQ",
+      "scrapedAt": "2026-04-24T22:49:06.814Z",
+      "placeId": "ChIJzSjr-0ZLsz4RD5LFeY76sqQ",
+      "title": "Super Gabol Restaurant",
+      "address": "Bahria Town Karachi, Karachi, 75340, Pakistan",
+      "categoryName": "Restaurant",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Thursday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Friday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Open 24 hours"
+        }
+      ],
+      "reviewsCount": 20,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.2
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 94,
+    "lead_id": 455,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=DK%20Grill.%2C%20est.%202020%20-%20Best%20Food%20in%20Bahria%20Town%20Karachi&query_place_id=ChIJowxwO3FNsz4Rf6cU6G9_iwg",
+      "scrapedAt": "2026-04-24T22:49:06.815Z",
+      "placeId": "ChIJowxwO3FNsz4Rf6cU6G9_iwg",
+      "title": "DK Grill., est. 2020 - Best Food in Bahria Town Karachi",
+      "address": "Bahria Dancing Fountain, Bahria Town Karachi, Karachi, Pakistan",
+      "categoryName": "Restaurant",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "6 PM to 2:30 AM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "6 PM to 2:30 AM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "6 PM to 2:30 AM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "6 PM to 2:30 AM"
+        },
+        {
+          "day": "Friday",
+          "hours": "6 PM to 2:30 AM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "6 PM to 3 AM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "6 PM to 2:30 AM"
+        }
+      ],
+      "reviewsCount": 355,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.7
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 95,
+    "lead_id": 456,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Aashiyana%20Hotel&query_place_id=ChIJO7JUs5RLsz4RUmKs2slwUeU",
+      "scrapedAt": "2026-04-24T22:49:06.815Z",
+      "placeId": "ChIJO7JUs5RLsz4RUmKs2slwUeU",
+      "title": "Aashiyana Hotel",
+      "address": "3982+RJ7, Unnamed Road, Gadap Town, Karachi, Pakistan",
+      "categoryName": "Chicken restaurant",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Thursday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Friday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Open 24 hours"
+        }
+      ],
+      "reviewsCount": 38,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.4
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 96,
+    "lead_id": 457,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=VASCO'S%20RESTAURANT&query_place_id=ChIJZxYlQ1NLsz4RZpg_d19g4ns",
+      "scrapedAt": "2026-04-24T22:49:06.815Z",
+      "placeId": "ChIJZxYlQ1NLsz4RZpg_d19g4ns",
+      "title": "VASCO'S RESTAURANT",
+      "address": "3982+VPJ UC-3, Gadap Town, Karachi, Pakistan",
+      "categoryName": "Restaurant",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Thursday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Friday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Open 24 hours"
+        }
+      ],
+      "reviewsCount": 32,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 97,
+    "lead_id": 458,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=New%20Al%20Jeddah%20Restaurant&query_place_id=ChIJH7oylldLsz4RHat-Xz-bdoY",
+      "scrapedAt": "2026-04-24T22:49:06.815Z",
+      "placeId": "ChIJH7oylldLsz4RHat-Xz-bdoY",
+      "title": "New Al Jeddah Restaurant",
+      "address": "Gadap Town, Karachi, Pakistan",
+      "categoryName": "Restaurant",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Thursday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Friday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Open 24 hours"
+        }
+      ],
+      "reviewsCount": 7,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.1
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 108,
+    "lead_id": 163,
+    "source": "google_maps",
+    "website": "https://peakrisetech.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Peakrise%20Technologies&query_place_id=ChIJ5SYRkPkZ3zgR1_vm84mn6C4",
+      "scrapedAt": "2026-04-28T09:30:42.216Z",
+      "website": "https://peakrisetech.com/",
+      "placeId": "ChIJ5SYRkPkZ3zgR1_vm84mn6C4",
+      "title": "Peakrise Technologies",
+      "address": "2nd Floor, Khan Plaza, Kamra Rd, near Mashallah CNG, Peoples Colony, Attock, 43600, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "10 AM to 8 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "10 AM to 8 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "10 AM to 8 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "10 AM to 8 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "10 AM to 8 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "10 AM to 8 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 56,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 109,
+    "lead_id": 164,
+    "source": "google_maps",
+    "website": "https://webgeniee.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Web%20Geniee%20Website%20Design%20%26%20Development&query_place_id=ChIJRxrg0TcZ3zgRCFsj8K-4otE",
+      "scrapedAt": "2026-04-28T09:30:42.217Z",
+      "website": "https://webgeniee.com/",
+      "placeId": "ChIJRxrg0TcZ3zgRCFsj8K-4otE",
+      "title": "Web Geniee Website Design & Development",
+      "address": "Mcb Bank Building, 2nd Floor Karam Arcade, Kamra Rd, Attock, 43600, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "9 AM to 1 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "9 AM to 7 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 84,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 110,
+    "lead_id": 165,
+    "source": "google_maps",
+    "website": "https://endevsols.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=EnDevSols%20(Pvt.)%20Ltd.&query_place_id=ChIJacBp7Ybr3zgRYmIfUeZ05z4",
+      "scrapedAt": "2026-04-28T09:30:42.217Z",
+      "website": "https://endevsols.com/",
+      "placeId": "ChIJacBp7Ybr3zgRYmIfUeZ05z4",
+      "title": "EnDevSols (Pvt.) Ltd.",
+      "address": "First Floor, ZK Business Center, F-03, Attock, 43600, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "8:30 AM to 4:30 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "8:30 AM to 4:30 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "8:30 AM to 4:30 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "8:30 AM to 4:30 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "8:30 AM to 4:30 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Closed"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": null,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": null
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 111,
+    "lead_id": 166,
+    "source": "google_maps",
+    "website": "http://its4u.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=ITS4U%20Computers%20and%20Mobiles&query_place_id=ChIJRxF1FD4Y3zgRwjc7fiNanwI",
+      "scrapedAt": "2026-04-28T09:30:42.218Z",
+      "website": "http://its4u.com/",
+      "placeId": "ChIJRxF1FD4Y3zgRwjc7fiNanwI",
+      "title": "ITS4U Computers and Mobiles",
+      "address": "3 Fawara Chowk, Attock, 43600, Pakistan",
+      "categoryName": "Electronics store",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "8 AM to 8 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "8 AM to 8 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "8 AM to 8 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "8 AM to 8 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "Closed"
+        },
+        {
+          "day": "Saturday",
+          "hours": "8 AM to 8 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "8 AM to 8 PM"
+        }
+      ],
+      "reviewsCount": 199,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.2
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 112,
+    "lead_id": 459,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Upwasoft&query_place_id=ChIJY3J65zsY3zgR-_8yw2PGTaY",
+      "scrapedAt": "2026-04-28T09:32:21.674Z",
+      "placeId": "ChIJY3J65zsY3zgR-_8yw2PGTaY",
+      "title": "Upwasoft",
+      "address": "Q9M5+538, Attock, Pakistan",
+      "categoryName": "Software company",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "9 AM to 5 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 3,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 113,
+    "lead_id": 460,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Attique%20Dental%20Clinic&query_place_id=ChIJidNXHoobGTkRPons0_epQN0",
+      "scrapedAt": "2026-08-07T04:46:15.891Z",
+      "placeId": "ChIJidNXHoobGTkRPons0_epQN0",
+      "title": "Attique Dental Clinic",
+      "address": "H8X9+7QR, Data Nagar Badami Bagh, Lahore, Pakistan",
+      "categoryName": "Dental clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "6 to 10 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "6 to 10 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "6 to 10 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "6 to 10 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "6 to 10 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "6 to 10 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 2,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 3
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 114,
+    "lead_id": 461,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Smile%20Buds%20Dental%20Clinic&query_place_id=ChIJn9rQj9EbGTkRk1kBIbagOn8",
+      "scrapedAt": "2026-08-07T04:46:20.549Z",
+      "placeId": "ChIJn9rQj9EbGTkRk1kBIbagOn8",
+      "title": "Smile Buds Dental Clinic",
+      "address": "202 A Triple Rd, Shad Bagh, Lahore, 54950, Pakistan",
+      "categoryName": "Dentist",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "6 to 11 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "6 to 11 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "6 to 11 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "6 to 11 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "6 to 11 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "6 to 11 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 47,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 115,
+    "lead_id": 167,
+    "source": "google_maps",
+    "website": "https://fiazdentalcare.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Fiaz%20Dental%20Care&query_place_id=ChIJpRV2KrMdGTkRDyevJgm3WyQ",
+      "scrapedAt": "2026-08-07T04:46:20.817Z",
+      "website": "https://fiazdentalcare.com/",
+      "placeId": "ChIJpRV2KrMdGTkRDyevJgm3WyQ",
+      "title": "Fiaz Dental Care",
+      "address": "159 Ravi Park, Ravi Rd, Qila Lachman Singh, Lahore, 54000, Pakistan",
+      "categoryName": "Dental clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "4 to 10 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "4 to 10 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "4 to 10 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "4 to 10 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "4 to 10 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "4 to 10 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 92,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 116,
+    "lead_id": 462,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=FAROOQ%20DENTAL%20Care%20Centre&query_place_id=ChIJj0ecUwAbGTkRBEuxZRxwPcc",
+      "scrapedAt": "2026-08-07T04:46:21.200Z",
+      "placeId": "ChIJj0ecUwAbGTkRBEuxZRxwPcc",
+      "title": "FAROOQ DENTAL Care Centre",
+      "address": "St#2 Main Bazar Siddiqia Colony, Siddiqia Colony Badami Bagh, Lahore, Pakistan",
+      "categoryName": "Dentist",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "6 to 10 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "6 to 10 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "6 to 10 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "6 to 10 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "6 to 10 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "6 to 10 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 2,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 117,
+    "lead_id": null,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Smile%20architect&query_place_id=ChIJ3dDGSgQbGTkRCcktZ-7tzyw",
+      "scrapedAt": "2026-08-07T04:46:23.580Z",
+      "placeId": "ChIJ3dDGSgQbGTkRCcktZ-7tzyw",
+      "title": "Smile architect",
+      "address": "SHOP:#.69, Mia Plaza, Badami Bagh, Lahore, 54000, Pakistan",
+      "categoryName": "Dental clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "12:30 PM to 12 AM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Thursday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Friday",
+          "hours": "Closed"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": null,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": null
+    },
+    "expected": "unknown"
+  },
+  {
+    "staging_id": 133,
+    "lead_id": 469,
+    "source": "google_maps",
+    "website": "http://calumetriver-licensedplumber.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Calumet%20River%20Licensed%20Plumber%20Co&query_place_id=ChIJTbDtc5EnDogR6vvF5rXNS0E",
+      "scrapedAt": "2026-08-13T09:07:58.736Z",
+      "website": "http://calumetriver-licensedplumber.com/",
+      "placeId": "ChIJTbDtc5EnDogR6vvF5rXNS0E",
+      "title": "Calumet River Licensed Plumber Co",
+      "address": "10245 S Commercial Ave, Chicago, IL 60617",
+      "categoryName": "Plumber",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Thursday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Friday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Open 24 hours"
+        }
+      ],
+      "reviewsCount": null,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": null
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 134,
+    "lead_id": 172,
+    "source": "google_maps",
+    "website": "https://obannonplumbingandsewer.com/?utm_source=GBP&utm_medium=organic&utm_campaign=website",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=O'Bannon%20Plumbing%20%26%20Sewer&query_place_id=ChIJOfmDOjfZEYgRmtiJ9wAxXkM",
+      "scrapedAt": "2026-08-13T09:07:59.799Z",
+      "website": "https://obannonplumbingandsewer.com/?utm_source=GBP&utm_medium=organic&utm_campaign=website",
+      "placeId": "ChIJOfmDOjfZEYgRmtiJ9wAxXkM",
+      "title": "O'Bannon Plumbing & Sewer",
+      "address": null,
+      "categoryName": "Plumber",
+      "openingHours": [],
+      "reviewsCount": 57,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.8
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 135,
+    "lead_id": 470,
+    "source": "google_maps",
+    "website": "https://www.burrisandsons.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Burris%20%26%20Sons%20Heating%2C%20Cooling%20%26%20Plumbing&query_place_id=ChIJMYt-AmsoDogRLPIgHRSgw-o",
+      "scrapedAt": "2026-08-13T09:08:02.505Z",
+      "website": "https://www.burrisandsons.com/",
+      "placeId": "ChIJMYt-AmsoDogRLPIgHRSgw-o",
+      "title": "Burris & Sons Heating, Cooling & Plumbing",
+      "address": "7850 S Colfax Ave, Chicago, IL 60649",
+      "categoryName": "Plumber",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Thursday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Friday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Open 24 hours"
+        }
+      ],
+      "reviewsCount": 506,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.8
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 136,
+    "lead_id": 471,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=South%20Chicago%20Plumbing%20And%20Heating%20Supply&query_place_id=ChIJmV9cGOUnDogRXppE-TmkniA",
+      "scrapedAt": "2026-08-13T09:08:02.899Z",
+      "placeId": "ChIJmV9cGOUnDogRXppE-TmkniA",
+      "title": "South Chicago Plumbing And Heating Supply",
+      "address": "9275 S South Chicago Ave, Chicago, IL 60617",
+      "categoryName": "Plumbing supply store",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "10 AM to 5 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "10 AM to 5 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "10 AM to 5 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "10 AM to 5 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "10 AM to 5 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "10 AM to 5:30 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "10 AM to 3 PM"
+        }
+      ],
+      "reviewsCount": 132,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.7
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 137,
+    "lead_id": 472,
+    "source": "google_maps",
+    "website": "https://www.allproplumbingchicago.com/",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=All%20Pro%20Plumbing&query_place_id=ChIJb2fULHLYEYgR9Qaw5J3NZp8",
+      "scrapedAt": "2026-08-13T09:08:05.621Z",
+      "website": "https://www.allproplumbingchicago.com/",
+      "placeId": "ChIJb2fULHLYEYgR9Qaw5J3NZp8",
+      "title": "All Pro Plumbing",
+      "address": "10208 S Indianapolis Ave Ste 307, Chicago, IL 60617",
+      "categoryName": "Plumber",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Thursday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Friday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Saturday",
+          "hours": "Open 24 hours"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Open 24 hours"
+        }
+      ],
+      "reviewsCount": 162,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.7
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 150,
+    "lead_id": 445,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Islamabad%20Dental%20Clinic&query_place_id=ChIJFdsB6Sy_3zgRylw6vcZMKbM",
+      "scrapedAt": "2026-09-26T08:25:18.688Z",
+      "placeId": "ChIJFdsB6Sy_3zgRylw6vcZMKbM",
+      "title": "Islamabad Dental Clinic",
+      "address": "6 Municipal Rd, G-6 Markaz G 6 Markaz G-6, Islamabad, 44000, Pakistan",
+      "categoryName": "Medical clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "5 to 8:30 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "5 to 8:30 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "5 to 8:30 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "5 to 8:30 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "5 to 8:30 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "5 to 8:30 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 4,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 3.8
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 151,
+    "lead_id": 446,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Luminosity%20Dental%20Clinic&query_place_id=ChIJtYIuK4zB3zgRhCfPj9mNPNg",
+      "scrapedAt": "2026-09-26T08:25:18.689Z",
+      "placeId": "ChIJtYIuK4zB3zgRhCfPj9mNPNg",
+      "title": "Luminosity Dental Clinic",
+      "address": "Ground floor, Sitara Plaza, Ramna 5 Diplomatic Enclave, Islamabad, 44000, Pakistan",
+      "categoryName": "Dental clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "10:30 AM to 6:30 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "10:30 AM to 6:30 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "10:30 AM to 6:30 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "10:30 AM to 6:30 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "2:30 to 6:30 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "10:30 AM to 6:30 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 22,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 5
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 152,
+    "lead_id": 447,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=The%20Dental%20Care%20Clinic%20(%20Dr.Shahnawaz%20Ahmed)&query_place_id=ChIJw0r1b1-_3zgRY0YMatEk-UQ",
+      "scrapedAt": "2026-09-26T08:25:18.689Z",
+      "placeId": "ChIJw0r1b1-_3zgRY0YMatEk-UQ",
+      "title": "The Dental Care Clinic ( Dr.Shahnawaz Ahmed)",
+      "address": "12 Mezzanine Floor, Huma Plaza, Fazal-e-Haq Road, Block C G 6/2 Blue Area, Islamabad, 44000, Pakistan",
+      "categoryName": "Dental clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "4 to 8:30 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "4 to 8:30 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "4 to 8:30 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "4 to 8:30 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "4 to 8:30 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "4 to 8:30 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 167,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.9
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 153,
+    "lead_id": 448,
+    "source": "google_maps",
+    "website": null,
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Odontologia-Dental%20Setup&query_place_id=ChIJCRl4gYnB3zgRrKLqwBuHObg",
+      "scrapedAt": "2026-09-26T08:25:18.689Z",
+      "placeId": "ChIJCRl4gYnB3zgRrKLqwBuHObg",
+      "title": "Odontologia-Dental Setup",
+      "address": "G, House 406, 6/4 Street 72, G 6/4 G-6, Islamabad, 44000, Pakistan",
+      "categoryName": "Dental clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "4 to 8 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "5 to 9 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "5 to 9 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "5 to 9 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "5 to 9 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "5 to 9 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 62,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.9
+    },
+    "expected": "none_found"
+  },
+  {
+    "staging_id": 154,
+    "lead_id": 449,
+    "source": "google_maps",
+    "website": "https://ziadentalconsultants.me",
+    "raw_data": {
+      "url": "https://www.google.com/maps/search/?api=1&query=Zia%20Dental%20Consultants&query_place_id=ChIJX6DJN4a_3zgRLHPAx0ICgC4",
+      "scrapedAt": "2026-09-26T08:25:18.690Z",
+      "website": "https://ziadentalconsultants.me/",
+      "placeId": "ChIJX6DJN4a_3zgRLHPAx0ICgC4",
+      "title": "Zia Dental Consultants",
+      "address": "Melody Market, G-6 Markaz G 6 Markaz G-6, Islamabad, 44000, Pakistan",
+      "categoryName": "Dental clinic",
+      "openingHours": [
+        {
+          "day": "Monday",
+          "hours": "2 to 9 PM"
+        },
+        {
+          "day": "Tuesday",
+          "hours": "2 to 9 PM"
+        },
+        {
+          "day": "Wednesday",
+          "hours": "2 to 9 PM"
+        },
+        {
+          "day": "Thursday",
+          "hours": "2 to 9 PM"
+        },
+        {
+          "day": "Friday",
+          "hours": "2 to 9 PM"
+        },
+        {
+          "day": "Saturday",
+          "hours": "2 to 9 PM"
+        },
+        {
+          "day": "Sunday",
+          "hours": "Closed"
+        }
+      ],
+      "reviewsCount": 19,
+      "permanentlyClosed": false,
+      "temporarilyClosed": false,
+      "description": null,
+      "totalScore": 4.4
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 118,
+    "lead_id": 168,
+    "source": "yellow_pages",
+    "website": "https://alledelectricil.com",
+    "raw_data": {
+      "profileUrl": "https://www.yellowpages.com/chicago-il/mip/all-ed-electric-579608019?lid=1002195574696",
+      "sourceUrl": "https://www.yellowpages.com/search?search_terms=plumbers&geo_location_terms=Chicago%2C+IL",
+      "scrapedAt": "2026-08-08T13:35:45Z",
+      "website": "https://alledelectricil.com",
+      "name": "ALL ED ELECTRIC",
+      "address": {
+        "city": "Chicago",
+        "state": "IL",
+        "street": null,
+        "country": "US",
+        "postalCode": "60625"
+      },
+      "yellowPagesId": "579608019",
+      "hours": {
+        "Fri": "8:00 am - 6:00 pm",
+        "Mon": "8:00 am - 6:00 pm",
+        "Sat": "8:00 am - 6:00 pm",
+        "Sun": "Closed",
+        "Thu": "8:00 am - 6:00 pm",
+        "Tue": "8:00 am - 6:00 pm",
+        "Wed": "8:00 am - 6:00 pm"
+      },
+      "description": "At All Ed Electric, we power homes and businesses with high-quality electrical solutions designed for today’s needs. From EV charging station installations and whole-home rewiring to panel and service upgrades, our licensed electricians bring experience, safety, and reliability to every project. We also provide 24/7 emergency service to ensure your home or business stays powered when it matters most. Every job starts with a free estimate, honest recommendations, and a commitment to getting the job done right. Trust All Ed Electric — your local experts for dependable electrical work in Chicago, Skokie, and Evanston.",
+      "paymentMethods": [],
+      "rating": null,
+      "reviewCount": 0
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 119,
+    "lead_id": 169,
+    "source": "yellow_pages",
+    "website": "https://shop.wellsplumbing.com/locations.HTML",
+    "raw_data": {
+      "profileUrl": "https://www.yellowpages.com/chicago-il/mip/wells-plumbing-heating-4718716?lid=1002166423741",
+      "sourceUrl": "https://www.yellowpages.com/search?search_terms=plumbers&geo_location_terms=Chicago%2C+IL",
+      "scrapedAt": "2026-08-08T13:35:45Z",
+      "website": "https://shop.wellsplumbing.com/locations.HTML",
+      "name": "Wells Plumbing & Heating",
+      "address": {
+        "city": "Chicago",
+        "state": "IL",
+        "street": "916 West 21st Street",
+        "country": "US",
+        "postalCode": "60608"
+      },
+      "yellowPagesId": "4718716",
+      "hours": {
+        "Fri": "6:30 am - 4:30 pm",
+        "Mon": "6:30 am - 4:30 pm",
+        "Sat": "7:00 am - 12:00 pm",
+        "Sun": "Closed",
+        "Thu": "6:30 am - 4:30 pm",
+        "Tue": "6:30 am - 4:30 pm",
+        "Wed": "6:30 am - 4:30 pm"
+      },
+      "description": "Wells’ mission is to provide the industry and profession of residential and commercial improvement and construction with competitive, first-rate products, services, and technological solutions through thorough market research and commitment to global view of the development of the industry. Since its establishment and operation in 2002, wells has successfully built up an extensive distribution network throughout the Chicago metropolitan area, experiencing a fast growth in revenue.",
+      "paymentMethods": [
+        "mastercard"
+      ],
+      "rating": 5,
+      "reviewCount": 1
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 120,
+    "lead_id": 170,
+    "source": "yellow_pages",
+    "website": "http://www.landascleaning.com",
+    "raw_data": {
+      "profileUrl": "https://www.yellowpages.com/chicago-il/mip/landas-carpet-and-upholstery-cleaning-23055083?lid=1002163686941",
+      "sourceUrl": "https://www.yellowpages.com/search?search_terms=plumbers&geo_location_terms=Chicago%2C+IL",
+      "scrapedAt": "2026-08-08T13:35:45Z",
+      "website": "http://www.landascleaning.com",
+      "name": "Landa's Carpet And Upholstery Cleaning",
+      "address": {
+        "city": "Chicago",
+        "state": "IL",
+        "street": null,
+        "country": "US",
+        "postalCode": "60630"
+      },
+      "yellowPagesId": "23055083",
+      "hours": {
+        "Fri": "8:00 am - 5:00 pm",
+        "Mon": "8:00 am - 5:00 pm",
+        "Sat": "8:00 am - 12:00 pm",
+        "Sun": "Closed",
+        "Thu": "8:00 am - 5:00 pm",
+        "Tue": "8:00 am - 5:00 pm",
+        "Wed": "8:00 am - 5:00 pm"
+      },
+      "description": "Expert cleaning & fast drying. Landa's Carpet Cleaning serves all of Chicagoland and its suburbs. It is a family owned business that has built its client base up through integrity, fair pricing, and good excellent service. Let us help your home with: • Carpet cleaning • Rug cleaning • Water damage cleanup • Upholstery cleaning • Floor cleaning • Floor stripping and waxing Our powerful truck mounted system also helps with deep soil extraction, sanitation and disinfection. We have a 24-hour water damage emergency service if you need help immediately. We service both residential and commercial. Please give Landa's Carpet Cleaning a call today. We look forward to hearing from you.",
+      "paymentMethods": [],
+      "rating": null,
+      "reviewCount": 0
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 121,
+    "lead_id": 171,
+    "source": "yellow_pages",
+    "website": "https://www.halstedplumbing.com",
+    "raw_data": {
+      "profileUrl": "https://www.yellowpages.com/chicago-il/mip/halsted-plumbing-sewer-10195927?lid=1002195564636",
+      "sourceUrl": "https://www.yellowpages.com/search?search_terms=plumbers&geo_location_terms=Chicago%2C+IL",
+      "scrapedAt": "2026-08-08T13:35:45Z",
+      "website": "https://www.halstedplumbing.com",
+      "name": "Halsted Plumbing & Sewer",
+      "address": {
+        "city": "Chicago",
+        "state": "IL",
+        "street": null,
+        "country": "US",
+        "postalCode": "60655"
+      },
+      "yellowPagesId": "10195927",
+      "hours": {
+        "Fri": "8:00 am - 5:00 pm",
+        "Mon": "8:00 am - 5:00 pm",
+        "Sat": "9:00 am - 3:00 pm",
+        "Sun": "Closed",
+        "Thu": "8:00 am - 5:00 pm",
+        "Tue": "8:00 am - 5:00 pm",
+        "Wed": "8:00 am - 5:00 pm"
+      },
+      "description": "Since 1980, Halsted Plumbing & Sewer in Chicago, IL, has been servicing the Chicagoland area in our south side location. Our expert plumbers are fully licensed, bonded and insured for plumbing and sewer repairs and installations. We service residential accounts with 24/7 emergency service available. Our company is family owned and operated and offer the best rates for high-quality work with 100% written guarantees on our workmanship. For prompt service, you can rely on call us for a free estimate today!",
+      "paymentMethods": [],
+      "rating": null,
+      "reviewCount": 0
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 122,
+    "lead_id": 463,
+    "source": "yellow_pages",
+    "website": "https://www.rotorooter.com/chicago/?utm_source=iyp&utm_medium=paid&utm_campaign=iyp",
+    "raw_data": {
+      "profileUrl": "https://www.yellowpages.com/chicago-il/mip/roto-rooter-plumbing-water-cleanup-562623075?lid=1002194257059",
+      "sourceUrl": "https://www.yellowpages.com/search?search_terms=plumbers&geo_location_terms=Chicago%2C+IL",
+      "scrapedAt": "2026-08-08T13:35:45Z",
+      "website": "https://www.rotorooter.com/chicago/?utm_source=iyp&utm_medium=paid&utm_campaign=iyp",
+      "name": "Roto-Rooter Plumbing & Water Cleanup",
+      "address": {
+        "city": "Chicago",
+        "state": "IL",
+        "street": null,
+        "country": "US",
+        "postalCode": "60602"
+      },
+      "yellowPagesId": "562623075",
+      "hours": {
+        "Fri": "Open 24 Hours",
+        "Mon": "Open 24 Hours",
+        "Sat": "Open 24 Hours",
+        "Sun": "Open 24 Hours",
+        "Thu": "Open 24 Hours",
+        "Tue": "Open 24 Hours",
+        "Wed": "Open 24 Hours"
+      },
+      "description": "When you need an emergency plumber near me in Chicago or a drain cleaner, call Roto-Rooter Plumbing & Water Cleanup. Your fast & reliable plumber can fix any plumbing problem, including sump pumps, toilet repair, faucet repair, faucet replacement, garbage disposals, water heaters, bathtubs, showers, and outside faucets. Roto-Rooter is best known for drain cleaning & sewer cleaning. We fix drain clogs, clogged toilets or sinks, blockage of main sewer lines, slow draining shower and bathtub drains, sewer lines and leaking or burst pipes. We also specialize in water damage restoration & water cleanup services. We can fix and clean up your flooded basement too. Roto-Rooter is a 24-hour plumber near you and provides emergency service.",
+      "paymentMethods": [],
+      "rating": null,
+      "reviewCount": 0
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 123,
+    "lead_id": 464,
+    "source": "yellow_pages",
+    "website": "http://emjmetals.com",
+    "raw_data": {
+      "profileUrl": "https://www.yellowpages.com/chicago-il/mip/erics-plumbing-heating-14280493",
+      "sourceUrl": "https://www.yellowpages.com/search?search_terms=plumbers&geo_location_terms=Chicago%2C+IL",
+      "scrapedAt": "2026-08-13T09:00:46Z",
+      "website": "http://emjmetals.com",
+      "name": "Eric's Plumbing & Heating",
+      "address": {
+        "city": "Chicago",
+        "state": "IL",
+        "street": null,
+        "country": "US",
+        "postalCode": "60630"
+      },
+      "yellowPagesId": "14280493",
+      "hours": {
+        "Fri": "Open 24 Hours",
+        "Mon": "Open 24 Hours",
+        "Sat": "Open 24 Hours",
+        "Sun": "Open 24 Hours",
+        "Thu": "Open 24 Hours",
+        "Tue": "Open 24 Hours",
+        "Wed": "Open 24 Hours"
+      },
+      "description": "Eric's Plumbing & Heating is a full service plumbing contractor, serving residential and commercial customers in the Chicago area. We specialize in plumbing repairs and home remodels. You deal direct with the owner at all times. Using the latest in technology, we can resolve any plumbing problem and install any product including: * Leaking Faucet * Leaking Pipes * Leaking Water Heaters * Sump Pumps * Toilets * Water Lines * Sewer Maintenance * Plumbing Violation Corrections * Many more We are available 24 hours, seven days a week for those unexpected emergency situations, and we guarantee that we will be there on time. We take time to listen to your needs and develop solutions tailored to address your situation. With over 17 years experience, we have seen it all and have the experience necessary to take stress from your life. No job is too big or too small. We're licensed and insured. Call today for a free estimate.",
+      "paymentMethods": [],
+      "rating": null,
+      "reviewCount": 0
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 124,
+    "lead_id": 465,
+    "source": "yellow_pages",
+    "website": "http://chicagoplumbingcontractors.localsearch.com",
+    "raw_data": {
+      "profileUrl": "https://www.yellowpages.com/chicago-il/mip/chicago-plumbing-contractors-562998918",
+      "sourceUrl": "https://www.yellowpages.com/search?search_terms=plumbers&geo_location_terms=Chicago%2C+IL",
+      "scrapedAt": "2026-08-13T09:00:46Z",
+      "website": "http://chicagoplumbingcontractors.localsearch.com",
+      "name": "Chicago Plumbing Contractors",
+      "address": {
+        "city": "Chicago",
+        "state": "IL",
+        "street": null,
+        "country": "US",
+        "postalCode": "60615"
+      },
+      "yellowPagesId": "562998918",
+      "hours": {
+        "Fri": "Open 24 Hours",
+        "Mon": "Open 24 Hours",
+        "Sat": "Open 24 Hours",
+        "Sun": "Open 24 Hours",
+        "Thu": "Open 24 Hours",
+        "Tue": "Open 24 Hours",
+        "Wed": "Open 24 Hours"
+      },
+      "description": ":Chicago Plumbing Contractors 7736482113",
+      "paymentMethods": [],
+      "rating": null,
+      "reviewCount": 0
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 125,
+    "lead_id": 466,
+    "source": "yellow_pages",
+    "website": "http://localplumberschicagoil.localsearch.com",
+    "raw_data": {
+      "profileUrl": "https://www.yellowpages.com/chicago-il/mip/local-plumbers-chicago-il-555558763",
+      "sourceUrl": "https://www.yellowpages.com/search?search_terms=plumbers&geo_location_terms=Chicago%2C+IL",
+      "scrapedAt": "2026-08-13T09:00:46Z",
+      "website": "http://localplumberschicagoil.localsearch.com",
+      "name": "Local Plumbers Chicago IL",
+      "address": {
+        "city": "Chicago",
+        "state": "IL",
+        "street": null,
+        "country": "US",
+        "postalCode": "60610"
+      },
+      "yellowPagesId": "555558763",
+      "hours": {
+        "Fri": "Open 24 Hours",
+        "Mon": "Open 24 Hours",
+        "Sat": "Open 24 Hours",
+        "Sun": "Open 24 Hours",
+        "Thu": "Open 24 Hours",
+        "Tue": "Open 24 Hours",
+        "Wed": "Open 24 Hours"
+      },
+      "description": "Complete plumbing repair, residential plumbing, commercial plumbing, bathroom plumbing solutions, trench less sewer line repair and replacement, pipe bursting, pipe relining, kitchen plumbing jobs, sink plumbing, toilet repair / replacement, water heaters, sump pumps, faucet replacement, video camera pipe inspections, back flow certification and repairs, Plumbers, Plumbing, Plumbing drain & sewer cleaning, Plumbing contractors commercial industrial, Fire water damage restoration, Water heater repair, Sewer cleaners & repairers All of our plumbers are licensed, professional and reliable. We provide estimates for every project and we offer guarantees on all of our work. Call us any time on 6182152204",
+      "paymentMethods": [],
+      "rating": null,
+      "reviewCount": 0
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 126,
+    "lead_id": 467,
+    "source": "yellow_pages",
+    "website": "http://plumbinginspectionchicagoil.localsearch.com",
+    "raw_data": {
+      "profileUrl": "https://www.yellowpages.com/chicago-il/mip/plumbing-inspection-chicago-il-561207410",
+      "sourceUrl": "https://www.yellowpages.com/search?search_terms=plumbers&geo_location_terms=Chicago%2C+IL",
+      "scrapedAt": "2026-08-13T09:00:46Z",
+      "website": "http://plumbinginspectionchicagoil.localsearch.com",
+      "name": "Plumbing Inspection Chicago IL",
+      "address": {
+        "city": "Chicago",
+        "state": "IL",
+        "street": null,
+        "country": "US",
+        "postalCode": "60614"
+      },
+      "yellowPagesId": "561207410",
+      "hours": {
+        "Fri": "Open 24 Hours",
+        "Mon": "Open 24 Hours",
+        "Sat": "Open 24 Hours",
+        "Sun": "Open 24 Hours",
+        "Thu": "Open 24 Hours",
+        "Tue": "Open 24 Hours",
+        "Wed": "Open 24 Hours"
+      },
+      "description": "We Offer Residential & Commercial Plumbing & HVAC Services, Local Plumbing, Local Seattle Plumbing Company, Plumbing, Kitchen, Bathroom Plumbing, HVAC and other all type plumbing & HVAC services. Call us any time on 7736667977",
+      "paymentMethods": [],
+      "rating": null,
+      "reviewCount": 0
+    },
+    "expected": "present"
+  },
+  {
+    "staging_id": 127,
+    "lead_id": 468,
+    "source": "yellow_pages",
+    "website": "http://waterheaterrepairchicagoil.localsearch.com",
+    "raw_data": {
+      "profileUrl": "https://www.yellowpages.com/chicago-il/mip/water-heater-repair-chicago-il-555563941",
+      "sourceUrl": "https://www.yellowpages.com/search?search_terms=plumbers&geo_location_terms=Chicago%2C+IL",
+      "scrapedAt": "2026-08-13T09:00:46Z",
+      "website": "http://waterheaterrepairchicagoil.localsearch.com",
+      "name": "Water Heater Repair Chicago, IL",
+      "address": {
+        "city": "Chicago",
+        "state": "IL",
+        "street": null,
+        "country": "US",
+        "postalCode": "60637"
+      },
+      "yellowPagesId": "555563941",
+      "hours": {
+        "Fri": "Open 24 Hours",
+        "Mon": "Open 24 Hours",
+        "Sat": "Open 24 Hours",
+        "Sun": "Open 24 Hours",
+        "Thu": "Open 24 Hours",
+        "Tue": "Open 24 Hours",
+        "Wed": "Open 24 Hours"
+      },
+      "description": "Water Heater Repair Chicago, IL offers Residential & Commercial Plumbing & HVAC Services, Local Plumbing, Local Seattle Plumbing Company, Plumbing, Kitchen, Bathroom Plumbing, HVAC and other all type plumbing & HVAC services.Call us any time on 7737295060",
+      "paymentMethods": [],
+      "rating": null,
+      "reviewCount": 0
+    },
+    "expected": "present"
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "completed_at": "2026-10-22T04:00:08.076Z",
+  "migration": 33,
+  "sql_verified": true,
+  "workflow_imported": true,
+  "workflow_active": false,
+  "business_state_unchanged": true,
+  "provider_calls": 0,
+  "emails_sent": 0,
+  "basic_policy_preview": [
+    {
+      "reason": "email_business_review_required",
+      "classification": null,
+      "leads": 2
+    },
+    {
+      "reason": "email_published_contact_required",
+      "classification": null,
+      "leads": 4
+    },
+    {
+      "reason": "email_known_invalid_risky_or_review",
+      "classification": null,
+      "leads": 3
+    },
+    {
+      "reason": "email_identity_changed",
+      "classification": null,
+      "leads": 38
+    }
+  ]
+}

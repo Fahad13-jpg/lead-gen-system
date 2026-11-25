@@ -1,0 +1,267 @@
+{
+  "evaluated_at": "2026-10-11T19:40:14.524Z",
+  "method": "Offline reclassification of stored basic observations. Assumes normal fingerprint refresh; does not bypass current production hash gates.",
+  "leads": [
+    {
+      "lead_id": 450,
+      "source_at": "2026-04-24T22:49:06.810Z",
+      "assessment_at": "2026-10-03T17:05:10.15523+00:00",
+      "source_age_days": 169.8688392824074,
+      "windows": {
+        "30": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "90": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "180": {
+          "state": "none_found",
+          "fit": "strong",
+          "reasons": [
+            "website_presence_opportunity"
+          ]
+        }
+      }
+    },
+    {
+      "lead_id": 451,
+      "source_at": "2026-04-24T22:49:06.812Z",
+      "assessment_at": "2026-10-03T17:05:10.181191+00:00",
+      "source_age_days": 169.86883925925926,
+      "windows": {
+        "30": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "90": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "180": {
+          "state": "none_found",
+          "fit": "strong",
+          "reasons": [
+            "website_presence_opportunity"
+          ]
+        }
+      }
+    },
+    {
+      "lead_id": 452,
+      "source_at": "2026-04-24T22:49:06.814Z",
+      "assessment_at": "2026-10-03T17:10:09.09954+00:00",
+      "source_age_days": 169.8688392361111,
+      "windows": {
+        "30": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "90": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "180": {
+          "state": "none_found",
+          "fit": "strong",
+          "reasons": [
+            "website_presence_opportunity"
+          ]
+        }
+      }
+    },
+    {
+      "lead_id": 453,
+      "source_at": "2026-04-24T22:49:06.814Z",
+      "assessment_at": "2026-10-03T17:10:09.134437+00:00",
+      "source_age_days": 169.8688392361111,
+      "windows": {
+        "30": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "90": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "180": {
+          "state": "none_found",
+          "fit": "strong",
+          "reasons": [
+            "website_presence_opportunity"
+          ]
+        }
+      }
+    },
+    {
+      "lead_id": 454,
+      "source_at": "2026-04-24T22:49:06.814Z",
+      "assessment_at": "2026-10-03T17:15:09.276673+00:00",
+      "source_age_days": 169.8688392361111,
+      "windows": {
+        "30": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "90": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "180": {
+          "state": "none_found",
+          "fit": "strong",
+          "reasons": [
+            "website_presence_opportunity"
+          ]
+        }
+      }
+    },
+    {
+      "lead_id": 455,
+      "source_at": "2026-04-24T22:49:06.815Z",
+      "assessment_at": "2026-10-03T17:15:09.319744+00:00",
+      "source_age_days": 169.86883922453703,
+      "windows": {
+        "30": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "90": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "180": {
+          "state": "none_found",
+          "fit": "strong",
+          "reasons": [
+            "website_presence_opportunity"
+          ]
+        }
+      }
+    },
+    {
+      "lead_id": 456,
+      "source_at": "2026-04-24T22:49:06.815Z",
+      "assessment_at": "2026-10-03T17:20:08.667723+00:00",
+      "source_age_days": 169.86883922453703,
+      "windows": {
+        "30": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "90": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "180": {
+          "state": "none_found",
+          "fit": "strong",
+          "reasons": [
+            "website_presence_opportunity"
+          ]
+        }
+      }
+    },
+    {
+      "lead_id": 457,
+      "source_at": "2026-04-24T22:49:06.815Z",
+      "assessment_at": "2026-10-03T17:20:08.685594+00:00",
+      "source_age_days": 169.86883922453703,
+      "windows": {
+        "30": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "90": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "180": {
+          "state": "none_found",
+          "fit": "strong",
+          "reasons": [
+            "website_presence_opportunity"
+          ]
+        }
+      }
+    },
+    {
+      "lead_id": 458,
+      "source_at": "2026-04-24T22:49:06.815Z",
+      "assessment_at": "2026-10-03T17:25:08.649508+00:00",
+      "source_age_days": 169.86883922453703,
+      "windows": {
+        "30": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "90": {
+          "state": "unknown",
+          "fit": "unclear",
+          "reasons": [
+            "recheck_needed"
+          ]
+        },
+        "180": {
+          "state": "none_found",
+          "fit": "strong",
+          "reasons": [
+            "website_presence_opportunity"
+          ]
+        }
+      }
+    }
+  ]
+}

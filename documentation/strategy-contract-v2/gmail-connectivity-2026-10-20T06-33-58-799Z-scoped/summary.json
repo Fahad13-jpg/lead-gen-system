@@ -1,0 +1,26 @@
+{
+  "requests": 60,
+  "groups": {
+    "n8n:default": {
+      "total": 20,
+      "expected_401": 20,
+      "p50_ms": 688,
+      "max_ms": 3371,
+      "failures": []
+    },
+    "n8n:scoped": {
+      "total": 20,
+      "expected_401": 20,
+      "p50_ms": 696,
+      "max_ms": 1897,
+      "failures": []
+    },
+    "host:default": {
+      "total": 20,
+      "expected_401": 20,
+      "p50_ms": 424,
+      "max_ms": 1687,
+      "failures": []
+    }
+  }
+}

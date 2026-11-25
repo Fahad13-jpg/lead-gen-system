@@ -1,0 +1,24 @@
+'use strict';
+// Explicit public projection. Raw reports can contain internal task/error/provider data.
+const object=v=>v&&typeof v==='object'&&!Array.isArray(v)?v:{};
+const list=(v,max=30)=>Array.isArray(v)?v.slice(0,max):[];
+const text=(v,max=500)=>typeof v==='string'?v.replace(/[\p{Cc}\p{Cf}]/gu,' ').slice(0,max):null;
+const date=v=>typeof v==='string'&&Number.isFinite(Date.parse(v))?new Date(v).toISOString():null;
+function url(v){try{const u=new URL(v);if(!['http:','https:'].includes(u.protocol)||u.username||u.password||v.length>2048)return null;u.search='';u.hash='';return u.href;}catch{return null;}}
+const number=v=>typeof v==='number'&&Number.isFinite(v)&&v>=0?v:null;
+function detail(row){
+ const r=object(row.report),basic=object(r.basic),research=object(r.research),trust=object(r.trust),fresh=object(trust.freshness);
+ const evidence=list(basic.evidence,40).filter(e=>['booking_link','contact_form','whatsapp','phone','email','social','technology_marker','website_description'].includes(e?.type)).map(e=>({type:e.type,value:['booking_link','contact_form','whatsapp','social'].includes(e.type)?url(e.value):text(e.value,600),source_url:url(e.source_url),observed_at:date(e.observed_at),submission_tested:e.submission_tested===true}));
+ const services=list(basic.services,20).map(s=>({text:text(s?.text,180),source_url:url(s?.source_url),method:text(s?.method,100)})).filter(s=>s.text);
+ const pages=list(basic.pages,20).map(p=>({url:url(p?.url),final_url:url(p?.final_url),status:number(p?.status),content_type:text(p?.content_type,100),html_bytes:number(p?.html_bytes),text_bytes:number(p?.text_bytes),truncated:typeof p?.truncated==='boolean'?p.truncated:null,usable_html:typeof p?.usable_html==='boolean'?p.usable_html:null,error_class:text(p?.error_class,80)}));
+ const emails=list(object(trust.fields).emails,20).map(e=>({value:text(e?.value,254),status:text(e?.status,100),relevance:text(e?.relevance,100),checked_at:date(e?.checked_at),expires_at:date(e?.expires_at)})).filter(e=>e.value);
+ const flags=v=>list(v,20).map(f=>typeof f==='string'?{code:text(f,140)}:{code:text(f?.code||f?.type,140),message:text(f?.message,300)}).filter(f=>f.code||f.message);
+ return{found:true,lead:{id:row.id,company_name:text(row.company_name,255),category:text(row.category,255),city:text(row.city,255),country:text(row.country,100),email:text(row.email,254),phone:text(row.phone,100),website:url(row.website)},report_available:!!row.report,
+  assessment:{basic_at:date(row.basic_at instanceof Date?row.basic_at.toISOString():row.basic_at),research_at:date(row.research_at instanceof Date?row.research_at.toISOString():row.research_at),basic_status:text(basic.status,80),research_status:text(research.status,80),website_current:typeof fresh.website_current==='boolean'?fresh.website_current:null,research_current:typeof fresh.research_current==='boolean'?fresh.research_current:null,website_presence:['present','none_found','social_only','unknown'].includes(trust.website_presence)?trust.website_presence:'unknown',overall_status:text(trust.overall_status,120),identity_status:text(object(trust.identity).status,120),evaluated_at:date(trust.evaluated_at),warnings:flags(trust.warnings),conflicts:flags(trust.conflicts),blocking_reasons:list(trust.blocking_reasons,20).map(v=>text(v,140)).filter(Boolean)},
+  imports:list(row.import_observations,10).map(v=>({batch_id:/^[1-9]\d*$/.test(v?.batch_id||'')?v.batch_id:null,filename:text(v?.filename,200),provided_stage:['raw','cleaned','enriched'].includes(v?.provided_stage)?v.provided_stage:'raw',notes:text(v?.notes,4000),created_at:date(v?.created_at)})),
+  summary:text(research.summary,1200),description:text(basic.website_description,600),evidence,services,pages,emails,
+  facebook:list(row.facebook_observations,10).map(p=>({page_url:/^https:\/\/www\.facebook\.com\/[A-Za-z0-9._/-]+\/$/.test(p?.page_url||'')?p.page_url:null,messenger_url:/^https:\/\/(?:m\.me\/[A-Za-z0-9._-]+|(?:www\.)?facebook\.com\/messages\/t\/[A-Za-z0-9._-]+)\/?$/.test(p?.messenger_url||'')?p.messenger_url:null,observed_at:date(p?.observed_at),automatic_messaging_eligible:false})).filter(p=>p.page_url),
+  linkedin:{profiles:list(object(research.linkedin).profiles,10).map(p=>({url:url(p?.profile_url),kind:text(p?.kind,50)})).filter(p=>p.url),posts:list(object(research.linkedin).recent_posts,5).map(p=>({url:url(p?.url),text:text(p?.text,600),published_at:date(p?.published_at)})).filter(p=>p.url)},
+  tasks:list(r.tasks,10).map(t=>({kind:text(t?.kind,80),status:text(t?.status,80)})),limitations:['Saved source observations are not independent business verification.','Website assessment freshness does not mean a website exists.','This report is not a campaign-specific permission or approval to send.','Missing diagnostics in older reports remain unknown.']};
+}
+module.exports={detail,url};

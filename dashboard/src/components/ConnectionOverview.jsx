@@ -1,0 +1,10 @@
+import {evaluationMode} from './EvaluationChannels';
+import React,{useEffect} from 'react';
+export default function ConnectionOverview({settings}){
+ const openSection=()=>{const id=window.location.hash.slice(1);if(!['search-account','email-accounts','calling-setup','sms-setup'].includes(id))return;const section=document.getElementById(id);if(section?.tagName==='DETAILS')section.open=true;section?.scrollIntoView?.({block:'start'});};
+ useEffect(()=>{openSection();window.addEventListener('hashchange',openSection);return()=>window.removeEventListener('hashchange',openSection);},[]);
+ const senders=(settings.connections||[]).filter(c=>['gmail','smtp'].includes(c.provider));
+ const checked=senders.filter(c=>c.health?.status==='checked').length;
+ const search=settings.apify?.health;
+ return <section className="st-health-overview" aria-labelledby="connection-overview-title"><div><h2 id="connection-overview-title">Connection overview</h2><p>Saved status only. Each channel checks readiness again before sending.</p></div><div className="st-health-links"><a href="#search-account"><strong>Lead research</strong><span>{search?.label||'Review search account'}</span><small>{search?.next_action?.label||'Review account or platform funding'}</small></a><a href="#email-accounts"><strong>Email accounts</strong><span>{senders.length?`${checked} of ${senders.length} recently checked`:'No visible email accounts'}</span><small>{!senders.length?'Connect your email account':checked<senders.length?'Review senders needing attention':'Review saved checks and limits'}</small></a>{!evaluationMode&&<><a href="#calling-setup"><strong>Calling</strong><span>Open setup to check</span><small>Account, agent and number checks</small></a><a href="#sms-setup"><strong>SMS phone</strong><span>Open setup to check</span><small>Phone heartbeat, SIM and sending slot</small></a></>}</div><p className="st-note">Counts cover visible email accounts on this page. Email and manual messages are available for this evaluation.</p></section>;
+}

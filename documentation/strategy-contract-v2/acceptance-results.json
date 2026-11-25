@@ -1,0 +1,1164 @@
+{
+  "scope": "Offline mocks and saved-response replays only",
+  "prompt_version": "strategy_v2.6",
+  "passed": 56,
+  "failed": 0,
+  "network_calls": 0,
+  "rows": [
+    {
+      "scenario": "benchmark_167",
+      "variant": "valid_mock",
+      "expected": "ai_completed",
+      "provider": "ai_completed",
+      "native": "ai_completed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_167",
+      "variant": "truncated",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_167",
+      "variant": "malformed",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_167",
+      "variant": "fit_override",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_167",
+      "variant": "forbidden_followup",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_167",
+      "variant": "zero_allowance",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_445",
+      "variant": "valid_mock",
+      "expected": "ai_completed",
+      "provider": "ai_completed",
+      "native": "ai_completed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_445",
+      "variant": "truncated",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_445",
+      "variant": "malformed",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_445",
+      "variant": "fit_override",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_445",
+      "variant": "forbidden_followup",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_445",
+      "variant": "zero_allowance",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_446",
+      "variant": "valid_mock",
+      "expected": "ai_completed",
+      "provider": "ai_completed",
+      "native": "ai_completed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_446",
+      "variant": "truncated",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_446",
+      "variant": "malformed",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_446",
+      "variant": "fit_override",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_446",
+      "variant": "forbidden_followup",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_446",
+      "variant": "zero_allowance",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_447",
+      "variant": "valid_mock",
+      "expected": "ai_completed",
+      "provider": "ai_completed",
+      "native": "ai_completed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_447",
+      "variant": "truncated",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_447",
+      "variant": "malformed",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_447",
+      "variant": "fit_override",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_447",
+      "variant": "forbidden_followup",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_447",
+      "variant": "zero_allowance",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_449",
+      "variant": "valid_mock",
+      "expected": "ai_completed",
+      "provider": "ai_completed",
+      "native": "ai_completed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_449",
+      "variant": "truncated",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_449",
+      "variant": "malformed",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_449",
+      "variant": "fit_override",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_449",
+      "variant": "forbidden_followup",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "benchmark_449",
+      "variant": "zero_allowance",
+      "passed": true
+    },
+    {
+      "scenario": "suppressed",
+      "variant": "valid_mock",
+      "expected": "ai_completed",
+      "provider": "ai_completed",
+      "native": "ai_completed",
+      "passed": true
+    },
+    {
+      "scenario": "suppressed",
+      "variant": "truncated",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "suppressed",
+      "variant": "malformed",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "suppressed",
+      "variant": "fit_override",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "suppressed",
+      "variant": "forbidden_followup",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "suppressed",
+      "variant": "zero_allowance",
+      "passed": true
+    },
+    {
+      "scenario": "replied",
+      "variant": "valid_mock",
+      "expected": "ai_completed",
+      "provider": "ai_completed",
+      "native": "ai_completed",
+      "passed": true
+    },
+    {
+      "scenario": "replied",
+      "variant": "truncated",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "replied",
+      "variant": "malformed",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "replied",
+      "variant": "fit_override",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "replied",
+      "variant": "forbidden_followup",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "replied",
+      "variant": "zero_allowance",
+      "passed": true
+    },
+    {
+      "scenario": "conflicted",
+      "variant": "valid_mock",
+      "expected": "ai_completed",
+      "provider": "ai_completed",
+      "native": "ai_completed",
+      "passed": true
+    },
+    {
+      "scenario": "conflicted",
+      "variant": "truncated",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "conflicted",
+      "variant": "malformed",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "conflicted",
+      "variant": "fit_override",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "conflicted",
+      "variant": "forbidden_followup",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "conflicted",
+      "variant": "zero_allowance",
+      "passed": true
+    },
+    {
+      "scenario": "not_assessed",
+      "variant": "valid_mock",
+      "expected": "ai_completed",
+      "provider": "ai_completed",
+      "native": "ai_completed",
+      "passed": true
+    },
+    {
+      "scenario": "not_assessed",
+      "variant": "truncated",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "not_assessed",
+      "variant": "malformed",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "not_assessed",
+      "variant": "fit_override",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "not_assessed",
+      "variant": "forbidden_followup",
+      "expected": "ai_failed",
+      "provider": "ai_failed",
+      "native": "ai_failed",
+      "passed": true
+    },
+    {
+      "scenario": "not_assessed",
+      "variant": "zero_allowance",
+      "passed": true
+    },
+    {
+      "scenario": "saved_real_167",
+      "variant": "forbidden_channel",
+      "passed": true
+    },
+    {
+      "scenario": "saved_real_449",
+      "variant": "missing_asset",
+      "passed": true
+    }
+  ],
+  "ratings": [
+    {
+      "scenario": "benchmark_167",
+      "provenance": "Template output; mock acceptance is NOT an AI quality rating.",
+      "fit": "strong",
+      "permitted_channels": [
+        {
+          "channel": "whatsapp",
+          "reason_codes": [
+            "existing_readiness_ready"
+          ]
+        },
+        {
+          "channel": "call",
+          "reason_codes": [
+            "existing_readiness_ready"
+          ]
+        }
+      ],
+      "source_facts": [
+        {
+          "id": "f1",
+          "source": "https://fiazdentalcare.com/, https://fiazdentalcare.com/index.php/contact-us/, https://fiazdentalcare.com/index.php/about-us/",
+          "age_days": 8,
+          "polarity": "absent_on_checked_pages",
+          "data": {
+            "label": "UNTRUSTED_WEBSITE_DATA",
+            "text": "booking_link not observed on 3 checked pages"
+          },
+          "outgoing_text": null
+        },
+        {
+          "id": "f2",
+          "source": "https://fiazdentalcare.com/, https://fiazdentalcare.com/index.php/contact-us/, https://fiazdentalcare.com/index.php/about-us/",
+          "age_days": 8,
+          "polarity": "absent_on_checked_pages",
+          "data": {
+            "label": "UNTRUSTED_WEBSITE_DATA",
+            "text": "whatsapp not observed on 3 checked pages"
+          },
+          "outgoing_text": null
+        }
+      ],
+      "approved_benefits": [
+        {
+          "id": "b1",
+          "text": "The demonstration includes an enquiry form."
+        }
+      ],
+      "draft": "Hello Fiaz Dental Care, The demonstration includes an enquiry form. Would you like to review the demonstration? Demo Sender — Example Studio Reply STOP to opt out.",
+      "followups": [
+        {
+          "channel": "whatsapp",
+          "intent": "Ask whether the approved offer is relevant; stop on reply or opt-out."
+        }
+      ],
+      "quality_review": {
+        "flags": [],
+        "followup_review": {
+          "items": [
+            {
+              "index": 0,
+              "channel": "whatsapp",
+              "status": "requires_execution_checks",
+              "asset_reference": false,
+              "errors": [],
+              "required_checks": [
+                "previous_confirmed_send",
+                "no_reply",
+                "not_suppressed",
+                "current_channel_readiness"
+              ],
+              "checks_performed": false,
+              "execution_authorized": false
+            }
+          ],
+          "errors": [],
+          "limitations": [
+            "Internal intent text is not an executable message.",
+            "Asset detection covers common English demo/product link phrases only; other wording requires review.",
+            "A configured URL does not prove it was sent, received or viewed."
+          ]
+        },
+        "personalization_status": "insufficient_evidence",
+        "next_action": "Collect usable current evidence or explicitly review category-level wording.",
+        "available_match_count": 0,
+        "observed_personalization": false,
+        "benefit_relevance": "not_established",
+        "supported_fact_ids": [],
+        "recommendation": "Review the approved angle and factual accuracy.",
+        "confirmed_need": false,
+        "campaign_gaps": [
+          "target_terms",
+          "additional_approved_benefits",
+          "optional_demo_url",
+          "evidence_to_benefit_rules"
+        ]
+      },
+      "human_rating": null,
+      "human_approval": null
+    },
+    {
+      "scenario": "benchmark_445",
+      "provenance": "Template output; mock acceptance is NOT an AI quality rating.",
+      "fit": "unclear",
+      "permitted_channels": [
+        {
+          "channel": "whatsapp",
+          "reason_codes": [
+            "existing_readiness_ready"
+          ]
+        },
+        {
+          "channel": "call",
+          "reason_codes": [
+            "existing_readiness_ready"
+          ]
+        }
+      ],
+      "source_facts": [],
+      "approved_benefits": [
+        {
+          "id": "b1",
+          "text": "The demonstration includes an enquiry form."
+        }
+      ],
+      "draft": "Hello Islamabad Dental Clinic, The demonstration includes an enquiry form. Would you like to review the demonstration? Demo Sender — Example Studio Reply STOP to opt out.",
+      "followups": [
+        {
+          "channel": "whatsapp",
+          "intent": "Ask whether the approved offer is relevant; stop on reply or opt-out."
+        }
+      ],
+      "quality_review": {
+        "flags": [
+          "fit_not_established"
+        ],
+        "followup_review": {
+          "items": [
+            {
+              "index": 0,
+              "channel": "whatsapp",
+              "status": "requires_execution_checks",
+              "asset_reference": false,
+              "errors": [],
+              "required_checks": [
+                "previous_confirmed_send",
+                "no_reply",
+                "not_suppressed",
+                "current_channel_readiness"
+              ],
+              "checks_performed": false,
+              "execution_authorized": false
+            }
+          ],
+          "errors": [],
+          "limitations": [
+            "Internal intent text is not an executable message.",
+            "Asset detection covers common English demo/product link phrases only; other wording requires review.",
+            "A configured URL does not prove it was sent, received or viewed."
+          ]
+        },
+        "personalization_status": "insufficient_evidence",
+        "next_action": "Collect usable current evidence or explicitly review category-level wording.",
+        "available_match_count": 0,
+        "observed_personalization": false,
+        "benefit_relevance": "not_established",
+        "supported_fact_ids": [],
+        "recommendation": "Clarify relevance before pursuing the offer.",
+        "confirmed_need": false,
+        "campaign_gaps": [
+          "target_terms",
+          "additional_approved_benefits",
+          "optional_demo_url",
+          "evidence_to_benefit_rules"
+        ]
+      },
+      "human_rating": null,
+      "human_approval": null
+    },
+    {
+      "scenario": "benchmark_446",
+      "provenance": "Template output; mock acceptance is NOT an AI quality rating.",
+      "fit": "unclear",
+      "permitted_channels": [
+        {
+          "channel": "whatsapp",
+          "reason_codes": [
+            "existing_readiness_ready"
+          ]
+        },
+        {
+          "channel": "call",
+          "reason_codes": [
+            "existing_readiness_ready"
+          ]
+        }
+      ],
+      "source_facts": [],
+      "approved_benefits": [
+        {
+          "id": "b1",
+          "text": "The demonstration includes an enquiry form."
+        }
+      ],
+      "draft": "Hello Luminosity Dental Clinic, The demonstration includes an enquiry form. Would you like to review the demonstration? Demo Sender — Example Studio Reply STOP to opt out.",
+      "followups": [
+        {
+          "channel": "whatsapp",
+          "intent": "Ask whether the approved offer is relevant; stop on reply or opt-out."
+        }
+      ],
+      "quality_review": {
+        "flags": [
+          "fit_not_established"
+        ],
+        "followup_review": {
+          "items": [
+            {
+              "index": 0,
+              "channel": "whatsapp",
+              "status": "requires_execution_checks",
+              "asset_reference": false,
+              "errors": [],
+              "required_checks": [
+                "previous_confirmed_send",
+                "no_reply",
+                "not_suppressed",
+                "current_channel_readiness"
+              ],
+              "checks_performed": false,
+              "execution_authorized": false
+            }
+          ],
+          "errors": [],
+          "limitations": [
+            "Internal intent text is not an executable message.",
+            "Asset detection covers common English demo/product link phrases only; other wording requires review.",
+            "A configured URL does not prove it was sent, received or viewed."
+          ]
+        },
+        "personalization_status": "insufficient_evidence",
+        "next_action": "Collect usable current evidence or explicitly review category-level wording.",
+        "available_match_count": 0,
+        "observed_personalization": false,
+        "benefit_relevance": "not_established",
+        "supported_fact_ids": [],
+        "recommendation": "Clarify relevance before pursuing the offer.",
+        "confirmed_need": false,
+        "campaign_gaps": [
+          "target_terms",
+          "additional_approved_benefits",
+          "optional_demo_url",
+          "evidence_to_benefit_rules"
+        ]
+      },
+      "human_rating": null,
+      "human_approval": null
+    },
+    {
+      "scenario": "benchmark_447",
+      "provenance": "Template output; mock acceptance is NOT an AI quality rating.",
+      "fit": "unclear",
+      "permitted_channels": [
+        {
+          "channel": "whatsapp",
+          "reason_codes": [
+            "existing_readiness_ready"
+          ]
+        },
+        {
+          "channel": "call",
+          "reason_codes": [
+            "existing_readiness_ready"
+          ]
+        }
+      ],
+      "source_facts": [],
+      "approved_benefits": [
+        {
+          "id": "b1",
+          "text": "The demonstration includes an enquiry form."
+        }
+      ],
+      "draft": "Hello The Dental Care Clinic ( Dr.Shahnawaz Ahmed), The demonstration includes an enquiry form. Would you like to review the demonstration? Demo Sender — Example Studio Reply STOP to opt out.",
+      "followups": [
+        {
+          "channel": "whatsapp",
+          "intent": "Ask whether the approved offer is relevant; stop on reply or opt-out."
+        }
+      ],
+      "quality_review": {
+        "flags": [
+          "fit_not_established"
+        ],
+        "followup_review": {
+          "items": [
+            {
+              "index": 0,
+              "channel": "whatsapp",
+              "status": "requires_execution_checks",
+              "asset_reference": false,
+              "errors": [],
+              "required_checks": [
+                "previous_confirmed_send",
+                "no_reply",
+                "not_suppressed",
+                "current_channel_readiness"
+              ],
+              "checks_performed": false,
+              "execution_authorized": false
+            }
+          ],
+          "errors": [],
+          "limitations": [
+            "Internal intent text is not an executable message.",
+            "Asset detection covers common English demo/product link phrases only; other wording requires review.",
+            "A configured URL does not prove it was sent, received or viewed."
+          ]
+        },
+        "personalization_status": "insufficient_evidence",
+        "next_action": "Collect usable current evidence or explicitly review category-level wording.",
+        "available_match_count": 0,
+        "observed_personalization": false,
+        "benefit_relevance": "not_established",
+        "supported_fact_ids": [],
+        "recommendation": "Clarify relevance before pursuing the offer.",
+        "confirmed_need": false,
+        "campaign_gaps": [
+          "target_terms",
+          "additional_approved_benefits",
+          "optional_demo_url",
+          "evidence_to_benefit_rules"
+        ]
+      },
+      "human_rating": null,
+      "human_approval": null
+    },
+    {
+      "scenario": "benchmark_449",
+      "provenance": "Template output; mock acceptance is NOT an AI quality rating.",
+      "fit": "weak",
+      "permitted_channels": [
+        {
+          "channel": "whatsapp",
+          "reason_codes": [
+            "existing_readiness_ready"
+          ]
+        },
+        {
+          "channel": "call",
+          "reason_codes": [
+            "existing_readiness_ready"
+          ]
+        }
+      ],
+      "source_facts": [
+        {
+          "id": "f1",
+          "source": "https://ziadentalconsultants.me/",
+          "age_days": 8,
+          "polarity": "present",
+          "data": {
+            "label": "UNTRUSTED_WEBSITE_DATA",
+            "text": "Orthodontics & braces"
+          },
+          "outgoing_text": "Your website lists: “Orthodontics & braces”."
+        },
+        {
+          "id": "f2",
+          "source": "https://ziadentalconsultants.me/",
+          "age_days": 8,
+          "polarity": "present",
+          "data": {
+            "label": "UNTRUSTED_WEBSITE_DATA",
+            "text": "Clear aligners"
+          },
+          "outgoing_text": "Your website lists: “Clear aligners”."
+        },
+        {
+          "id": "f3",
+          "source": "https://ziadentalconsultants.me/",
+          "age_days": 8,
+          "polarity": "present",
+          "data": {
+            "label": "UNTRUSTED_WEBSITE_DATA",
+            "text": "Cosmetic dentistry"
+          },
+          "outgoing_text": "Your website lists: “Cosmetic dentistry”."
+        },
+        {
+          "id": "f4",
+          "source": "https://ziadentalconsultants.me/",
+          "age_days": 8,
+          "polarity": "present",
+          "data": {
+            "label": "UNTRUSTED_WEBSITE_DATA",
+            "text": "Dental implants"
+          },
+          "outgoing_text": "Your website lists: “Dental implants”."
+        }
+      ],
+      "approved_benefits": [
+        {
+          "id": "b1",
+          "text": "The demonstration includes an enquiry form."
+        }
+      ],
+      "draft": "Hello Zia Dental Consultants, The demonstration includes an enquiry form. Would you like to review the demonstration? Demo Sender — Example Studio Reply STOP to opt out.",
+      "followups": [],
+      "quality_review": {
+        "flags": [
+          "weak_offer_fit"
+        ],
+        "followup_review": {
+          "items": [],
+          "errors": [],
+          "limitations": [
+            "Internal intent text is not an executable message.",
+            "Asset detection covers common English demo/product link phrases only; other wording requires review.",
+            "A configured URL does not prove it was sent, received or viewed."
+          ]
+        },
+        "personalization_status": "no_approved_benefit_match",
+        "next_action": "Provide a relevant approved benefit and customer-defined evidence matching rule.",
+        "available_match_count": 0,
+        "observed_personalization": false,
+        "benefit_relevance": "not_established",
+        "supported_fact_ids": [],
+        "recommendation": "Review whether to pursue this lead before follow-up.",
+        "confirmed_need": false,
+        "campaign_gaps": [
+          "target_terms",
+          "additional_approved_benefits",
+          "optional_demo_url",
+          "evidence_to_benefit_rules"
+        ]
+      },
+      "human_rating": null,
+      "human_approval": null
+    },
+    {
+      "scenario": "suppressed",
+      "provenance": "Template output; mock acceptance is NOT an AI quality rating.",
+      "fit": "strong",
+      "permitted_channels": [],
+      "source_facts": [
+        {
+          "id": "f1",
+          "source": "https://fiazdentalcare.com/, https://fiazdentalcare.com/index.php/contact-us/, https://fiazdentalcare.com/index.php/about-us/",
+          "age_days": 8,
+          "polarity": "absent_on_checked_pages",
+          "data": {
+            "label": "UNTRUSTED_WEBSITE_DATA",
+            "text": "booking_link not observed on 3 checked pages"
+          },
+          "outgoing_text": null
+        },
+        {
+          "id": "f2",
+          "source": "https://fiazdentalcare.com/, https://fiazdentalcare.com/index.php/contact-us/, https://fiazdentalcare.com/index.php/about-us/",
+          "age_days": 8,
+          "polarity": "absent_on_checked_pages",
+          "data": {
+            "label": "UNTRUSTED_WEBSITE_DATA",
+            "text": "whatsapp not observed on 3 checked pages"
+          },
+          "outgoing_text": null
+        }
+      ],
+      "approved_benefits": [
+        {
+          "id": "b1",
+          "text": "The demonstration includes an enquiry form."
+        }
+      ],
+      "draft": null,
+      "followups": [],
+      "quality_review": {
+        "flags": [],
+        "followup_review": {
+          "items": [],
+          "errors": [],
+          "limitations": [
+            "Internal intent text is not an executable message.",
+            "Asset detection covers common English demo/product link phrases only; other wording requires review.",
+            "A configured URL does not prove it was sent, received or viewed."
+          ]
+        },
+        "personalization_status": "no_permitted_channel",
+        "next_action": "Resolve existing readiness restrictions before planning outreach.",
+        "available_match_count": 0,
+        "observed_personalization": false,
+        "benefit_relevance": "not_established",
+        "supported_fact_ids": [],
+        "recommendation": "Review the approved angle and factual accuracy.",
+        "confirmed_need": false,
+        "campaign_gaps": [
+          "target_terms",
+          "additional_approved_benefits",
+          "optional_demo_url",
+          "evidence_to_benefit_rules"
+        ]
+      },
+      "human_rating": null,
+      "human_approval": null
+    },
+    {
+      "scenario": "replied",
+      "provenance": "Template output; mock acceptance is NOT an AI quality rating.",
+      "fit": "strong",
+      "permitted_channels": [],
+      "source_facts": [
+        {
+          "id": "f1",
+          "source": "https://fiazdentalcare.com/, https://fiazdentalcare.com/index.php/contact-us/, https://fiazdentalcare.com/index.php/about-us/",
+          "age_days": 8,
+          "polarity": "absent_on_checked_pages",
+          "data": {
+            "label": "UNTRUSTED_WEBSITE_DATA",
+            "text": "booking_link not observed on 3 checked pages"
+          },
+          "outgoing_text": null
+        },
+        {
+          "id": "f2",
+          "source": "https://fiazdentalcare.com/, https://fiazdentalcare.com/index.php/contact-us/, https://fiazdentalcare.com/index.php/about-us/",
+          "age_days": 8,
+          "polarity": "absent_on_checked_pages",
+          "data": {
+            "label": "UNTRUSTED_WEBSITE_DATA",
+            "text": "whatsapp not observed on 3 checked pages"
+          },
+          "outgoing_text": null
+        }
+      ],
+      "approved_benefits": [
+        {
+          "id": "b1",
+          "text": "The demonstration includes an enquiry form."
+        }
+      ],
+      "draft": null,
+      "followups": [],
+      "quality_review": {
+        "flags": [],
+        "followup_review": {
+          "items": [],
+          "errors": [],
+          "limitations": [
+            "Internal intent text is not an executable message.",
+            "Asset detection covers common English demo/product link phrases only; other wording requires review.",
+            "A configured URL does not prove it was sent, received or viewed."
+          ]
+        },
+        "personalization_status": "no_permitted_channel",
+        "next_action": "Resolve existing readiness restrictions before planning outreach.",
+        "available_match_count": 0,
+        "observed_personalization": false,
+        "benefit_relevance": "not_established",
+        "supported_fact_ids": [],
+        "recommendation": "Review the approved angle and factual accuracy.",
+        "confirmed_need": false,
+        "campaign_gaps": [
+          "target_terms",
+          "additional_approved_benefits",
+          "optional_demo_url",
+          "evidence_to_benefit_rules"
+        ]
+      },
+      "human_rating": null,
+      "human_approval": null
+    },
+    {
+      "scenario": "conflicted",
+      "provenance": "Template output; mock acceptance is NOT an AI quality rating.",
+      "fit": "unclear",
+      "permitted_channels": [],
+      "source_facts": [
+        {
+          "id": "f1",
+          "source": "https://fiazdentalcare.com/, https://fiazdentalcare.com/index.php/contact-us/, https://fiazdentalcare.com/index.php/about-us/",
+          "age_days": 8,
+          "polarity": "absent_on_checked_pages",
+          "data": {
+            "label": "UNTRUSTED_WEBSITE_DATA",
+            "text": "booking_link not observed on 3 checked pages"
+          },
+          "outgoing_text": null
+        },
+        {
+          "id": "f2",
+          "source": "https://fiazdentalcare.com/, https://fiazdentalcare.com/index.php/contact-us/, https://fiazdentalcare.com/index.php/about-us/",
+          "age_days": 8,
+          "polarity": "absent_on_checked_pages",
+          "data": {
+            "label": "UNTRUSTED_WEBSITE_DATA",
+            "text": "whatsapp not observed on 3 checked pages"
+          },
+          "outgoing_text": null
+        },
+        {
+          "id": "f3",
+          "source": "https://fiazdentalcare.com/, https://fiazdentalcare.com/index.php/contact-us/, https://fiazdentalcare.com/index.php/about-us/",
+          "age_days": 8,
+          "polarity": "absent_on_checked_pages",
+          "data": {
+            "label": "UNTRUSTED_WEBSITE_DATA",
+            "text": "phone not observed on 3 checked pages"
+          },
+          "outgoing_text": null
+        }
+      ],
+      "approved_benefits": [
+        {
+          "id": "b1",
+          "text": "The demonstration includes an enquiry form."
+        }
+      ],
+      "draft": null,
+      "followups": [],
+      "quality_review": {
+        "flags": [
+          "fit_not_established"
+        ],
+        "followup_review": {
+          "items": [],
+          "errors": [],
+          "limitations": [
+            "Internal intent text is not an executable message.",
+            "Asset detection covers common English demo/product link phrases only; other wording requires review.",
+            "A configured URL does not prove it was sent, received or viewed."
+          ]
+        },
+        "personalization_status": "no_permitted_channel",
+        "next_action": "Resolve existing readiness restrictions before planning outreach.",
+        "available_match_count": 0,
+        "observed_personalization": false,
+        "benefit_relevance": "not_established",
+        "supported_fact_ids": [],
+        "recommendation": "Clarify relevance before pursuing the offer.",
+        "confirmed_need": false,
+        "campaign_gaps": [
+          "target_terms",
+          "additional_approved_benefits",
+          "optional_demo_url",
+          "evidence_to_benefit_rules"
+        ]
+      },
+      "human_rating": null,
+      "human_approval": null
+    },
+    {
+      "scenario": "not_assessed",
+      "provenance": "Template output; mock acceptance is NOT an AI quality rating.",
+      "fit": "not_assessed",
+      "permitted_channels": [
+        {
+          "channel": "whatsapp",
+          "reason_codes": [
+            "existing_readiness_ready"
+          ]
+        },
+        {
+          "channel": "call",
+          "reason_codes": [
+            "existing_readiness_ready"
+          ]
+        }
+      ],
+      "source_facts": [],
+      "approved_benefits": [
+        {
+          "id": "b1",
+          "text": "The demonstration includes an enquiry form."
+        }
+      ],
+      "draft": "Hello Fiaz Dental Care, The demonstration includes an enquiry form. Would you like to review the demonstration? Demo Sender — Example Studio Reply STOP to opt out.",
+      "followups": [
+        {
+          "channel": "whatsapp",
+          "intent": "Ask whether the approved offer is relevant; stop on reply or opt-out."
+        }
+      ],
+      "quality_review": {
+        "flags": [
+          "fit_not_established"
+        ],
+        "followup_review": {
+          "items": [
+            {
+              "index": 0,
+              "channel": "whatsapp",
+              "status": "requires_execution_checks",
+              "asset_reference": false,
+              "errors": [],
+              "required_checks": [
+                "previous_confirmed_send",
+                "no_reply",
+                "not_suppressed",
+                "current_channel_readiness"
+              ],
+              "checks_performed": false,
+              "execution_authorized": false
+            }
+          ],
+          "errors": [],
+          "limitations": [
+            "Internal intent text is not an executable message.",
+            "Asset detection covers common English demo/product link phrases only; other wording requires review.",
+            "A configured URL does not prove it was sent, received or viewed."
+          ]
+        },
+        "personalization_status": "insufficient_evidence",
+        "next_action": "Collect usable current evidence or explicitly review category-level wording.",
+        "available_match_count": 0,
+        "observed_personalization": false,
+        "benefit_relevance": "not_established",
+        "supported_fact_ids": [],
+        "recommendation": "Clarify relevance before pursuing the offer.",
+        "confirmed_need": false,
+        "campaign_gaps": [
+          "target_terms",
+          "additional_approved_benefits",
+          "optional_demo_url",
+          "evidence_to_benefit_rules"
+        ]
+      },
+      "human_rating": null,
+      "human_approval": null
+    }
+  ],
+  "release_status": "NOT_READY_FOR_DEPLOYMENT",
+  "remaining": [
+    "Latest-prompt live quality across representative leads UNVERIFIED",
+    "Human usefulness ratings unfilled",
+    "Executor event checks not implemented; requirements are metadata",
+    "Deployment and live migration not authorized",
+    "Latest changes not tested in actual n8n runtime"
+  ]
+}

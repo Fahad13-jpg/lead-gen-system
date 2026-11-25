@@ -1,0 +1,53 @@
+{
+  "contract": {
+    "passed": 33,
+    "names": [
+      "benchmark 167 historical evidence, real blocked gates and synthetic draft",
+      "benchmark 445 historical evidence, real blocked gates and synthetic draft",
+      "benchmark 446 historical evidence, real blocked gates and synthetic draft",
+      "benchmark 447 historical evidence, real blocked gates and synthetic draft",
+      "benchmark 449 historical evidence, real blocked gates and synthetic draft",
+      "thin evidence and absent assessment",
+      "template site qualifier owns strong fit",
+      "social-only scoped wording",
+      "no channel, suppression and reply never bypassed by mock readiness",
+      "conflicting evidence produces unclear and no permitted channel",
+      "prompt injection is isolated data and controls stripped",
+      "non-English text retained; language review flagged",
+      "long evidence is capped; mandatory brief overflow fails closed",
+      "schema rejects extra fields and null arrays",
+      "unknown benefit, unknown fact and hypothesis-as-claim rejected",
+      "undeclared hypothesis in copy rejected",
+      "absence polarity cannot be cited",
+      "unscoped absence rejected even in approved benefit",
+      "fit override, unknown angle and blocked channel rejected",
+      "opt-out, prohibited claims, URL allowlist and length checked",
+      "zero/default gate makes no provider call",
+      "successful mock records config, usage, method and same reservation",
+      "malformed JSON one repair succeeds",
+      "schema error only one repair; no silent fallback",
+      "truncation and semantic failures are never repaired",
+      "provably pre-send permits one quick retry, same lease and reservation",
+      "two pre-send failures stop; code-only reset is ambiguous",
+      "lease expiry, pooled dispatch and closed gate prevent retry",
+      "wrong fingerprint cannot use a reservation",
+      "matched profile evidence needs current research and known age",
+      "valid observed personalization accepted, future observation excluded",
+      "template states, explicit fallback acknowledgement and hash binding",
+      "v1 remains readable and never converted"
+    ]
+  },
+  "adapter": {
+    "passed": 13,
+    "scope": "Mock orchestration and static SQL checks only; PostgreSQL execution UNVERIFIED"
+  },
+  "quality": {
+    "passed": 6,
+    "scope": "offline relevance rules and draft quality controls; no model evaluation"
+  },
+  "native": {
+    "passed": 9,
+    "scope": "Actual local Code-node bodies in Node VM with mocked inputs; no n8n import or provider call"
+  },
+  "sql_execution": "Passed scratch_strategy_v2_20261012; fixture transaction rolled back; see scratch-017-results.txt"
+}

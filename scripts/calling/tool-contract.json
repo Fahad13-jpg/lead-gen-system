@@ -1,0 +1,117 @@
+{
+  "status": "connected_unpublished_retell_agent_20261028",
+  "authentication": "Trusted gateway resolves identity from an authenticated provider call; never from model arguments.",
+  "tools": [
+    {
+      "name": "get_available_slots",
+      "description": "Return up to three available owner-offered meeting slots. Availability is checked, not a booking.",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "book_meeting",
+      "description": "Book an offered slot only after the recipient explicitly confirms it. Claim booked only on a booked receipt.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "slot_id": {
+            "type": "string"
+          },
+          "confirmed_by_recipient": {
+            "const": true
+          }
+        },
+        "required": [
+          "slot_id",
+          "confirmed_by_recipient"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "record_outcome",
+      "description": "Record what the recipient said. Do not infer intent; never claim a booking through this tool.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "outcome": {
+            "enum": [
+              "interested",
+              "busy",
+              "not_interested",
+              "wrong_person",
+              "human_requested",
+              "unknown"
+            ]
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 1000
+          }
+        },
+        "required": [
+          "outcome",
+          "event_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "request_callback",
+      "description": "Record an explicitly confirmed future callback date/time with timezone. This is a request, not a promise of a scheduled call.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "requested_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "confirmed_by_recipient": {
+            "const": true
+          },
+          "event_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "requested_at",
+          "timezone",
+          "confirmed_by_recipient",
+          "event_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "opt_out",
+      "description": "Record an opt-out immediately, then end the call. Do not continue pitching.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "event_id"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "limitations": [
+    "Provider configuration read back; audio tool execution remains UNVERIFIED.",
+    "Private header authentication plus provider lookup; no HMAC verification.",
+    "Browser calls cannot modify live leads; controlled test binding remains pending.",
+    "No outbound call schedules enabled."
+  ]
+}

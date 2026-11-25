@@ -1,0 +1,108 @@
+{
+  "id": "managedGmailcheck",
+  "name": "Managed Gmail - account check",
+  "active": false,
+  "nodes": [
+    {
+      "id": "manual",
+      "name": "Manual Account Check",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "schedule",
+      "name": "Check Pending Gmail Every Five Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        160
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "check",
+      "name": "Check Gmail Connection",
+      "type": "CUSTOM.managedGmailCheck",
+      "typeVersion": 1,
+      "position": [
+        320,
+        80
+      ],
+      "retryOnFail": false,
+      "parameters": {
+        "binding": "{\"org_id\":1,\"connection_id\":\"configure-me\"}"
+      },
+      "credentials": {
+        "postgres": {
+          "id": "configure-postgres-credential",
+          "name": "Lead Database"
+        },
+        "gmailOAuth2": {
+          "id": "configure-gmail-credential",
+          "name": "Managed customer Gmail"
+        }
+      }
+    },
+    {
+      "id": "note",
+      "name": "Check only - no outreach",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -240
+      ],
+      "parameters": {
+        "width": 650,
+        "height": 200,
+        "content": "Account check only. No email sending or message-content reads. Five-minute schedule processes pending_check only; ready/disabled/disconnected accounts are skipped. Native n8n OAuth handles token refresh. Granted send/read scopes and canonical mailbox must match. A session advisory lock prevents overlapping checks and saved version fences concurrent changes. Uncertain provider failures remain pending for the next schedule. Reconnection/expiry is not campaign approval. Bind this workflow to exactly one organization/connection/credential."
+      }
+    }
+  ],
+  "connections": {
+    "Manual Account Check": {
+      "main": [
+        [
+          {
+            "node": "Check Gmail Connection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Pending Gmail Every Five Minutes": {
+      "main": [
+        [
+          {
+            "node": "Check Gmail Connection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "executionTimeout": 90
+  }
+}

@@ -1,0 +1,30 @@
+'use strict';
+const fs=require('fs'),cp=require('child_process'),assert=require('assert/strict');
+const container='lead_diag_pg_20261011',db='scratch_v2_release_20261014';
+function docker(args,input){const r=cp.spawnSync('docker',args,{input,encoding:'utf8',timeout:60000,maxBuffer:2e6});if(r.status!==0)throw Error(String(r.stderr||r.error).slice(0,1800));return r.stdout.trim();}
+const info=JSON.parse(docker(['inspect',container]))[0];assert.equal(info.HostConfig.NetworkMode,'none');assert(info.State.Running);
+const sql=q=>docker(['exec','-i',container,'psql','-XAt','-v','ON_ERROR_STOP=1','-U','n8n_user','-d',db],q);
+sql(fs.readFileSync('database/migrations/022_followup_readiness.sql','utf8'));
+const timing={timezone:'UTC',sending_window:{start_hour:0,end_hour:24,weekdays:[1,2,3,4,5,6,7]},sequence:[{step:1,channel:'email',delay_days:0},{step:2,channel:'email',delay_days:3}]};
+const drafts=[{step:2,channel:'email',delay_days:3,status:'requires_plan_approval_and_execution_checks',subject:'Demo',body:'Approved followup'}];
+let fixture=fs.readFileSync('tests/lead-strategy/email-lifecycle.sql','utf8');
+fixture=fixture.replace('{"email_dispatch":',JSON.stringify(timing).slice(0,-1)+',"email_dispatch":');
+fixture=fixture.replace('"artifacts":{"email_draft":','"artifacts":{"schedule":'+JSON.stringify(timing)+',"followup_drafts":'+JSON.stringify(drafts)+',"email_draft":');
+fixture=fixture.replace(" ASSERT outreach_email_finish('null')",` -- Simulate a previously committed receipt before this transaction's snapshot.
+ UPDATE outreach_activities SET sent_at=(now()-interval '1 second') AT TIME ZONE 'UTC' WHERE org_id=1 AND dispatch_metadata->>'plan_id'=pid::text;
+ ASSERT outreach_followup_check(second_arg||'{"step":2}')->>'reason'='delay_not_elapsed';
+ UPDATE outreach_activities SET sent_at=(now()-interval '73 hours') AT TIME ZONE 'UTC' WHERE org_id=1 AND dispatch_metadata->>'plan_id'=pid::text;
+ ASSERT outreach_followup_check(second_arg||'{"step":2}')->>'ready'='true';
+ ASSERT outreach_followup_check(second_arg||'{"step":2}')->>'execution_authorized'='false';
+ ASSERT outreach_followup_check(second_arg||'{"step":2,"org_id":999999}')->>'ready'='false';
+ UPDATE outreach_activities SET dispatch_metadata=dispatch_metadata||'{"stop_reason":"meeting_booked"}' WHERE org_id=1 AND dispatch_metadata->>'plan_id'=pid::text;
+ ASSERT outreach_followup_check(second_arg||'{"step":2}')->>'reason'='stop_event_recorded';
+ UPDATE outreach_activities SET dispatch_metadata=dispatch_metadata-'stop_reason',replied_at=now() WHERE org_id=1 AND dispatch_metadata->>'plan_id'=pid::text;
+ ASSERT outreach_followup_check(second_arg||'{"step":2}')->>'ready'='false';
+ UPDATE outreach_activities SET replied_at=NULL,dispatch_metadata=dispatch_metadata||'{"state":"ambiguous"}' WHERE org_id=1 AND dispatch_metadata->>'plan_id'=pid::text;
+ ASSERT outreach_followup_check(second_arg||'{"step":2}')->>'reason'='previous_confirmed_send_required';
+ ASSERT outreach_followup_check('null')->>'ready'='false';
+ ASSERT outreach_followup_check(second_arg||'{"step":11}')->>'ready'='false';
+ ASSERT outreach_email_finish('null')`);
+fs.writeFileSync('.local/followup-readiness-fixture.sql',fixture);
+console.log(sql(fixture));console.log('PASS: follow-up delay, previous acceptance, tenant, stop events, replies and disabled execution; scratch only.');

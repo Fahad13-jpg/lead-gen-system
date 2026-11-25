@@ -1,0 +1,142 @@
+[
+  {
+    "path": "06C_BEFORE_REWRITE.json",
+    "bytes": 21404,
+    "sha256": "8dc1a495f9e1b796906dc34422571605f12b1ec0af9fb2ab07f5cf23daf4ad00"
+  },
+  {
+    "path": "06C_DEPLOYED.json",
+    "bytes": 237224,
+    "sha256": "158926b46bd7a83b58ab3727dcfddf5805f7601faed6a3e8170a81a1c2a509d5"
+  },
+  {
+    "path": "06C_LOCAL.json",
+    "bytes": 246016,
+    "sha256": "41c43a106592c1c6486bfabfc35e1cd54bdac5618a0fa6122c55dd86e008a62f"
+  },
+  {
+    "path": "database/migrations/013_lead_trust.sql",
+    "bytes": 5652,
+    "sha256": "73daf62e9245b3cadd4c5ecdea388ab0a10cd44cd7c27ee47813fe2aa8a9f8a6"
+  },
+  {
+    "path": "database/migrations/015_outreach_strategy.sql",
+    "bytes": 16157,
+    "sha256": "f2a6070e1291c3322c187ced03c1eaa3dcfaa45eeae079d84feef583585d8541"
+  },
+  {
+    "path": "evidence/OUTREACH_STRATEGY.md",
+    "bytes": 11589,
+    "sha256": "3377becc3279f0192b4efa397b6e56fd7b20c22526b67c2dc08f714c3be70f3c"
+  },
+  {
+    "path": "evidence/STRATEGY_AI_TRIAL_1.json",
+    "bytes": 3991,
+    "sha256": "d693d3434269d375e714badd502a00ce34b5f5bb08033718c65c1bc820f20cc5"
+  },
+  {
+    "path": "evidence/STRATEGY_AI_TRIAL_2.json",
+    "bytes": 28431,
+    "sha256": "4de9719d5d58740f44c11c214e309dd17c0435fc718f061ce068fb562fa26f30"
+  },
+  {
+    "path": "evidence/STRATEGY_AI_TRIAL_3.json",
+    "bytes": 4404,
+    "sha256": "ac65daa3563fc40207b5f97e5cb0355d17432bb1811f3908a4cd2d53ecce7449"
+  },
+  {
+    "path": "evidence/STRATEGY_AI_TRIAL_REVIEW.md",
+    "bytes": 3920,
+    "sha256": "dd73ae0982fcaffa020b487235a448c54093ab2451061f9efba696e4c3356425"
+  },
+  {
+    "path": "evidence/STRATEGY_SAMPLE_PLANS.json",
+    "bytes": 76033,
+    "sha256": "129483c9ae599aeda59c06d98aa268978616bf64ae869dbad2bbd71fc4db3583"
+  },
+  {
+    "path": "evidence/STRATEGY_SAMPLE_PLANS_AFTER.json",
+    "bytes": 82120,
+    "sha256": "ff1bb0230a7a7b12963a46e60466421f790ad1abe9d70a30133992a9c5a542fb"
+  },
+  {
+    "path": "evidence/STRATEGY_SAMPLE_REVIEW.md",
+    "bytes": 6775,
+    "sha256": "3c1f910873ecaf4873d02d1a5430bdc73b0febdc06a0e580c5828a3971d71ad6"
+  },
+  {
+    "path": "HANDOFF.md",
+    "bytes": 25022,
+    "sha256": "4330a48695076ab61223df97a0341d940141193e587c7f539783587c5621ac34"
+  },
+  {
+    "path": "LIVE_STATE.json",
+    "bytes": 1353,
+    "sha256": "c4f61142785c5ffcdd5fc07efd63a8a93d6d6067937fa59e5f0bd7f3834a6b5e"
+  },
+  {
+    "path": "LOCAL_VS_LIVE.json",
+    "bytes": 353,
+    "sha256": "4a7e6c33a1123f516afdf183cc0de73224701215f8e5a17d9ec2dc743e26102a"
+  },
+  {
+    "path": "scripts/lead-strategy/audit-scores.cjs",
+    "bytes": 1945,
+    "sha256": "52f8ab60804a19993387e7a546aaa26c84fe513e1e1c2e5742dad7814e06f05f"
+  },
+  {
+    "path": "scripts/lead-strategy/build.cjs",
+    "bytes": 8405,
+    "sha256": "d50c3cee41b82b8f8c40ba986471977d0e9f2e75f125ed656543592920cf44d2"
+  },
+  {
+    "path": "scripts/lead-strategy/check-live.cjs",
+    "bytes": 2134,
+    "sha256": "2746340b429e1995d42d15bda5c87e961607d8cf3888826e45c6f95181da9df1"
+  },
+  {
+    "path": "scripts/lead-strategy/deploy.cjs",
+    "bytes": 3709,
+    "sha256": "336808db5c6fec6647e3fd5a66fcaffa0f284ba5d769ad9a5a206754a0dbc527"
+  },
+  {
+    "path": "scripts/lead-strategy/review-sample-plans.cjs",
+    "bytes": 2466,
+    "sha256": "b4c64e473f05a0c2d0ca656590175b2074ad2213e8bcc6ad6e71d32a67c78002"
+  },
+  {
+    "path": "scripts/lead-strategy/runtime.cjs",
+    "bytes": 23895,
+    "sha256": "e05bfcef00ce3ac9974b13a798714220b29132440934e123c0051b7fc8812ec0"
+  },
+  {
+    "path": "scripts/lead-strategy/test-ai-live-host.cjs",
+    "bytes": 2168,
+    "sha256": "2cbf0d98f53222ed90b69275cdf3a1589989a77a883a3a7fd1a71aad09d2de75"
+  },
+  {
+    "path": "scripts/lead-strategy/test-ai-live.cjs",
+    "bytes": 3700,
+    "sha256": "3c2e890a62213f081c891450c680c01671acb4142f5ed887cc48bca0afa3fb05"
+  },
+  {
+    "path": "scripts/lead-strategy/test-n8n.cjs",
+    "bytes": 7671,
+    "sha256": "5d2db3eaf41b3dece6d8b5d8beba1eb8fffc019a5c4c0193574f8dfcbc429975"
+  },
+  {
+    "path": "tests/lead-strategy/database.sql",
+    "bytes": 4716,
+    "sha256": "5fd69c338060ca27f220c0b21f7072723fc3fb1aae55682feb52c6936ecb5466"
+  },
+  {
+    "path": "tests/lead-strategy/runtime.test.cjs",
+    "bytes": 11307,
+    "sha256": "8bb67034137e55d3ce4f8e680a0de8d70c143219a80c00f11d4a00fb056c8f11"
+  },
+  {
+    "path": "tests/lead-strategy/sample-review.test.cjs",
+    "bytes": 1461,
+    "sha256": "a0d4c33fc52b679c65e262a1a25680e9b5cf6cacd20cc7a7b9905bcd936f4c2f"
+  }
+]

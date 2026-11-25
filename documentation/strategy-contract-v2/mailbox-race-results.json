@@ -1,0 +1,8 @@
+{
+  "database": "scratch_mailbox_race_20261018",
+  "sessions": 2,
+  "authorized": 1,
+  "mailbox_quota_blocked": 1,
+  "sends": 0,
+  "scope": "synthetic plans in isolated scratch database; same organization, separate plans"
+}

@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-14T13:06:26.399Z",
+  "scope": "06C draft-only and 017",
+  "migration016": false,
+  "ai_allowance": 0,
+  "sending_enabled": false,
+  "workflow_sha256": "23b7eec3ab317d920e302b887b777ded3ba66751dd39b2909d631d72412dd851",
+  "prompt_version": "strategy_v2.6",
+  "backup_restored_and_tested": true,
+  "live_api_smoke_passed": true,
+  "actual_runtime_cases_passed": 6,
+  "ai_enabled": false,
+  "send_blocker": "v2_offline_only"
+}

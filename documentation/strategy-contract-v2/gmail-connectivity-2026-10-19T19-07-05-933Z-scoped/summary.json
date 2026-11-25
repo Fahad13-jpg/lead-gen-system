@@ -1,0 +1,763 @@
+{
+  "requests": 60,
+  "groups": {
+    "n8n:default": {
+      "total": 20,
+      "expected_401": 16,
+      "p50_ms": 652,
+      "max_ms": 6961,
+      "failures": [
+        {
+          "round": 7,
+          "at": "2026-10-19T19:07:46.223Z",
+          "errors": [
+            {
+              "code": "ETIMEDOUT",
+              "syscall": null
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": null
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            }
+          ],
+          "attempts": [
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            }
+          ]
+        },
+        {
+          "round": 14,
+          "at": "2026-10-19T19:08:00.707Z",
+          "errors": [
+            {
+              "code": "ETIMEDOUT",
+              "syscall": null
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": null
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            }
+          ],
+          "attempts": [
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            }
+          ]
+        },
+        {
+          "round": 15,
+          "at": "2026-10-19T19:08:02.762Z",
+          "errors": [
+            {
+              "code": "ETIMEDOUT",
+              "syscall": null
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": null
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            }
+          ],
+          "attempts": [
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            }
+          ]
+        },
+        {
+          "round": 20,
+          "at": "2026-10-19T19:08:32.957Z",
+          "errors": [
+            {
+              "code": "ETIMEDOUT",
+              "syscall": null
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": null
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "code": "ETIMEDOUT",
+              "syscall": "connect"
+            },
+            {
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            }
+          ],
+          "attempts": [
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            },
+            {
+              "family": 6,
+              "code": "ENETUNREACH",
+              "syscall": "connect"
+            }
+          ]
+        }
+      ]
+    },
+    "n8n:scoped": {
+      "total": 20,
+      "expected_401": 20,
+      "p50_ms": 563,
+      "max_ms": 14139,
+      "failures": []
+    },
+    "host:default": {
+      "total": 20,
+      "expected_401": 20,
+      "p50_ms": 467,
+      "max_ms": 10834,
+      "failures": []
+    }
+  }
+}

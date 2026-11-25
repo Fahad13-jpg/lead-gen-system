@@ -1,0 +1,8 @@
+const fs=require('fs'),assert=require('assert/strict');
+(async()=>{const key=fs.readFileSync('.local/gathering-api-key','utf8').trim();const call=async(path,body,auth=true)=>{const r=await fetch('http://127.0.0.1:5678/webhook/'+path,{method:body?'POST':'GET',headers:{...(auth?{'X-Lead-Gathering-Key':key}:{}),'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined,signal:AbortSignal.timeout(10000)});let data;try{data=await r.json()}catch{}return {status:r.status,data};};
+let report;for(let i=0;i<30;i++){try{report=await call('enrichment-report?org_id=1&lead_id=159');if(report.status===200&&report.data?.lead_id===159)break;}catch{}await new Promise(r=>setTimeout(r,2000));}
+assert.equal(report?.data?.lead_id,159);assert.equal((await call('enrichment-report?org_id=bad&lead_id=159')).status,400);assert.equal((await call('enrichment-report?org_id=999999&lead_id=159')).status,404);assert([401,403].includes((await call('enrichment-report?org_id=1&lead_id=159',null,false)).status));
+assert.equal((await call('enrichment-linkedin',{org_id:1,lead_id:159,profiles:[{profile_url:'https://evil.test/profile'}]})).status,400);
+assert.equal((await call('enrichment-linkedin',{org_id:999999,lead_id:159,profiles:[]})).status,404);
+assert.equal((await call('enrichment-campaign',{org_id:1,lead_id:159,config:{}})).status,400);
+console.log('PASS enrichment endpoints: valid report, malformed IDs, organization scope, authentication, invalid LinkedIn evidence and missing campaign offer');console.log(JSON.stringify({lead_id:report.data.lead_id,basic:report.data.basic?.status,research:report.data.research?.status,linkedin_profiles:report.data.research?.linkedin?.profiles?.length||0}));})().catch(e=>{console.error(e.message);process.exitCode=1});

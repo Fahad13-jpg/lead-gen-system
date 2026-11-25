@@ -1,0 +1,79 @@
+{
+  "checked_at": "2026-10-11T05:52:31.335Z",
+  "workflow": {
+    "id": "27W04lgTGdgFMWUx",
+    "name": "6C - Campaign Outreach Strategy Planner",
+    "active": true,
+    "node_count": 40
+  },
+  "planner": [
+    {
+      "enabled": true
+    }
+  ],
+  "ai_controls": [],
+  "enrichment_ai": [
+    {
+      "enabled": false
+    }
+  ],
+  "verification": [
+    {
+      "verification_enabled": false
+    }
+  ],
+  "sending_workflows": [
+    {
+      "name": "7A - Email Outreach Executor",
+      "active": false
+    },
+    {
+      "name": "7B - LinkedIn Outreach Helper",
+      "active": false
+    },
+    {
+      "name": "7C - SMS Outreach Executor",
+      "active": false
+    },
+    {
+      "name": "7D - WhatsApp Outreach Executor",
+      "active": false
+    },
+    {
+      "name": "8 - Automated Follow-Up Manager",
+      "active": false
+    }
+  ],
+  "job_counts": [],
+  "plan_count": [
+    {
+      "n": 0
+    }
+  ],
+  "tables": [
+    {
+      "tablename": "strategy_ai_controls"
+    },
+    {
+      "tablename": "strategy_ai_requests"
+    },
+    {
+      "tablename": "strategy_approvals"
+    },
+    {
+      "tablename": "strategy_campaign_versions"
+    },
+    {
+      "tablename": "strategy_campaigns"
+    },
+    {
+      "tablename": "strategy_controls"
+    },
+    {
+      "tablename": "strategy_jobs"
+    },
+    {
+      "tablename": "strategy_plans"
+    }
+  ]
+}

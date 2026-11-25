@@ -1,0 +1,14 @@
+{
+  "profile_verified": true,
+  "refresh_verified": true,
+  "inbox_read": false,
+  "sent": false,
+  "live_database_changed": false,
+  "invalid_access_token_installed": true,
+  "reason": "matched",
+  "refreshed_access_token_persisted": true,
+  "live_credential_unchanged": true,
+  "org_id": 1,
+  "checked_at": "2026-11-08T10:39:24.093Z",
+  "send_permission_verified": false
+}

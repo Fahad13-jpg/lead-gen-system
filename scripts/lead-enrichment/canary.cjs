@@ -1,0 +1,8 @@
+'use strict';
+const cp=require('child_process'),{Client}=require(require.resolve('pg',{paths:['/usr/local/lib/node_modules/n8n']}));
+(async()=>{const db=new Client({host:process.env.DB_POSTGRESDB_HOST,user:process.env.DB_POSTGRESDB_USER,password:process.env.DB_POSTGRESDB_PASSWORD,database:'lead_db'});await db.connect();try{
+ const ids=(await db.query(`SELECT c.id FROM cleaned_leads c WHERE c.id IN (159,168,463) AND NOT EXISTS(SELECT 1 FROM enriched_leads e WHERE e.lead_id=c.id AND e.org_id IS DISTINCT FROM c.org_id)`)).rows.map(r=>r.id);if(!ids.length)throw Error('No eligible canary');
+ await db.query('UPDATE enrichment_controls SET enabled=true,lead_ids=$1',[ids]);
+ for(const kind of ['basic','research']){for(let i=0;i<3;i++){const tasks=(await db.query('SELECT value AS task FROM enrichment_claim($1,2) value',[kind])).rows;if(!tasks.length)break;for(const {task} of tasks){const r=cp.spawnSync(process.execPath,['/home/node/.n8n/enrichment-stage/worker.cjs',String(task.id),task.lease],{encoding:'utf8',timeout:65000,maxBuffer:2*1024*1024});if(r.status!==0)throw Error('Canary worker failed');const output=JSON.parse(r.stdout);const saved=(await db.query('SELECT enrichment_finish($1) AS r',[output])).rows[0].r;if(!saved.saved)throw Error('Canary result not saved');console.log(JSON.stringify({task_id:task.id,kind,status:output.status}));}}}
+ const results=(await db.query('SELECT lead_id,basic->>\'status\' AS basic_status,research->>\'status\' AS research_status FROM enrichment_profiles WHERE lead_id=ANY($1)',[ids])).rows;console.log(JSON.stringify({results}));
+ }finally{await db.query('UPDATE enrichment_controls SET enabled=false,lead_ids=NULL');await db.end();}})().catch(e=>{console.error(e.message);process.exitCode=1});

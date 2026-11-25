@@ -1,0 +1,113 @@
+{
+  "passed": true,
+  "trigger": "real n8n Schedule Trigger every 10 seconds (test only)",
+  "network": "none",
+  "providers": "mocked",
+  "database": "isolated SQLite; application queries mocked",
+  "cases": [
+    {
+      "kind": "email",
+      "execution": "1",
+      "result": {
+        "case": "accepted",
+        "pass": true
+      }
+    },
+    {
+      "kind": "email",
+      "execution": "1",
+      "result": {
+        "case": "begin_denied",
+        "pass": true
+      }
+    },
+    {
+      "kind": "email",
+      "execution": "1",
+      "result": {
+        "case": "empty_receipt",
+        "pass": true
+      }
+    },
+    {
+      "kind": "email",
+      "execution": "1",
+      "result": {
+        "case": "finish_rejected",
+        "pass": true
+      }
+    },
+    {
+      "kind": "email",
+      "execution": "1",
+      "result": {
+        "case": "followup_accepted",
+        "pass": true
+      }
+    },
+    {
+      "kind": "email",
+      "execution": "1",
+      "result": {
+        "case": "followup_timeout",
+        "pass": true
+      }
+    },
+    {
+      "kind": "email",
+      "execution": "1",
+      "result": {
+        "case": "reservation_denied",
+        "pass": true
+      }
+    },
+    {
+      "kind": "email",
+      "execution": "1",
+      "result": {
+        "case": "timeout",
+        "pass": true
+      }
+    },
+    {
+      "kind": "reply",
+      "execution": "2",
+      "result": {
+        "saved": true,
+        "activity_id": 1,
+        "complete": true,
+        "events": 0
+      }
+    },
+    {
+      "kind": "reply",
+      "execution": "2",
+      "result": {
+        "saved": true,
+        "activity_id": 2,
+        "complete": true,
+        "events": 1
+      }
+    },
+    {
+      "kind": "reply",
+      "execution": "2",
+      "result": {
+        "saved": true,
+        "activity_id": 3,
+        "complete": false,
+        "events": 1
+      }
+    },
+    {
+      "kind": "reply",
+      "execution": "2",
+      "result": {
+        "saved": true,
+        "activity_id": 4,
+        "complete": true,
+        "events": 0
+      }
+    }
+  ]
+}

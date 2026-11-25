@@ -1,0 +1,11 @@
+{
+  "checked_at": "2026-10-24T17:27:56.381Z",
+  "migration": 35,
+  "sql_verified": true,
+  "existing_data_preserved": true,
+  "connections_created": 0,
+  "workflows_imported": 0,
+  "emails_sent": 0,
+  "smtp_enabled": false,
+  "customer_api_exposed": false
+}

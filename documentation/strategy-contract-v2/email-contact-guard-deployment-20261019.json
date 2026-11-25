@@ -1,0 +1,9 @@
+{
+  "deployed_at": "2026-10-19T12:41:33.139Z",
+  "migration": 31,
+  "function": "outreach_email_contact_gate",
+  "definition_verified": true,
+  "activity_changes": false,
+  "activation_changes": false,
+  "sends": 0
+}

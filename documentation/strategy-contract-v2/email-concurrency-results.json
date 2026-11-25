@@ -1,0 +1,10 @@
+{
+  "database": "scratch_email_concurrency_20261015",
+  "network": "none",
+  "concurrent_sessions": 2,
+  "quota_limit": 1,
+  "attempts_started": 1,
+  "quota_blocked": 1,
+  "context": "scratch test double",
+  "sends": 0
+}

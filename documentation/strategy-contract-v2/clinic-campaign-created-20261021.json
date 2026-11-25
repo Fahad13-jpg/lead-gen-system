@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-10-21T07:24:44.854Z",
+  "campaign_id": 1,
+  "version": 1,
+  "org_id": 1,
+  "name": "DRAFT - Islamabad Dental Clinic Website Introduction",
+  "state": "draft_not_approved_for_sending",
+  "created_through": "existing strategy-campaign API",
+  "jobs_requested": 0,
+  "plans_approved": 0,
+  "sending_enabled": false,
+  "model_calls": 0
+}

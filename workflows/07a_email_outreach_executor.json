@@ -6,7 +6,8 @@
         "rule": {
           "interval": [
             {
-              "field": "hours"
+              "field": "minutes",
+              "minutesInterval": 5
             }
           ]
         }
@@ -23,7 +24,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n  el.lead_id,\n  cl.company_name,\n  cl.email,\n  el.email_should_use,\n  el.email_subject_line,\n  el.email_opening,\n  el.email_body_template,\n  el.primary_channel,\n  el.lead_score,\n  el.priority\nFROM enriched_leads el\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nWHERE el.enrichment_stage = 3\nAND el.email_should_use = TRUE\nAND cl.email IS NOT NULL\nAND el.outreach_status IS NULL\nORDER BY el.lead_score DESC\nLIMIT 10",
+        "query": "SELECT * FROM (SELECT p.org_id,p.id AS plan_id,p.lead_id,p.content_hash,p.body,c.email,steps.step,\nCASE WHEN p.body->>'validation_profile'='customer_email_v1' OR p.body->'generation'->>'source'='customer_supplied' OR p.body->'customer_review'->>'required'='true' THEN strategy_context(p.org_id,p.campaign_id,p.lead_id) ELSE NULL END AS strategy_context,\n(SELECT cv.config->'email_dispatch' FROM strategy_campaign_versions cv WHERE cv.org_id=p.org_id AND cv.campaign_id=p.campaign_id AND cv.version=p.campaign_version) AS sender_policy,\n(SELECT jsonb_build_object('org_id',prev.org_id,'plan_id',p.id,'step',steps.step-1,'content_hash',prev.dispatch_metadata->>'content_hash',\n 'state',prev.dispatch_metadata->>'state','external_id',prev.external_id,'sender_email',prev.dispatch_metadata->>'sender_email','credential_ref',prev.dispatch_metadata->>'credential_ref')\n FROM outreach_activities prev WHERE prev.org_id=p.org_id AND prev.lead_id=p.lead_id AND prev.dispatch_metadata->>'plan_id'=p.id::text\n AND prev.dispatch_metadata->>'step'=(steps.step-1)::text) AS parent_activity,\noutreach_email_step_check(jsonb_build_object('org_id',p.org_id,'plan_id',p.id,'step',steps.step,'content_hash',p.content_hash)) AS dispatch_check\nFROM strategy_plans p JOIN cleaned_leads c ON c.id=p.lead_id AND c.org_id=p.org_id\nCROSS JOIN LATERAL generate_series(1,least(10,CASE WHEN jsonb_typeof(p.body->'artifacts'->'schedule'->'sequence')='array' THEN jsonb_array_length(p.body->'artifacts'->'schedule'->'sequence') ELSE 1 END)) steps(step)\nWHERE p.body->>'version'='strategy_v2' AND p.body->'strategy'->'step1'->>'channel'='email'\nAND p.expires_at>now()\nAND EXISTS(SELECT 1 FROM strategy_campaign_versions cv WHERE cv.org_id=p.org_id AND cv.campaign_id=p.campaign_id\n AND cv.version=p.campaign_version AND outreach_email_window(cv.config,clock_timestamp())->>'allowed'='true')\nAND NOT EXISTS(SELECT 1 FROM outreach_activities a WHERE a.org_id=p.org_id AND a.dispatch_metadata->>'plan_id'=p.id::text AND a.dispatch_metadata->>'step'=steps.step::text AND NOT outreach_email_can_resume(a.dispatch_metadata))\nORDER BY p.created_at DESC ) candidates WHERE dispatch_check->>'ready'='true' ORDER BY plan_id,step LIMIT 10",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -39,7 +40,8 @@
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
-      }
+      },
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -53,7 +55,7 @@
           "conditions": [
             {
               "id": "a4253785-f88f-48a5-acab-c70bb4db2c91",
-              "leftValue": "={{ $input.all().length }}",
+              "leftValue": "={{ $json.dispatch_check?.ready === true ? 1 : 0 }}",
               "rightValue": 0,
               "operator": {
                 "type": "number",
@@ -77,7 +79,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT COUNT(*) as unsubscribe_count\nFROM unsubscribes\nWHERE email = '{{ $json.email }}'",
+        "query": "SELECT count(*) AS unsubscribe_count FROM unsubscribes WHERE lower(trim(email))=lower(trim('{{ String($json.email || '').replace(/'/g, \"''\") }}'))",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -93,7 +95,8 @@
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
-      }
+      },
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -131,7 +134,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO outreach_activities (\n  lead_id,\n  channel,\n  status,\n  external_id,\n  sent_at\n) VALUES (\n  {{ $('Prepare Email Content').item.json.lead_id }},\n  'email',\n  'sent',\n  '{{ $json.id || \"pending\" }}',\n  NOW()\n)",
+        "query": "SELECT outreach_email_step_finish('{{ JSON.stringify($json.finish_payload).replace(/'/g, \"''\") }}'::jsonb) AS result",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -147,12 +150,14 @@
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
-      }
+      },
+      "alwaysOutputData": true,
+      "retryOnFail": false
     },
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "const leadData = $input.item.json;\n\nconst subject = leadData.email_subject_line || `Following up: ${leadData.company_name}`;\nconst opening = leadData.email_opening || '';\nconst bodyTemplate = leadData.email_body_template || '';\n\nconst emailBody = `${opening}\n\n${bodyTemplate}\n\nBest regards,\nMuhammad Fahad\nLead Generation System\nmohmmadfahad53408@gmail.com\n\n---\nYou're receiving this because we thought it might be valuable for ${leadData.company_name}.\nTo unsubscribe, reply with UNSUBSCRIBE.`;\n\nreturn {\n  lead_id: leadData.lead_id,\n  to_email: leadData.email,\n  to_name: leadData.company_name,\n  subject_line: subject,\n  email_body: emailBody,\n  priority: leadData.priority,\n  lead_score: leadData.lead_score\n};"
+        "jsCode": "const emailHelpers=(()=>{const modules={\"handoff\":function(module,exports,require){\n'use strict';\n// Read-only draft adapter. No provider, credential loading or database mutations.\nfunction draft(row){\n const b=row?.body;\n const step=row?.step===undefined?1:Number(row.step);\n if(!Number.isSafeInteger(step)||step<1||step>10||String(step)!==String(row?.step??1))throw Error('INVALID_EMAIL_STEP');\n const follow=step>1?b?.artifacts?.followup_drafts?.find(d=>d.step===step):null;\n const d=step===1?b?.artifacts?.email_draft:follow;\n const id=v=>typeof v==='string'&&/^[1-9][0-9]*$/.test(v)?Number(v):v;\n const org_id=id(row?.org_id),plan_id=id(row?.plan_id);\n if(!Number.isSafeInteger(org_id)||org_id<1||!Number.isSafeInteger(plan_id)||plan_id<1||!/^[a-f0-9]{32}$/.test(row.content_hash||''))throw Error('INVALID_PLAN_IDENTITY');\n if(b?.version!=='strategy_v2'||!['ai_completed','template_completed','template_fallback'].includes(b.state)||!Array.isArray(b.validation_errors)||b.validation_errors.length)throw Error('INVALID_PLAN');\n const selected=step===1?b.strategy?.step1:b.strategy?.followups?.[follow?.intent_index];\n if(selected?.channel!=='email'||!Array.isArray(selected.parts)||step>1&&follow?.status!=='requires_plan_approval_and_execution_checks')throw Error('NOT_APPROVED_EMAIL_STEP');\n if(!d||typeof d.subject!=='string'||!d.subject.trim()||d.subject.length>200||/[\\r\\n\\x00]/.test(d.subject)||typeof d.body!=='string'||!d.body.trim())throw Error('APPROVED_EMAIL_ARTIFACT_REQUIRED');\n if(selected.parts.some(p=>typeof p?.text!=='string')||d.body!==selected.parts.map(p=>p.text).join('\\n\\n'))throw Error('EMAIL_ARTIFACT_MISMATCH');\n if(typeof row.email!=='string'||! /^[^\\s@,;<>]+@[^\\s@,;<>]+\\.[^\\s@,;<>]+$/.test(row.email))throw Error('INVALID_RECIPIENT');\n return {org_id,plan_id,step,content_hash:row.content_hash,to_email:row.email,subject_line:d.subject,email_body:d.body,execution_authorized:false,reason:'sender_mapping_and_transport_not_enabled'};\n}\n// A receipt is evidence of provider acceptance, not inbox delivery. Missing or\n// ambiguous receipts must be reconciled, never treated as permission to resend.\nfunction receipt(result){\n if(result&&!result.error&&typeof result.id==='string'&&/^[a-f0-9]{8,64}$/i.test(result.id))return {state:'provider_accepted',external_id:result.id,delivered:false,retry_allowed:false};\n return {state:'ambiguous',external_id:null,delivered:false,retry_allowed:false};\n}\nfunction executionDraft(row){\n const b=row?.body;\n if(b?.validation_profile==='customer_email_v1'||b?.generation?.source==='customer_supplied'||b?.customer_review?.required===true)\n  require('../../organization-policy/customer-execution.cjs').validate(row);\n return draft(row);\n}\nmodule.exports={draft,executionDraft,receipt};\n\n},\"../../organization-policy/customer-execution.cjs\":function(module,exports,require){\n'use strict';\n// Recheck customer content against current trusted SQL context before transport preparation.\n// Success is content validity only. SQL still owns approval, lease, eligibility and quota.\nconst {render}=require('./customer-email-template.cjs');\nfunction validate(row){\n const b=row?.body;\n const customer=b?.validation_profile==='customer_email_v1'||b?.generation?.source==='customer_supplied'||b?.customer_review?.required===true;\n if(!customer)return {applicable:false,execution_authorized:false};\n const fail=reason=>{throw Error(reason);};\n const x=row.strategy_context,r=b.customer_review;\n if(!x||x.error||x.org_id!==Number(row.org_id)||x.lead?.org_id!==x.org_id||x.lead?.id!==Number(row.lead_id)||\n  x.campaign?.id!==r?.campaign_id||x.campaign?.version!==r?.campaign_version||x.lead.id!==r?.lead_id||\n  x.lead.email!==row.email||r.recipient!==row.email)fail('CUSTOMER_CONTEXT_CHANGED');\n if(x.suppressed!==false||x.replied!==false||(x.report?.trust?.conflicts||[]).length)fail('CUSTOMER_CONTACT_BLOCKED');\n if(b.version!=='strategy_v2'||b.state!=='template_completed'||b.validation_profile!=='customer_email_v1'||\n  b.generation?.method!=='template'||b.generation?.source!=='customer_supplied'||r.required!==true||\n  r.claim_provenance!=='customer_supplied_not_independently_verified'||typeof b.execution_authorized!=='boolean'||b.approval_required!==true||\n  !Array.isArray(b.blocking_reasons)||b.blocking_reasons.length||!Array.isArray(b.validation_errors)||b.validation_errors.length)fail('CUSTOMER_PLAN_BLOCKED');\n const preview=render({org_id:x.org_id,lead:x.lead,campaign:{...x.campaign,org_id:x.org_id}});\n if(!preview.draft||preview.state!=='requires_review'||preview.preview_hash!==r.rendered_preview_hash)fail('CUSTOMER_RENDER_CHANGED');\n const d=preview.draft,a=b.artifacts,s=a?.schedule;\n const canonical=v=>Array.isArray(v)?v.map(canonical):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,canonical(v[k])])):v;\n const same=(a,b)=>JSON.stringify(canonical(a))===JSON.stringify(canonical(b));\n if(!s||s.timezone!==d.timezone||!same(s.sending_window,d.sending_window)||s.delay_basis!=='previous_confirmed_send'||\n  !Array.isArray(s.sequence)||s.sequence.length!==d.steps.length||!Array.isArray(a.followup_drafts)||a.followup_drafts.length!==d.steps.length-1||\n  !Array.isArray(b.strategy?.followups)||b.strategy.followups.length!==d.steps.length-1)fail('CUSTOMER_SCHEDULE_CHANGED');\n for(const step of d.steps){\n  const first=step.step===1,artifact=first?a.email_draft:a.followup_drafts[step.step-2];\n  const part=(first?b.strategy.step1:b.strategy.followups[step.step-2]);\n  if(!artifact||artifact.subject!==step.subject||artifact.body!==step.body||part?.channel!=='email'||!same(part.parts,[{type:'customer_supplied',ref:'customer_email_step_'+step.step,text:step.body}]))fail('CUSTOMER_MESSAGE_CHANGED');\n  if(!first&&(artifact.step!==step.step||artifact.intent_index!==step.step-2||artifact.delay_days!==step.delay_days||artifact.channel!=='email'||artifact.status!=='requires_plan_approval_and_execution_checks'))fail('CUSTOMER_FOLLOWUP_CHANGED');\n  const timing=s.sequence[step.step-1];\n  if(!timing||timing.step!==step.step||timing.channel!=='email'||timing.delay_days!==step.delay_days||timing.condition!==step.condition||!same(timing.stop_on,step.stop_on))fail('CUSTOMER_SCHEDULE_CHANGED');\n }\n return {applicable:true,content_valid:true,execution_authorized:false};\n}\nmodule.exports={validate};\n\n},\"./customer-email-template.cjs\":function(module,exports,require){\n'use strict';\n// Offline plain-text renderer. Its preview is deliberately NOT a strategy_v2 plan.\n// No AI, network, credentials, persistence, approvals or transport dependencies.\nconst crypto=require('node:crypto');\nconst variables=new Set(['company_name','city','offer_name','offer_description','cta','demo_url','sender_name','sender_company']);\nconst object=v=>v!==null&&typeof v==='object'&&!Array.isArray(v);\nconst controls=/[\\x00-\\x08\\x0b\\x0c\\x0e-\\x1f\\x7f\\p{Cf}]/u;\nfunction render(input){\n const x=object(input)?input:{},c=x.campaign?.config||{},lead=x.lead||{},errors=[];\n const add=(code,field)=>errors.push({code,field});\n const id=v=>Number.isSafeInteger(v)&&v>0;\n if(!id(x.org_id)||x.campaign?.org_id!==x.org_id||lead.org_id!==x.org_id)add('ORGANIZATION_MISMATCH','org_id');\n if(c.mode!=='template')add('CUSTOMER_DEFINED_MODE_REQUIRED','mode');\n if(!Array.isArray(c.channels)||c.channels.length!==1||c.channels[0]!=='email')add('EMAIL_ONLY_SLICE','channels');\n if(typeof lead.email!=='string'||! /^[^\\s@,;<>]+@[^\\s@,;<>]+\\.[^\\s@,;<>]+$/.test(lead.email))add('RECIPIENT_REQUIRED','lead.email');\n const data={company_name:lead.company_name,city:lead.city,offer_name:c.offer?.name,offer_description:c.offer?.description,\n  cta:c.cta?.text,demo_url:c.cta?.url,sender_name:c.sender?.name,sender_company:c.sender?.company};\n function fill(value,field){\n  if(typeof value!=='string'||!value.trim()){add('TEXT_REQUIRED',field);return '';}\n  if(value.length>6000){add('TEMPLATE_TOO_LONG',field);return '';}\n  if(controls.test(value))add('CONTROL_CHARACTERS',field);\n  const result=value.replace(/\\{\\{\\s*([^{}]+?)\\s*\\}\\}/g,(_,key)=>{\n   key=key.trim();if(!variables.has(key)){add('UNKNOWN_VARIABLE',field);return '';}\n   const v=data[key];if(typeof v!=='string'||!v.trim()){add('MISSING_VARIABLE',field+':'+key);return '';}\n   if(v.length>1500||controls.test(v)||/[\\r\\n\\t]/.test(v)||/[{}]/.test(v)){add('UNSAFE_VARIABLE',field+':'+key);return '';}\n   return v; // Single substitution only. Never evaluate expressions or nested templates.\n  });\n  if(result.includes('{{')||result.includes('}}'))add('MALFORMED_VARIABLE',field);\n  return result;\n }\n const signature=c.sender?.signature||[c.sender?.name,c.sender?.company].join(' | ');\n if(typeof c.sender?.name!=='string'||!c.sender.name.trim()||typeof c.sender?.company!=='string'||!c.sender.company.trim())add('SENDER_REQUIRED','sender');\n if(typeof signature!=='string'||!signature.trim()||/[\\r\\n]/.test(signature)||controls.test(signature))add('INVALID_SIGNATURE','sender.signature');\n // First slice uses the existing English opt-out wording; localization is explicit future work.\n if(c.language!=='en')add('LANGUAGE_NOT_SUPPORTED_IN_SLICE','language');\n const optOut='Reply STOP to opt out.';\n const allowed=new Set();\n if(c.cta?.url){try{const u=new URL(c.cta.url);if(u.protocol!=='https:'||u.username||u.password)throw Error();allowed.add(u.href);}catch{add('INVALID_CTA_URL','cta.url');}}\n if(!Array.isArray(c.offer?.prohibited_claims)||c.offer.prohibited_claims.some(v=>typeof v!=='string'||!v.trim()))add('PROHIBITED_CLAIMS_REQUIRED','offer.prohibited_claims');\n const prohibited=Array.isArray(c.offer?.prohibited_claims)?c.offer.prohibited_claims.filter(v=>typeof v==='string'&&v.trim()):[];\n const template=c.templates?.email,sequence=c.sequence;\n if(!object(template)||!Array.isArray(template.followups))add('EMAIL_TEMPLATE_REQUIRED','templates.email');\n if(!Array.isArray(sequence)||!sequence.length||sequence.length>10)add('INVALID_SEQUENCE','sequence');\n const steps=Array.isArray(sequence)&&sequence.length<=10?sequence:[];\n if(Array.isArray(template?.followups)&&template.followups.length!==Math.max(0,steps.length-1))add('FOLLOWUP_COUNT_MISMATCH','templates.email.followups');\n const drafts=[];\n for(const [i,step] of steps.entries()){\n  if(!object(step)||step.channel!=='email'||!Number.isInteger(step.delay_days)||step.delay_days<0||step.delay_days>60||(i===0&&step.delay_days!==0))add('INVALID_SEQUENCE_STEP','sequence.'+i);\n  const subject=fill(template?.subject,'step.'+(i+1)+'.subject');\n  const body=fill(i===0?template?.body:template?.followups?.[i-1],'step.'+(i+1)+'.body');\n  if(subject.length>200||/[\\r\\n\\t]/.test(subject))add('INVALID_SUBJECT','step.'+(i+1));\n  if(body.length>1200)add('EMAIL_TOO_LONG','step.'+(i+1));\n  const lines=body.split(/\\r?\\n/).map(s=>s.trim()).filter(Boolean);\n  if(lines.at(-1)!==optOut)add('OPT_OUT_FOOTER_REQUIRED','step.'+(i+1));\n  if(!lines.includes(signature))add('SENDER_SIGNATURE_REQUIRED','step.'+(i+1));\n  const combined=subject+'\\n'+body;\n  for(const phrase of prohibited)if(combined.toLowerCase().includes(phrase.toLowerCase()))add('PROHIBITED_CLAIM','step.'+(i+1));\n  if(/\\b(?:https?:\\/\\/|www\\.)/i.test(combined)){\n   for(const token of combined.match(/(?:https?:\\/\\/|www\\.)[^\\s<>\"']+/gi)||[]){\n    try{const url=new URL(token.replace(/[.,!?;)]+$/,''));if(!allowed.has(url.href))add('URL_NOT_ALLOWED','step.'+(i+1));}catch{add('URL_NOT_ALLOWED','step.'+(i+1));}\n   }\n  }\n  if(/\\b(?:javascript|data|ftp):/i.test(combined))add('URL_NOT_ALLOWED','step.'+(i+1));\n  // Recognizable unscoped absence is blocked. General factual truth requires review.\n  if(/\\byou(?:r business)? (?:do not|don't|have no|lack) (?:have )?(?:a |an )?website\\b/i.test(combined))add('UNSCOPED_WEBSITE_ABSENCE','step.'+(i+1));\n  drafts.push({step:i+1,channel:'email',delay_days:step?.delay_days,subject,body,\n   condition:i===0?'initial':'no_reply_after_previous_confirmed_send',stop_on:['reply','opt_out','bounce','wrong_person','meeting_booked']});\n }\n try{if(!c.timezone||typeof c.timezone!=='string')throw Error();new Intl.DateTimeFormat('en',{timeZone:c.timezone});}catch{add('TIMEZONE_REQUIRED','timezone');}\n const window=c.sending_window;\n if(!object(window)||!Number.isInteger(window.start_hour)||!Number.isInteger(window.end_hour)||window.start_hour<0||window.end_hour>24||window.start_hour>=window.end_hour||!Array.isArray(window.weekdays)||!window.weekdays.length||window.weekdays.some(d=>!Number.isInteger(d)||d<1||d>7))add('INVALID_SENDING_WINDOW','sending_window');\n const result={version:'customer_email_preview_v1',org_id:x.org_id||null,state:errors.length?'needs_correction':'requires_review',\n  mode:'template',preview_only:true,execution_authorized:false,approval_required:true,ai_calls:0,ai_tokens:0,\n  claim_provenance:'customer_supplied_not_independently_verified',validation_errors:errors,\n  limitations:['Plain-text English email only; exact supplied wording is not a factual accuracy guarantee.',\n   'URL/phrase checks are not a comprehensive semantic, phishing or factual-verification engine.',\n   'Not accepted by the current strategy_v2 executor; no policy/approval or recipient-verification gates are bypassed.'],\n  draft:errors.length?null:{recipient:lead.email,timezone:c.timezone,sending_window:JSON.parse(JSON.stringify(window)),steps:drafts}};\n // New preview hash only, deliberately distinct from existing SQL plan/content hashes.\n const canonical=v=>Array.isArray(v)?v.map(canonical):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,canonical(v[k])])):v;\n result.preview_hash=result.draft?crypto.createHash('sha256').update(JSON.stringify(canonical(result.draft))).digest('hex'):null;\n return result;\n}\nmodule.exports={render};\n\n}};const cache={};function load(id){if(id===\"node:crypto\")return require(\"crypto\");if(cache[id])return cache[id].exports;if(!modules[id])throw Error(\"UNKNOWN_CUSTOMER_MODULE\");const m={exports:{}};cache[id]=m;modules[id](m,m.exports,load);return m.exports;}return load(\"handoff\");})();\nconst draft=emailHelpers.executionDraft($json); return {json:{...draft,sender:$json.sender,parent_activity:$json.parent_activity}};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -166,7 +171,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "UPDATE enriched_leads\nSET \n  outreach_status = 'email_sent',\n  last_contacted_at = NOW(),\n  follow_up_count = 1\nWHERE lead_id = {{ $('Prepare Email Content').item.json.lead_id }}",
+        "query": "SELECT '{{ JSON.stringify($json.result || {saved:false,reason:'receipt_not_persisted'}).replace(/'/g, \"''\") }}'::jsonb AS dispatch_result, false AS legacy_followup_authorized",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -182,18 +187,24 @@
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
-      }
+      },
+      "alwaysOutputData": true
     },
     {
       "parameters": {
-        "sendTo": "={{ $json.to_email }}",
-        "subject": "={{ $json.subject_line }}",
-        "emailType": "text",
-        "message": "={{ $json.email_body }}",
-        "options": {}
+        "method": "POST",
+        "url": "={{ (() => { throw new Error('EMAIL_TRANSPORT_NOT_ENABLED'); })() }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "gmailOAuth2",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.gmail_request }}",
+        "options": {
+          "timeout": 20000
+        }
       },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.1,
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
         1872,
         -112
@@ -206,11 +217,15 @@
           "id": "ErvKkvbo4c5GQjPn",
           "name": "Gmail account"
         }
-      }
+      },
+      "retryOnFail": false,
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true
     },
     {
       "parameters": {
-        "jsCode": "const unsubResult = $input.item.json;\nconst leadData = $('Any Emails to Send?').item.json;\n\nreturn {\n  ...leadData,\n  unsubscribe_count: parseInt(unsubResult.unsubscribe_count) || 0\n};"
+        "jsCode": "const row=$('Any Emails to Send?').item.json; const v=$json.unsubscribe_count; return {json:{...row,unsubscribe_count:(v===0||v==='0')?0:1}};",
+        "mode": "runOnceForEachItem"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -238,7 +253,8 @@
     },
     {
       "parameters": {
-        "jsCode": "// Daily limit check\nconst leads = $input.all();\nconst MAX_PER_DAY = 50;\n\n// Check how many sent today (add this DB check)\nreturn leads.slice(0, 5); // Max 5 per run for safety"
+        "jsCode": "// Explicit release binding stays unset. SQL remains the atomic quota authority.\nconst binding=null;\nif(!binding)return [];\nconst policies=(()=>{const module={exports:{}};\n'use strict';\n// Pure validation. OAuth secrets belong in n8n credentials, never campaign JSON.\nconst object=v=>v!==null&&typeof v==='object'&&!Array.isArray(v);\nconst email=v=>typeof v==='string'&&v===v.trim().toLowerCase()&&/^[^\\s@,;<>]+@[^\\s@,;<>]+\\.[^\\s@,;<>]+$/.test(v);\nconst id=v=>/^[1-9][0-9]*$/.test(String(v))&&Number.isSafeInteger(Number(v));\nfunction validate(policy){\n const errors=[];\n if(!object(policy))return {valid:false,errors:['sender_policy_missing']};\n const allowed=new Set(['enabled','credential_ref','sender_email','daily_limit','mailbox_rolling_limit','min_interval_seconds']);\n if(Object.keys(policy).some(k=>!allowed.has(k)))errors.push('unsupported_policy_field');\n if(typeof policy.enabled!=='boolean')errors.push('enabled_must_be_boolean');\n if(typeof policy.credential_ref!=='string'||!policy.credential_ref.trim()||policy.credential_ref.length>200||/[\\x00-\\x20\\x7f]/.test(policy.credential_ref))errors.push('credential_reference_required');\n if(!email(policy.sender_email))errors.push('canonical_sender_email_required');\n for(const [key,max] of [['daily_limit',9999],['mailbox_rolling_limit',9999],['min_interval_seconds',99999]]){\n  if(!Number.isInteger(policy[key])||policy[key]<1||policy[key]>max)errors.push(key+'_required');\n }\n return {valid:errors.length===0,errors};\n}\nfunction select(row,binding,actualCredential){\n if(!object(binding)||!id(binding.org_id)||!email(binding.email)||binding.credential_ref!==actualCredential)return {ready:false,reason:'mailbox_binding_required'};\n if(!id(row?.org_id)||String(row.org_id)!==String(binding.org_id))return {ready:false,reason:'organization_mismatch'};\n const p=row.sender_policy,v=validate(p);\n if(!v.valid)return {ready:false,reason:'sender_policy_invalid',errors:v.errors};\n if(p.enabled!==true)return {ready:false,reason:'sender_disabled'};\n if(p.credential_ref!==binding.credential_ref||p.sender_email!==binding.email)return {ready:false,reason:'sender_policy_mismatch'};\n return {ready:true,sender:{org_id:Number(row.org_id),email:p.sender_email,credential_ref:p.credential_ref}};\n}\nfunction draft(input){\n if(!object(input)||!id(input.org_id))throw Error('ORGANIZATION_REQUIRED');\n const policy={enabled:false,credential_ref:input.credential_ref,sender_email:input.sender_email,\n daily_limit:input.daily_limit,mailbox_rolling_limit:input.mailbox_rolling_limit,min_interval_seconds:input.min_interval_seconds};\n // Reject accidental secret fields rather than copying or logging their values.\n if(Object.keys(input).some(k=>!['org_id',...Object.keys(policy)].includes(k)))throw Error('UNSUPPORTED_SETUP_FIELD');\n const v=validate(policy);if(!v.valid)throw Error(v.errors.join(','));\n return {org_id:Number(input.org_id),email_dispatch:policy,binding:{org_id:Number(input.org_id),email:policy.sender_email,credential_ref:policy.credential_ref},\n status:'draft_requires_account_verification_and_release_review',execution_authorized:false};\n}\nmodule.exports={validate,select,draft};\n\nreturn module.exports;})();\nreturn $input.all().flatMap((item,i)=>{const result=policies.select(item.json,binding,\"ErvKkvbo4c5GQjPn\");\nreturn result.ready?[{json:{...item.json,sender:result.sender},pairedItem:{item:i}}]:[];});",
+        "mode": "runOnceForAllItems"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -251,7 +267,8 @@
     },
     {
       "parameters": {
-        "jsCode": "return [\n  {\n    json: {\n      lead_id: 1,\n      company_name: \"Blue Bottle Coffee\",\n      email: \"your-test-email@gmail.com\", // use your own email for testing\n      email_should_use: true,\n      email_subject_line: \"Quick question about Blue Bottle's expansion\",\n      email_opening: \"Hi! I noticed Blue Bottle recently opened new locations.\",\n      email_body_template: \"We help coffee brands scale their operations efficiently. Given your recent expansion, I thought this might be valuable.\",\n      primary_channel: \"email\",\n      lead_score: 87,\n      priority: \"hot\"\n    }\n  }\n];"
+        "jsCode": "return [\n  {\n    json: {\n      lead_id: 1,\n      company_name: \"Blue Bottle Coffee\",\n      email: \"your-test-email@gmail.com\", // use your own email for testing\n      email_should_use: true,\n      email_subject_line: \"Quick question about Blue Bottle's expansion\",\n      email_opening: \"Hi! I noticed Blue Bottle recently opened new locations.\",\n      email_body_template: \"We help coffee brands scale their operations efficiently. Given your recent expansion, I thought this might be valuable.\",\n      primary_channel: \"email\",\n      lead_score: 87,\n      priority: \"hot\"\n    }\n  }\n];",
+        "mode": "runOnceForAllItems"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -262,9 +279,289 @@
       "id": "b3493b90-3358-4dee-b111-c13cbc1dfdce",
       "name": "Mock Email Ready Leads",
       "disabled": true
+    },
+    {
+      "id": "email-v2-reserve-approved-email",
+      "name": "Reserve Approved Email",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1800,
+        -112
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT outreach_email_step_reserve('{{ JSON.stringify({org_id:$json.org_id,plan_id:$json.plan_id,step:$json.step,content_hash:$json.content_hash}).replace(/'/g, \"''\") }}'::jsonb) AS result",
+        "options": {}
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "retryOnFail": false,
+      "alwaysOutputData": true
+    },
+    {
+      "id": "email-v2-bind-email-reservation",
+      "name": "Bind Email Reservation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2000,
+        -112
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const draft=$('Build Gmail MIME').item.json; const r=$json.result; return {json:{...draft,lease:r?.lease,reservation:r,reservation_allowed:r?.ready===true&&r?.reserved===true}};"
+      }
+    },
+    {
+      "id": "email-v2-email-reserved-",
+      "name": "Email Reserved?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2200,
+        -112
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "Email Reserved?",
+              "leftValue": "={{ $json.reservation_allowed === true ? 1 : 0 }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "email-v2-begin-email-attempt",
+      "name": "Begin Email Attempt",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2400,
+        -112
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT outreach_email_step_begin('{{ JSON.stringify({org_id:$json.org_id,plan_id:$json.plan_id,step:$json.step,content_hash:$json.content_hash,lease:$json.lease,credential_ref:$json.sender?.credential_ref,sender_email:$json.sender?.email,to_email:$json.to_email,subject:$json.subject_line,body:$json.email_body}).replace(/'/g, \"''\") }}'::jsonb) AS result",
+        "options": {}
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "retryOnFail": false,
+      "alwaysOutputData": true
+    },
+    {
+      "id": "email-v2-bind-email-authorization",
+      "name": "Bind Email Authorization",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2600,
+        -112
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const draft=$('Bind Email Reservation').item.json;const r=$json.result;return {json:{...draft,begin_result:r,dispatch_allowed:r?.ready===true&&r?.execution_authorized===true}};"
+      }
+    },
+    {
+      "id": "email-v2-email-attempt-authorized-",
+      "name": "Email Attempt Authorized?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2800,
+        -112
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "Email Attempt Authorized?",
+              "leftValue": "={{ $json.dispatch_allowed === true ? 1 : 0 }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "email-v2-classify-email-receipt",
+      "name": "Classify Email Receipt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3200,
+        -112
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const emailHelpers=(()=>{const module={exports:{}};\n'use strict';\n// Read-only draft adapter. No provider, credential loading or database mutations.\nfunction draft(row){\n const b=row?.body;\n const step=row?.step===undefined?1:Number(row.step);\n if(!Number.isSafeInteger(step)||step<1||step>10||String(step)!==String(row?.step??1))throw Error('INVALID_EMAIL_STEP');\n const follow=step>1?b?.artifacts?.followup_drafts?.find(d=>d.step===step):null;\n const d=step===1?b?.artifacts?.email_draft:follow;\n const id=v=>typeof v==='string'&&/^[1-9][0-9]*$/.test(v)?Number(v):v;\n const org_id=id(row?.org_id),plan_id=id(row?.plan_id);\n if(!Number.isSafeInteger(org_id)||org_id<1||!Number.isSafeInteger(plan_id)||plan_id<1||!/^[a-f0-9]{32}$/.test(row.content_hash||''))throw Error('INVALID_PLAN_IDENTITY');\n if(b?.version!=='strategy_v2'||!['ai_completed','template_completed','template_fallback'].includes(b.state)||!Array.isArray(b.validation_errors)||b.validation_errors.length)throw Error('INVALID_PLAN');\n const selected=step===1?b.strategy?.step1:b.strategy?.followups?.[follow?.intent_index];\n if(selected?.channel!=='email'||!Array.isArray(selected.parts)||step>1&&follow?.status!=='requires_plan_approval_and_execution_checks')throw Error('NOT_APPROVED_EMAIL_STEP');\n if(!d||typeof d.subject!=='string'||!d.subject.trim()||d.subject.length>200||/[\\r\\n\\x00]/.test(d.subject)||typeof d.body!=='string'||!d.body.trim())throw Error('APPROVED_EMAIL_ARTIFACT_REQUIRED');\n if(selected.parts.some(p=>typeof p?.text!=='string')||d.body!==selected.parts.map(p=>p.text).join('\\n\\n'))throw Error('EMAIL_ARTIFACT_MISMATCH');\n if(typeof row.email!=='string'||! /^[^\\s@,;<>]+@[^\\s@,;<>]+\\.[^\\s@,;<>]+$/.test(row.email))throw Error('INVALID_RECIPIENT');\n return {org_id,plan_id,step,content_hash:row.content_hash,to_email:row.email,subject_line:d.subject,email_body:d.body,execution_authorized:false,reason:'sender_mapping_and_transport_not_enabled'};\n}\n// A receipt is evidence of provider acceptance, not inbox delivery. Missing or\n// ambiguous receipts must be reconciled, never treated as permission to resend.\nfunction receipt(result){\n if(result&&!result.error&&typeof result.id==='string'&&/^[a-f0-9]{8,64}$/i.test(result.id))return {state:'provider_accepted',external_id:result.id,delivered:false,retry_allowed:false};\n return {state:'ambiguous',external_id:null,delivered:false,retry_allowed:false};\n}\nmodule.exports={draft,receipt};\n\nreturn module.exports;})();\nconst draft=$('Bind Email Authorization').item.json;const outcome=emailHelpers.receipt($json);return {json:{finish_payload:{org_id:draft.org_id,plan_id:draft.plan_id,step:draft.step,content_hash:draft.content_hash,lease:draft.lease,outcome:outcome.state,external_id:outcome.external_id},outcome}};"
+      }
+    },
+    {
+      "id": "email-v2-load-sender-profile",
+      "name": "Load Sender Profile",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        -112
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://gmail.googleapis.com/gmail/v1/users/me/profile",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "gmailOAuth2",
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ErvKkvbo4c5GQjPn",
+          "name": "Gmail account"
+        }
+      },
+      "retryOnFail": false
+    },
+    {
+      "id": "email-v2-verify-sender-profile",
+      "name": "Verify Sender Profile",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1300,
+        -112
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const gmailHelpers=(()=>{const module={exports:{}};\n'use strict';\n// Deterministic, read-only matching. Inputs must come from the bound mailbox,\n// never from dashboard-submitted Gmail IDs. No AI or network access here.\nconst gmailId = v => typeof v === 'string' && /^[a-f0-9]{8,64}$/i.test(v);\nconst positive = v => /^[1-9][0-9]*$/.test(String(v)) && Number.isSafeInteger(Number(v));\nfunction header(message, name) {\n const h = message?.payload?.headers;\n if (!Array.isArray(h)) return '';\n const values = h.filter(x => typeof x?.name === 'string' && x.name.toLowerCase() === name.toLowerCase());\n return values.length === 1 && typeof values[0].value === 'string' ? values[0].value : '';\n}\nfunction address(value) {\n if (typeof value !== 'string' || /[\\r\\n]/.test(value)) return null;\n const v = (value.match(/^[^<>]*<([^<>]+)>\\s*$/)?.[1] || value).trim();\n return /^[^\\s@,;<>]+@[^\\s@,;<>]+\\.[^\\s@,;<>]+$/.test(v) ? v.toLowerCase() : null;\n}\nfunction verifyMailbox(binding,profile,credentialRef) {\n if(!positive(binding?.org_id)||!address(binding?.email)||binding?.credential_ref!==credentialRef||!credentialRef)\n  throw Error('INVALID_SENDER_BINDING');\n if(!address(profile?.emailAddress)||address(profile.emailAddress)!==address(binding.email)||profile.error)\n  throw Error('CONNECTED_MAILBOX_MISMATCH');\n // Canonical account only; aliases need an explicit verified mapping later.\n return {...binding,email:address(profile.emailAddress)};\n}\nfunction body(message) {\n let count=0;\n function visit(part, depth) {\n  if (!part || depth>8 || ++count>100) return '';\n  if (part.mimeType==='text/plain' && typeof part.body?.data==='string') {\n   return Buffer.from(part.body.data.slice(0,22000),'base64url').toString('utf8').replace(/[\\x00-\\x08\\x0b\\x0c\\x0e-\\x1f]/g,'').slice(0,12000);\n  }\n  return Array.isArray(part.parts) ? part.parts.map(p=>visit(p,depth+1)).filter(Boolean).join('\\n').slice(0,12000) : '';\n }\n return visit(message?.payload,0);\n}\nfunction clearOptOut(text) {\n // Exact standalone request in the new text only. Never classify quoted\n // unsubscribe footers, questions, or a negated request as an opt-out.\n const fresh=String(text).split(/\\n\\s*(?:>|On .+wrote:|From:|-----Original Message-----)/i)[0].trim();\n return /^(?:unsubscribe(?: me)?|please unsubscribe(?: me)?|remove me(?: from (?:your|the) (?:list|mailing list))?|please remove me(?: from (?:your|the) (?:list|mailing list))?|stop(?: emailing me)?|do not (?:email|contact) me(?: again)?|don't (?:email|contact) me(?: again)?)[.!\\s]*$/i.test(fresh);\n}\nfunction deliveryReport(original,incoming,recipient) {\n // RFC 3464 subset: an explicit failed recipient + permanent status and a\n // returned original Message-ID. Subject text is never bounce evidence.\n const parts=[];let count=0;\n function walk(part,depth){if(!part||depth>8||++count>100)return;parts.push(part);if(Array.isArray(part.parts))for(const child of part.parts)walk(child,depth+1);}\n walk(incoming?.payload,0);\n const reports=parts.filter(p=>p.mimeType==='message/delivery-status');\n if(!reports.length)return null;\n const uncertain=reason=>({matched:false,reason});\n if(incoming.payload?.mimeType!=='multipart/report'||reports.length!==1)return uncertain('delivery_report_shape_unverified');\n const decode=p=>typeof p.body?.data==='string'&&p.body.data.length<=44000?Buffer.from(p.body.data,'base64url').toString('utf8'):null;\n function fields(text){\n  const map={};for(const line of text.replace(/\\r\\n/g,'\\n').replace(/\\n[ \\t]+/g,' ').split('\\n')){\n   const m=line.match(/^([A-Za-z0-9-]+):\\s*(.*)$/);if(!m)continue;\n   const key=m[1].toLowerCase();if(Object.hasOwn(map,key))return null;map[key]=m[2].trim();\n  }return map;\n }\n const raw=decode(reports[0]);if(raw===null)return uncertain('delivery_report_body_unavailable');\n const blocks=raw.replace(/\\r\\n/g,'\\n').trim().split(/\\n\\s*\\n/).map(fields);\n if(blocks.some(b=>!b)||!blocks[0]?.['reporting-mta'])return uncertain('delivery_report_fields_unverified');\n const recipients=blocks.slice(1).filter(b=>address(b['final-recipient']?.match(/^rfc822\\s*;\\s*(.+)$/i)?.[1])===address(recipient));\n if(recipients.length!==1)return uncertain('delivery_report_recipient_mismatch');\n const originalRef=header(original,'Message-ID'),returned=[];\n for(const p of parts.filter(p=>['text/rfc822-headers','message/rfc822'].includes(p.mimeType))){\n  const data=decode(p);if(data!==null){const h=fields(data.split(/\\r?\\n\\r?\\n/)[0]);if(h?.['message-id'])returned.push(h['message-id']);}\n  // Some Gmail payloads expose encapsulated original headers as child parts.\n  if(p.mimeType==='message/rfc822'&&Array.isArray(p.parts))for(const child of p.parts){const id=header({payload:child},'Message-ID');if(id)returned.push(id);}\n }\n if(!/^<[^<>\\s]+>$/.test(originalRef)||!returned.length||returned.some(id=>id!==originalRef))return uncertain('delivery_report_original_mismatch');\n const report=recipients[0];\n if(report.action?.toLowerCase()!=='failed'||!/^5\\.[0-9]{1,3}\\.[0-9]{1,3}$/.test(report.status||''))return uncertain('delivery_report_not_permanent_failure');\n return {matched:true,status:report.status,category:'hard_bounce'};\n}\nfunction match(binding, activity, original, incoming) {\n const review=reason=>({matched:false,reason,requires_review:true});\n if (!positive(binding?.org_id) || !binding?.credential_ref || !address(binding?.email) ||\n     !positive(activity?.activity_id) || !positive(activity?.lead_id) || !address(activity?.lead_email) ||\n     String(binding.org_id)!==String(activity?.org_id) ||\n     binding.credential_ref!==activity?.credential_ref || address(binding.email)!==address(activity?.sender_email)) return review('sender_binding_mismatch');\n if (!gmailId(original?.id) || original.id!==activity?.external_id || !gmailId(original?.threadId) ||\n     address(header(original,'From'))!==address(binding.email) ||\n     address(header(original,'To'))!==address(activity.lead_email)) return review('original_message_mismatch');\n if (!gmailId(incoming?.id) || incoming.error || incoming.id===original.id) return review('not_a_new_message');\n if (!gmailId(incoming.threadId)) return review('conversation_mismatch');\n if (Array.isArray(incoming.labelIds) && (incoming.labelIds.includes('SENT') || incoming.labelIds.includes('DRAFT')) ||\n     address(header(incoming,'From'))===address(binding.email)) return review('outgoing_message');\n const sent=Number(original.internalDate), received=Number(incoming.internalDate);\n if (!Number.isSafeInteger(sent) || !Number.isSafeInteger(received) || sent<=0 || received<=sent || received>8640000000000000) return review('message_time_invalid');\n const delivery=deliveryReport(original,incoming,activity.lead_email);\n if(delivery){\n  if(!delivery.matched)return review(delivery.reason);\n  return {matched:true,requires_review:true,category:'hard_bounce',body:'Structured delivery report: '+delivery.status,\n   subject:header(incoming,'Subject').slice(0,500),received_at:new Date(received).toISOString(),\n   thread_id:incoming.threadId,message_id:incoming.id,\n   stop_event:{org_id:Number(binding.org_id),activity_id:Number(activity.activity_id),kind:'bounce',event_id:'gmail:'+incoming.id,source_ref:'gmail-thread:'+incoming.threadId}};\n }\n if(incoming.threadId!==original.threadId)return review('conversation_mismatch');\n // Unknown senders need review; never infer a bounce from subject text.\n if (address(header(incoming,'From'))!==address(activity.lead_email)) return review('sender_requires_review');\n const originalRef=header(original,'Message-ID');\n const refs=(header(incoming,'In-Reply-To')+' '+header(incoming,'References')).match(/<[^<>\\s]+>/g)||[];\n if (!/^<[^<>\\s]+>$/.test(originalRef) || !refs.includes(originalRef)) return review('reply_reference_missing');\n const text=body(incoming);\n const automatic=header(incoming,'Auto-Submitted');\n // Automatic responses also pause conservatively; no automatic resumption.\n const category=automatic && automatic.toLowerCase()!=='no' ? 'automatic_response' : clearOptOut(text)?'opt_out':'reply';\n return {matched:true,requires_review:true,category,body:text,subject:header(incoming,'Subject').slice(0,500),\n  received_at:new Date(received).toISOString(),thread_id:incoming.threadId,message_id:incoming.id,\n  stop_event:{org_id:Number(binding.org_id),activity_id:Number(activity.activity_id),kind:category==='opt_out'?'opt_out':'reply',\n   event_id:'gmail:'+incoming.id,source_ref:'gmail-thread:'+incoming.threadId}};\n}\nasync function discoverDeliveryReports(binding,activity,original,deps,options={}) {\n if(options.enabled!==true)return {complete:false,reason:'discovery_disabled',events:[],reviews:[]};\n if(!positive(binding?.org_id)||!positive(activity?.activity_id)||String(binding.org_id)!==String(activity?.org_id)||\n binding.credential_ref!==activity?.credential_ref||!address(binding.email)||address(binding.email)!==address(activity.sender_email)||\n !address(activity.lead_email)||original?.id!==activity.external_id||!gmailId(original?.id)||\n address(header(original,'From'))!==address(binding.email)||address(header(original,'To'))!==address(activity.lead_email))\n  return {complete:false,reason:'discovery_context_mismatch',events:[],reviews:[]};\n const sent=Number(original.internalDate),until=options.now??Date.now();\n const checkpoint=options.checkedThrough===undefined?sent:Date.parse(options.checkedThrough);\n if(!Number.isSafeInteger(sent)||sent<=0||!Number.isSafeInteger(until)||until>8640000000000000||until<sent||\n !Number.isFinite(checkpoint)||checkpoint<sent||checkpoint>until)return {complete:false,reason:'invalid_discovery_window',events:[],reviews:[]};\n // Overlap by a second. Idempotent event IDs absorb repeated boundary results.\n const q='after:'+Math.max(0,Math.floor(checkpoint/1000)-1)+' before:'+(Math.floor(until/1000)+1)+' -in:sent -in:drafts';\n const events=[],reviews=[],seen=new Set(),tokens=new Set();let pageToken;\n for(let page=0;page<2;page++){\n  let list;\n  try{list=await deps.listMessages(binding,{q,maxResults:25,...(pageToken?{pageToken}:{})});}\n  catch{return {complete:false,reason:'discovery_list_failed',events,reviews};}\n  if(list?.error||!list||typeof list!=='object'||Array.isArray(list)||\n   list.messages!==undefined&&!Array.isArray(list.messages)||Array.isArray(list.messages)&&list.messages.length>25)\n   return {complete:false,reason:'invalid_discovery_page',events,reviews};\n  for(const ref of list.messages||[]){\n   if(!gmailId(ref?.id))return {complete:false,reason:'invalid_discovery_id',events,reviews};\n   if(seen.has(ref.id)||ref.id===original.id)continue;seen.add(ref.id);\n   let message;try{message=await deps.getMessage(binding,ref.id);}catch{return {complete:false,reason:'discovery_message_failed',events,reviews};}\n   if(message?.id!==ref.id||message.error)return {complete:false,reason:'discovery_message_failed',events,reviews};\n   const result=match(binding,activity,original,message);\n   if(result.matched&&result.category==='hard_bounce')events.push(result);\n   else if(result.reason?.startsWith('delivery_report_')&&!['delivery_report_recipient_mismatch','delivery_report_original_mismatch'].includes(result.reason))reviews.push({message_id:ref.id,reason:result.reason});\n  }\n  pageToken=list.nextPageToken;\n  if(!pageToken)return {complete:true,checked_through:new Date(until).toISOString(),events,reviews};\n  if(typeof pageToken!=='string'||pageToken.length>2000||tokens.has(pageToken))return {complete:false,reason:'invalid_discovery_page_token',events,reviews};\n  tokens.add(pageToken);\n }\n return {complete:false,reason:'discovery_page_budget_reached',events,reviews};\n}\nasync function poll(binding, activities, deps, options={}) {\n if(options.enabled!==true) return {state:'disabled',processed:0};\n if(!positive(binding?.org_id)||typeof binding?.credential_ref!=='string'||!binding.credential_ref||!address(binding?.email))throw Error('INVALID_SENDER_BINDING');\n if(!Array.isArray(activities)||activities.length>50)throw Error('INVALID_REPLY_BATCH');\n const results=[];\n for(const activity of activities) {\n  // Validate binding before reading a mailbox. SQL also checks scope on write.\n  if(!positive(activity?.activity_id)||!positive(activity?.lead_id)||String(activity?.org_id)!==String(binding.org_id)||activity.credential_ref!==binding.credential_ref||\n     address(activity.sender_email)!==address(binding.email)||!address(binding.email)||!gmailId(activity.external_id)) {\n   results.push({state:'review',reason:'sender_binding_mismatch'});continue;\n  }\n  let original,thread;\n  try {original=await deps.getMessage(binding,activity.external_id);\n   if(original?.id!==activity.external_id||!gmailId(original?.threadId))throw Error('invalid_original');\n   thread=await deps.getThread(binding,original.threadId);\n  } catch {results.push({state:'paused',reason:'mailbox_read_failed'});continue;}\n  if(thread?.id!==original.threadId||!Array.isArray(thread?.messages)||thread.messages.length>200){results.push({state:'review',reason:'invalid_or_oversized_thread'});continue;}\n  const seen=new Set();\n  for(const message of thread.messages){\n   if(message?.id===original.id||seen.has(message?.id))continue;\n   seen.add(message?.id);\n   const event=match(binding,activity,original,message);\n   if(!event.matched){results.push({state:'review',reason:event.reason});continue;}\n   // Stop BEFORE downstream qualification/storage. A write failure is retried\n   // on a later poll with the same deterministic event ID, never a new event.\n   try {const saved=await deps.recordStop(event.stop_event);\n    results.push(saved?.saved===true?{state:'stopped',event}:{state:'paused',reason:'stop_not_saved'});\n   } catch {results.push({state:'paused',reason:'stop_commit_unknown'});}\n  }\n }\n return {state:'checked',processed:results.length,results};\n}\nmodule.exports={header,address,body,verifyMailbox,clearOptOut,deliveryReport,discoverDeliveryReports,match,poll};\n\nreturn module.exports;})();\nconst row=$('Daily limit check').item.json;const sender=gmailHelpers.verifyMailbox({...row.sender,org_id:row.org_id},$json,\"ErvKkvbo4c5GQjPn\");return {json:{...row,sender}};"
+      }
+    },
+    {
+      "id": "email-v2-email-is-followup-",
+      "name": "Email Is Followup?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1450,
+        -112
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "Email Is Followup?",
+              "leftValue": "={{ $json.step > 1 ? 1 : 0 }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "email-v2-load-previous-gmail-message",
+      "name": "Load Previous Gmail Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1500,
+        -112
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ 'https://gmail.googleapis.com/gmail/v1/users/me/messages/' + encodeURIComponent($json.parent_activity?.external_id || 'missing') + '?format=full' }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "gmailOAuth2",
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ErvKkvbo4c5GQjPn",
+          "name": "Gmail account"
+        }
+      },
+      "retryOnFail": false
+    },
+    {
+      "id": "email-v2-bind-previous-gmail-message",
+      "name": "Bind Previous Gmail Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1550,
+        -112
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const row=$('Prepare Email Content').item.json;return {json:{...row,parent_message:$json}};"
+      }
+    },
+    {
+      "id": "email-v2-build-gmail-mime",
+      "name": "Build Gmail MIME",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1600,
+        -112
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const gmailHelpers=(()=>{const module={exports:{}};\n'use strict';\n// Deterministic, read-only matching. Inputs must come from the bound mailbox,\n// never from dashboard-submitted Gmail IDs. No AI or network access here.\nconst gmailId = v => typeof v === 'string' && /^[a-f0-9]{8,64}$/i.test(v);\nconst positive = v => /^[1-9][0-9]*$/.test(String(v)) && Number.isSafeInteger(Number(v));\nfunction header(message, name) {\n const h = message?.payload?.headers;\n if (!Array.isArray(h)) return '';\n const values = h.filter(x => typeof x?.name === 'string' && x.name.toLowerCase() === name.toLowerCase());\n return values.length === 1 && typeof values[0].value === 'string' ? values[0].value : '';\n}\nfunction address(value) {\n if (typeof value !== 'string' || /[\\r\\n]/.test(value)) return null;\n const v = (value.match(/^[^<>]*<([^<>]+)>\\s*$/)?.[1] || value).trim();\n return /^[^\\s@,;<>]+@[^\\s@,;<>]+\\.[^\\s@,;<>]+$/.test(v) ? v.toLowerCase() : null;\n}\nfunction verifyMailbox(binding,profile,credentialRef) {\n if(!positive(binding?.org_id)||!address(binding?.email)||binding?.credential_ref!==credentialRef||!credentialRef)\n  throw Error('INVALID_SENDER_BINDING');\n if(!address(profile?.emailAddress)||address(profile.emailAddress)!==address(binding.email)||profile.error)\n  throw Error('CONNECTED_MAILBOX_MISMATCH');\n // Canonical account only; aliases need an explicit verified mapping later.\n return {...binding,email:address(profile.emailAddress)};\n}\nfunction body(message) {\n let count=0;\n function visit(part, depth) {\n  if (!part || depth>8 || ++count>100) return '';\n  if (part.mimeType==='text/plain' && typeof part.body?.data==='string') {\n   return Buffer.from(part.body.data.slice(0,22000),'base64url').toString('utf8').replace(/[\\x00-\\x08\\x0b\\x0c\\x0e-\\x1f]/g,'').slice(0,12000);\n  }\n  return Array.isArray(part.parts) ? part.parts.map(p=>visit(p,depth+1)).filter(Boolean).join('\\n').slice(0,12000) : '';\n }\n return visit(message?.payload,0);\n}\nfunction clearOptOut(text) {\n // Exact standalone request in the new text only. Never classify quoted\n // unsubscribe footers, questions, or a negated request as an opt-out.\n const fresh=String(text).split(/\\n\\s*(?:>|On .+wrote:|From:|-----Original Message-----)/i)[0].trim();\n return /^(?:unsubscribe(?: me)?|please unsubscribe(?: me)?|remove me(?: from (?:your|the) (?:list|mailing list))?|please remove me(?: from (?:your|the) (?:list|mailing list))?|stop(?: emailing me)?|do not (?:email|contact) me(?: again)?|don't (?:email|contact) me(?: again)?)[.!\\s]*$/i.test(fresh);\n}\nfunction deliveryReport(original,incoming,recipient) {\n // RFC 3464 subset: an explicit failed recipient + permanent status and a\n // returned original Message-ID. Subject text is never bounce evidence.\n const parts=[];let count=0;\n function walk(part,depth){if(!part||depth>8||++count>100)return;parts.push(part);if(Array.isArray(part.parts))for(const child of part.parts)walk(child,depth+1);}\n walk(incoming?.payload,0);\n const reports=parts.filter(p=>p.mimeType==='message/delivery-status');\n if(!reports.length)return null;\n const uncertain=reason=>({matched:false,reason});\n if(incoming.payload?.mimeType!=='multipart/report'||reports.length!==1)return uncertain('delivery_report_shape_unverified');\n const decode=p=>typeof p.body?.data==='string'&&p.body.data.length<=44000?Buffer.from(p.body.data,'base64url').toString('utf8'):null;\n function fields(text){\n  const map={};for(const line of text.replace(/\\r\\n/g,'\\n').replace(/\\n[ \\t]+/g,' ').split('\\n')){\n   const m=line.match(/^([A-Za-z0-9-]+):\\s*(.*)$/);if(!m)continue;\n   const key=m[1].toLowerCase();if(Object.hasOwn(map,key))return null;map[key]=m[2].trim();\n  }return map;\n }\n const raw=decode(reports[0]);if(raw===null)return uncertain('delivery_report_body_unavailable');\n const blocks=raw.replace(/\\r\\n/g,'\\n').trim().split(/\\n\\s*\\n/).map(fields);\n if(blocks.some(b=>!b)||!blocks[0]?.['reporting-mta'])return uncertain('delivery_report_fields_unverified');\n const recipients=blocks.slice(1).filter(b=>address(b['final-recipient']?.match(/^rfc822\\s*;\\s*(.+)$/i)?.[1])===address(recipient));\n if(recipients.length!==1)return uncertain('delivery_report_recipient_mismatch');\n const originalRef=header(original,'Message-ID'),returned=[];\n for(const p of parts.filter(p=>['text/rfc822-headers','message/rfc822'].includes(p.mimeType))){\n  const data=decode(p);if(data!==null){const h=fields(data.split(/\\r?\\n\\r?\\n/)[0]);if(h?.['message-id'])returned.push(h['message-id']);}\n  // Some Gmail payloads expose encapsulated original headers as child parts.\n  if(p.mimeType==='message/rfc822'&&Array.isArray(p.parts))for(const child of p.parts){const id=header({payload:child},'Message-ID');if(id)returned.push(id);}\n }\n if(!/^<[^<>\\s]+>$/.test(originalRef)||!returned.length||returned.some(id=>id!==originalRef))return uncertain('delivery_report_original_mismatch');\n const report=recipients[0];\n if(report.action?.toLowerCase()!=='failed'||!/^5\\.[0-9]{1,3}\\.[0-9]{1,3}$/.test(report.status||''))return uncertain('delivery_report_not_permanent_failure');\n return {matched:true,status:report.status,category:'hard_bounce'};\n}\nfunction match(binding, activity, original, incoming) {\n const review=reason=>({matched:false,reason,requires_review:true});\n if (!positive(binding?.org_id) || !binding?.credential_ref || !address(binding?.email) ||\n     !positive(activity?.activity_id) || !positive(activity?.lead_id) || !address(activity?.lead_email) ||\n     String(binding.org_id)!==String(activity?.org_id) ||\n     binding.credential_ref!==activity?.credential_ref || address(binding.email)!==address(activity?.sender_email)) return review('sender_binding_mismatch');\n if (!gmailId(original?.id) || original.id!==activity?.external_id || !gmailId(original?.threadId) ||\n     address(header(original,'From'))!==address(binding.email) ||\n     address(header(original,'To'))!==address(activity.lead_email)) return review('original_message_mismatch');\n if (!gmailId(incoming?.id) || incoming.error || incoming.id===original.id) return review('not_a_new_message');\n if (!gmailId(incoming.threadId)) return review('conversation_mismatch');\n if (Array.isArray(incoming.labelIds) && (incoming.labelIds.includes('SENT') || incoming.labelIds.includes('DRAFT')) ||\n     address(header(incoming,'From'))===address(binding.email)) return review('outgoing_message');\n const sent=Number(original.internalDate), received=Number(incoming.internalDate);\n if (!Number.isSafeInteger(sent) || !Number.isSafeInteger(received) || sent<=0 || received<=sent || received>8640000000000000) return review('message_time_invalid');\n const delivery=deliveryReport(original,incoming,activity.lead_email);\n if(delivery){\n  if(!delivery.matched)return review(delivery.reason);\n  return {matched:true,requires_review:true,category:'hard_bounce',body:'Structured delivery report: '+delivery.status,\n   subject:header(incoming,'Subject').slice(0,500),received_at:new Date(received).toISOString(),\n   thread_id:incoming.threadId,message_id:incoming.id,\n   stop_event:{org_id:Number(binding.org_id),activity_id:Number(activity.activity_id),kind:'bounce',event_id:'gmail:'+incoming.id,source_ref:'gmail-thread:'+incoming.threadId}};\n }\n if(incoming.threadId!==original.threadId)return review('conversation_mismatch');\n // Unknown senders need review; never infer a bounce from subject text.\n if (address(header(incoming,'From'))!==address(activity.lead_email)) return review('sender_requires_review');\n const originalRef=header(original,'Message-ID');\n const refs=(header(incoming,'In-Reply-To')+' '+header(incoming,'References')).match(/<[^<>\\s]+>/g)||[];\n if (!/^<[^<>\\s]+>$/.test(originalRef) || !refs.includes(originalRef)) return review('reply_reference_missing');\n const text=body(incoming);\n const automatic=header(incoming,'Auto-Submitted');\n // Automatic responses also pause conservatively; no automatic resumption.\n const category=automatic && automatic.toLowerCase()!=='no' ? 'automatic_response' : clearOptOut(text)?'opt_out':'reply';\n return {matched:true,requires_review:true,category,body:text,subject:header(incoming,'Subject').slice(0,500),\n  received_at:new Date(received).toISOString(),thread_id:incoming.threadId,message_id:incoming.id,\n  stop_event:{org_id:Number(binding.org_id),activity_id:Number(activity.activity_id),kind:category==='opt_out'?'opt_out':'reply',\n   event_id:'gmail:'+incoming.id,source_ref:'gmail-thread:'+incoming.threadId}};\n}\nasync function discoverDeliveryReports(binding,activity,original,deps,options={}) {\n if(options.enabled!==true)return {complete:false,reason:'discovery_disabled',events:[],reviews:[]};\n if(!positive(binding?.org_id)||!positive(activity?.activity_id)||String(binding.org_id)!==String(activity?.org_id)||\n binding.credential_ref!==activity?.credential_ref||!address(binding.email)||address(binding.email)!==address(activity.sender_email)||\n !address(activity.lead_email)||original?.id!==activity.external_id||!gmailId(original?.id)||\n address(header(original,'From'))!==address(binding.email)||address(header(original,'To'))!==address(activity.lead_email))\n  return {complete:false,reason:'discovery_context_mismatch',events:[],reviews:[]};\n const sent=Number(original.internalDate),until=options.now??Date.now();\n const checkpoint=options.checkedThrough===undefined?sent:Date.parse(options.checkedThrough);\n if(!Number.isSafeInteger(sent)||sent<=0||!Number.isSafeInteger(until)||until>8640000000000000||until<sent||\n !Number.isFinite(checkpoint)||checkpoint<sent||checkpoint>until)return {complete:false,reason:'invalid_discovery_window',events:[],reviews:[]};\n // Overlap by a second. Idempotent event IDs absorb repeated boundary results.\n const q='after:'+Math.max(0,Math.floor(checkpoint/1000)-1)+' before:'+(Math.floor(until/1000)+1)+' -in:sent -in:drafts';\n const events=[],reviews=[],seen=new Set(),tokens=new Set();let pageToken;\n for(let page=0;page<2;page++){\n  let list;\n  try{list=await deps.listMessages(binding,{q,maxResults:25,...(pageToken?{pageToken}:{})});}\n  catch{return {complete:false,reason:'discovery_list_failed',events,reviews};}\n  if(list?.error||!list||typeof list!=='object'||Array.isArray(list)||\n   list.messages!==undefined&&!Array.isArray(list.messages)||Array.isArray(list.messages)&&list.messages.length>25)\n   return {complete:false,reason:'invalid_discovery_page',events,reviews};\n  for(const ref of list.messages||[]){\n   if(!gmailId(ref?.id))return {complete:false,reason:'invalid_discovery_id',events,reviews};\n   if(seen.has(ref.id)||ref.id===original.id)continue;seen.add(ref.id);\n   let message;try{message=await deps.getMessage(binding,ref.id);}catch{return {complete:false,reason:'discovery_message_failed',events,reviews};}\n   if(message?.id!==ref.id||message.error)return {complete:false,reason:'discovery_message_failed',events,reviews};\n   const result=match(binding,activity,original,message);\n   if(result.matched&&result.category==='hard_bounce')events.push(result);\n   else if(result.reason?.startsWith('delivery_report_')&&!['delivery_report_recipient_mismatch','delivery_report_original_mismatch'].includes(result.reason))reviews.push({message_id:ref.id,reason:result.reason});\n  }\n  pageToken=list.nextPageToken;\n  if(!pageToken)return {complete:true,checked_through:new Date(until).toISOString(),events,reviews};\n  if(typeof pageToken!=='string'||pageToken.length>2000||tokens.has(pageToken))return {complete:false,reason:'invalid_discovery_page_token',events,reviews};\n  tokens.add(pageToken);\n }\n return {complete:false,reason:'discovery_page_budget_reached',events,reviews};\n}\nasync function poll(binding, activities, deps, options={}) {\n if(options.enabled!==true) return {state:'disabled',processed:0};\n if(!positive(binding?.org_id)||typeof binding?.credential_ref!=='string'||!binding.credential_ref||!address(binding?.email))throw Error('INVALID_SENDER_BINDING');\n if(!Array.isArray(activities)||activities.length>50)throw Error('INVALID_REPLY_BATCH');\n const results=[];\n for(const activity of activities) {\n  // Validate binding before reading a mailbox. SQL also checks scope on write.\n  if(!positive(activity?.activity_id)||!positive(activity?.lead_id)||String(activity?.org_id)!==String(binding.org_id)||activity.credential_ref!==binding.credential_ref||\n     address(activity.sender_email)!==address(binding.email)||!address(binding.email)||!gmailId(activity.external_id)) {\n   results.push({state:'review',reason:'sender_binding_mismatch'});continue;\n  }\n  let original,thread;\n  try {original=await deps.getMessage(binding,activity.external_id);\n   if(original?.id!==activity.external_id||!gmailId(original?.threadId))throw Error('invalid_original');\n   thread=await deps.getThread(binding,original.threadId);\n  } catch {results.push({state:'paused',reason:'mailbox_read_failed'});continue;}\n  if(thread?.id!==original.threadId||!Array.isArray(thread?.messages)||thread.messages.length>200){results.push({state:'review',reason:'invalid_or_oversized_thread'});continue;}\n  const seen=new Set();\n  for(const message of thread.messages){\n   if(message?.id===original.id||seen.has(message?.id))continue;\n   seen.add(message?.id);\n   const event=match(binding,activity,original,message);\n   if(!event.matched){results.push({state:'review',reason:event.reason});continue;}\n   // Stop BEFORE downstream qualification/storage. A write failure is retried\n   // on a later poll with the same deterministic event ID, never a new event.\n   try {const saved=await deps.recordStop(event.stop_event);\n    results.push(saved?.saved===true?{state:'stopped',event}:{state:'paused',reason:'stop_not_saved'});\n   } catch {results.push({state:'paused',reason:'stop_commit_unknown'});}\n  }\n }\n return {state:'checked',processed:results.length,results};\n}\nmodule.exports={header,address,body,verifyMailbox,clearOptOut,deliveryReport,discoverDeliveryReports,match,poll};\n\nreturn module.exports;})();\nconst mimeHelpers=(()=>{const module={exports:{}};\n'use strict';\nconst {address,header}=gmailHelpers;\nconst safeId=v=>typeof v==='string'&&/^[a-f0-9]{8,64}$/i.test(v);\nfunction encodedSubject(subject){\n const chunks=[];let current='';\n for(const char of subject){if(Buffer.byteLength(current+char,'utf8')>42){chunks.push(current);current='';}current+=char;}\n if(current)chunks.push(current);\n return chunks.map(s=>'=?UTF-8?B?'+Buffer.from(s).toString('base64')+'?=').join('\\r\\n ');\n}\nfunction prepare(message,sender,parent=null){\n if(!address(sender?.email)||!sender?.credential_ref||!address(message?.to_email))throw Error('INVALID_MAILBOX');\n if(typeof message.subject_line!=='string'||!message.subject_line.trim()||message.subject_line.length>200||/[\\x00-\\x1f\\x7f]/.test(message.subject_line))throw Error('INVALID_SUBJECT');\n if(typeof message.email_body!=='string'||!message.email_body||Buffer.byteLength(message.email_body)>50000)throw Error('INVALID_BODY');\n if(!Number.isInteger(message.step)||message.step<1||message.step>10)throw Error('INVALID_STEP');\n const headers=['From: '+address(sender.email),'To: '+address(message.to_email),'Subject: '+encodedSubject(message.subject_line),\n 'MIME-Version: 1.0','Content-Type: text/plain; charset=UTF-8','Content-Transfer-Encoding: base64'];\n let threadId;\n if(message.step>1){\n  const a=parent?.activity,m=parent?.message;\n  if(!a||!m||String(a.org_id)!==String(message.org_id)||String(a.plan_id)!==String(message.plan_id)||\n    a.content_hash!==message.content_hash||Number(a.step)!==message.step-1||a.state!=='provider_accepted'||\n    a.credential_ref!==sender.credential_ref||address(a.sender_email)!==address(sender.email)||\n    !safeId(a.external_id)||m.id!==a.external_id||!safeId(m.threadId)||m.error)throw Error('THREAD_CONTEXT_REQUIRED');\n  if(address(header(m,'From'))!==address(sender.email)||address(header(m,'To'))!==address(message.to_email))throw Error('THREAD_PARTICIPANTS_MISMATCH');\n  // Never silently change an approved subject or invent Re: history.\n  if(header(m,'Subject')!==message.subject_line)throw Error('THREAD_SUBJECT_REAPPROVAL_REQUIRED');\n  const ref=header(m,'Message-ID');\n  if(!/^<[^<>\\s\\x00-\\x1f]+>$/.test(ref)||ref.length>250)throw Error('THREAD_REFERENCE_INVALID');\n  const previous=header(m,'References');\n  const refs=previous?previous.match(/<[^<>\\s\\x00-\\x1f]+>/g)||[]:[];\n  if(previous&&previous.replace(/<[^<>\\s\\x00-\\x1f]+>/g,'').trim())throw Error('THREAD_REFERENCE_INVALID');\n  const chain=[...new Set([...refs,ref])];\n  if(chain.length>20||chain.some(s=>s.length>250)||chain.join(' ').length>800)throw Error('THREAD_REFERENCE_TOO_LONG');\n  headers.push('In-Reply-To: '+ref,'References: '+chain.join('\\r\\n '));threadId=m.threadId;\n }\n const body=Buffer.from(message.email_body.replace(/\\r?\\n/g,'\\r\\n'),'utf8').toString('base64').match(/.{1,76}/g).join('\\r\\n');\n const raw=Buffer.from(headers.join('\\r\\n')+'\\r\\n\\r\\n'+body+'\\r\\n','utf8').toString('base64url');\n return threadId?{raw,threadId}:{raw};\n}\nmodule.exports={prepare,encodedSubject};\n\nreturn module.exports;})();\nconst request=mimeHelpers.prepare($json,$json.sender,$json.step>1?{activity:$json.parent_activity,message:$json.parent_message}:null);return {json:{...$json,gmail_request:request}};"
+      }
     }
   ],
-  "pinData": {},
   "connections": {
     "Schedule Trigger": {
       "main": [
@@ -336,7 +633,7 @@
       "main": [
         [
           {
-            "node": "Send Email - Gmail",
+            "node": "Email Is Followup?",
             "type": "main",
             "index": 0
           }
@@ -347,7 +644,7 @@
       "main": [
         [
           {
-            "node": "Log Email Sent",
+            "node": "Classify Email Receipt",
             "type": "main",
             "index": 0
           }
@@ -369,7 +666,157 @@
       "main": [
         [
           {
+            "node": "Load Sender Profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reserve Approved Email": {
+      "main": [
+        [
+          {
+            "node": "Bind Email Reservation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bind Email Reservation": {
+      "main": [
+        [
+          {
+            "node": "Email Reserved?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Reserved?": {
+      "main": [
+        [
+          {
+            "node": "Begin Email Attempt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Begin Email Attempt": {
+      "main": [
+        [
+          {
+            "node": "Bind Email Authorization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bind Email Authorization": {
+      "main": [
+        [
+          {
+            "node": "Email Attempt Authorized?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Attempt Authorized?": {
+      "main": [
+        [
+          {
+            "node": "Send Email - Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classify Email Receipt": {
+      "main": [
+        [
+          {
+            "node": "Log Email Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Gmail MIME": {
+      "main": [
+        [
+          {
+            "node": "Reserve Approved Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Sender Profile": {
+      "main": [
+        [
+          {
+            "node": "Verify Sender Profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify Sender Profile": {
+      "main": [
+        [
+          {
             "node": "Prepare Email Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Is Followup?": {
+      "main": [
+        [
+          {
+            "node": "Load Previous Gmail Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Gmail MIME",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Previous Gmail Message": {
+      "main": [
+        [
+          {
+            "node": "Bind Previous Gmail Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bind Previous Gmail Message": {
+      "main": [
+        [
+          {
+            "node": "Build Gmail MIME",
             "type": "main",
             "index": 0
           }
@@ -377,15 +824,10 @@
       ]
     }
   },
-  "active": false,
-  "settings": {
-    "executionOrder": "v1"
-  },
-  "versionId": "98115392-08a5-498b-a9c3-7c1b9031af3e",
+  "pinData": {},
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
   },
-  "id": "gTjsUEP8VLlxKfWf",
-  "tags": []
+  "active": false
 }

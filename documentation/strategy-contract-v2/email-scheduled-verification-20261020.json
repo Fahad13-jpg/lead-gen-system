@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-20T15:01:17.754Z",
+  "execution": "1",
+  "provider_accepted": true,
+  "retry_allowed": false,
+  "id": "1a159d4baddde4e9",
+  "threadId": "1a159d4baddde4e9",
+  "scope": "native timer and Gmail transport; isolated SQLite; no production SQL campaign activation",
+  "production_changed": false
+}

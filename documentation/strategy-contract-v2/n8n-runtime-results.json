@@ -1,0 +1,68 @@
+{
+  "n8n_runtime": true,
+  "network": "none",
+  "cases": [
+    {
+      "case": "template",
+      "pass": true,
+      "execution_authorized": false
+    },
+    {
+      "case": "disabled",
+      "pass": true,
+      "execution_authorized": false
+    },
+    {
+      "case": "valid",
+      "pass": true,
+      "execution_authorized": false
+    },
+    {
+      "case": "malformed",
+      "pass": true,
+      "execution_authorized": false
+    },
+    {
+      "case": "truncated",
+      "pass": true,
+      "execution_authorized": false
+    },
+    {
+      "case": "unknown_reference",
+      "pass": true,
+      "execution_authorized": false
+    }
+  ],
+  "preview_cases": [
+    {
+      "pass": true,
+      "mode": "template"
+    },
+    {
+      "pass": true,
+      "mode": "ai"
+    },
+    {
+      "pass": true,
+      "mode": "ai"
+    },
+    {
+      "pass": true,
+      "mode": "ai"
+    },
+    {
+      "pass": true,
+      "mode": "ai"
+    },
+    {
+      "pass": true,
+      "mode": "ai"
+    }
+  ],
+  "container": "strategy-v2-runtime-crypto-20261013",
+  "crypto_allowlisted": true,
+  "required_configuration": {
+    "NODE_FUNCTION_ALLOW_BUILTIN": "crypto"
+  },
+  "default_configuration_failure": "VMError: Cannot find module crypto"
+}

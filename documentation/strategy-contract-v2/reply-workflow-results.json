@@ -1,0 +1,31 @@
+{
+  "cases": [
+    {
+      "saved": true,
+      "activity_id": 2,
+      "complete": true,
+      "events": 1
+    },
+    {
+      "saved": true,
+      "activity_id": 3,
+      "complete": false,
+      "events": 1
+    },
+    {
+      "saved": true,
+      "activity_id": 1,
+      "complete": true,
+      "events": 0
+    },
+    {
+      "saved": true,
+      "activity_id": 4,
+      "complete": true,
+      "events": 0
+    }
+  ],
+  "network": "none",
+  "real_providers": false,
+  "sql": "mocked; separately scratch tested"
+}

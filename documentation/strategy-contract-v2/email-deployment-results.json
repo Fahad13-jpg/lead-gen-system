@@ -1,0 +1,15 @@
+{
+  "deployed_at": "2026-10-15T03:53:53.023Z",
+  "migration": 20,
+  "workflows": [
+    "27W04lgTGdgFMWUx",
+    "gTjsUEP8VLlxKfWf"
+  ],
+  "email_active": false,
+  "transport_blocked": true,
+  "ai_allowance": 0,
+  "api_smoke_passed": true,
+  "activities_plans_ledgers_and_activation_unchanged": true,
+  "provider_calls": 0,
+  "sends": 0
+}

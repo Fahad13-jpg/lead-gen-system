@@ -1,0 +1,27 @@
+'use strict';
+const assert=require('node:assert/strict'),vm=require('node:vm');
+const w=require('../../workflows/06B_ai_deep_research.json');
+const node=name=>w.nodes.find(n=>n.name===name);
+assert(!node('Run Enrichment Worker'));
+for(const n of w.nodes.filter(n=>n.type.endsWith('.code')))new Function(n.parameters.jsCode);
+const run=(name,json,previous={})=>vm.runInNewContext('(function(){'+node(name).parameters.jsCode+'})()',{$json:json,$:name=>({item:{json:previous[name]}})});
+const input={id:1,lease:'a'.repeat(32),input:{lead:{company_name:'Test Clinic'},basic:{status:'complete',evidence:[{type:'website_description',value:'Dental implants and checkups.',source_url:'https://clinic.example'}]},campaign:{offer:'Clinic website demo'}}};
+const p=run('Prepare Evidence and AI Request',input);
+const spaced=structuredClone(input);spaced.input.basic.evidence[0].value='Dental\n  implants and checkups.';
+assert.equal(run('Prepare Evidence and AI Request',spaced).evidence[0].text,'Dental implants and checkups.');
+const encoded=structuredClone(input);encoded.input.basic.evidence[0].value='AI &amp; Software &#038; Design&nbsp;Services';
+assert.equal(run('Prepare Evidence and AI Request',encoded).evidence[0].text,'AI & Software & Design Services');
+assert.equal(p.evidence.length,1);assert.equal(p.request.model,'openai/gpt-oss-120b');
+const body={choices:[{finish_reason:'stop',message:{content:JSON.stringify({facts:[{evidence_id:'e1',quote:'Dental implants'}],product_fit:[],outreach_angles:[],unknowns:[]})}}],usage:{total_tokens:500}};
+const result=run('Validate AI Evidence',{statusCode:200,body},{'Prepare Evidence and AI Request':p});assert.equal(result.result.ai_research.status,'review_required');
+body.choices[0].message.content=JSON.stringify({facts:[{evidence_id:'e1',quote:'Dental implants'}],product_fit:[{text:'This clinic needs a revenue improvement campaign.',evidence_ids:['e1']}],outreach_angles:[{text:'Promise more patients.',evidence_ids:['e1']}],unknowns:[]});
+const guarded=run('Validate AI Evidence',{statusCode:200,body},{'Prepare Evidence and AI Request':p}).result.ai_research.analysis;
+assert.equal(guarded.usage,'source_excerpts_only');assert.equal(guarded.product_fit.length,0);assert.equal(guarded.outreach_angles.length,0);assert.equal(guarded.rejected_recommendations,2);
+body.choices[0].message.content=JSON.stringify({facts:[{evidence_id:'e1',quote:'Invented revenue'}],product_fit:[],outreach_angles:[],unknowns:[]});
+assert.equal(run('Validate AI Evidence',{statusCode:200,body},{'Prepare Evidence and AI Request':p}).result.ai_research.status,'invalid_output');
+assert.equal(run('Validate AI Evidence',{statusCode:429},{'Prepare Evidence and AI Request':p}).result.ai_research.status,'rate_limited');
+const large=structuredClone(input);large.input.basic.evidence=Array.from({length:35},(_,i)=>({type:'website_description',value:'文'.repeat(1900)+i,source_url:'https://clinic.example/'+i}));
+const limited=run('Prepare Evidence and AI Request',large);assert(Buffer.byteLength(limited.request.messages[1].content)<3501);
+assert.equal(node('Groq Evidence Analysis').retryOnFail,false);
+for(const [from,groups] of Object.entries(w.connections)){assert(node(from));for(const links of Object.values(groups))for(const group of links)for(const link of group)assert(node(link.node));}
+console.log('PASS native graph, sandbox code, model request, byte cap, citations, 429 handling and disabled retries');

@@ -1,0 +1,10 @@
+Container: lead_diag_pg_20261011
+Database: scratch_v2_release_20261014
+Role: v2_scratch_runtime (non-superuser, inherits existing owner privileges)
+Backup: 2026-10-11 saved dump; not a fresh production snapshot
+BEGIN
+SET
+DO
+PASS: non-superuser, zero allowance, one reservation, repeated recheck, tenant, fingerprint, expiry, disabled planner, v2 save/replay, database hash, approval, fallback acknowledgement, stale/malformed approval, v1 save, superseded input
+ROLLBACK
+Fixture writes rolled back. No model calls.

@@ -1,0 +1,17 @@
+{
+  "name": "lead-dashboard-private-auth",
+  "private": true,
+  "version": "0.1.0",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "firebase-admin": "14.5.0",
+    "google-auth-library": "11.3.3",
+    "pg": "8.23.1"
+  },
+  "scripts": {
+    "start:local": "node start-local-auth.cjs"
+  }
+}

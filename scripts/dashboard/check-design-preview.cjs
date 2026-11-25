@@ -1,0 +1,50 @@
+// Local fixture preview only. Never connects to n8n or providers.
+const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const fs = require('node:fs');
+const path = require('node:path');
+const assert = require('node:assert/strict');
+(async () => {
+  const output = path.resolve('.local/dashboard-preview');
+  fs.mkdirSync(output, { recursive: true });
+  const browser = await chromium.launch({ channel: 'chrome', headless: true });
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1080 } });
+  const errors = [], requests = [];
+  page.on('pageerror', e => errors.push(e.message));
+  page.on('request', r => requests.push(r.url()));
+  try {
+    await page.goto('http://127.0.0.1:3001/design-preview');
+    await page.getByRole('heading', { name: 'Your workspace, at a glance.' }).waitFor();
+    await page.evaluate(() => Promise.race([document.fonts.ready, new Promise(resolve => setTimeout(resolve, 5000))]));
+    assert.equal(await page.locator('.dp-snapshot .dp-stat').count(), 3);
+    await page.screenshot({ path: path.join(output, 'overview-desktop.png'), fullPage: true });
+    await page.getByRole('button', { name: 'Leads', exact: true }).click();
+    assert.equal(await page.locator('tbody tr').count(), 5);
+    await page.getByRole('button', { name: 'Strong fit' }).click();
+    assert.equal(await page.locator('tbody tr').count(), 2);
+    await page.getByRole('searchbox').fill('no-such-business');
+    await page.getByRole('heading', { name: 'No matching businesses' }).waitFor();
+    await page.getByRole('button', { name: 'Clear filters' }).click();
+    await page.screenshot({ path: path.join(output, 'leads-desktop.png'), fullPage: true });
+    await page.getByRole('button', { name: 'View Willow Dental Care', exact: true }).click();
+    await page.getByRole('heading', { name: 'Willow Dental Care' }).waitFor();
+    assert.match(await page.locator('main').innerText(), /website fetch failed/i);
+    await page.getByRole('button', { name: 'Back to leads' }).click();
+    await page.setViewportSize({ width: 390, height: 844 });
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Leads page overflows at 390px');
+    await page.screenshot({ path: path.join(output, 'leads-mobile.png'), fullPage: true });
+    await page.getByRole('button', { name: 'Open navigation' }).click();
+    await page.getByRole('button', { name: 'Overview', exact: true }).click();
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Overview page overflows at 390px');
+    await page.screenshot({ path: path.join(output, 'overview-mobile.png'), fullPage: true });
+    await page.getByRole('textbox', { name: 'Search sample leads' }).fill('Cedar');
+    await page.getByRole('textbox', { name: 'Search sample leads' }).press('Enter');
+    assert.equal(await page.locator('tbody tr').count(), 1);
+    await page.getByRole('button', { name: 'Preview notifications' }).click();
+    await page.getByRole('status').filter({ hasText: 'Notifications are illustrative' }).waitFor();
+    assert.deepEqual(errors, []);
+    const allowed = url => ['http://127.0.0.1:3001', 'https://fonts.googleapis.com', 'https://fonts.gstatic.com'].includes(new URL(url).origin);
+    assert.ok(requests.every(allowed), 'Unexpected request: ' + requests.filter(url => !allowed(url)).join(', '));
+    assert.ok(requests.every(url => !url.includes('/webhook')));
+    console.log(JSON.stringify({ passed: true, checks: ['overview renders', 'sample count panels', '5 fixture leads', 'fit filter', 'empty state', 'filter reset', 'lead details', 'mobile navigation', 'mobile header search', 'notification preview notice', 'no page overflow at 390px', 'no JavaScript errors', 'no backend or provider requests'], inherited_google_fonts_requested: requests.some(url => new URL(url).hostname === 'fonts.googleapis.com'), screenshots: output }, null, 2));
+  } finally { await browser.close(); }
+})().catch(e => { console.error(e.message); process.exitCode = 1; });

@@ -1,0 +1,2 @@
+import {csvCell,csvDocument}from'./leadCsv';
+test('CSV escapes delimiters, quotes and spreadsheet formulas without stripping contact data',()=>{expect(csvCell('=HYPERLINK("bad")')).toBe('"\'=HYPERLINK(""bad"")"');expect(csvCell('+923001234567')).toBe('"\'+923001234567"');expect(csvCell('a,b\nc')).toBe('"a,b\nc"');expect(csvDocument(['Business'],[['Clinic']])).toContain('"Business"\r\n"Clinic"');});

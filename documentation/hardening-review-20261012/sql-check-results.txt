@@ -1,0 +1,6 @@
+SQL/JS source-stamp parity: 84 stored records PASS
+BEGIN
+DO
+PASS: source isolation, permissions, stale-plan rejection, lead 167 warning/presence, signal forwarding, failed/all-unusable refresh retention, social-only projection, assessment status, STABLE volatility, retry state and stale lease
+ROLLBACK
+All fixtures rolled back. No live database writes.

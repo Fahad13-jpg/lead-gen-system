@@ -1,0 +1,18 @@
+# Optional account/SMS resources. Sending remains disabled in the base settings.
+services:
+  gateway:
+    secrets:
+      - source: sms-config
+        target: /opt/leadgen/.local/sms-gate/config.json
+      - source: sms-encryption-key
+        target: /opt/leadgen/.local/sms-gate/encryption.key
+      - source: calling-encryption-key
+        target: /opt/leadgen/.local/calling-accounts/encryption.key
+      - source: calling-tools-config
+        target: /opt/leadgen/.local/calling-tools-20261028/private.json
+    ports: [127.0.0.1:3012:3012]
+secrets:
+  sms-config: {file: "${SMS_CONFIG_FILE:?Set the reviewed SMS callback config}"}
+  sms-encryption-key: {file: "${SMS_ENCRYPTION_KEY_FILE:?Set the existing SMS encryption key}"}
+  calling-encryption-key: {file: "${CALLING_ENCRYPTION_KEY_FILE:?Set the existing calling-account key}"}
+  calling-tools-config: {file: "${CALLING_TOOLS_CONFIG_FILE:?Set the reviewed calling-tools configuration}"}

@@ -1,0 +1,12 @@
+--- a/docker-compose.yml
++++ b/docker-compose.yml
+@@
+   n8n:
+     image: n8nio/n8n
+     container_name: n8n
+     restart: always
++    sysctls:
++      net.ipv6.conf.all.disable_ipv6: "1"
++      net.ipv6.conf.default.disable_ipv6: "1"
+     ports:
+       - "5678:5678"

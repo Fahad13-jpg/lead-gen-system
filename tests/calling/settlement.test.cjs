@@ -1,0 +1,10 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict');
+const {prepare,settle}=require('../../scripts/calling/settlement.cjs');
+const b={org_id:1,activity_id:12,lease:'fixture',connection_ref:'connection',provider_call_id:'call'};
+const receipt=(provider,cost)=>({...b,provider,micro_usd:cost,final:true,verified:true,currency:'USD',evidence_ref:'receipt-'+provider});
+test('combines AI and separately billed carrier with stable evidence',()=>{const r=[receipt('retell',100000),receipt('carrier',20000)];const a=prepare(b,r,['retell','carrier']);assert.equal(a.total_micro_usd,120000);assert.equal(a.evidence_ref,prepare(b,[...r].reverse(),['retell','carrier']).evidence_ref);});
+test('missing or duplicate provider receipts cannot release reservation',()=>{assert.throws(()=>prepare(b,[receipt('retell',100)],['retell','carrier']));assert.throws(()=>prepare(b,[receipt('retell',100),receipt('retell',100)],['retell','carrier']));});
+test('wrong tenant, call, currency or partial receipt rejected',()=>{for(const patch of [{org_id:2},{provider_call_id:'other'},{currency:'PKR'},{final:false},{verified:false},{micro_usd:-1},{micro_usd:1.5}])assert.throws(()=>prepare(b,[{...receipt('retell',100),...patch}],['retell']));});
+test('unknown settlement commit retains reconciliation status',async()=>{const r=await settle(b,[receipt('retell',100)],['retell'],{mode:'mock',executeQuery:async()=>{throw Error('timeout');}});assert.equal(r.reason,'settlement_commit_unknown');});
+test('live settlement unavailable until provider billing mapping is verified',async()=>{await assert.rejects(settle(b,[receipt('retell',100)],['retell'],{mode:'live'}),/LIVE_SETTLEMENT/);});

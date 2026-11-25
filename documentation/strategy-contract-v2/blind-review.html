@@ -1,0 +1,981 @@
+<!doctype html><meta charset="utf-8"><title>Strategy v2 offline blind review</title><style>body{font:16px system-ui;margin:32px;max-width:1500px} .pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}article{border:1px solid #ccc;padding:20px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}textarea{width:95%}@media(max-width:750px){.pair{grid-template-columns:1fr}}</style><h1>Strategy v2: blind contract review</h1><p>MOCKED responses and synthetic channel permissions. No real AI quality claim, no sends, no ratings assigned. Use RATING-RUBRIC.md. Ratings entered here are not saved; print or copy your notes. Answer key is a separate file.</p><section><h2>167 — Fiaz Dental Care</h2><div class="pair"><article><h3>A</h3><p>Fit: strong</p><pre>{
+  &quot;fit&quot;: &quot;strong&quot;,
+  &quot;fit_notes&quot;: [
+    &quot;The deterministic assessment flags an unfinished template; confirm relevance with the business.&quot;
+  ],
+  &quot;angle_id&quot;: &quot;a1&quot;,
+  &quot;channel_plan&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;reason&quot;: &quot;First permitted channel.&quot;
+    }
+  ],
+  &quot;step1&quot;: {
+    &quot;channel&quot;: &quot;whatsapp&quot;,
+    &quot;parts&quot;: [
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;greeting&quot;,
+        &quot;text&quot;: &quot;Hello Fiaz Dental Care,&quot;
+      },
+      {
+        &quot;type&quot;: &quot;offer&quot;,
+        &quot;ref&quot;: &quot;b1&quot;,
+        &quot;text&quot;: &quot;The demonstration includes an enquiry form.&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;cta&quot;,
+        &quot;text&quot;: &quot;Would you like to review the demonstration?&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;sender&quot;,
+        &quot;text&quot;: &quot;Demo Sender — Example Studio&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;opt_out&quot;,
+        &quot;text&quot;: &quot;Reply STOP to opt out.&quot;
+      }
+    ]
+  },
+  &quot;followups&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;intent&quot;: &quot;Offer one approved demonstration only if the prospect expresses interest; stop after opt-out.&quot;
+    }
+  ],
+  &quot;call_guidance&quot;: {
+    &quot;opening&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;opening&quot;,
+      &quot;text&quot;: &quot;Hello, this is Demo Sender from Example Studio.&quot;
+    },
+    &quot;permission_question&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;permission&quot;,
+      &quot;text&quot;: &quot;Is now a suitable time for a brief explanation?&quot;
+    },
+    &quot;objections&quot;: [
+      {
+        &quot;kind&quot;: &quot;busy&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;busy&quot;,
+          &quot;text&quot;: &quot;Would you prefer that I leave it here?&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;not_interested&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;not_interested&quot;,
+          &quot;text&quot;: &quot;Thank you for your time. I will leave it here.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;unknown&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;unknown&quot;,
+          &quot;text&quot;: &quot;A team member can answer that; I do not want to guess.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;opt_out&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;stop&quot;,
+          &quot;text&quot;: &quot;I will stop and record your opt-out request.&quot;
+        }
+      }
+    ]
+  },
+  &quot;review_flags&quot;: [
+    &quot;thin_evidence&quot;
+  ],
+  &quot;personalization_level&quot;: &quot;category_level&quot;
+}</pre><label>Human rating / notes (unscored)<textarea rows="5"></textarea></label></article><article><h3>B</h3><p>Fit: strong</p><pre>{
+  &quot;fit&quot;: &quot;strong&quot;,
+  &quot;fit_notes&quot;: [
+    &quot;The qualifier suggests potential fit; the business has not confirmed a need or buying intent.&quot;
+  ],
+  &quot;angle_id&quot;: &quot;a1&quot;,
+  &quot;channel_plan&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;reason&quot;: &quot;First permitted channel.&quot;
+    }
+  ],
+  &quot;step1&quot;: {
+    &quot;channel&quot;: &quot;whatsapp&quot;,
+    &quot;parts&quot;: [
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;greeting&quot;,
+        &quot;text&quot;: &quot;Hello Fiaz Dental Care,&quot;
+      },
+      {
+        &quot;type&quot;: &quot;offer&quot;,
+        &quot;ref&quot;: &quot;b1&quot;,
+        &quot;text&quot;: &quot;The demonstration includes an enquiry form.&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;cta&quot;,
+        &quot;text&quot;: &quot;Would you like to review the demonstration?&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;sender&quot;,
+        &quot;text&quot;: &quot;Demo Sender — Example Studio&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;opt_out&quot;,
+        &quot;text&quot;: &quot;Reply STOP to opt out.&quot;
+      }
+    ]
+  },
+  &quot;followups&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;intent&quot;: &quot;Ask whether the approved offer is relevant; stop on reply or opt-out.&quot;
+    }
+  ],
+  &quot;call_guidance&quot;: {
+    &quot;opening&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;opening&quot;,
+      &quot;text&quot;: &quot;Hello, this is Demo Sender from Example Studio.&quot;
+    },
+    &quot;permission_question&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;permission&quot;,
+      &quot;text&quot;: &quot;Is now a suitable time for a brief explanation?&quot;
+    },
+    &quot;objections&quot;: [
+      {
+        &quot;kind&quot;: &quot;busy&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;busy&quot;,
+          &quot;text&quot;: &quot;Would you prefer that I leave it here?&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;not_interested&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;not_interested&quot;,
+          &quot;text&quot;: &quot;Thank you for your time. I will leave it here.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;unknown&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;unknown&quot;,
+          &quot;text&quot;: &quot;A team member can answer that; I do not want to guess.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;opt_out&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;stop&quot;,
+          &quot;text&quot;: &quot;I will stop and record your opt-out request.&quot;
+        }
+      }
+    ]
+  },
+  &quot;review_flags&quot;: [
+    &quot;thin_evidence&quot;
+  ],
+  &quot;personalization_level&quot;: &quot;category_level&quot;
+}</pre><label>Human rating / notes (unscored)<textarea rows="5"></textarea></label></article></div></section>
+<section><h2>445 — Islamabad Dental Clinic</h2><div class="pair"><article><h3>A</h3><p>Fit: unclear</p><pre>{
+  &quot;fit&quot;: &quot;unclear&quot;,
+  &quot;fit_notes&quot;: [
+    &quot;Offer relevance is unconfirmed. Do not infer a missing website or a business need.&quot;
+  ],
+  &quot;angle_id&quot;: null,
+  &quot;channel_plan&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;reason&quot;: &quot;First permitted channel.&quot;
+    }
+  ],
+  &quot;step1&quot;: {
+    &quot;channel&quot;: &quot;whatsapp&quot;,
+    &quot;parts&quot;: [
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;greeting&quot;,
+        &quot;text&quot;: &quot;Hello Islamabad Dental Clinic,&quot;
+      },
+      {
+        &quot;type&quot;: &quot;offer&quot;,
+        &quot;ref&quot;: &quot;b1&quot;,
+        &quot;text&quot;: &quot;The demonstration includes an enquiry form.&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;cta&quot;,
+        &quot;text&quot;: &quot;Would you like to review the demonstration?&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;sender&quot;,
+        &quot;text&quot;: &quot;Demo Sender — Example Studio&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;opt_out&quot;,
+        &quot;text&quot;: &quot;Reply STOP to opt out.&quot;
+      }
+    ]
+  },
+  &quot;followups&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;intent&quot;: &quot;Ask whether the approved offer is relevant; stop on reply or opt-out.&quot;
+    }
+  ],
+  &quot;call_guidance&quot;: {
+    &quot;opening&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;opening&quot;,
+      &quot;text&quot;: &quot;Hello, this is Demo Sender from Example Studio.&quot;
+    },
+    &quot;permission_question&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;permission&quot;,
+      &quot;text&quot;: &quot;Is now a suitable time for a brief explanation?&quot;
+    },
+    &quot;objections&quot;: [
+      {
+        &quot;kind&quot;: &quot;busy&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;busy&quot;,
+          &quot;text&quot;: &quot;Would you prefer that I leave it here?&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;not_interested&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;not_interested&quot;,
+          &quot;text&quot;: &quot;Thank you for your time. I will leave it here.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;unknown&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;unknown&quot;,
+          &quot;text&quot;: &quot;A team member can answer that; I do not want to guess.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;opt_out&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;stop&quot;,
+          &quot;text&quot;: &quot;I will stop and record your opt-out request.&quot;
+        }
+      }
+    ]
+  },
+  &quot;review_flags&quot;: [
+    &quot;thin_evidence&quot;,
+    &quot;fit_not_established&quot;
+  ],
+  &quot;personalization_level&quot;: &quot;category_level&quot;
+}</pre><label>Human rating / notes (unscored)<textarea rows="5"></textarea></label></article><article><h3>B</h3><p>Fit: unclear</p><pre>{
+  &quot;fit&quot;: &quot;unclear&quot;,
+  &quot;fit_notes&quot;: [
+    &quot;The stored listing does not establish website absence. Ask about relevance without asserting a missing website.&quot;
+  ],
+  &quot;angle_id&quot;: null,
+  &quot;channel_plan&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;reason&quot;: &quot;First permitted channel.&quot;
+    }
+  ],
+  &quot;step1&quot;: {
+    &quot;channel&quot;: &quot;whatsapp&quot;,
+    &quot;parts&quot;: [
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;greeting&quot;,
+        &quot;text&quot;: &quot;Hello Islamabad Dental Clinic,&quot;
+      },
+      {
+        &quot;type&quot;: &quot;offer&quot;,
+        &quot;ref&quot;: &quot;b1&quot;,
+        &quot;text&quot;: &quot;The demonstration includes an enquiry form.&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;cta&quot;,
+        &quot;text&quot;: &quot;Would you like to review the demonstration?&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;sender&quot;,
+        &quot;text&quot;: &quot;Demo Sender — Example Studio&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;opt_out&quot;,
+        &quot;text&quot;: &quot;Reply STOP to opt out.&quot;
+      }
+    ]
+  },
+  &quot;followups&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;intent&quot;: &quot;Offer one approved demonstration only if the prospect expresses interest; stop after opt-out.&quot;
+    }
+  ],
+  &quot;call_guidance&quot;: {
+    &quot;opening&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;opening&quot;,
+      &quot;text&quot;: &quot;Hello, this is Demo Sender from Example Studio.&quot;
+    },
+    &quot;permission_question&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;permission&quot;,
+      &quot;text&quot;: &quot;Is now a suitable time for a brief explanation?&quot;
+    },
+    &quot;objections&quot;: [
+      {
+        &quot;kind&quot;: &quot;busy&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;busy&quot;,
+          &quot;text&quot;: &quot;Would you prefer that I leave it here?&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;not_interested&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;not_interested&quot;,
+          &quot;text&quot;: &quot;Thank you for your time. I will leave it here.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;unknown&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;unknown&quot;,
+          &quot;text&quot;: &quot;A team member can answer that; I do not want to guess.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;opt_out&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;stop&quot;,
+          &quot;text&quot;: &quot;I will stop and record your opt-out request.&quot;
+        }
+      }
+    ]
+  },
+  &quot;review_flags&quot;: [
+    &quot;thin_evidence&quot;,
+    &quot;fit_not_established&quot;
+  ],
+  &quot;personalization_level&quot;: &quot;category_level&quot;
+}</pre><label>Human rating / notes (unscored)<textarea rows="5"></textarea></label></article></div></section>
+<section><h2>446 — Luminosity Dental Clinic</h2><div class="pair"><article><h3>A</h3><p>Fit: unclear</p><pre>{
+  &quot;fit&quot;: &quot;unclear&quot;,
+  &quot;fit_notes&quot;: [
+    &quot;The stored listing does not establish website absence. Ask about relevance without asserting a missing website.&quot;
+  ],
+  &quot;angle_id&quot;: null,
+  &quot;channel_plan&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;reason&quot;: &quot;First permitted channel.&quot;
+    }
+  ],
+  &quot;step1&quot;: {
+    &quot;channel&quot;: &quot;whatsapp&quot;,
+    &quot;parts&quot;: [
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;greeting&quot;,
+        &quot;text&quot;: &quot;Hello Luminosity Dental Clinic,&quot;
+      },
+      {
+        &quot;type&quot;: &quot;offer&quot;,
+        &quot;ref&quot;: &quot;b1&quot;,
+        &quot;text&quot;: &quot;The demonstration includes an enquiry form.&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;cta&quot;,
+        &quot;text&quot;: &quot;Would you like to review the demonstration?&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;sender&quot;,
+        &quot;text&quot;: &quot;Demo Sender — Example Studio&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;opt_out&quot;,
+        &quot;text&quot;: &quot;Reply STOP to opt out.&quot;
+      }
+    ]
+  },
+  &quot;followups&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;intent&quot;: &quot;Offer one approved demonstration only if the prospect expresses interest; stop after opt-out.&quot;
+    }
+  ],
+  &quot;call_guidance&quot;: {
+    &quot;opening&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;opening&quot;,
+      &quot;text&quot;: &quot;Hello, this is Demo Sender from Example Studio.&quot;
+    },
+    &quot;permission_question&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;permission&quot;,
+      &quot;text&quot;: &quot;Is now a suitable time for a brief explanation?&quot;
+    },
+    &quot;objections&quot;: [
+      {
+        &quot;kind&quot;: &quot;busy&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;busy&quot;,
+          &quot;text&quot;: &quot;Would you prefer that I leave it here?&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;not_interested&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;not_interested&quot;,
+          &quot;text&quot;: &quot;Thank you for your time. I will leave it here.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;unknown&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;unknown&quot;,
+          &quot;text&quot;: &quot;A team member can answer that; I do not want to guess.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;opt_out&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;stop&quot;,
+          &quot;text&quot;: &quot;I will stop and record your opt-out request.&quot;
+        }
+      }
+    ]
+  },
+  &quot;review_flags&quot;: [
+    &quot;thin_evidence&quot;,
+    &quot;fit_not_established&quot;
+  ],
+  &quot;personalization_level&quot;: &quot;category_level&quot;
+}</pre><label>Human rating / notes (unscored)<textarea rows="5"></textarea></label></article><article><h3>B</h3><p>Fit: unclear</p><pre>{
+  &quot;fit&quot;: &quot;unclear&quot;,
+  &quot;fit_notes&quot;: [
+    &quot;Offer relevance is unconfirmed. Do not infer a missing website or a business need.&quot;
+  ],
+  &quot;angle_id&quot;: null,
+  &quot;channel_plan&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;reason&quot;: &quot;First permitted channel.&quot;
+    }
+  ],
+  &quot;step1&quot;: {
+    &quot;channel&quot;: &quot;whatsapp&quot;,
+    &quot;parts&quot;: [
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;greeting&quot;,
+        &quot;text&quot;: &quot;Hello Luminosity Dental Clinic,&quot;
+      },
+      {
+        &quot;type&quot;: &quot;offer&quot;,
+        &quot;ref&quot;: &quot;b1&quot;,
+        &quot;text&quot;: &quot;The demonstration includes an enquiry form.&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;cta&quot;,
+        &quot;text&quot;: &quot;Would you like to review the demonstration?&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;sender&quot;,
+        &quot;text&quot;: &quot;Demo Sender — Example Studio&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;opt_out&quot;,
+        &quot;text&quot;: &quot;Reply STOP to opt out.&quot;
+      }
+    ]
+  },
+  &quot;followups&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;intent&quot;: &quot;Ask whether the approved offer is relevant; stop on reply or opt-out.&quot;
+    }
+  ],
+  &quot;call_guidance&quot;: {
+    &quot;opening&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;opening&quot;,
+      &quot;text&quot;: &quot;Hello, this is Demo Sender from Example Studio.&quot;
+    },
+    &quot;permission_question&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;permission&quot;,
+      &quot;text&quot;: &quot;Is now a suitable time for a brief explanation?&quot;
+    },
+    &quot;objections&quot;: [
+      {
+        &quot;kind&quot;: &quot;busy&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;busy&quot;,
+          &quot;text&quot;: &quot;Would you prefer that I leave it here?&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;not_interested&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;not_interested&quot;,
+          &quot;text&quot;: &quot;Thank you for your time. I will leave it here.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;unknown&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;unknown&quot;,
+          &quot;text&quot;: &quot;A team member can answer that; I do not want to guess.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;opt_out&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;stop&quot;,
+          &quot;text&quot;: &quot;I will stop and record your opt-out request.&quot;
+        }
+      }
+    ]
+  },
+  &quot;review_flags&quot;: [
+    &quot;thin_evidence&quot;,
+    &quot;fit_not_established&quot;
+  ],
+  &quot;personalization_level&quot;: &quot;category_level&quot;
+}</pre><label>Human rating / notes (unscored)<textarea rows="5"></textarea></label></article></div></section>
+<section><h2>447 — The Dental Care Clinic ( Dr.Shahnawaz Ahmed)</h2><div class="pair"><article><h3>A</h3><p>Fit: unclear</p><pre>{
+  &quot;fit&quot;: &quot;unclear&quot;,
+  &quot;fit_notes&quot;: [
+    &quot;The stored listing does not establish website absence. Ask about relevance without asserting a missing website.&quot;
+  ],
+  &quot;angle_id&quot;: null,
+  &quot;channel_plan&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;reason&quot;: &quot;First permitted channel.&quot;
+    }
+  ],
+  &quot;step1&quot;: {
+    &quot;channel&quot;: &quot;whatsapp&quot;,
+    &quot;parts&quot;: [
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;greeting&quot;,
+        &quot;text&quot;: &quot;Hello The Dental Care Clinic ( Dr.Shahnawaz Ahmed),&quot;
+      },
+      {
+        &quot;type&quot;: &quot;offer&quot;,
+        &quot;ref&quot;: &quot;b1&quot;,
+        &quot;text&quot;: &quot;The demonstration includes an enquiry form.&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;cta&quot;,
+        &quot;text&quot;: &quot;Would you like to review the demonstration?&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;sender&quot;,
+        &quot;text&quot;: &quot;Demo Sender — Example Studio&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;opt_out&quot;,
+        &quot;text&quot;: &quot;Reply STOP to opt out.&quot;
+      }
+    ]
+  },
+  &quot;followups&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;intent&quot;: &quot;Offer one approved demonstration only if the prospect expresses interest; stop after opt-out.&quot;
+    }
+  ],
+  &quot;call_guidance&quot;: {
+    &quot;opening&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;opening&quot;,
+      &quot;text&quot;: &quot;Hello, this is Demo Sender from Example Studio.&quot;
+    },
+    &quot;permission_question&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;permission&quot;,
+      &quot;text&quot;: &quot;Is now a suitable time for a brief explanation?&quot;
+    },
+    &quot;objections&quot;: [
+      {
+        &quot;kind&quot;: &quot;busy&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;busy&quot;,
+          &quot;text&quot;: &quot;Would you prefer that I leave it here?&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;not_interested&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;not_interested&quot;,
+          &quot;text&quot;: &quot;Thank you for your time. I will leave it here.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;unknown&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;unknown&quot;,
+          &quot;text&quot;: &quot;A team member can answer that; I do not want to guess.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;opt_out&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;stop&quot;,
+          &quot;text&quot;: &quot;I will stop and record your opt-out request.&quot;
+        }
+      }
+    ]
+  },
+  &quot;review_flags&quot;: [
+    &quot;thin_evidence&quot;,
+    &quot;fit_not_established&quot;
+  ],
+  &quot;personalization_level&quot;: &quot;category_level&quot;
+}</pre><label>Human rating / notes (unscored)<textarea rows="5"></textarea></label></article><article><h3>B</h3><p>Fit: unclear</p><pre>{
+  &quot;fit&quot;: &quot;unclear&quot;,
+  &quot;fit_notes&quot;: [
+    &quot;Offer relevance is unconfirmed. Do not infer a missing website or a business need.&quot;
+  ],
+  &quot;angle_id&quot;: null,
+  &quot;channel_plan&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;reason&quot;: &quot;First permitted channel.&quot;
+    }
+  ],
+  &quot;step1&quot;: {
+    &quot;channel&quot;: &quot;whatsapp&quot;,
+    &quot;parts&quot;: [
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;greeting&quot;,
+        &quot;text&quot;: &quot;Hello The Dental Care Clinic ( Dr.Shahnawaz Ahmed),&quot;
+      },
+      {
+        &quot;type&quot;: &quot;offer&quot;,
+        &quot;ref&quot;: &quot;b1&quot;,
+        &quot;text&quot;: &quot;The demonstration includes an enquiry form.&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;cta&quot;,
+        &quot;text&quot;: &quot;Would you like to review the demonstration?&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;sender&quot;,
+        &quot;text&quot;: &quot;Demo Sender — Example Studio&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;opt_out&quot;,
+        &quot;text&quot;: &quot;Reply STOP to opt out.&quot;
+      }
+    ]
+  },
+  &quot;followups&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;intent&quot;: &quot;Ask whether the approved offer is relevant; stop on reply or opt-out.&quot;
+    }
+  ],
+  &quot;call_guidance&quot;: {
+    &quot;opening&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;opening&quot;,
+      &quot;text&quot;: &quot;Hello, this is Demo Sender from Example Studio.&quot;
+    },
+    &quot;permission_question&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;permission&quot;,
+      &quot;text&quot;: &quot;Is now a suitable time for a brief explanation?&quot;
+    },
+    &quot;objections&quot;: [
+      {
+        &quot;kind&quot;: &quot;busy&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;busy&quot;,
+          &quot;text&quot;: &quot;Would you prefer that I leave it here?&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;not_interested&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;not_interested&quot;,
+          &quot;text&quot;: &quot;Thank you for your time. I will leave it here.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;unknown&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;unknown&quot;,
+          &quot;text&quot;: &quot;A team member can answer that; I do not want to guess.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;opt_out&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;stop&quot;,
+          &quot;text&quot;: &quot;I will stop and record your opt-out request.&quot;
+        }
+      }
+    ]
+  },
+  &quot;review_flags&quot;: [
+    &quot;thin_evidence&quot;,
+    &quot;fit_not_established&quot;
+  ],
+  &quot;personalization_level&quot;: &quot;category_level&quot;
+}</pre><label>Human rating / notes (unscored)<textarea rows="5"></textarea></label></article></div></section>
+<section><h2>449 — Zia Dental Consultants</h2><div class="pair"><article><h3>A</h3><p>Fit: weak</p><pre>{
+  &quot;fit&quot;: &quot;weak&quot;,
+  &quot;fit_notes&quot;: [
+    &quot;Current evidence indicates weak fit. Review whether this offer is relevant before pursuing it.&quot;
+  ],
+  &quot;angle_id&quot;: null,
+  &quot;channel_plan&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;reason&quot;: &quot;First permitted channel.&quot;
+    }
+  ],
+  &quot;step1&quot;: {
+    &quot;channel&quot;: &quot;whatsapp&quot;,
+    &quot;parts&quot;: [
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;greeting&quot;,
+        &quot;text&quot;: &quot;Hello Zia Dental Consultants,&quot;
+      },
+      {
+        &quot;type&quot;: &quot;offer&quot;,
+        &quot;ref&quot;: &quot;b1&quot;,
+        &quot;text&quot;: &quot;The demonstration includes an enquiry form.&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;cta&quot;,
+        &quot;text&quot;: &quot;Would you like to review the demonstration?&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;sender&quot;,
+        &quot;text&quot;: &quot;Demo Sender — Example Studio&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;opt_out&quot;,
+        &quot;text&quot;: &quot;Reply STOP to opt out.&quot;
+      }
+    ]
+  },
+  &quot;followups&quot;: [],
+  &quot;call_guidance&quot;: {
+    &quot;opening&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;opening&quot;,
+      &quot;text&quot;: &quot;Hello, this is Demo Sender from Example Studio.&quot;
+    },
+    &quot;permission_question&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;permission&quot;,
+      &quot;text&quot;: &quot;Is now a suitable time for a brief explanation?&quot;
+    },
+    &quot;objections&quot;: [
+      {
+        &quot;kind&quot;: &quot;busy&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;busy&quot;,
+          &quot;text&quot;: &quot;Would you prefer that I leave it here?&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;not_interested&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;not_interested&quot;,
+          &quot;text&quot;: &quot;Thank you for your time. I will leave it here.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;unknown&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;unknown&quot;,
+          &quot;text&quot;: &quot;A team member can answer that; I do not want to guess.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;opt_out&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;stop&quot;,
+          &quot;text&quot;: &quot;I will stop and record your opt-out request.&quot;
+        }
+      }
+    ]
+  },
+  &quot;review_flags&quot;: [
+    &quot;weak_offer_fit&quot;
+  ],
+  &quot;personalization_level&quot;: &quot;category_level&quot;
+}</pre><label>Human rating / notes (unscored)<textarea rows="5"></textarea></label></article><article><h3>B</h3><p>Fit: weak</p><pre>{
+  &quot;fit&quot;: &quot;weak&quot;,
+  &quot;fit_notes&quot;: [
+    &quot;Existing site evidence supports a weak website offer fit; avoid asserting a need to replace it.&quot;
+  ],
+  &quot;angle_id&quot;: null,
+  &quot;channel_plan&quot;: [
+    {
+      &quot;channel&quot;: &quot;whatsapp&quot;,
+      &quot;reason&quot;: &quot;First permitted channel.&quot;
+    }
+  ],
+  &quot;step1&quot;: {
+    &quot;channel&quot;: &quot;whatsapp&quot;,
+    &quot;parts&quot;: [
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;greeting&quot;,
+        &quot;text&quot;: &quot;Hello Zia Dental Consultants,&quot;
+      },
+      {
+        &quot;type&quot;: &quot;offer&quot;,
+        &quot;ref&quot;: &quot;b1&quot;,
+        &quot;text&quot;: &quot;The demonstration includes an enquiry form.&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;cta&quot;,
+        &quot;text&quot;: &quot;Would you like to review the demonstration?&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;sender&quot;,
+        &quot;text&quot;: &quot;Demo Sender — Example Studio&quot;
+      },
+      {
+        &quot;type&quot;: &quot;copy&quot;,
+        &quot;ref&quot;: &quot;opt_out&quot;,
+        &quot;text&quot;: &quot;Reply STOP to opt out.&quot;
+      }
+    ]
+  },
+  &quot;followups&quot;: [],
+  &quot;call_guidance&quot;: {
+    &quot;opening&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;opening&quot;,
+      &quot;text&quot;: &quot;Hello, this is Demo Sender from Example Studio.&quot;
+    },
+    &quot;permission_question&quot;: {
+      &quot;type&quot;: &quot;copy&quot;,
+      &quot;ref&quot;: &quot;permission&quot;,
+      &quot;text&quot;: &quot;Is now a suitable time for a brief explanation?&quot;
+    },
+    &quot;objections&quot;: [
+      {
+        &quot;kind&quot;: &quot;busy&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;busy&quot;,
+          &quot;text&quot;: &quot;Would you prefer that I leave it here?&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;not_interested&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;not_interested&quot;,
+          &quot;text&quot;: &quot;Thank you for your time. I will leave it here.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;unknown&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;unknown&quot;,
+          &quot;text&quot;: &quot;A team member can answer that; I do not want to guess.&quot;
+        }
+      },
+      {
+        &quot;kind&quot;: &quot;opt_out&quot;,
+        &quot;response&quot;: {
+          &quot;type&quot;: &quot;copy&quot;,
+          &quot;ref&quot;: &quot;stop&quot;,
+          &quot;text&quot;: &quot;I will stop and record your opt-out request.&quot;
+        }
+      }
+    ]
+  },
+  &quot;review_flags&quot;: [
+    &quot;weak_offer_fit&quot;
+  ],
+  &quot;personalization_level&quot;: &quot;category_level&quot;
+}</pre><label>Human rating / notes (unscored)<textarea rows="5"></textarea></label></article></div></section>

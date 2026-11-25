@@ -1,0 +1,310 @@
+{
+  "metadata": [
+    {
+      "type": "ready",
+      "node": "v22.19.0",
+      "client": "n8n",
+      "ipv4": false,
+      "autoSelectFamily": true,
+      "dns": [
+        "127.0.0.11"
+      ],
+      "container": "lead_diag_base_20261011"
+    },
+    {
+      "type": "ready",
+      "node": "v22.19.0",
+      "client": "n8n",
+      "ipv4": true,
+      "autoSelectFamily": true,
+      "dns": [
+        "127.0.0.11"
+      ],
+      "container": "lead_diag_base_20261011"
+    },
+    {
+      "type": "ready",
+      "node": "v22.19.0",
+      "client": "fetch",
+      "ipv4": true,
+      "autoSelectFamily": true,
+      "dns": [
+        "127.0.0.11"
+      ],
+      "container": "lead_diag_base_20261011"
+    },
+    {
+      "type": "ready",
+      "node": "v22.19.0",
+      "client": "n8n",
+      "ipv4": false,
+      "autoSelectFamily": true,
+      "dns": [
+        "127.0.0.11"
+      ],
+      "container": "lead_diag_dns_20261012"
+    },
+    {
+      "type": "ready",
+      "node": "v22.19.0",
+      "client": "n8n",
+      "ipv4": true,
+      "autoSelectFamily": true,
+      "dns": [
+        "127.0.0.11"
+      ],
+      "container": "lead_diag_dns_20261012"
+    },
+    {
+      "type": "ready",
+      "node": "v22.19.0",
+      "client": "fetch",
+      "ipv4": true,
+      "autoSelectFamily": true,
+      "dns": [
+        "127.0.0.11"
+      ],
+      "container": "lead_diag_dns_20261012"
+    },
+    {
+      "type": "ready",
+      "node": "v22.19.0",
+      "client": "fetch",
+      "ipv4": false,
+      "autoSelectFamily": true,
+      "dns": [
+        "192.168.100.1"
+      ],
+      "container": "windows_host"
+    }
+  ],
+  "groups": {
+    "windows_host:fetch:default": {
+      "success": 100,
+      "total": 100,
+      "errors": {},
+      "p50_ms": 366.5,
+      "max_ms": 1664,
+      "windows": [],
+      "observed_families": [
+        "IPv4"
+      ]
+    },
+    "lead_diag_dns_20261012:n8n:default": {
+      "success": 97,
+      "total": 100,
+      "errors": {
+        "ETIMEDOUT": 3,
+        "ENETUNREACH": 3
+      },
+      "p50_ms": 701.5,
+      "max_ms": 3883,
+      "windows": [
+        {
+          "start": "2026-10-11T19:32:33.114Z",
+          "first_round": 9,
+          "count": 1,
+          "last_failure_end": "2026-10-11T19:32:34.099Z",
+          "recovered_at": "2026-10-11T19:32:43.734Z",
+          "duration_ms": 10620,
+          "host_samples": 1,
+          "host_errors": 0
+        },
+        {
+          "start": "2026-10-11T19:34:08.113Z",
+          "first_round": 47,
+          "count": 1,
+          "last_failure_end": "2026-10-11T19:34:09.349Z",
+          "recovered_at": "2026-10-11T19:34:24.868Z",
+          "duration_ms": 16755,
+          "host_samples": 1,
+          "host_errors": 0
+        },
+        {
+          "start": "2026-10-11T19:36:18.913Z",
+          "first_round": 87,
+          "count": 1,
+          "last_failure_end": "2026-10-11T19:36:19.744Z",
+          "recovered_at": "2026-10-11T19:36:28.540Z",
+          "duration_ms": 9627,
+          "host_samples": 1,
+          "host_errors": 0
+        }
+      ],
+      "observed_families": [
+        "IPv4"
+      ]
+    },
+    "lead_diag_base_20261011:n8n:default": {
+      "success": 95,
+      "total": 100,
+      "errors": {
+        "ETIMEDOUT": 5,
+        "ENETUNREACH": 5
+      },
+      "p50_ms": 545,
+      "max_ms": 2454,
+      "windows": [
+        {
+          "start": "2026-10-11T19:32:33.114Z",
+          "first_round": 9,
+          "count": 1,
+          "last_failure_end": "2026-10-11T19:32:33.710Z",
+          "recovered_at": "2026-10-11T19:32:43.734Z",
+          "duration_ms": 10620,
+          "host_samples": 1,
+          "host_errors": 0
+        },
+        {
+          "start": "2026-10-11T19:34:01.655Z",
+          "first_round": 44,
+          "count": 1,
+          "last_failure_end": "2026-10-11T19:34:02.178Z",
+          "recovered_at": "2026-10-11T19:34:03.948Z",
+          "duration_ms": 2293,
+          "host_samples": 1,
+          "host_errors": 0
+        },
+        {
+          "start": "2026-10-11T19:34:08.104Z",
+          "first_round": 47,
+          "count": 1,
+          "last_failure_end": "2026-10-11T19:34:08.649Z",
+          "recovered_at": "2026-10-11T19:34:24.868Z",
+          "duration_ms": 16764,
+          "host_samples": 1,
+          "host_errors": 0
+        },
+        {
+          "start": "2026-10-11T19:36:18.910Z",
+          "first_round": 87,
+          "count": 1,
+          "last_failure_end": "2026-10-11T19:36:19.433Z",
+          "recovered_at": "2026-10-11T19:36:28.540Z",
+          "duration_ms": 9630,
+          "host_samples": 2,
+          "host_errors": 0
+        },
+        {
+          "start": "2026-10-11T19:36:39.789Z",
+          "first_round": 94,
+          "count": 1,
+          "last_failure_end": "2026-10-11T19:36:40.304Z",
+          "recovered_at": "2026-10-11T19:36:42.260Z",
+          "duration_ms": 2471,
+          "host_samples": 1,
+          "host_errors": 0
+        }
+      ],
+      "observed_families": [
+        "IPv4"
+      ]
+    },
+    "lead_diag_dns_20261012:n8n:ipv4": {
+      "success": 97,
+      "total": 100,
+      "errors": {
+        "EAI_AGAIN": 2,
+        "ERR_CANCELED": 1
+      },
+      "p50_ms": 556,
+      "max_ms": 15007,
+      "windows": [
+        {
+          "start": "2026-10-11T19:33:44.578Z",
+          "first_round": 41,
+          "count": 1,
+          "last_failure_end": "2026-10-11T19:33:49.591Z",
+          "recovered_at": "2026-10-11T19:33:58.979Z",
+          "duration_ms": 14401,
+          "host_samples": 1,
+          "host_errors": 0
+        },
+        {
+          "start": "2026-10-11T19:34:09.371Z",
+          "first_round": 47,
+          "count": 1,
+          "last_failure_end": "2026-10-11T19:34:24.375Z",
+          "recovered_at": "2026-10-11T19:34:27.859Z",
+          "duration_ms": 18488,
+          "host_samples": 1,
+          "host_errors": 0
+        },
+        {
+          "start": "2026-10-11T19:35:10.780Z",
+          "first_round": 68,
+          "count": 1,
+          "last_failure_end": "2026-10-11T19:35:15.792Z",
+          "recovered_at": "2026-10-11T19:35:20.994Z",
+          "duration_ms": 10214,
+          "host_samples": 1,
+          "host_errors": 0
+        }
+      ],
+      "observed_families": [
+        "IPv4"
+      ]
+    },
+    "lead_diag_base_20261011:n8n:ipv4": {
+      "success": 99,
+      "total": 100,
+      "errors": {
+        "ECONNRESET": 1
+      },
+      "p50_ms": 530.5,
+      "max_ms": 9201,
+      "windows": [
+        {
+          "start": "2026-10-11T19:35:10.771Z",
+          "first_round": 68,
+          "count": 1,
+          "last_failure_end": "2026-10-11T19:35:17.146Z",
+          "recovered_at": "2026-10-11T19:35:20.969Z",
+          "duration_ms": 10198,
+          "host_samples": 1,
+          "host_errors": 0
+        }
+      ],
+      "observed_families": [
+        "IPv4"
+      ]
+    },
+    "lead_diag_base_20261011:fetch:ipv4": {
+      "success": 100,
+      "total": 100,
+      "errors": {},
+      "p50_ms": 357,
+      "max_ms": 8858,
+      "windows": [],
+      "observed_families": [
+        "IPv4"
+      ]
+    },
+    "lead_diag_dns_20261012:fetch:ipv4": {
+      "success": 99,
+      "total": 100,
+      "errors": {
+        "TypeError": 1,
+        "ECONNRESET": 1
+      },
+      "p50_ms": 360.5,
+      "max_ms": 7142,
+      "windows": [
+        {
+          "start": "2026-10-11T19:36:06.653Z",
+          "first_round": 85,
+          "count": 1,
+          "last_failure_end": "2026-10-11T19:36:13.795Z",
+          "recovered_at": "2026-10-11T19:36:18.194Z",
+          "duration_ms": 11541,
+          "host_samples": 1,
+          "host_errors": 0
+        }
+      ],
+      "observed_families": [
+        "IPv4"
+      ]
+    }
+  },
+  "window_definition": "Consecutive failed sampled requests in one group; duration first failure start to next successful sample start. Not proof of continuous outage between samples."
+}

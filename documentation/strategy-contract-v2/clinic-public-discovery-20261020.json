@@ -1,0 +1,87 @@
+{
+  "checked_on": "2026-10-20",
+  "org_id": 1,
+  "method": "Bounded public web search and extracted webpage inspection",
+  "production_updated": false,
+  "emails_sent": 0,
+  "provider_verification_performed": false,
+  "accepted_email_candidates": [],
+  "leads": [
+    {
+      "lead_id": 446,
+      "name": "Luminosity Dental Clinic",
+      "status": "no_email_found_in_checked_sources",
+      "sources": [
+        "https://pk.linkedin.com/in/dr-mishel-siddiq-006909211",
+        "https://yandex.com/maps/org/luminosity_dental_clinic/12274919514/"
+      ],
+      "limitations": [
+        "LinkedIn affiliation and directory listing are not independently verified ownership",
+        "Search results show different location descriptions; identity needs review",
+        "No matched Facebook profile established by this search",
+        "Website absence is not established"
+      ]
+    },
+    {
+      "lead_id": 447,
+      "name": "The Dental Care Clinic ( Dr.Shahnawaz Ahmed)",
+      "status": "no_email_found_in_checked_sources",
+      "sources": [
+        "https://instacare.pk/doctors/islamabad/dentist/dr-shahnawaz-ahmed",
+        "https://instacare.pk/hospitals/islamabad/blue-area/the-dental-care-clinic"
+      ],
+      "rejected_contacts": [
+        {
+          "value": "hello@instacare.pk",
+          "reason": "Directory operator contact in footer, not the clinic"
+        }
+      ],
+      "limitations": [
+        "Directory helpline must not be treated as clinic-owned",
+        "Website absence is not established"
+      ]
+    },
+    {
+      "lead_id": 448,
+      "name": "Odontologia-Dental Setup",
+      "status": "no_email_found_in_checked_sources",
+      "sources": ["https://digicard.pk/g-8.html"],
+      "limitations": [
+        "Unclaimed directory preview; business ownership UNVERIFIED",
+        "No matched first-party website or Facebook profile established",
+        "Website absence is not established"
+      ]
+    },
+    {
+      "lead_id": 449,
+      "name": "Zia Dental Consultants",
+      "status": "no_email_found_in_checked_sources",
+      "sources": [
+        "https://ziadentalconsultants.me/",
+        "https://ziadentalconsultants.me/about/",
+        "https://ziadentalconsultants.me/contact/"
+      ],
+      "observations": [
+        "Website presents dental services and clinic location",
+        "Contact page has appointment request inputs",
+        "Page states that the request is reviewed and sent through WhatsApp",
+        "Phone and WhatsApp contact paths are displayed"
+      ],
+      "campaign_recommendation": "Deprioritize for a basic new-website proposal; existing website already addresses core proposed features",
+      "limitations": [
+        "Recommendation is manual evidence review, not a persisted deterministic qualifier result",
+        "Appointment form was not submitted; functionality beyond visible UI is UNVERIFIED",
+        "Domain ownership and contact permissions are UNVERIFIED",
+        "Search-index content can lag live changes; no raw HTML diagnostic was captured",
+        "Masked lead-directory emails and designer portfolio contacts were not accepted"
+      ]
+    }
+  ],
+  "conclusion": "No send-ready recipients from this bounded search. Do not invent addresses, promote discovery to verification, or bypass campaign approval.",
+  "remaining_external_requirements": [
+    "A suitable lead with a publicly attributable email address",
+    "Email verification through the configured provider when available",
+    "Confirmed offer and sender identity",
+    "Existing plan-generation allowance and exact-plan approval before sending"
+  ]
+}

@@ -1,0 +1,10 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './index.css';
+import './brand-theme.css';
+import './appearance.css';
+const DesignReviewApp=React.lazy(()=>import('./DesignReviewApp'));
+const Application=process.env.REACT_APP_DESIGN_REVIEW==='true'?DesignReviewApp:App;
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(<React.StrictMode><React.Suspense fallback={<p role="status">Loading page...</p>}><Application/></React.Suspense></React.StrictMode>);

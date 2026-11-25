@@ -1,0 +1,6 @@
+'use strict';
+class ManagedWhatsApp {
+ constructor(){this.description={displayName:'Managed WhatsApp Executor',name:'managedWhatsApp',group:['transform'],version:1,description:'Organization-scoped dispatch through existing approval, lease and budget gates',defaults:{name:'Managed WhatsApp Executor'},inputs:['main'],outputs:['main'],credentials:[{name:'postgres',required:true},{name:'whatsAppApi',required:true}],properties:[{displayName:'Dispatch Enabled',name:'dispatchEnabled',type:'boolean',default:false},{displayName:'Provider Rechecks Enabled',name:'providerRechecksEnabled',type:'boolean',default:false,description:'Requires reviewed migrations 047–049. Read-only sender/template rechecks before due follow-ups; sending still requires every dispatch gate.'},{displayName:'Operator Sender Binding',name:'binding',type:'json',default:'{"org_id":0,"connection_id":"configure-me","credential_ref":"configure-me","phone_number_id":"configure-me","waba_id":"configure-me","credential_expires_at":null}'}]};}
+ async execute(){try{return [[{json:await require('./lead-system/scripts/whatsapp/worker.cjs').run(this)}]];}catch{throw Error('WHATSAPP_EXECUTOR_UNCONFIRMED; inspect activity before any retry; private details suppressed');}}
+}
+module.exports={ManagedWhatsApp};

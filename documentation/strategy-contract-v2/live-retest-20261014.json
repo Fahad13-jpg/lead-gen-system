@@ -1,0 +1,183 @@
+{
+  "lead_id": 449,
+  "evidence": "Historical stored snapshot, not freshly verified",
+  "offer": "Demonstration offer, not a real customer campaign",
+  "channel_permissions": "Synthetic draft-only readiness",
+  "budget": {
+    "requests": 1,
+    "max_completion_tokens": 6000
+  },
+  "token_estimate": {
+    "brief": 831,
+    "brief_upper_bound": 2491,
+    "hard_cap": 2500,
+    "method": "UTF-8 byte upper bound; /3 estimate UNVERIFIED",
+    "full_request_estimate": 2710
+  },
+  "at": "2026-10-14T07:59:30.276Z",
+  "calls": 1,
+  "http_status": 200,
+  "transport_error": null,
+  "duration_ms": 2726,
+  "state": "ai_completed",
+  "generation": {
+    "method": "ai",
+    "model": "openai/gpt-oss-120b",
+    "prompt_version": "strategy_v2.4",
+    "attempts": 1,
+    "tokens": {
+      "prompt": 1950,
+      "completion": 614,
+      "total": 2564
+    },
+    "usage_complete": true,
+    "mocked": false
+  },
+  "validation_errors": [],
+  "quality_review": {
+    "flags": [
+      "weak_offer_fit"
+    ],
+    "personalization_status": "supported_personalization",
+    "next_action": "Review the quoted fact and approved benefit together; need remains unconfirmed.",
+    "available_match_count": 0,
+    "observed_personalization": true,
+    "benefit_relevance": "customer_rule_match_not_confirmed_need",
+    "supported_fact_ids": [
+      "f1"
+    ],
+    "recommendation": "Review whether to pursue this lead before follow-up.",
+    "confirmed_need": false,
+    "campaign_gaps": [
+      "optional_demo_url"
+    ]
+  },
+  "production_changes": false,
+  "trial_ledger_changes": false,
+  "sent": false,
+  "manual_review": {
+    "contract_valid": true,
+    "channel_permissions_respected": true,
+    "fit_preserved": true,
+    "observed_fact_exact": true,
+    "unsupported_outgoing_claims_found": false,
+    "followup_issue": "Assumes a demo link was shared although campaign CTA URL is empty and no send occurred.",
+    "deployment_ready": false,
+    "limitations": [
+      "Historical saved evidence, not freshly verified",
+      "Synthetic channel permissions and sample product benefits",
+      "One successful host request does not establish container reliability or model success rate",
+      "Structured message assembly; not unrestricted creative copywriting"
+    ]
+  },
+  "strategy": {
+    "fit": "weak",
+    "fit_notes": [
+      "The lead shows orthodontics related content but no clear intent or need for a website demo; fit is weak."
+    ],
+    "angle_id": null,
+    "channel_plan": [
+      {
+        "channel": "whatsapp",
+        "reason": "existing_readiness_ready"
+      },
+      {
+        "channel": "call",
+        "reason": "existing_readiness_ready"
+      }
+    ],
+    "step1": {
+      "channel": "whatsapp",
+      "parts": [
+        {
+          "type": "copy",
+          "ref": "greeting",
+          "text": "Hello Zia Dental Consultants,"
+        },
+        {
+          "type": "observed",
+          "ref": "f1",
+          "text": "Your website lists: “Orthodontics & braces”."
+        },
+        {
+          "type": "offer",
+          "ref": "b1",
+          "text": "The demo explains braces options."
+        },
+        {
+          "type": "copy",
+          "ref": "cta",
+          "text": "Would you like to review the demonstration?"
+        },
+        {
+          "type": "copy",
+          "ref": "sender",
+          "text": "Demo Sender — Example Studio"
+        },
+        {
+          "type": "copy",
+          "ref": "opt_out",
+          "text": "Reply STOP to opt out."
+        }
+      ]
+    },
+    "followups": [
+      {
+        "channel": "whatsapp",
+        "intent": "Check if they saw the demo link and ask for feedback"
+      }
+    ],
+    "call_guidance": {
+      "opening": {
+        "type": "copy",
+        "ref": "opening",
+        "text": "Hello, this is Demo Sender from Example Studio."
+      },
+      "permission_question": {
+        "type": "copy",
+        "ref": "permission",
+        "text": "Is now a suitable time for a brief explanation?"
+      },
+      "objections": [
+        {
+          "kind": "busy",
+          "response": {
+            "type": "copy",
+            "ref": "busy",
+            "text": "Would you prefer that I leave it here?"
+          }
+        },
+        {
+          "kind": "not_interested",
+          "response": {
+            "type": "copy",
+            "ref": "not_interested",
+            "text": "Thank you for your time. I will leave it here."
+          }
+        },
+        {
+          "kind": "unknown",
+          "response": {
+            "type": "copy",
+            "ref": "unknown",
+            "text": "A team member can answer that; I do not want to guess."
+          }
+        },
+        {
+          "kind": "opt_out",
+          "response": {
+            "type": "copy",
+            "ref": "stop",
+            "text": "I will stop and record your opt-out request."
+          }
+        }
+      ]
+    },
+    "review_flags": [
+      "weak_offer_fit"
+    ],
+    "personalization_level": "lead_specific"
+  },
+  "whatsapp_draft": "Hello Zia Dental Consultants, Your website lists: “Orthodontics & braces”. The demo explains braces options. Would you like to review the demonstration? Demo Sender — Example Studio Reply STOP to opt out.",
+  "reasoning_tokens": 197
+}

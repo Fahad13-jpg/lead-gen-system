@@ -1,6 +1,8 @@
 # Secrets - NEVER commit
 .env
 *.env
+.env.*
+!.env.example
 
 # Dependencies
 node_modules/
@@ -21,3 +23,6 @@ postgres_data/
 
 # Logs
 *.log
+
+# Local pre-change snapshots and deployment credentials
+.local/

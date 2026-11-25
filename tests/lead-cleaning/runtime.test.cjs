@@ -1,0 +1,27 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const {normalize}=require('../../scripts/lead-cleaning/runtime.cjs');
+const base={id:1,org_id:1,company_name:'Clinic',country:'PK',phone:'03001234567',raw_data:{}};
+let count=0;function check(name,fn){fn();count++;console.log('PASS '+name);}
+check('PK mobile',()=>assert.equal(normalize(base).fields.phone,'+923001234567'));
+check('PK landline',()=>assert.equal(normalize({...base,phone:'0511234567'}).fields.phone,'+92511234567'));
+check('US local',()=>assert.equal(normalize({...base,country:'US',phone:'2125550123'}).fields.phone,'+12125550123'));
+check('ambiguous national number stays uncertain',()=>assert.equal(normalize({...base,country:null,phone:'2125550123'}).fields.phone,null));
+check('extension retained separately',()=>{const r=normalize({...base,phone:'+92 300 1234567 ext 12'});assert.equal(r.fields.phone,'+923001234567');assert.equal(r.phone_extension,'12');});
+check('multiple plus signs rejected',()=>assert.equal(normalize({...base,phone:'++923001234567'}).fields.phone,null));
+check('Urdu retained',()=>assert.equal(normalize({...base,company_name:'ڈینٹل کلینک'}).fields.normalized_name,'ڈینٹل کلینک'));
+check('website works without URL global',()=>{const r=vm.runInNewContext('('+normalize.toString()+')(raw)',{raw:{...base,website:'https://Example.org/contact#team'}});assert.equal(r.fields.website,'https://example.org/contact');});
+check('scheme retained',()=>assert.equal(normalize({...base,website:'http://example.org'}).fields.website,'http://example.org'));
+check('unsafe schemes and local hosts rejected',()=>{for(const website of ['javascript:alert(1)','http://127.0.0.1','http://localhost','https://user:pass@example.org'])assert.equal(normalize({...base,website}).fields.website,null);});
+check('zero coordinates preserved',()=>{const r=normalize({...base,raw_data:{location:{lat:0,lng:0}}});assert.equal(r.fields.latitude,0);assert.equal(r.fields.longitude,0);});
+check('longitude valid above 100',()=>assert.equal(normalize({...base,raw_data:{coordinates:{latitude:35,longitude:140}}}).fields.longitude,140));
+check('review separators',()=>assert.equal(normalize({...base,raw_data:{reviewsCount:'1,234'}}).fields.review_count,1234));
+check('invalid numerical values',()=>{const r=normalize({...base,raw_data:{rating:8,reviewsCount:'1.2k',location:{lat:99}}});assert.equal(r.fields.rating,null);assert.equal(r.fields.review_count,null);assert.equal(r.fields.latitude,null);});
+check('phone-only retained',()=>assert.equal(normalize(base).outcome,'cleaned'));
+check('website-only recoverable',()=>assert.equal(normalize({...base,phone:null,website:'example.org'}).outcome,'needs_discovery'));
+check('no contact review',()=>assert.equal(normalize({...base,phone:null}).outcome,'review'));
+check('email format does not verify mailbox',()=>assert.equal(normalize({...base,email:'INFO@clinic.org'}).readiness.email,'needs_verification'));
+check('role email same completeness',()=>assert.equal(normalize({...base,email:'info@clinic.org'}).fields.data_quality_score,normalize({...base,email:'owner@clinic.org'}).fields.data_quality_score));
+check('disposable exact domain boundary',()=>{assert.equal(normalize({...base,email:'a@mailinator.com'}).fields.email_type,'disposable');assert.notEqual(normalize({...base,email:'a@notmailinator.com'}).fields.email_type,'disposable');});
+check('malformed input types do not break batch',()=>assert.equal(normalize({...base,company_name:{bad:true},phone:[],raw_data:null}).outcome,'review'));
+check('workflow SQL parameterized and failure not swallowed',()=>{const w=JSON.parse(fs.readFileSync('workflows/04_data_cleaning.json'));for(const n of w.nodes.filter(n=>n.type.endsWith('.postgres'))){assert(!n.continueOnFail);assert(!n.parameters.query.includes('{{'));}assert(!JSON.stringify(w).includes('SET total_leads'));});
+console.log(count+' cleaning checks passed');

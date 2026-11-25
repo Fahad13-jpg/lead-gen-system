@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-10-22T04:10:13.758Z",
+  "migration": 34,
+  "sql_verified": true,
+  "data_preserved": true,
+  "counts": [
+    {
+      "allowed": "false",
+      "classification": null,
+      "reason": "email_known_invalid_risky_or_review",
+      "count": 3
+    },
+    {
+      "allowed": "false",
+      "classification": null,
+      "reason": "email_missing",
+      "count": 40
+    },
+    {
+      "allowed": "true",
+      "classification": "basic_unverified",
+      "reason": null,
+      "count": 4
+    }
+  ],
+  "emails_sent": 0,
+  "activation": false
+}

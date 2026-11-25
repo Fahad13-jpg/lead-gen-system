@@ -1,0 +1,31 @@
+{
+  "call_dispatch": {
+    "enabled": false,
+    "campaign_state": "paused",
+    "language": "en",
+    "funding": "platform",
+    "connection_ref": null,
+    "org_daily_calls": null,
+    "min_interval_seconds": null,
+    "followup_outcomes": ["busy", "line_busy", "no_answer", "callback_requested"],
+    "followup_after_email": false,
+    "safety_buffer_micro_usd": null,
+    "release": { "enabled": false, "expires_at": null },
+    "quote": { "verified": false, "max_call_micro_usd": null, "expires_at": null },
+    "connection": {
+      "ready": false,
+      "credential_ref": null,
+      "country": "US",
+      "agent_id": null,
+      "agent_version": null,
+      "from_number": null,
+      "caller_id_authorized": false,
+      "route_verified": false,
+      "voice_tested": false
+    },
+    "recipient_permissions": {},
+    "campaign_windows": [],
+    "plan_windows": [],
+    "calendar": { "ready": false, "id": null, "slots": [] }
+  }
+}
