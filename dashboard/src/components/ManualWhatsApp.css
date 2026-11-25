@@ -1,0 +1,10 @@
+.manual-whatsapp textarea{display:block;box-sizing:border-box;width:100%;min-height:120px;margin:8px 0 16px;padding:12px;border:1px solid var(--lm-line);border-radius:8px;font:inherit;color:var(--lm-ink);background:var(--lm-surface);resize:vertical}
+.manual-whatsapp textarea:focus-visible{outline:2px solid var(--lm-accent);outline-offset:2px}
+.manual-whatsapp-ack{display:flex;align-items:flex-start;gap:8px;margin:0 0 16px;font-size:15px;line-height:1.6}
+.manual-whatsapp-ack input{margin-top:4px;flex-shrink:0}
+.manual-whatsapp-actions{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0}
+.manual-facebook-select{display:block;box-sizing:border-box;width:100%;margin:8px 0 16px;padding:12px;border:1px solid var(--lm-line);border-radius:8px;font:inherit;color:var(--lm-ink);background:var(--lm-surface)}
+.manual-facebook-select:focus-visible{outline:2px solid var(--lm-accent);outline-offset:2px}
+.manual-whatsapp-actions>label{width:100%;min-width:0}
+
+.manual-whatsapp textarea::placeholder{color:var(--lm-secondary);opacity:1}.manual-whatsapp textarea{font-size:16px}

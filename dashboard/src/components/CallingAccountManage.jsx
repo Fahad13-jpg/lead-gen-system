@@ -1,0 +1,15 @@
+import React,{useState}from'react';
+import{changeCallingAccount}from'../api/client';
+import useCallingChange from'../hooks/useCallingChange';
+export default function CallingAccountManage({account,onSaved}){
+ const[form,setForm]=useState({agent_id:account.agent_id,agent_version:String(account.agent_version),from_number:account.from_number||'',api_key:''}),[action,setAction]=useState('update'),[ack,setAck]=useState(false);
+ const change=useCallingChange(onSaved),disconnected=account.state==='disconnected';
+ function edit(e){setForm(f=>({...f,[e.target.name]:e.target.value}));setAck(false);}
+ async function submit(e){e.preventDefault();if(!ack)return;const payload={action,expected_account_version:account.version,acknowledge_pause_and_review:true,...(action==='update'?{agent_id:form.agent_id,agent_version:Number(form.agent_version),from_number:form.from_number||null,...(form.api_key?{api_key:form.api_key}:{})}:{})};await change.run(changeCallingAccount,payload);setForm(f=>({...f,api_key:''}));setAck(false);}
+ return <div className="st-calling-manage"><h3>Manage calling account</h3><p>Changes create a new account version and pause affected campaigns. Active or uncertain calls must be resolved first.</p>{change.message&&<p role="status">{change.message}</p>}{change.waiting&&<p><button type="button" className="live-secondary" onClick={change.reconcile} disabled={change.busy}>Confirm saved calling change</button></p>}
+ <form onSubmit={submit}><fieldset className="st-calling-fields" disabled={change.busy||!!change.waiting}>
+ <p><label>Action<select className="live-select" value={action} onChange={e=>{setAction(e.target.value);setAck(false);}}><option value="update">{disconnected?'Reconnect account':'Update account or add calling number'}</option>{!disconnected&&<option value="disconnect">Disconnect account</option>}</select></label></p>
+ {action==='update'&&<><p><label>Retell API key{!disconnected&&' (leave blank to keep saved key)'}<input className="live-select" type="password" name="api_key" autoComplete="new-password" minLength={16} maxLength={300} required={disconnected} value={form.api_key} onChange={edit}/></label></p><p><label>Published agent ID<input className="live-select" name="agent_id" required value={form.agent_id} onChange={edit}/></label></p><p><label>Published version<input className="live-select" name="agent_version" type="number" min="0" step="1" required value={form.agent_version} onChange={edit}/></label></p><p><label>US calling number (optional)<input className="live-select" name="from_number" type="tel" placeholder="+14155550123" value={form.from_number} onChange={edit}/></label></p></>}
+ <p><label><input type="checkbox" checked={ack} onChange={e=>setAck(e.target.checked)}/> I authorize this change and understand affected campaigns will be paused and need fresh review.</label></p><button className="live-secondary" type="submit" disabled={!ack}>{action==='disconnect'?'Disconnect and pause campaigns':'Verify change and pause campaigns'}</button>
+ </fieldset></form></div>;
+}

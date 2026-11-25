@@ -1,0 +1,17 @@
+import React,{act}from'react';
+import{createRoot}from'react-dom/client';
+import CallingAccount from'./CallingAccount';
+import{useAuth}from'../context/AuthContext';
+import{getCallingAccount,connectCallingAccount}from'../api/client';
+jest.mock('../context/AuthContext',()=>({useAuth:jest.fn()}));
+jest.mock('../api/client',()=>({getCallingAccount:jest.fn(),connectCallingAccount:jest.fn()}));
+let root,container;
+beforeEach(()=>{global.IS_REACT_ACT_ENVIRONMENT=true;jest.resetAllMocks();useAuth.mockReturnValue({organization:{org_id:7,role:'owner'}});Object.defineProperty(window,'crypto',{configurable:true,value:{randomUUID:()=> '11111111-1111-4111-8111-111111111111'}});getCallingAccount.mockResolvedValue({mode:'byok',connection:null});container=document.createElement('div');document.body.appendChild(container);root=createRoot(container);});
+afterEach(()=>{act(()=>root.unmount());container.remove();});
+const render=()=>act(async()=>root.render(<CallingAccount/>));
+async function change(name,value){await act(async()=>{const e=container.querySelector(`[name="${name}"]`);Object.getOwnPropertyDescriptor(Object.getPrototypeOf(e),'value').set.call(e,value);e.dispatchEvent(new Event('input',{bubbles:true}));});}
+test('mount only reads settings and exposes no managed purchase or call activation',async()=>{await render();expect(connectCallingAccount).not.toHaveBeenCalled();expect(container.textContent).toContain('Managed calling · Not available yet');expect(container.querySelector('button[type=submit]').disabled).toBe(true);useAuth.mockReturnValue({organization:{org_id:8,role:'member'}});await render();expect(container.querySelector('form')).toBeNull();});
+test('uncertain save clears key and requires reconciliation instead of replacement submission',async()=>{connectCallingAccount.mockRejectedValue(Error('timeout'));await render();await change('api_key','private-key-test-only');await change('agent_id','agent_test');await act(async()=>container.querySelector('input[type=checkbox]').click());await act(async()=>container.querySelector('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));expect(connectCallingAccount).toHaveBeenCalledTimes(1);expect(container.querySelector('form')).toBeNull();expect(container.textContent).toContain('Connection result is uncertain');getCallingAccount.mockResolvedValue({connection:{agent_id:'agent_test',agent_version:1,from_number:null}});await act(async()=>container.querySelector('button').click());expect(container.textContent).toContain('Sending paused');expect(container.textContent).not.toContain('private-key-test-only');expect(connectCallingAccount).toHaveBeenCalledTimes(1);});
+
+
+test('a rejected optional number identifies the actual problem without hiding the form or asking for a replacement key',async()=>{connectCallingAccount.mockRejectedValue({response:{status:409,data:{error:'CALLING_ACCOUNT_NOT_VERIFIED',reason:'CALLING_NUMBER_NOT_FOUND'}}});await render();await change('api_key','private-key-test-only');await change('agent_id','agent_test');await act(async()=>container.querySelector('input[type=checkbox]').click());await act(async()=>container.querySelector('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));expect(container.textContent).toContain('The entered number is not in this Retell account');expect(container.querySelector('form')).not.toBeNull();expect(connectCallingAccount).toHaveBeenCalledTimes(1);});
