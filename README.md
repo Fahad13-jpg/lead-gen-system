@@ -72,7 +72,7 @@ See `/documentation` folder for:
 ## 👥 Team
 
 - Muhammad Fahad
-- [Partner Name]
+- Shahan Waheed
 
 ## 📝 License
 
