@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-19",
+  "scratch_database": "scratch_email_release_20261019",
+  "network": "none",
+  "fresh_backup_restored": true,
+  "live_access": "read-only baseline and pg_dump only",
+  "live_baseline": {
+    "lifecycle": true,
+    "window": false,
+    "runtime_superuser": true
+  },
+  "migrations": [
+    "database/migrations/021_email_sending_window.sql",
+    "database/migrations/022_followup_readiness.sql",
+    "database/migrations/023_email_sequence_dispatch.sql",
+    "database/migrations/024_outreach_review_events.sql",
+    "database/migrations/025_gmail_reply_scan.sql",
+    "database/migrations/026_mailbox_capacity.sql",
+    "database/migrations/027_email_safe_deferral.sql",
+    "database/migrations/028_email_contact_gate.sql",
+    "database/migrations/029_delivery_scan_checkpoint.sql",
+    "database/migrations/030_delivery_scan_recovery.sql"
+  ],
+  "non_superuser_checks": {
+    "superuser": false,
+    "finish": true,
+    "gate": true,
+    "recovery": true
+  },
+  "lifecycle_fixture_passed": true,
+  "fixture_rolled_back": true,
+  "live_migrations": false,
+  "provider_calls": 0,
+  "sends": 0
+}

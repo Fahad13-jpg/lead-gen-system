@@ -1,0 +1,42 @@
+[
+  {
+    "lead_id": 167,
+    "brief": 761,
+    "brief_upper_bound": 2282,
+    "hard_cap": 2500,
+    "method": "UTF-8 byte upper bound; /3 estimate UNVERIFIED",
+    "full_request_estimate": 2434
+  },
+  {
+    "lead_id": 445,
+    "brief": 528,
+    "brief_upper_bound": 1582,
+    "hard_cap": 2500,
+    "method": "UTF-8 byte upper bound; /3 estimate UNVERIFIED",
+    "full_request_estimate": 2200
+  },
+  {
+    "lead_id": 446,
+    "brief": 528,
+    "brief_upper_bound": 1583,
+    "hard_cap": 2500,
+    "method": "UTF-8 byte upper bound; /3 estimate UNVERIFIED",
+    "full_request_estimate": 2201
+  },
+  {
+    "lead_id": 447,
+    "brief": 535,
+    "brief_upper_bound": 1603,
+    "hard_cap": 2500,
+    "method": "UTF-8 byte upper bound; /3 estimate UNVERIFIED",
+    "full_request_estimate": 2207
+  },
+  {
+    "lead_id": 449,
+    "brief": 822,
+    "brief_upper_bound": 2464,
+    "hard_cap": 2500,
+    "method": "UTF-8 byte upper bound; /3 estimate UNVERIFIED",
+    "full_request_estimate": 2494
+  }
+]

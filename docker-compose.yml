@@ -8,7 +8,7 @@ services:
     restart: always
     environment:
       POSTGRES_USER: n8n_user
-      POSTGRES_PASSWORD: n8n_pass123
+      POSTGRES_PASSWORD: &local_database_password n8n_pass123
       POSTGRES_DB: lead_db
     ports:
       - "5432:5432"
@@ -48,26 +48,129 @@ services:
       - APIFY_API_KEY=${APIFY_API_KEY}
       - SENDGRID_API_KEY=${SENDGRID_API_KEY}
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - NODE_FUNCTION_ALLOW_BUILTIN=crypto
+      - N8N_RUNNERS_ENABLED=false
+      - STRATEGY_CONTRACT_VERSION=strategy_v2
+      - NODE_OPTIONS=--require=/opt/n8n-network/gmail-ipv4.cjs
     volumes:
       - n8n_data:/home/node/.n8n
+      - ./scripts/network/gmail-ipv4.cjs:/opt/n8n-network/gmail-ipv4.cjs:ro
     depends_on:
       postgres:
         condition: service_healthy
     networks:
       - lead-gen-network
 
-  dashboard:
-    build:
-      context: ./dashboard
-      dockerfile: Dockerfile
-    container_name: lead_dashboard
-    restart: always
+  credential-adapter:
+    image: leadgen-credential-adapter:20261117
+    container_name: lead_credential_adapter
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    environment:
+      CREDENTIAL_ADAPTER_TOKEN_FILE: /run/secrets/credential-adapter-token
     ports:
-      - "3000:3000"
-    depends_on:
-      - n8n
+      - "127.0.0.1:3013:3013"
+    volumes:
+      - n8n_data:/home/node/.n8n:ro
+      - ./.local/credential-adapter/token:/run/secrets/credential-adapter-token:ro
     networks:
       - lead-gen-network
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:3013/health/live').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+  dashboard:
+    image: leadgen-gateway:20261117
+    container_name: lead_dashboard
+    command: ["scripts/dashboard/start-local-auth.cjs"]
+    restart: unless-stopped
+    stop_grace_period: 60s
+    logging:
+      driver: local
+      options: {max-size: "10m", max-file: "3"}
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    ports:
+      - "127.0.0.1:3000:3002"
+      - "127.0.0.1:3002:3002"
+      - "127.0.0.1:3012:3012"
+    environment:
+      DASHBOARD_BIND_HOST: 0.0.0.0
+      NODE_OPTIONS: --dns-result-order=ipv4first --require=/opt/leadgen/scripts/network/google-auth-ipv4.cjs
+      DASHBOARD_LOCAL_ORIGIN: http://localhost:3000
+      DASHBOARD_RUNTIME: local-container
+      DASHBOARD_FIREBASE_CREDENTIAL: /run/secrets/firebase-admin
+      GMAIL_OAUTH_CLIENT_FILE: /run/secrets/gmail-client
+      DATABASE_HOST: postgres
+      DATABASE_PORT: "5432"
+      DATABASE_NAME: lead_db
+      DATABASE_USER: n8n_user
+      DATABASE_PASSWORD: *local_database_password
+      DATABASE_TLS: "off"
+      N8N_INTERNAL_ORIGIN: http://n8n:5678
+      CREDENTIAL_ADAPTER_URL: http://credential-adapter:3013
+      CREDENTIAL_ADAPTER_TOKEN_FILE: /opt/leadgen/.local/credential-adapter/token
+      EMAIL_CAMPAIGN_RENEWAL_ENABLED: "true"
+      EMAIL_BATCH_DASHBOARD_START_ENABLED: "false"
+      SMS_WORKER_ENABLED: "true"
+    volumes:
+      - ./dashboard/build:/opt/leadgen/dashboard/build:ro
+      - ./scripts/dashboard/start-local-auth.cjs:/opt/leadgen/scripts/dashboard/start-local-auth.cjs:ro
+      - ./scripts/dashboard/status-summary.cjs:/opt/leadgen/scripts/dashboard/status-summary.cjs:ro
+      - ./scripts/dashboard/http.cjs:/opt/leadgen/scripts/dashboard/http.cjs:ro
+      - ./scripts/network/google-auth-ipv4.cjs:/opt/leadgen/scripts/network/google-auth-ipv4.cjs:ro
+      - ./scripts/dashboard/lead-import.cjs:/opt/leadgen/scripts/dashboard/lead-import.cjs:ro
+      - ./scripts/dashboard/campaign-preferences.cjs:/opt/leadgen/scripts/dashboard/campaign-preferences.cjs:ro
+      - ./scripts/dashboard/draft-batch.cjs:/opt/leadgen/scripts/dashboard/draft-batch.cjs:ro
+      - ./scripts/organization-policy/customer-email-template.cjs:/opt/leadgen/scripts/organization-policy/customer-email-template.cjs:ro
+      - ./scripts/dashboard/lead-scope.cjs:/opt/leadgen/scripts/dashboard/lead-scope.cjs:ro
+      - ./scripts/dashboard/lead-export.cjs:/opt/leadgen/scripts/dashboard/lead-export.cjs:ro
+      - ./scripts/dashboard/data.cjs:/opt/leadgen/scripts/dashboard/data.cjs:ro
+      - ./scripts/dashboard/lead-detail.cjs:/opt/leadgen/scripts/dashboard/lead-detail.cjs:ro
+      - ./scripts/lead-cleaning/runtime.cjs:/opt/leadgen/scripts/lead-cleaning/runtime.cjs:ro
+      - ./dashboard/src/routeMetadata.js:/opt/leadgen/dashboard/src/routeMetadata.js:ro
+      - ./dashboard/src/site.json:/opt/leadgen/dashboard/src/site.json:ro
+      - ./dashboard/src/release.json:/opt/leadgen/dashboard/src/release.json:ro
+      - ./scripts/dashboard/package-access.cjs:/opt/leadgen/scripts/dashboard/package-access.cjs:ro
+      - ./scripts/dashboard/page-metadata.cjs:/opt/leadgen/scripts/dashboard/page-metadata.cjs:ro
+      - ./scripts/organization-policy/set-package.cjs:/opt/leadgen/scripts/organization-policy/set-package.cjs:ro
+      - ./scripts/dashboard/strategy-readiness.cjs:/opt/leadgen/scripts/dashboard/strategy-readiness.cjs:ro
+      - ./scripts/dashboard/memberships.cjs:/opt/leadgen/scripts/dashboard/memberships.cjs:ro
+      - ./scripts/dashboard/identity.cjs:/opt/leadgen/scripts/dashboard/identity.cjs:ro
+      - ./scripts/dashboard/package-access.cjs:/opt/leadgen/scripts/dashboard/package-access.cjs:ro
+      - ./scripts/dashboard/runtime-config.cjs:/opt/leadgen/scripts/dashboard/runtime-config.cjs:ro
+      - "C:/Users/hp/Downloads/firebase-admin.json:/run/secrets/firebase-admin:ro"
+      - "C:/Users/hp/Downloads/client_secret_741312923882-093iooiilorglb322drnht6auq7i3rsj.apps.googleusercontent.com.json:/run/secrets/gmail-client:ro"
+      - ./.local/gathering-api-key:/opt/leadgen/.local/gathering-api-key:ro
+      - ./.local/gmail-onboarding/config.json:/opt/leadgen/.local/gmail-onboarding/config.json:ro
+      - ./.local/gmail-onboarding/state.key:/opt/leadgen/.local/gmail-onboarding/state.key:ro
+      - ./.local/credential-adapter/token:/opt/leadgen/.local/credential-adapter/token:ro
+      - ./.local/sms-gate/config.json:/opt/leadgen/.local/sms-gate/config.json:ro
+      - ./.local/sms-gate/encryption.key:/opt/leadgen/.local/sms-gate/encryption.key:ro
+      - ./.local/calling-accounts/encryption.key:/opt/leadgen/.local/calling-accounts/encryption.key:ro
+      - ./.local/calling-tools-20261028/private.json:/opt/leadgen/.local/calling-tools-20261028/private.json:ro
+      - ./.local/n8n-api-key.txt:/opt/leadgen/.local/n8n-api-key.txt:ro
+      - ./.local/smtp-provisioning:/opt/leadgen/.local/smtp-provisioning
+      - ./.local/campaign-slices:/opt/leadgen/.local/campaign-slices
+    depends_on:
+      postgres:
+        condition: service_healthy
+      n8n:
+        condition: service_started
+      credential-adapter:
+        condition: service_healthy
+    networks:
+      - lead-gen-network
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:3002/health/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 4
 
 networks:
   lead-gen-network:

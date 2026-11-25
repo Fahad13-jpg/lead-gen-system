@@ -1,0 +1,10 @@
+{
+  "check_schedule_active": true,
+  "interval_minutes": 5,
+  "custom_node_loaded": true,
+  "live_recheck_passed": true,
+  "other_workflows_unchanged": true,
+  "activities_unchanged": true,
+  "emails_sent": 0,
+  "verified_at": "2026-11-08T10:57:43.983Z"
+}

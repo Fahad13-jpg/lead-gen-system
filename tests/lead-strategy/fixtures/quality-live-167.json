@@ -1,0 +1,291 @@
+{
+  "brief": {
+    "contract": "strategy_v2",
+    "org_id": 1,
+    "lead_id": 167,
+    "qualifier": {
+      "fit": "strong",
+      "reason_codes": [
+        "website_presence_opportunity"
+      ],
+      "candidate_angles": [
+        {
+          "id": "a1",
+          "benefit_id": "b1",
+          "text": "The demo explains clinic services."
+        },
+        {
+          "id": "a2",
+          "benefit_id": "b2",
+          "text": "The demo includes an enquiry form."
+        }
+      ]
+    },
+    "permitted_channels": [
+      {
+        "channel": "whatsapp",
+        "reason_codes": [
+          "existing_readiness_ready"
+        ]
+      },
+      {
+        "channel": "call",
+        "reason_codes": [
+          "existing_readiness_ready"
+        ]
+      }
+    ],
+    "blocked_channels": [],
+    "campaign": {
+      "offer": "Clinic website demo",
+      "description": "Sample clinic service-page demo; no claim that the business needs a replacement website.",
+      "approved_benefits": [
+        {
+          "id": "b1",
+          "text": "The demo explains clinic services."
+        },
+        {
+          "id": "b2",
+          "text": "The demo includes an enquiry form."
+        }
+      ],
+      "prohibited_claims": [
+        "guaranteed revenue"
+      ],
+      "cta": {
+        "text": "Would you like to review the demonstration?",
+        "url": ""
+      },
+      "tone": "professional",
+      "language": "en",
+      "sender": {
+        "name": "Demo Sender",
+        "company": "Example Studio",
+        "signature": ""
+      }
+    },
+    "facts": [
+      {
+        "id": "f1",
+        "source": "https://fiazdentalcare.com/, https://fiazdentalcare.com/index.php/contact-us/, https://fiazdentalcare.com/index.php/about-us/",
+        "age_days": 8,
+        "polarity": "absent_on_checked_pages",
+        "data": {
+          "label": "UNTRUSTED_WEBSITE_DATA",
+          "text": "booking_link not observed on 3 checked pages"
+        },
+        "outgoing_text": null
+      },
+      {
+        "id": "f2",
+        "source": "https://fiazdentalcare.com/, https://fiazdentalcare.com/index.php/contact-us/, https://fiazdentalcare.com/index.php/about-us/",
+        "age_days": 8,
+        "polarity": "absent_on_checked_pages",
+        "data": {
+          "label": "UNTRUSTED_WEBSITE_DATA",
+          "text": "whatsapp not observed on 3 checked pages"
+        },
+        "outgoing_text": null
+      }
+    ],
+    "copy": {
+      "greeting": "Hello Fiaz Dental Care,",
+      "cta": "Would you like to review the demonstration?",
+      "sender": "Demo Sender — Example Studio",
+      "opt_out": "Reply STOP to opt out.",
+      "opening": "Hello, this is Demo Sender from Example Studio.",
+      "permission": "Is now a suitable time for a brief explanation?",
+      "busy": "Would you prefer that I leave it here?",
+      "not_interested": "Thank you for your time. I will leave it here.",
+      "unknown": "A team member can answer that; I do not want to guess.",
+      "stop": "I will stop and record your opt-out request."
+    },
+    "url_allowlist": [],
+    "limits": {
+      "email": 1200,
+      "sms": 480,
+      "whatsapp": 1500,
+      "linkedin": 500,
+      "call": 1500
+    },
+    "limitations": [
+      "Source observations are not independently verified ownership or need.",
+      "Internal notes and follow-up intents are not outgoing text."
+    ],
+    "conflicts": [],
+    "relevance": {
+      "matches": []
+    }
+  },
+  "output": {
+    "fit": "strong",
+    "fit_notes": [
+      "Qualifier indicates strong fit based on website presence opportunity.",
+      "No present‑day observed facts were available; only absent observations were found."
+    ],
+    "angle_id": "a1",
+    "channel_plan": [
+      {
+        "channel": "whatsapp",
+        "reason": "existing_readiness_ready"
+      },
+      {
+        "channel": "call",
+        "reason": "existing_readiness_ready"
+      }
+    ],
+    "step1": {
+      "channel": "whatsapp",
+      "parts": [
+        {
+          "type": "copy",
+          "ref": "greeting",
+          "text": "Hello Fiaz Dental Care,"
+        },
+        {
+          "type": "copy",
+          "ref": "cta",
+          "text": "Would you like to review the demonstration?"
+        },
+        {
+          "type": "copy",
+          "ref": "sender",
+          "text": "Demo Sender — Example Studio"
+        },
+        {
+          "type": "copy",
+          "ref": "opt_out",
+          "text": "Reply STOP to opt out."
+        }
+      ]
+    },
+    "followups": [
+      {
+        "channel": "whatsapp",
+        "intent": "If no response, send a polite follow‑up reminder referencing the demo invitation."
+      },
+      {
+        "channel": "call",
+        "intent": "If still no reply, place a brief call to confirm receipt and interest."
+      }
+    ],
+    "call_guidance": {
+      "opening": {
+        "type": "copy",
+        "ref": "opening",
+        "text": "Hello, this is Demo Sender from Example Studio."
+      },
+      "permission_question": {
+        "type": "copy",
+        "ref": "permission",
+        "text": "Is now a suitable time for a brief explanation?"
+      },
+      "objections": [
+        {
+          "kind": "busy",
+          "response": {
+            "type": "copy",
+            "ref": "busy",
+            "text": "Would you prefer that I leave it here?"
+          }
+        },
+        {
+          "kind": "not_interested",
+          "response": {
+            "type": "copy",
+            "ref": "not_interested",
+            "text": "Thank you for your time. I will leave it here."
+          }
+        },
+        {
+          "kind": "unknown",
+          "response": {
+            "type": "copy",
+            "ref": "unknown",
+            "text": "A team member can answer that; I do not want to guess."
+          }
+        },
+        {
+          "kind": "opt_out",
+          "response": {
+            "type": "copy",
+            "ref": "stop",
+            "text": "I will stop and record your opt-out request."
+          }
+        }
+      ]
+    },
+    "review_flags": [
+      "offer_relevance_unproven"
+    ],
+    "personalization_level": "category_level"
+  },
+  "provider_error": null,
+  "result": {
+    "lead_id": 167,
+    "evidence": "Historical stored snapshot, not freshly verified",
+    "offer": "Demonstration offer, not a real customer campaign",
+    "channel_permissions": "Synthetic draft-only readiness",
+    "budget": {
+      "requests": 1,
+      "max_completion_tokens": 6000
+    },
+    "token_estimate": {
+      "brief": 813,
+      "brief_upper_bound": 2438,
+      "hard_cap": 2500,
+      "method": "UTF-8 byte upper bound; /3 estimate UNVERIFIED",
+      "full_request_estimate": 2852
+    },
+    "at": "2026-10-14T08:12:19.572Z",
+    "calls": 1,
+    "http_status": 200,
+    "transport_error": null,
+    "duration_ms": 3901,
+    "state": "ai_failed",
+    "generation": {
+      "method": "ai",
+      "model": "openai/gpt-oss-120b",
+      "prompt_version": "strategy_v2.5",
+      "attempts": 1,
+      "tokens": {
+        "prompt": 2020,
+        "completion": 721,
+        "total": 2741
+      },
+      "usage_complete": true,
+      "mocked": false,
+      "failure_reason": "MISSING_THIN_EVIDENCE_FLAG,ANGLE_BENEFIT_MISSING"
+    },
+    "validation_errors": [
+      "AI_FAILED"
+    ],
+    "quality_review": {
+      "flags": [],
+      "followup_review": {
+        "items": [],
+        "errors": [],
+        "limitations": [
+          "Internal intent text is not an executable message.",
+          "Asset detection covers common English demo/product link phrases only; other wording requires review.",
+          "A configured URL does not prove it was sent, received or viewed."
+        ]
+      },
+      "personalization_status": "no_valid_plan",
+      "next_action": "Review the generation failure; no draft is ready.",
+      "available_match_count": 0,
+      "observed_personalization": false,
+      "benefit_relevance": "not_established",
+      "supported_fact_ids": [],
+      "recommendation": "Review the approved angle and factual accuracy.",
+      "confirmed_need": false,
+      "campaign_gaps": [
+        "target_terms",
+        "optional_demo_url"
+      ]
+    },
+    "production_changes": false,
+    "trial_ledger_changes": false,
+    "sent": false
+  }
+}

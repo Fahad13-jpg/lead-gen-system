@@ -1,0 +1,24 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs');
+const {build}=require('../../scripts/calling/build-executor-workflows.cjs'),{normalize}=require('../../scripts/calling/n8n-receipt.cjs');
+function fixture(){const request={override_agent_id:'agent',override_agent_version:1,from_number:'+12025550101',to_number:'+12025550102',metadata:{org_id:'1',activity_id:'2',plan_hash:'hash',dispatch_key:'key'}};
+ const binding={org_id:1,activity_id:'2',content_hash:'hash',lease:'fixture',connection_ref:'credential',request,provider_call_id:'call_1'};
+ const body={call_id:'call_1',call_type:'phone_call',call_status:'registered',agent_id:'agent',agent_version:1,from_number:request.from_number,to_number:request.to_number,metadata:request.metadata};return {binding,body};}
+test('correlated create receipt becomes factual observation only',()=>{const {binding,body}=fixture();const r=normalize({statusCode:201,body},binding);assert.equal(r.operation,'outreach_call_observe');assert.equal(r.payload.provider_call_id,'call_1');assert.equal(r.payload.duration_ms,null);});
+test('timeout, error response or mismatched receipt never permits redial',()=>{const {binding,body}=fixture();for(const response of [{error:'timeout'},{statusCode:500,body},{statusCode:201,body:{...body,agent_id:'wrong'}},{statusCode:201,body:{...body,metadata:{...body.metadata,org_id:'2'}}}]){const r=normalize(response,binding);assert.equal(r.operation,'outreach_call_uncertain');assert.equal(r.retry_allowed,false);}});
+test('failed polling leaves the existing durable state untouched',()=>{const {binding,body}=fixture();assert.equal(normalize({statusCode:404},binding,true).operation,'none');assert.equal(normalize({statusCode:200,body:{...body,call_id:'wrong'}},binding,true).operation,'none');assert.equal(normalize({statusCode:200,body},binding,true).operation,'outreach_call_observe');});
+test('provider summary is bounded review data and cannot book, suppress or release funds',()=>{const {binding,body}=fixture();body.call_analysis={call_summary:'x'.repeat(2000)+'\n',user_sentiment:'Positive',call_successful:true,custom_analysis_data:{booked:true,opt_out:true}};
+ const r=normalize({statusCode:200,body},binding,true);assert.equal(r.payload.analysis.summary.length,1000);assert.equal(r.payload.analysis.sentiment,'Positive');assert.equal(r.payload.booked,undefined);assert.equal(r.payload.total_micro_usd,undefined);assert.equal(r.payload.kind,undefined);});
+test('documented provider DNC is forwarded separately from inferred summaries',()=>{const {binding,body}=fixture();body.disconnection_reason='user_requested_dnc';const r=normalize({statusCode:200,body},binding,true);assert.equal(r.payload.disconnection_reason,'user_requested_dnc');body.disconnection_reason='invented_schema';assert.equal(normalize({statusCode:200,body},binding,true).payload.disconnection_reason,undefined);});
+for(const [poll,file] of [[false,'07g_retell_call_executor.json'],[true,'09d_retell_result_poller.json']])test(file+' is deterministic, inactive, explicitly scoped, and never retries',()=>{
+ const w=build(poll);assert.deepEqual(w,JSON.parse(fs.readFileSync('workflows/'+file,'utf8')));assert.equal(w.active,false);
+ for(const n of w.nodes){assert.equal(n.type==='n8n-nodes-base.webhook',false);if(n.type==='n8n-nodes-base.code')assert.ok(['runOnceForAllItems','runOnceForEachItem'].includes(n.parameters.mode));
+ if(n.type==='n8n-nodes-base.postgres')assert.equal(n.alwaysOutputData,true);if(n.type==='n8n-nodes-base.httpRequest'){assert.equal(n.retryOnFail,false);assert.equal(n.parameters.method,poll?'GET':'POST');assert.equal(n.parameters.options.response.response.neverError,true);}}
+ assert.match(w.nodes.find(n=>n.id==='scope').parameters.jsCode,/const org_id = null/);
+});
+test('embedded Code receipt handler runs without external modules',()=>{const {binding,body}=fixture();const source=build().nodes.find(n=>n.id==='normalize').parameters.jsCode;
+ const result=new Function('$json','$',source)({statusCode:201,body},()=>({item:{json:{result:binding}}}));assert.equal(result.json.operation,'outreach_call_observe');});
+test('storage node emits escaped raw SQL from a fixed allowlist',()=>{const source=build().nodes.find(n=>n.id==='store').parameters.query.slice(2,-2);
+ const result=new Function('$json','return ('+source+')')({operation:'outreach_call_uncertain',payload:{org_id:1,lease:"a'b"}});
+ assert.match(result,/a''b/);const rejected=new Function('$json','return ('+source+')')({operation:'DROP TABLE',payload:{}});assert.match(rejected,/lookup_unverified/);});
+test('n8n receipt storage uses DNC-aware ingest without a graph rewrite',()=>{const source=build().nodes.find(n=>n.id==='store').parameters.query.slice(2,-2);assert.match(new Function('$json','return ('+source+')')({operation:'outreach_call_observe',payload:{org_id:1}}),/^SELECT outreach_call_ingest/);});

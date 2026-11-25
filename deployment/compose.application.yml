@@ -1,0 +1,186 @@
+name: leadgen-release
+services:
+  postgres:
+    image: postgres@sha256:98fe06b500b5eb29e45bf8c073eb0ca399790ce17b1d586448edc4203627d342
+    restart: unless-stopped
+    logging:
+      driver: local
+      options: {max-size: "10m", max-file: "3"}
+    environment:
+      POSTGRES_DB: lead_db
+      POSTGRES_USER: n8n_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+    secrets: [postgres-password]
+    volumes: [postgres_runtime:/var/lib/postgresql/data]
+    networks: [database_private]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U n8n_user -d lead_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  n8n:
+    stop_grace_period: 60s
+    profiles: [application]
+    build:
+      context: ..
+      dockerfile: deployment/n8n.Dockerfile
+    image: ${N8N_RELEASE_IMAGE:-leadgen-n8n:20261123}
+    restart: unless-stopped
+    logging:
+      driver: local
+      options: {max-size: "10m", max-file: "3"}
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs:
+      - /tmp:size=128m,mode=1777
+      - /home/node/.cache:size=128m,uid=1000,gid=1000,mode=0700
+    environment:
+      DEPLOYMENT_STAGE: ${DEPLOYMENT_STAGE:-staging}
+      ENABLE_APPROVED_AUTOMATION: ${ENABLE_APPROVED_AUTOMATION:-false}
+      STAGING_APPROVED_WORKFLOW_IDS: ${STAGING_APPROVED_WORKFLOW_IDS:-}
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: postgres
+      DB_POSTGRESDB_DATABASE: lead_db
+      DB_POSTGRESDB_USER: n8n_user
+      DB_POSTGRESDB_PASSWORD_FILE: /run/secrets/postgres-password
+      N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
+      N8N_GRACEFUL_SHUTDOWN_TIMEOUT: "45"
+      N8N_RUNNERS_ENABLED: "false"
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_VERSION_NOTIFICATIONS_ENABLED: "false"
+      NODE_FUNCTION_ALLOW_BUILTIN: crypto
+      STRATEGY_CONTRACT_VERSION: strategy_v2
+      NODE_OPTIONS: --require=/opt/leadgen/gmail-ipv4.cjs
+      WEBHOOK_URL: ${PUBLIC_WEBHOOK_BASE:?Set the reviewed public HTTPS webhook base}
+      N8N_EDITOR_BASE_URL: http://localhost:5678
+    env_file: ["${N8N_PROVIDER_ENV_FILE:?Set the protected provider environment file}"]
+    secrets: [postgres-password]
+    volumes: [n8n_runtime:/home/node/.n8n]
+    networks: [application, database_private]
+    depends_on:
+      postgres: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:5678/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 60s
+      retries: 3
+
+  credential-adapter:
+    profiles: [application]
+    build:
+      context: ..
+      dockerfile: deployment/credential-adapter.Dockerfile
+    image: ${CREDENTIAL_ADAPTER_IMAGE:-leadgen-credential-adapter:20261117}
+    restart: unless-stopped
+    logging:
+      driver: local
+      options: {max-size: "10m", max-file: "3"}
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 64
+    mem_limit: 256m
+    environment:
+      CREDENTIAL_ADAPTER_TOKEN_FILE: /run/secrets/credential-adapter-token
+    secrets: [credential-adapter-token]
+    volumes: [n8n_runtime:/home/node/.n8n:ro]
+    networks: [credentials_private]
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:3013/health/live').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+
+  gateway:
+    profiles: [application]
+    build:
+      context: ..
+      dockerfile: deployment/gateway.Dockerfile
+    image: ${GATEWAY_IMAGE:-leadgen-gateway:20261117}
+    restart: unless-stopped
+    logging:
+      driver: local
+      options: {max-size: "10m", max-file: "3"}
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    stop_grace_period: 60s
+    pids_limit: 128
+    tmpfs: ["/tmp:size=32m,mode=1777"]
+    ports: ["127.0.0.1:${GATEWAY_LOOPBACK_PORT:-3002}:3002"]
+    environment:
+      DASHBOARD_DEPLOYMENT_STAGE: ${DEPLOYMENT_STAGE:-staging}
+      DASHBOARD_PUBLIC_ORIGIN: ${DASHBOARD_PUBLIC_ORIGIN:?Set the exact HTTPS application origin}
+      DASHBOARD_BIND_HOST: 0.0.0.0
+      NODE_OPTIONS: --dns-result-order=ipv4first --require=/opt/leadgen/scripts/network/google-auth-ipv4.cjs
+      PUBLIC_SITE_INDEXING_ENABLED: ${PUBLIC_SITE_INDEXING_ENABLED:-false}
+      PUBLIC_ANALYTICS_ENABLED: ${PUBLIC_ANALYTICS_ENABLED:-false}
+      GA4_MEASUREMENT_ID: ${GA4_MEASUREMENT_ID:-}
+      GOOGLE_SITE_VERIFICATION: ${GOOGLE_SITE_VERIFICATION:-}
+      BING_SITE_VERIFICATION: ${BING_SITE_VERIFICATION:-}
+      DASHBOARD_FIREBASE_CREDENTIAL: /run/secrets/firebase-admin
+      DATABASE_HOST: postgres
+      DATABASE_PORT: "5432"
+      DATABASE_NAME: lead_db
+      DATABASE_USER: ${DASHBOARD_DB_USER:?Provision a reviewed gateway database role}
+      DATABASE_PASSWORD_FILE: /run/secrets/gateway-database-password
+      DATABASE_TLS: "off"
+      N8N_INTERNAL_ORIGIN: http://n8n:5678
+      CREDENTIAL_ADAPTER_URL: http://credential-adapter:3013
+      CREDENTIAL_ADAPTER_TOKEN_FILE: /run/secrets/credential-adapter-token
+      EMAIL_CAMPAIGN_RENEWAL_ENABLED: ${EMAIL_CAMPAIGN_RENEWAL_ENABLED:-false}
+      EMAIL_BATCH_DASHBOARD_START_ENABLED: ${EMAIL_BATCH_DASHBOARD_START_ENABLED:-false}
+      SMS_WORKER_ENABLED: ${SMS_WORKER_ENABLED:-false}
+    secrets:
+      - firebase-admin
+      - gateway-database-password
+      - credential-adapter-token
+      - source: gathering-api-key
+        target: /opt/leadgen/.local/gathering-api-key
+      - source: n8n-api-key
+        target: /opt/leadgen/.local/n8n-api-key.txt
+      - source: gmail-config
+        target: /opt/leadgen/.local/gmail-onboarding/config.json
+      - source: gmail-client
+        target: /run/secrets/gmail-oauth-client
+      - source: gmail-state-key
+        target: /opt/leadgen/.local/gmail-onboarding/state.key
+    volumes: [gateway_state:/opt/leadgen/.local]
+    networks: [application, database_private, credentials_private]
+    depends_on:
+      postgres: {condition: service_healthy}
+      credential-adapter: {condition: service_healthy}
+      n8n: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:3002/health/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+
+secrets:
+  postgres-password: {file: "${POSTGRES_PASSWORD_FILE:?Set the protected PostgreSQL password file}"}
+  gateway-database-password: {file: "${DASHBOARD_DATABASE_PASSWORD_FILE:?Set the gateway database password file}"}
+  credential-adapter-token: {file: "${CREDENTIAL_ADAPTER_TOKEN_FILE:?Set the credential adapter token file}"}
+  firebase-admin: {file: "${FIREBASE_CREDENTIAL_FILE:?Set the Firebase admin credential file}"}
+  gathering-api-key: {file: "${GATHERING_API_KEY_FILE:?Set the internal gathering API key file}"}
+  n8n-api-key: {file: "${N8N_API_KEY_FILE:?Set the workflow API key file}"}
+  gmail-config: {file: "${GMAIL_CONFIG_FILE:?Set the reviewed Gmail configuration file}"}
+  gmail-client: {file: "${GMAIL_CLIENT_FILE:?Set the Gmail OAuth client file}"}
+  gmail-state-key: {file: "${GMAIL_STATE_KEY_FILE:?Set the existing Gmail state encryption key file}"}
+volumes:
+  postgres_runtime:
+    external: true
+    name: ${POSTGRES_DATA_VOLUME:?Use a separate restored target PostgreSQL volume}
+  n8n_runtime:
+    external: true
+    name: ${N8N_DATA_VOLUME:?Use a separate restored target n8n volume}
+  gateway_state:
+networks:
+  database_private: {internal: true}
+  credentials_private: {internal: true}
+  application:

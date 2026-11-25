@@ -1,0 +1,33 @@
+{
+  "started_at": "2026-10-21T19:50:48.275Z",
+  "baseline_functions": 22,
+  "backup_catalog_verified": true,
+  "migration_applied": true,
+  "imports": [
+    {
+      "id": "27W04lgTGdgFMWUx",
+      "active": false
+    },
+    {
+      "id": "gTjsUEP8VLlxKfWf",
+      "active": false
+    },
+    {
+      "id": "TrgeZrs4ILZnrXuJ",
+      "active": false
+    }
+  ],
+  "restarted": true,
+  "completed_at": "2026-10-21T19:57:16.077Z",
+  "health": true,
+  "health_check": "container internal endpoint; initial host check timed out",
+  "sql_body_verified": true,
+  "runtime_grant_verified": true,
+  "business_state_preserved": true,
+  "workflows_inactive": true,
+  "planner_paused": true,
+  "customer_flag_enabled": false,
+  "sending_enabled": false,
+  "provider_calls": 0,
+  "emails_sent": 0
+}

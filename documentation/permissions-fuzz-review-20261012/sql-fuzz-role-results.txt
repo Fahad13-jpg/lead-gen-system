@@ -1,0 +1,11 @@
+BEGIN
+SET
+DO
+PASS role h_owner_20261012: full function chain and 50 malformed cases
+ROLLBACK
+BEGIN
+SET
+DO
+PASS role h_runtime_20261012: full function chain and 50 malformed cases
+ROLLBACK
+All fixtures rolled back.

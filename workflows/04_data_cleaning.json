@@ -2,66 +2,157 @@
   "name": "4 - Data Cleaning",
   "nodes": [
     {
-      "parameters": {
-        "jsCode": "return [\n  {\n    json: {\n      id: 1, job_id: 1, user_id: 1,\n      company_name: \"Test Company LLC\",\n      email: \"info@testcompany.com\",\n      phone: \"+12125551234\",\n      website: \"https://testcompany.com\",\n      address: \"123 Main St\", city: \"New York\",\n      state: \"NY\", zip_code: \"10001\", country: \"US\",\n      category: \"Marketing Agency\",\n      raw_data: { totalScore: 4.5, reviewsCount: 120 },\n      additional_data: {},\n      processing_status: \"pending\"\n    }\n  },\n  {\n    json: {\n      id: 2, job_id: 1, user_id: 1,\n      company_name: \"Bad Lead No Contact\",\n      email: null, phone: null,\n      website: null, address: \"456 Side St\",\n      city: \"Chicago\", state: \"IL\",\n      zip_code: \"60601\", country: \"US\",\n      category: \"Restaurant\",\n      raw_data: { totalScore: 3.2, reviewsCount: 45 },\n      additional_data: {},\n      processing_status: \"pending\"\n    }\n  },\n  {\n    json: {\n      id: 3, job_id: 1, user_id: 1,\n      company_name: \"Duplicate Test Inc\",\n      email: \"info@testcompany.com\",\n      phone: \"+12125551234\",\n      website: \"https://duplicate.com\",\n      address: \"789 Copy Ave\", city: \"Houston\",\n      state: \"TX\", zip_code: \"77001\", country: \"US\",\n      category: \"Consulting\",\n      raw_data: { totalScore: 4.8, reviewsCount: 300 },\n      additional_data: {},\n      processing_status: \"pending\"\n    }\n  }\n];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "name": "Every Minute",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "id": "57567835f006b582b80cba7c4af38f15",
       "position": [
-        -4912,
-        1600
+        0,
+        0
       ],
-      "id": "ed05af39-2dec-4a12-8404-c9259c1b9db6",
-      "name": "Mock Staging Leads"
-    },
-    {
-      "parameters": {
-        "content": "## 🧹Data Cleaning\n\n**Purpose**\nCleans raw leads automatically in the background. Takes messy scraped data from `staging_leads`, fixes it, removes duplicates, and moves good leads into `cleaned_leads`.\n\n**How it works**\nRuns every **15 minutes** → picks up to 50 pending leads → cleans emails and phone numbers → checks for duplicates → inserts new leads into `cleaned_leads` → marks staging lead as done.\n\n**Key Rules**\n- Leads with **no email AND no phone** are dropped\n- Duplicate check is based on email or phone match\n- Runs fully automatically nothing to trigger manually",
-        "height": 496,
-        "width": 304
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        -4912,
-        832
-      ],
-      "typeVersion": 1,
-      "id": "a229e8e6-d3d1-48c5-81b9-b5a2f13f49e1",
-      "name": "Sticky Note1"
-    },
-    {
       "parameters": {
         "rule": {
           "interval": [
             {
-              "field": "hours"
+              "field": "minutes",
+              "minutesInterval": 1
             }
           ]
         }
-      },
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1.2,
-      "position": [
-        -4912,
-        1392
-      ],
-      "id": "23e14763-b511-4eea-9ea1-9fa56ad26975",
-      "name": "Schedule Trigger"
+      }
     },
     {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT * FROM staging_leads WHERE processing_status = 'pending' ORDER BY id ASC LIMIT 100",
-        "options": {}
-      },
+      "name": "Manual Test",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "id": "ddcc47f04d666980506074a10f16aba4",
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "name": "Claim Cleaning Batch",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
+      "id": "6778506ecac4b74ba4a0795d49797082",
       "position": [
-        -4736,
-        1392
+        440,
+        0
       ],
-      "id": "347c0d45-2606-4b05-b5f9-5b0254f4b229",
-      "name": "Get Unprocessed Leads",
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT value AS lead FROM cleaning_claim($1,50) value",
+        "options": {
+          "queryReplacement": "={{ [String($execution.id)] }}",
+          "queryBatching": "independently"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "name": "Normalize Leads",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "id": "6b3a7ae06bdc3f0564bfbb23b4eae9f5",
+      "position": [
+        660,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// An empty claim is an idle queue, never a task.\nconst queueItems=$input.all();\nif(!queueItems.length||queueItems.every(item=>item&&item.json&&Object.keys(item.json).length===0))return [];\nconst normalize=function normalize(raw) {\n  const issues=[];\n  const text=(v,max=255)=>typeof v==='string'||typeof v==='number' ? String(v).normalize('NFKC').replace(/[\\u0000-\\u001f\\u007f]/g,' ').replace(/\\s+/g,' ').trim().slice(0,max)||null : null;\n  const field=(v,max)=>{const s=text(v,max);return s&& !/^(n\\/?a|unknown|not available|none|null|coming soon|test|lorem ipsum|--?|tbd)$/i.test(s)?s:null;};\n  const key=v=>field(v,1000)?.toLocaleLowerCase().replace(/[^\\p{L}\\p{N}]+/gu,' ').trim()||null;\n  const source=raw.raw_data&&typeof raw.raw_data==='object'?raw.raw_data:{};\n  const countries={pk:'PK',pakistan:'PK',us:'US',usa:'US','united states':'US',gb:'GB',uk:'GB','united kingdom':'GB',ca:'CA',canada:'CA',in:'IN',india:'IN',ae:'AE','united arab emirates':'AE'};\n  const countryText=field(raw.country)||field(source.countryCode)||field(raw.search_country);\n  const country=countries[countryText?.toLowerCase()]||(/^[a-z]{2}$/i.test(countryText||'')?countryText.toUpperCase():null);\n  if(!country)issues.push('country_unknown');\n  const emailInput=field(raw.email);\n  let email=emailInput?.replace(/^mailto:/i,'').trim()||null;\n  if(email){const at=email.lastIndexOf('@');email=email.slice(0,at).toLowerCase()+'@'+email.slice(at+1).toLowerCase();if(email.length>254||! /^[a-z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\\.[a-z]{2,}$/i.test(email)||email.split('@')[0].includes('..')||email.split('@')[1].includes('..')||email.startsWith('.')){issues.push('email_format_invalid');email=null;}}\n  const domain=email?.split('@')[1];\n  const disposable=['tempmail.com','mailinator.com','guerrillamail.com','10minutemail.com','throwaway.email','yopmail.com'].some(d=>domain===d||domain?.endsWith('.'+d));\n  const emailType=!email?'unknown':disposable?'disposable':/^(info|contact|sales|support|admin|hello|office|team|help|enquiries|inquiries)$/.test(email.split('@')[0])?'role_based':'individual_or_other';\n  if(disposable)issues.push('disposable_email');\n  let phone=field(raw.phone,100),extension=null;\n  if(phone){const ext=phone.match(/(?:ext\\.?|x|#)\\s*(\\d{1,8})$/i);if(ext){extension=ext[1];phone=phone.slice(0,ext.index);}phone=phone.replace(/[\\s().-]/g,'');if(phone.startsWith('00'))phone='+'+phone.slice(2);\n    if(!phone.startsWith('+')){\n      if(country==='PK'&&/^0\\d{9,10}$/.test(phone))phone='+92'+phone.slice(1);\n      else if(country==='PK'&&/^92\\d{9,10}$/.test(phone))phone='+'+phone;\n      else if(['US','CA'].includes(country)&&/^\\d{10}$/.test(phone))phone='+1'+phone;\n      else if(['US','CA'].includes(country)&&/^1\\d{10}$/.test(phone))phone='+'+phone;\n      else {issues.push('phone_country_or_format_uncertain');phone=null;}\n    }\n    if(phone&&!/^\\+[1-9]\\d{7,14}$/.test(phone)){issues.push('phone_format_invalid');phone=null;}\n  }\n  const websiteInput=field(raw.website,2000);\n  let website=null;\n  if(websiteInput){let u=websiteInput;if(!/^[a-z][a-z0-9+.-]*:/i.test(u))u='https://'+u;\n    const m=u.match(/^(https?):\\/\\/([a-z0-9.-]+)(?::(\\d{1,5}))?([^\\s]*)$/i);\n    if(m&&/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\\.[a-z]{2,}$/i.test(m[2])&&!m[2].includes('..')&&!m[2].endsWith('.local')&&(!m[3]||Number(m[3])<=65535)){\n      website=m[1].toLowerCase()+'://'+m[2].toLowerCase()+(m[3]?':'+m[3]:'')+(m[4].split('#')[0]||'');\n      if(website.length>255){issues.push('website_too_long');website=null;}\n    }else issues.push('website_format_invalid');\n  }\n  const number=(v,min,max)=>{if(v===null||v===undefined||v===''||typeof v==='boolean')return null;const n=Number(String(v).replace(/,/g,''));return Number.isFinite(n)&&n>=min&&n<=max?n:null;};\n  const company_name=field(raw.company_name),address=field(raw.address,1000),category=field(raw.category,100);\n  const latitude=number(source.location?.lat??source.coordinates?.latitude,-90,90),longitude=number(source.location?.lng??source.coordinates?.longitude,-180,180);\n  const review_count=number(source.reviewsCount??source.reviewCount,0,2147483647);\n  const facebookPage=raw.source==='facebook_pages'&&/^https:\\/\\/www\\.facebook\\.com\\/[A-Za-z0-9._/-]+\\/$/.test(source.facebook_page_url||'');\n  const outcome=!company_name?'review':email&&!disposable||phone?'cleaned':website||facebookPage?'needs_discovery':'review';\n  if(facebookPage&&!email&&!phone&&!website)issues.push('facebook_page_only_contact_unavailable');\n  if(!company_name)issues.push('business_name_missing');if(!email&&!phone)issues.push(website?'contact_discovery_needed':'no_usable_contact');\n  const score=(company_name?15:0)+(email?20:0)+(phone?20:0)+(website?15:0)+(address?15:0)+(country?5:0)+(category?10:0);\n  return {staging_id:raw.id,org_id:raw.org_id,lease_token:raw.cleaning_lease,rule_version:'cleaning-v1',outcome,issues,\n    fields:{company_name,normalized_name:key(company_name),email,email_type:emailType,phone,website,address,city:field(raw.city,100),state:field(raw.state,100),zip_code:field(raw.zip,20),country,category,latitude,longitude,rating:number(source.totalScore??source.rating,0,5),review_count:review_count===null?null:Math.floor(review_count),data_quality_score:score},\n    readiness:{email:email?(disposable?'blocked_disposable':'needs_verification'):'missing',phone:phone?'format_accepted':'missing_or_uncertain',website:website?'format_accepted':'missing_or_invalid'},phone_extension:extension};\n};return $input.all().map((item,index)=>({json:normalize(item.json.lead),pairedItem:{item:index}}));"
+      }
+    },
+    {
+      "name": "Save Cleaning Outcome",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "id": "9ae77b26739128333ac7203ef91dcfa2",
+      "position": [
+        880,
+        0
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT cleaning_finish($1::jsonb) AS result",
+        "options": {
+          "queryReplacement": "={{ [JSON.stringify($json)] }}",
+          "queryBatching": "independently"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000
+    },
+    {
+      "name": "status Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "id": "73415ac77a39127417662d2aa0b70ecd",
+      "position": [
+        1100,
+        0
+      ],
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "cleaning-status",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "leadGatheringAuth",
+          "name": "Lead Gathering API"
+        }
+      },
+      "webhookId": "6df7f4c8-705b-409d-b296-8f92912bf959"
+    },
+    {
+      "name": "status Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "id": "897bb5a859d4b479b16554e5ead577ef",
+      "position": [
+        1320,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const q=$input.first().json.query||{};const id=v=>/^[1-9]\\d*$/.test(String(v))&&Number.isSafeInteger(Number(v))?Number(v):null;return {org_id:id(q.org_id),staging_id:id(q.staging_id),job_id:q.job_id===undefined?null:id(q.job_id),invalid:!id(q.org_id)||(q.job_id!==undefined&&!id(q.job_id))};"
+      }
+    },
+    {
+      "name": "Read Status",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "id": "8867866917043ab4a40fb92b6afcd5b8",
+      "position": [
+        1540,
+        0
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT CASE WHEN $3::boolean THEN jsonb_build_object('error','INVALID_REQUEST') WHEN NOT EXISTS(SELECT 1 FROM organizations WHERE id=$1) THEN jsonb_build_object('error','NOT_FOUND') ELSE cleaning_report($1,$2) END AS result",
+        "options": {
+          "queryReplacement": "={{ [$json.org_id,$json.job_id,$json.invalid] }}",
+          "queryBatching": "independently"
+        }
+      },
       "credentials": {
         "postgres": {
           "id": "Scc3yxojKZkvXpOL",
@@ -70,59 +161,77 @@
       }
     },
     {
+      "name": "status Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "id": "fdf563f55dd124b7e200ccec3d0f7059",
+      "position": [
+        1760,
+        0
+      ],
       "parameters": {
-        "conditions": {
-          "conditions": [
-            {
-              "leftValue": "={{ $input.all().length }}",
-              "rightValue": 0,
-              "operator": {
-                "type": "number",
-                "operation": "gt"
-              }
-            }
-          ]
-        },
+        "respondWith": "json",
+        "responseBody": "={{ $json.result }}",
+        "options": {
+          "responseCode": "={{ $json.result.error === 'INVALID_REQUEST' ? 400 : $json.result.error ? 404 : 200 }}"
+        }
+      }
+    },
+    {
+      "name": "preview Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "id": "c83fe99529093d8041ab1514c1d159f2",
+      "position": [
+        1980,
+        0
+      ],
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "cleaning-preview",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
         "options": {}
       },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        -4544,
-        1392
-      ],
-      "id": "d0af9515-c703-4ad9-b84d-e7381e77f4f8",
-      "name": "Any to Process?"
-    },
-    {
-      "parameters": {
-        "jsCode": "const leads = $input.all();\nconst cleaned = [];\n\nfor (const item of leads) {\n  const raw = item.json;\n  const rawData = raw.raw_data || {};\n  const additionalData = raw.additional_data || {};\n\n  const cleanEmail = (email) => {\n    if (!email) return null;\n    const clean = email.toLowerCase().trim();\n    return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(clean) ? clean : null;\n  };\n\n  const cleanPhone = (phone) => {\n    if (!phone) return null;\n    const c = phone.replace(/[^0-9+]/g, '');\n    return c.length >= 7 ? c : null;\n  };\n\n  // Check email and phone from all possible sources\n  const cleanedEmail = cleanEmail(raw.email || rawData.email || additionalData.email);\n  const cleanedPhone = cleanPhone(raw.phone || rawData.phone || additionalData.phone);\n\n  if (!cleanedEmail && !cleanedPhone) {\n    console.log('Skipping: ' + (raw.company_name || 'Unknown'));\n    continue;\n  }\n\n  cleaned.push({\n    staging_id: raw.id,\n    job_id: raw.job_id,\n    user_id: raw.user_id,\n    company_name: (raw.company_name || 'Unknown').substring(0, 255),\n    email: cleanedEmail,\n    phone: cleanedPhone,\n    website: raw.website?.substring(0, 255) || null,\n    address: raw.address?.substring(0, 1000) || null,\n    city: raw.city?.substring(0, 100) || null,\n    state: raw.state?.substring(0, 100) || null,\n    zip_code: (raw.zip || raw.zip_code)?.substring(0, 20) || null,\n    country: (raw.country || 'Unknown').substring(0, 10),\n    category: raw.category?.substring(0, 100) || null,\n    rating: rawData.totalScore || additionalData.rating || null,\n    review_count: rawData.reviewsCount || additionalData.review_count || 0,\n    latitude: rawData.location?.lat || additionalData.latitude || null,\n    longitude: additionalData.longitude || rawData.location?.lng || null\n  });\n}\n\nconsole.log('Cleaned: ' + cleaned.length + '/' + leads.length);\n\nreturn cleaned.map(item => ({ json: item }));"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -4288,
-        1296
-      ],
-      "id": "5a5d26b3-2845-4247-96d1-fedacb4d363e",
-      "name": "Clean Data"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "=WITH input_data AS (\n  SELECT \n    {{ $json.staging_id }} as staging_id,\n    {{ $json.user_id }} as user_id,\n    $1 as email,\n    $2 as phone\n)\nSELECT \n  i.staging_id,\n  CASE WHEN c.id IS NULL THEN 0 ELSE 1 END as duplicate_count\nFROM input_data i\nLEFT JOIN cleaned_leads c ON c.user_id = i.user_id \n  AND (c.email = i.email OR c.phone = i.phone)\nLIMIT 1",
-        "options": {
-          "queryReplacement": "={{ $json.email }},={{ $json.phone }}"
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "leadGatheringAuth",
+          "name": "Lead Gathering API"
         }
       },
+      "webhookId": "15547a0a-3db6-4fc7-aa12-d05f725e89cf"
+    },
+    {
+      "name": "preview Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "id": "6100d54b47b4934cf1518ad2692a58bb",
+      "position": [
+        2200,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const q=$input.first().json.query||{};const id=v=>/^[1-9]\\d*$/.test(String(v))&&Number.isSafeInteger(Number(v))?Number(v):null;return {org_id:id(q.org_id),staging_id:id(q.staging_id),job_id:q.job_id===undefined?null:id(q.job_id),invalid:!id(q.org_id)||(q.job_id!==undefined&&!id(q.job_id))||!id(q.staging_id)};"
+      }
+    },
+    {
+      "name": "Read Preview Lead",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
+      "id": "e949a2dc92c583b11fc3aef3cbe7e0e4",
       "position": [
-        -4080,
-        1296
+        2420,
+        0
       ],
-      "id": "50ef5324-7d1e-4cbe-bb00-4a20a927162f",
-      "name": "Check Duplicates",
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT CASE WHEN $3::boolean THEN NULL ELSE (SELECT to_jsonb(s) FROM staging_leads s WHERE s.id=$2 AND s.org_id=$1) END AS lead,$3::boolean AS invalid",
+        "options": {
+          "queryReplacement": "={{ [$json.org_id,$json.staging_id,$json.invalid] }}",
+          "queryBatching": "independently"
+        }
+      },
       "credentials": {
         "postgres": {
           "id": "Scc3yxojKZkvXpOL",
@@ -131,485 +240,153 @@
       }
     },
     {
-      "parameters": {
-        "mode": "runOnceForEachItem",
-        "jsCode": "const duplicateResult = $input.item.json;\nconst leadData = $('Clean Data').item.json;\n\nreturn { ...leadData, duplicate_count: parseInt(duplicateResult.duplicate_count) || 0 };"
-      },
+      "name": "Preview Normalization",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
+      "id": "c304b0bac9d1447269a5cf3f1a6648f7",
       "position": [
-        -3856,
-        1296
+        2640,
+        0
       ],
-      "id": "deeac6af-c33a-4bf3-ae93-be2066015fd0",
-      "name": "Merge Data"
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const normalize=function normalize(raw) {\n  const issues=[];\n  const text=(v,max=255)=>typeof v==='string'||typeof v==='number' ? String(v).normalize('NFKC').replace(/[\\u0000-\\u001f\\u007f]/g,' ').replace(/\\s+/g,' ').trim().slice(0,max)||null : null;\n  const field=(v,max)=>{const s=text(v,max);return s&& !/^(n\\/?a|unknown|not available|none|null|coming soon|test|lorem ipsum|--?|tbd)$/i.test(s)?s:null;};\n  const key=v=>field(v,1000)?.toLocaleLowerCase().replace(/[^\\p{L}\\p{N}]+/gu,' ').trim()||null;\n  const source=raw.raw_data&&typeof raw.raw_data==='object'?raw.raw_data:{};\n  const countries={pk:'PK',pakistan:'PK',us:'US',usa:'US','united states':'US',gb:'GB',uk:'GB','united kingdom':'GB',ca:'CA',canada:'CA',in:'IN',india:'IN',ae:'AE','united arab emirates':'AE'};\n  const countryText=field(raw.country)||field(source.countryCode)||field(raw.search_country);\n  const country=countries[countryText?.toLowerCase()]||(/^[a-z]{2}$/i.test(countryText||'')?countryText.toUpperCase():null);\n  if(!country)issues.push('country_unknown');\n  const emailInput=field(raw.email);\n  let email=emailInput?.replace(/^mailto:/i,'').trim()||null;\n  if(email){const at=email.lastIndexOf('@');email=email.slice(0,at).toLowerCase()+'@'+email.slice(at+1).toLowerCase();if(email.length>254||! /^[a-z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\\.[a-z]{2,}$/i.test(email)||email.split('@')[0].includes('..')||email.split('@')[1].includes('..')||email.startsWith('.')){issues.push('email_format_invalid');email=null;}}\n  const domain=email?.split('@')[1];\n  const disposable=['tempmail.com','mailinator.com','guerrillamail.com','10minutemail.com','throwaway.email','yopmail.com'].some(d=>domain===d||domain?.endsWith('.'+d));\n  const emailType=!email?'unknown':disposable?'disposable':/^(info|contact|sales|support|admin|hello|office|team|help|enquiries|inquiries)$/.test(email.split('@')[0])?'role_based':'individual_or_other';\n  if(disposable)issues.push('disposable_email');\n  let phone=field(raw.phone,100),extension=null;\n  if(phone){const ext=phone.match(/(?:ext\\.?|x|#)\\s*(\\d{1,8})$/i);if(ext){extension=ext[1];phone=phone.slice(0,ext.index);}phone=phone.replace(/[\\s().-]/g,'');if(phone.startsWith('00'))phone='+'+phone.slice(2);\n    if(!phone.startsWith('+')){\n      if(country==='PK'&&/^0\\d{9,10}$/.test(phone))phone='+92'+phone.slice(1);\n      else if(country==='PK'&&/^92\\d{9,10}$/.test(phone))phone='+'+phone;\n      else if(['US','CA'].includes(country)&&/^\\d{10}$/.test(phone))phone='+1'+phone;\n      else if(['US','CA'].includes(country)&&/^1\\d{10}$/.test(phone))phone='+'+phone;\n      else {issues.push('phone_country_or_format_uncertain');phone=null;}\n    }\n    if(phone&&!/^\\+[1-9]\\d{7,14}$/.test(phone)){issues.push('phone_format_invalid');phone=null;}\n  }\n  const websiteInput=field(raw.website,2000);\n  let website=null;\n  if(websiteInput){let u=websiteInput;if(!/^[a-z][a-z0-9+.-]*:/i.test(u))u='https://'+u;\n    const m=u.match(/^(https?):\\/\\/([a-z0-9.-]+)(?::(\\d{1,5}))?([^\\s]*)$/i);\n    if(m&&/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\\.[a-z]{2,}$/i.test(m[2])&&!m[2].includes('..')&&!m[2].endsWith('.local')&&(!m[3]||Number(m[3])<=65535)){\n      website=m[1].toLowerCase()+'://'+m[2].toLowerCase()+(m[3]?':'+m[3]:'')+(m[4].split('#')[0]||'');\n      if(website.length>255){issues.push('website_too_long');website=null;}\n    }else issues.push('website_format_invalid');\n  }\n  const number=(v,min,max)=>{if(v===null||v===undefined||v===''||typeof v==='boolean')return null;const n=Number(String(v).replace(/,/g,''));return Number.isFinite(n)&&n>=min&&n<=max?n:null;};\n  const company_name=field(raw.company_name),address=field(raw.address,1000),category=field(raw.category,100);\n  const latitude=number(source.location?.lat??source.coordinates?.latitude,-90,90),longitude=number(source.location?.lng??source.coordinates?.longitude,-180,180);\n  const review_count=number(source.reviewsCount??source.reviewCount,0,2147483647);\n  const facebookPage=raw.source==='facebook_pages'&&/^https:\\/\\/www\\.facebook\\.com\\/[A-Za-z0-9._/-]+\\/$/.test(source.facebook_page_url||'');\n  const outcome=!company_name?'review':email&&!disposable||phone?'cleaned':website||facebookPage?'needs_discovery':'review';\n  if(facebookPage&&!email&&!phone&&!website)issues.push('facebook_page_only_contact_unavailable');\n  if(!company_name)issues.push('business_name_missing');if(!email&&!phone)issues.push(website?'contact_discovery_needed':'no_usable_contact');\n  const score=(company_name?15:0)+(email?20:0)+(phone?20:0)+(website?15:0)+(address?15:0)+(country?5:0)+(category?10:0);\n  return {staging_id:raw.id,org_id:raw.org_id,lease_token:raw.cleaning_lease,rule_version:'cleaning-v1',outcome,issues,\n    fields:{company_name,normalized_name:key(company_name),email,email_type:emailType,phone,website,address,city:field(raw.city,100),state:field(raw.state,100),zip_code:field(raw.zip,20),country,category,latitude,longitude,rating:number(source.totalScore??source.rating,0,5),review_count:review_count===null?null:Math.floor(review_count),data_quality_score:score},\n    readiness:{email:email?(disposable?'blocked_disposable':'needs_verification'):'missing',phone:phone?'format_accepted':'missing_or_uncertain',website:website?'format_accepted':'missing_or_invalid'},phone_extension:extension};\n};const row=$input.first().json;if(row.invalid)return {result:{error:'INVALID_REQUEST'}};if(!row.lead)return {result:{error:'NOT_FOUND'}};const p=normalize(row.lead);delete p.lease_token;return {result:{preview:true,proposal:p}};"
+      }
     },
     {
-      "parameters": {
-        "conditions": {
-          "conditions": [
-            {
-              "leftValue": "={{ $json.duplicate_count }}",
-              "rightValue": 0,
-              "operator": {
-                "type": "number",
-                "operation": "equals"
-              }
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
+      "name": "preview Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "id": "24345d67444b390e3fae2ee2bc8716e6",
       "position": [
-        -3616,
-        1296
+        2860,
+        0
       ],
-      "id": "e6157819-7ab5-427c-bc42-35d3b401decb",
-      "name": "Is New Lead?"
-    },
-    {
       "parameters": {
-        "schema": "public",
-        "table": "cleaned_leads",
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "staging_id": "={{ $json.staging_id }}",
-            "user_id": "={{ $json.user_id }}",
-            "company_name": "={{ $json.company_name }}",
-            "email": "={{ $json.email }}",
-            "email_valid": "={{ $json.email ? true : false }}",
-            "email_verification_status": "={{ $json.email ? 'pending' : 'no_email' }}",
-            "phone": "={{ $json.phone }}",
-            "phone_valid": "={{ $json.phone ? true : false }}",
-            "website": "={{ $json.website }}",
-            "address": "={{ $json.address }}",
-            "city": "={{ $json.city }}",
-            "state": "={{ $json.state }}",
-            "zip_code": "={{ $json.zip_code }}",
-            "country": "={{ $json.country }}",
-            "category": "={{ $json.category }}",
-            "rating": "={{ $json.rating }}",
-            "review_count": "={{ $json.review_count }}",
-            "latitude": "={{ $json.latitude }}",
-            "id": 0,
-            "org_id": 0
-          },
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": [
-            {
-              "id": "id",
-              "displayName": "id",
-              "required": false,
-              "defaultMatch": true,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "user_id",
-              "displayName": "user_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "company_name",
-              "displayName": "company_name",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "email",
-              "displayName": "email",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "phone",
-              "displayName": "phone",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "city",
-              "displayName": "city",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "state",
-              "displayName": "state",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "website",
-              "displayName": "website",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "cleaned_at",
-              "displayName": "cleaned_at",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "address",
-              "displayName": "address",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "country",
-              "displayName": "country",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "zip_code",
-              "displayName": "zip_code",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "latitude",
-              "displayName": "latitude",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "email_valid",
-              "displayName": "email_valid",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "boolean",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "phone_valid",
-              "displayName": "phone_valid",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "boolean",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "email_verification_status",
-              "displayName": "email_verification_status",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "staging_id",
-              "displayName": "staging_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "created_at",
-              "displayName": "created_at",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "category",
-              "displayName": "category",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "rating",
-              "displayName": "rating",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "review_count",
-              "displayName": "review_count",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "org_id",
-              "displayName": "org_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
+        "respondWith": "json",
+        "responseBody": "={{ $json.result }}",
         "options": {
-          "outputColumns": [
-            "id",
-            "staging_id"
-          ]
+          "responseCode": "={{ $json.result.error === 'INVALID_REQUEST' ? 400 : $json.result.error ? 404 : 200 }}"
         }
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        -3360,
-        1104
-      ],
-      "id": "771ac4dd-01ea-4b73-879e-5f610b90986e",
-      "name": "Insert Cleaned Lead",
-      "credentials": {
-        "postgres": {
-          "id": "Scc3yxojKZkvXpOL",
-          "name": "Lead Database"
-        }
-      },
-      "continueOnFail": true
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "UPDATE staging_leads\nSET processing_status = 'done',\n    processed = true\nWHERE id = $1;",
-        "options": {
-          "queryReplacement": "={{ [$json.staging_id] }}"
-        }
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        -3120,
-        1312
-      ],
-      "id": "607b9892-4aad-41b2-89c4-5865627c30d5",
-      "name": "Mark Processed",
-      "credentials": {
-        "postgres": {
-          "id": "Scc3yxojKZkvXpOL",
-          "name": "Lead Database"
-        }
-      },
-      "continueOnFail": true
-    },
-    {
-      "parameters": {
-        "jsCode": "const items = $input.all();\nconst jobIds = [...new Set(items.map(i => i.json.job_id).filter(Boolean))];\nreturn jobIds.map(job_id => ({ json: { job_id } }));"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -2912,
-        1312
-      ],
-      "id": "2980e441-0f89-4b42-8a7a-4e181fb87e17",
-      "name": "Get Unique Jobs"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "=UPDATE scraping_jobs SET total_leads = (SELECT COUNT(*) FROM cleaned_leads WHERE job_id = $1) WHERE id = $1",
-        "options": {
-          "queryReplacement": "={{ $json.job_id }}"
-        }
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        -2704,
-        1312
-      ],
-      "id": "3f607466-5a89-4b91-9f20-34308838950e",
-      "name": "Update Job Count",
-      "credentials": {
-        "postgres": {
-          "id": "Scc3yxojKZkvXpOL",
-          "name": "Lead Database"
-        }
-      },
-      "continueOnFail": true
+      }
     }
   ],
-  "pinData": {},
   "connections": {
-    "Mock Staging Leads": {
-      "main": [
-        []
-      ]
-    },
-    "Schedule Trigger": {
+    "Every Minute": {
       "main": [
         [
           {
-            "node": "Get Unprocessed Leads",
+            "node": "Claim Cleaning Batch",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get Unprocessed Leads": {
+    "Manual Test": {
       "main": [
         [
           {
-            "node": "Any to Process?",
+            "node": "Claim Cleaning Batch",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Any to Process?": {
+    "Claim Cleaning Batch": {
       "main": [
         [
           {
-            "node": "Clean Data",
+            "node": "Normalize Leads",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Clean Data": {
+    "Normalize Leads": {
       "main": [
         [
           {
-            "node": "Check Duplicates",
+            "node": "Save Cleaning Outcome",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Check Duplicates": {
+    "status Input": {
       "main": [
         [
           {
-            "node": "Merge Data",
+            "node": "Read Status",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Merge Data": {
+    "Read Status": {
       "main": [
         [
           {
-            "node": "Is New Lead?",
+            "node": "status Response",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Is New Lead?": {
+    "status Webhook": {
       "main": [
         [
           {
-            "node": "Insert Cleaned Lead",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Mark Processed",
+            "node": "status Input",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Insert Cleaned Lead": {
+    "preview Input": {
       "main": [
         [
           {
-            "node": "Mark Processed",
+            "node": "Read Preview Lead",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Mark Processed": {
+    "Read Preview Lead": {
       "main": [
         [
           {
-            "node": "Get Unique Jobs",
+            "node": "Preview Normalization",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get Unique Jobs": {
+    "Preview Normalization": {
       "main": [
         [
           {
-            "node": "Update Job Count",
+            "node": "preview Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "preview Webhook": {
+      "main": [
+        [
+          {
+            "node": "preview Input",
             "type": "main",
             "index": 0
           }
@@ -617,15 +394,16 @@
       ]
     }
   },
-  "active": false,
+  "pinData": {},
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "timezone": "UTC",
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "none",
+    "saveManualExecutions": false
   },
-  "versionId": "cbd576ac-b907-4f25-bbf1-5968079c3121",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
-  },
-  "id": "PnLPSceKs2Rzn4xw",
-  "tags": []
+  }
 }

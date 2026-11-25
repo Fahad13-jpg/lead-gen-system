@@ -1,0 +1,106 @@
+{
+  "brand": {
+    "name": "Leadmorrow",
+    "tagline": "Find leads and manage outreach",
+    "logo": "/brand/mark.svg"
+  },
+  "shareImage": "/brand/social-preview.png",
+  "pages": [
+    {
+      "path": "/",
+      "title": "Find leads. Plan your next conversation.",
+      "description": "Find businesses, review contact details and prepare outreach with connected accounts and clear approvals.",
+      "indexable": true
+    },
+    {
+      "path": "/faq",
+      "title": "Frequently asked questions",
+      "description": "Learn how lead discovery, Free and Plus access, connected accounts and approved outreach work.",
+      "indexable": true
+    },
+    {
+      "path": "/privacy",
+      "title": "Privacy notice",
+      "description": "How the service handles account information, business research, connected providers and privacy requests.",
+      "indexable": true
+    },
+    {
+      "path": "/terms",
+      "title": "Terms and conditions",
+      "description": "Read the terms for workspace access, responsible outreach, connected accounts and provider usage.",
+      "indexable": true
+    },
+    {
+      "path": "/contact",
+      "title": "Contact and support",
+      "description": "Find support information and the steps for reporting an account, connection or privacy issue.",
+      "indexable": true
+    },
+    {
+      "path": "/login",
+      "title": "Sign in",
+      "description": "Sign in to your organization workspace to manage business leads and approved outreach.",
+      "indexable": false
+    },
+    {
+      "path": "/access",
+      "title": "Workspace access",
+      "description": "Verify your account and choose an authorized organization workspace.",
+      "indexable": false
+    },
+    {
+      "path": "/design-preview",
+      "title": "Workspace preview",
+      "description": "Explore an illustrative workspace preview. Sample records do not represent live activity.",
+      "indexable": false
+    },
+    {
+      "path": "/dashboard",
+      "title": "Overview",
+      "description": "Review your workspace activity and choose the next step for your leads.",
+      "indexable": false
+    },
+    {
+      "path": "/scraping",
+      "title": "Find leads",
+      "description": "Follow your business searches and review their processing progress.",
+      "indexable": false
+    },
+    {
+      "path": "/scraping/new",
+      "title": "New business search",
+      "description": "Choose business types, locations and sources, then review your search budget.",
+      "indexable": false
+    },
+    {
+      "path": "/leads",
+      "title": "Saved leads",
+      "description": "Review your organization’s saved businesses, contact details and research evidence.",
+      "indexable": false
+    },
+    {
+      "path": "/campaigns",
+      "title": "Campaigns",
+      "description": "Manage your offers and prepare outreach campaigns for review.",
+      "indexable": false
+    },
+    {
+      "path": "/campaigns/new",
+      "title": "Create a campaign",
+      "description": "Define your offer, approved benefits and preferred outreach channels.",
+      "indexable": false
+    },
+    {
+      "path": "/outreach",
+      "title": "Outreach activity",
+      "description": "Review saved outreach activity, replies and delivery updates in your workspace.",
+      "indexable": false
+    },
+    {
+      "path": "/settings",
+      "title": "Workspace settings",
+      "description": "Manage your workspace package, connected accounts and sending settings.",
+      "indexable": false
+    }
+  ]
+}

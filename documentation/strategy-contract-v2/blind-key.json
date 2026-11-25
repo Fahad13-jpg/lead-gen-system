@@ -1,0 +1,27 @@
+[
+  {
+    "lead_id": 167,
+    "A": "mock_ai",
+    "B": "template"
+  },
+  {
+    "lead_id": 445,
+    "A": "template",
+    "B": "mock_ai"
+  },
+  {
+    "lead_id": 446,
+    "A": "mock_ai",
+    "B": "template"
+  },
+  {
+    "lead_id": 447,
+    "A": "mock_ai",
+    "B": "template"
+  },
+  {
+    "lead_id": 449,
+    "A": "template",
+    "B": "mock_ai"
+  }
+]

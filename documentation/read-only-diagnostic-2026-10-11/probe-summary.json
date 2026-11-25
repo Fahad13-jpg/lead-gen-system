@@ -1,0 +1,154 @@
+[
+  {
+    "environment": "windows",
+    "mode": "default",
+    "requests": 20,
+    "successes": 20,
+    "errors": {},
+    "dns_ms": {
+      "n": 20,
+      "p50": 5,
+      "max": 791
+    },
+    "connect_ms": {
+      "n": 20,
+      "p50": 37,
+      "max": 216
+    },
+    "tls_ms": {
+      "n": 20,
+      "p50": 59,
+      "max": 166
+    },
+    "first_byte_ms": {
+      "n": 20,
+      "p50": 342,
+      "max": 376
+    },
+    "ttfb_ms": {
+      "n": 20,
+      "p50": 455,
+      "max": 1277
+    },
+    "total_ms": {
+      "n": 20,
+      "p50": 459,
+      "max": 1288
+    }
+  },
+  {
+    "environment": "windows",
+    "mode": "ipv4",
+    "requests": 20,
+    "successes": 20,
+    "errors": {},
+    "dns_ms": {
+      "n": 20,
+      "p50": 3,
+      "max": 14
+    },
+    "connect_ms": {
+      "n": 20,
+      "p50": 54,
+      "max": 3439
+    },
+    "tls_ms": {
+      "n": 20,
+      "p50": 68,
+      "max": 5588
+    },
+    "first_byte_ms": {
+      "n": 20,
+      "p50": 422,
+      "max": 3024
+    },
+    "ttfb_ms": {
+      "n": 20,
+      "p50": 645,
+      "max": 11497
+    },
+    "total_ms": {
+      "n": 20,
+      "p50": 646,
+      "max": 11499
+    }
+  },
+  {
+    "environment": "n8n",
+    "mode": "default",
+    "requests": 20,
+    "successes": 6,
+    "errors": {
+      "ETIMEDOUT": 14
+    },
+    "dns_ms": {
+      "n": 20,
+      "p50": 250,
+      "max": 3692
+    },
+    "connect_ms": {
+      "n": 6,
+      "p50": 246,
+      "max": 530
+    },
+    "tls_ms": {
+      "n": 6,
+      "p50": 161,
+      "max": 370
+    },
+    "first_byte_ms": {
+      "n": 6,
+      "p50": 424,
+      "max": 1118
+    },
+    "ttfb_ms": {
+      "n": 6,
+      "p50": 1119,
+      "max": 4715
+    },
+    "total_ms": {
+      "n": 20,
+      "p50": 831,
+      "max": 4723
+    }
+  },
+  {
+    "environment": "n8n",
+    "mode": "ipv4",
+    "requests": 20,
+    "successes": 19,
+    "errors": {
+      "ECONNRESET": 1
+    },
+    "dns_ms": {
+      "n": 20,
+      "p50": 8,
+      "max": 30
+    },
+    "connect_ms": {
+      "n": 20,
+      "p50": 49,
+      "max": 2269
+    },
+    "tls_ms": {
+      "n": 19,
+      "p50": 86,
+      "max": 1453
+    },
+    "first_byte_ms": {
+      "n": 19,
+      "p50": 354,
+      "max": 1409
+    },
+    "ttfb_ms": {
+      "n": 19,
+      "p50": 525,
+      "max": 4814
+    },
+    "total_ms": {
+      "n": 20,
+      "p50": 619,
+      "max": 5147
+    }
+  }
+]

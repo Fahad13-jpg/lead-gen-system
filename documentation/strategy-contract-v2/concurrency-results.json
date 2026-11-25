@@ -1,0 +1,43 @@
+{
+  "database": "scratch_strategy_races_20261013",
+  "container": "lead_diag_pg_20261011",
+  "role": "v2_scratch_runtime",
+  "production_changed": false,
+  "provider_calls": 0,
+  "tests": [
+    {
+      "test": "simultaneous_claims",
+      "passed": true,
+      "job_ids": [
+        4,
+        5
+      ],
+      "evidence": "B completed while A held row lock; distinct claims"
+    },
+    {
+      "test": "concurrent_last_budget_slot",
+      "passed": true,
+      "responses": [
+        {
+          "allowed": true
+        },
+        {
+          "reason": "monthly_limit",
+          "allowed": false
+        }
+      ],
+      "evidence": "Observed B waiting on A lock; only one reservation created"
+    },
+    {
+      "test": "concurrent_finish_replay",
+      "passed": true,
+      "evidence": "Observed B waiting; second finish replayed same plan; exactly one plan row"
+    },
+    {
+      "test": "approval_against_concurrent_content_change",
+      "passed": true,
+      "evidence": "Observed B waiting; stale content hash rejected; no approval inserted"
+    }
+  ],
+  "retained": "Only dedicated clone contains committed concurrency fixtures; original scratch and production unchanged."
+}

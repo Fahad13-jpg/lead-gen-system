@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-11-08T04:49:29.310Z",
+  "cli_exit_code": 0,
+  "timed_out": false,
+  "sender": {
+    "state": "ready",
+    "version": 6,
+    "send_capable": true,
+    "reply_capable": true,
+    "checked_at": "2026-11-08T04:49:27.156603+00:00"
+  },
+  "emails_sent": 0,
+  "activity_count_unchanged": true
+}

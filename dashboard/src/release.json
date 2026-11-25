@@ -1,0 +1,4 @@
+{
+  "evaluationMode": true,
+  "deferredFeatures": ["calling", "sms", "whatsapp_automation"]
+}

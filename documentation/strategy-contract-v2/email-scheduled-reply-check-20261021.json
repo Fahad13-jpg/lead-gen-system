@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-10-21T07:21:59.308Z",
+  "original_found": true,
+  "thread_messages": 2,
+  "matched": 1,
+  "categories": [
+    "reply"
+  ],
+  "review_reasons": [],
+  "scope": "Read-only thread retrieval and existing reply matcher with fixture activity IDs; no production activity or stop event written",
+  "emails_sent": 0
+}

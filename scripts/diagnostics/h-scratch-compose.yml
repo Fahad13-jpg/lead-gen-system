@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: ${H_PG_IMAGE}
+    environment:
+      POSTGRES_USER: scratch_admin
+      POSTGRES_PASSWORD: ${H_DB_PASSWORD}
+      POSTGRES_DB: n8n_baseline
+    labels:
+      codex.scratch: h-review-20261012
+  baseline:
+    image: ${H_N8N_IMAGE}
+    environment:
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: postgres
+      DB_POSTGRESDB_DATABASE: n8n_baseline
+      DB_POSTGRESDB_USER: scratch_admin
+      DB_POSTGRESDB_PASSWORD: ${H_DB_PASSWORD}
+      N8N_DIAGNOSTICS_ENABLED: 'false'
+      N8N_VERSION_NOTIFICATIONS_ENABLED: 'false'
+      N8N_TEMPLATES_ENABLED: 'false'
+      N8N_SECURE_COOKIE: 'false'
+    ports:
+      - '127.0.0.1:12878:5678'
+    labels:
+      codex.scratch: h-review-20261012
+  ipv6off:
+    image: ${H_N8N_IMAGE}
+    sysctls:
+      net.ipv6.conf.all.disable_ipv6: '1'
+      net.ipv6.conf.default.disable_ipv6: '1'
+    environment:
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: postgres
+      DB_POSTGRESDB_DATABASE: n8n_ipv6off
+      DB_POSTGRESDB_USER: scratch_admin
+      DB_POSTGRESDB_PASSWORD: ${H_DB_PASSWORD}
+      N8N_DIAGNOSTICS_ENABLED: 'false'
+      N8N_VERSION_NOTIFICATIONS_ENABLED: 'false'
+      N8N_TEMPLATES_ENABLED: 'false'
+      N8N_SECURE_COOKIE: 'false'
+    ports:
+      - '127.0.0.1:12879:5678'
+    labels:
+      codex.scratch: h-review-20261012

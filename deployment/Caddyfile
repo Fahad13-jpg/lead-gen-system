@@ -1,0 +1,12 @@
+{$APP_DOMAIN} {
+ encode zstd gzip
+ header {
+  X-Content-Type-Options nosniff
+  Referrer-Policy no-referrer
+  Strict-Transport-Security "max-age=86400"
+ }
+ reverse_proxy gateway:3002
+ handle_errors {
+  respond "The service is temporarily unavailable. Please try again shortly." {err.status_code}
+ }
+}

@@ -1,0 +1,406 @@
+[
+  {
+    "client": "fetch",
+    "mode": "default",
+    "configuration": {
+      "type": "configuration",
+      "client": "fetch",
+      "mode": "default",
+      "initial": {
+        "node": "v22.19.0",
+        "autoSelectFamily": true,
+        "attemptTimeout": 250,
+        "dnsOrder": "verbatim"
+      },
+      "actual": {
+        "autoSelectFamily": true,
+        "attemptTimeout": 250,
+        "dnsOrder": "verbatim"
+      },
+      "proxyConfigured": false
+    },
+    "requests": 100,
+    "successes": 0,
+    "errors": {
+      "EAI_AGAIN": 3,
+      "ETIMEDOUT": 97,
+      "ENETUNREACH": 97
+    },
+    "p50_ms": 570.5,
+    "max_ms": 7374,
+    "failure_clusters": [
+      {
+        "first_index": 1,
+        "last_index": 100,
+        "start": "2026-10-11T14:28:54.445Z",
+        "end": "2026-10-11T14:30:40.759Z",
+        "count": 100
+      }
+    ]
+  },
+  {
+    "client": "fetch",
+    "mode": "raised_timeout",
+    "configuration": {
+      "type": "configuration",
+      "client": "fetch",
+      "mode": "raised_timeout",
+      "initial": {
+        "node": "v22.19.0",
+        "autoSelectFamily": true,
+        "attemptTimeout": 250,
+        "dnsOrder": "verbatim"
+      },
+      "actual": {
+        "autoSelectFamily": true,
+        "attemptTimeout": 1500,
+        "dnsOrder": "verbatim"
+      },
+      "proxyConfigured": false
+    },
+    "requests": 100,
+    "successes": 91,
+    "errors": {
+      "ETIMEDOUT": 8,
+      "ENETUNREACH": 8,
+      "EAI_AGAIN": 1
+    },
+    "p50_ms": 436.5,
+    "max_ms": 9787,
+    "failure_clusters": [
+      {
+        "first_index": 1,
+        "last_index": 9,
+        "start": "2026-10-11T14:30:53.363Z",
+        "end": "2026-10-11T14:31:32.989Z",
+        "count": 9
+      }
+    ]
+  },
+  {
+    "client": "fetch",
+    "mode": "disabled",
+    "configuration": {
+      "type": "configuration",
+      "client": "fetch",
+      "mode": "disabled",
+      "initial": {
+        "node": "v22.19.0",
+        "autoSelectFamily": true,
+        "attemptTimeout": 250,
+        "dnsOrder": "verbatim"
+      },
+      "actual": {
+        "autoSelectFamily": false,
+        "attemptTimeout": 250,
+        "dnsOrder": "verbatim"
+      },
+      "proxyConfigured": false
+    },
+    "requests": 100,
+    "successes": 100,
+    "errors": {},
+    "p50_ms": 535,
+    "max_ms": 8770,
+    "failure_clusters": []
+  },
+  {
+    "client": "fetch",
+    "mode": "ipv4",
+    "configuration": {
+      "type": "configuration",
+      "client": "fetch",
+      "mode": "ipv4",
+      "initial": {
+        "node": "v22.19.0",
+        "autoSelectFamily": true,
+        "attemptTimeout": 250,
+        "dnsOrder": "verbatim"
+      },
+      "actual": {
+        "autoSelectFamily": true,
+        "attemptTimeout": 250,
+        "dnsOrder": "verbatim"
+      },
+      "proxyConfigured": false
+    },
+    "requests": 100,
+    "successes": 100,
+    "errors": {},
+    "p50_ms": 454.5,
+    "max_ms": 8834,
+    "failure_clusters": []
+  },
+  {
+    "client": "fetch",
+    "mode": "ipv4first",
+    "configuration": {
+      "type": "configuration",
+      "client": "fetch",
+      "mode": "ipv4first",
+      "initial": {
+        "node": "v22.19.0",
+        "autoSelectFamily": true,
+        "attemptTimeout": 250,
+        "dnsOrder": "verbatim"
+      },
+      "actual": {
+        "autoSelectFamily": true,
+        "attemptTimeout": 250,
+        "dnsOrder": "ipv4first"
+      },
+      "proxyConfigured": false
+    },
+    "requests": 100,
+    "successes": 100,
+    "errors": {},
+    "p50_ms": 484,
+    "max_ms": 5057,
+    "failure_clusters": []
+  },
+  {
+    "client": "n8n_http",
+    "mode": "default",
+    "configuration": {
+      "type": "configuration",
+      "client": "n8n_http",
+      "mode": "default",
+      "initial": {
+        "node": "v22.19.0",
+        "autoSelectFamily": true,
+        "attemptTimeout": 250,
+        "dnsOrder": "verbatim"
+      },
+      "actual": {
+        "autoSelectFamily": true,
+        "attemptTimeout": 250,
+        "dnsOrder": "verbatim"
+      },
+      "proxyConfigured": false
+    },
+    "requests": 100,
+    "successes": 0,
+    "errors": {
+      "ETIMEDOUT": 98,
+      "ENETUNREACH": 98,
+      "EAI_AGAIN": 2
+    },
+    "p50_ms": 565,
+    "max_ms": 5294,
+    "failure_clusters": [
+      {
+        "first_index": 1,
+        "last_index": 100,
+        "start": "2026-10-11T14:29:09.218Z",
+        "end": "2026-10-11T14:30:54.037Z",
+        "count": 100
+      }
+    ]
+  },
+  {
+    "client": "n8n_http",
+    "mode": "raised_timeout",
+    "configuration": {
+      "type": "configuration",
+      "client": "n8n_http",
+      "mode": "raised_timeout",
+      "initial": {
+        "node": "v22.19.0",
+        "autoSelectFamily": true,
+        "attemptTimeout": 250,
+        "dnsOrder": "verbatim"
+      },
+      "actual": {
+        "autoSelectFamily": true,
+        "attemptTimeout": 1500,
+        "dnsOrder": "verbatim"
+      },
+      "proxyConfigured": false
+    },
+    "requests": 100,
+    "successes": 79,
+    "errors": {
+      "ETIMEDOUT": 19,
+      "ENETUNREACH": 19,
+      "EAI_AGAIN": 1,
+      "ERR_CANCELED": 1
+    },
+    "p50_ms": 1122.5,
+    "max_ms": 120533,
+    "failure_clusters": [
+      {
+        "first_index": 1,
+        "last_index": 7,
+        "start": "2026-10-11T14:30:59.513Z",
+        "end": "2026-10-11T14:31:32.382Z",
+        "count": 7
+      },
+      {
+        "first_index": 9,
+        "last_index": 9,
+        "start": "2026-10-11T14:33:36.474Z",
+        "end": "2026-10-11T14:33:36.474Z",
+        "count": 1
+      },
+      {
+        "first_index": 41,
+        "last_index": 41,
+        "start": "2026-10-11T14:34:29.343Z",
+        "end": "2026-10-11T14:34:29.343Z",
+        "count": 1
+      },
+      {
+        "first_index": 71,
+        "last_index": 82,
+        "start": "2026-10-11T14:35:11.138Z",
+        "end": "2026-10-11T14:35:45.673Z",
+        "count": 12
+      }
+    ]
+  },
+  {
+    "client": "n8n_http",
+    "mode": "disabled",
+    "configuration": {
+      "type": "configuration",
+      "client": "n8n_http",
+      "mode": "disabled",
+      "initial": {
+        "node": "v22.19.0",
+        "autoSelectFamily": true,
+        "attemptTimeout": 250,
+        "dnsOrder": "verbatim"
+      },
+      "actual": {
+        "autoSelectFamily": false,
+        "attemptTimeout": 250,
+        "dnsOrder": "verbatim"
+      },
+      "proxyConfigured": false
+    },
+    "requests": 100,
+    "successes": 96,
+    "errors": {
+      "ECONNRESET": 3,
+      "ERR_CANCELED": 1
+    },
+    "p50_ms": 863,
+    "max_ms": 16017,
+    "failure_clusters": [
+      {
+        "first_index": 20,
+        "last_index": 20,
+        "start": "2026-10-11T14:36:51.239Z",
+        "end": "2026-10-11T14:36:51.239Z",
+        "count": 1
+      },
+      {
+        "first_index": 56,
+        "last_index": 56,
+        "start": "2026-10-11T14:37:41.338Z",
+        "end": "2026-10-11T14:37:41.338Z",
+        "count": 1
+      },
+      {
+        "first_index": 75,
+        "last_index": 75,
+        "start": "2026-10-11T14:38:04.519Z",
+        "end": "2026-10-11T14:38:04.519Z",
+        "count": 1
+      },
+      {
+        "first_index": 97,
+        "last_index": 97,
+        "start": "2026-10-11T14:38:43.856Z",
+        "end": "2026-10-11T14:38:43.856Z",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "client": "n8n_http",
+    "mode": "ipv4",
+    "configuration": {
+      "type": "configuration",
+      "client": "n8n_http",
+      "mode": "ipv4",
+      "initial": {
+        "node": "v22.19.0",
+        "autoSelectFamily": true,
+        "attemptTimeout": 250,
+        "dnsOrder": "verbatim"
+      },
+      "actual": {
+        "autoSelectFamily": true,
+        "attemptTimeout": 250,
+        "dnsOrder": "verbatim"
+      },
+      "proxyConfigured": false
+    },
+    "requests": 100,
+    "successes": 100,
+    "errors": {},
+    "p50_ms": 698,
+    "max_ms": 10486,
+    "failure_clusters": []
+  },
+  {
+    "client": "n8n_http",
+    "mode": "ipv4first",
+    "configuration": {
+      "type": "configuration",
+      "client": "n8n_http",
+      "mode": "ipv4first",
+      "initial": {
+        "node": "v22.19.0",
+        "autoSelectFamily": true,
+        "attemptTimeout": 250,
+        "dnsOrder": "verbatim"
+      },
+      "actual": {
+        "autoSelectFamily": true,
+        "attemptTimeout": 250,
+        "dnsOrder": "ipv4first"
+      },
+      "proxyConfigured": false
+    },
+    "requests": 100,
+    "successes": 26,
+    "errors": {
+      "ETIMEDOUT": 74,
+      "ENETUNREACH": 74
+    },
+    "p50_ms": 514,
+    "max_ms": 3203,
+    "failure_clusters": [
+      {
+        "first_index": 20,
+        "last_index": 20,
+        "start": "2026-10-11T14:41:35.537Z",
+        "end": "2026-10-11T14:41:35.537Z",
+        "count": 1
+      },
+      {
+        "first_index": 24,
+        "last_index": 63,
+        "start": "2026-10-11T14:41:42.650Z",
+        "end": "2026-10-11T14:42:06.661Z",
+        "count": 40
+      },
+      {
+        "first_index": 65,
+        "last_index": 66,
+        "start": "2026-10-11T14:42:10.571Z",
+        "end": "2026-10-11T14:42:11.217Z",
+        "count": 2
+      },
+      {
+        "first_index": 70,
+        "last_index": 100,
+        "start": "2026-10-11T14:42:16.004Z",
+        "end": "2026-10-11T14:42:34.405Z",
+        "count": 31
+      }
+    ]
+  }
+]

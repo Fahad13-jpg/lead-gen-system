@@ -1,0 +1,168 @@
+{
+  "label": "Offline fictional demonstration; not a saved campaign or approved plan",
+  "input": {
+    "org_id": 1,
+    "campaign": {
+      "org_id": 1,
+      "config": {
+        "name": "Islamabad Dental Clinic Website Introduction",
+        "mode": "template",
+        "language": "en",
+        "channels": [
+          "email"
+        ],
+        "sender": {
+          "name": "Fahad",
+          "company": "Fahad Web Studio",
+          "signature": "Fahad | Fahad Web Studio"
+        },
+        "offer": {
+          "name": "Proposed clinic website",
+          "description": "A proposed website project for a dental clinic. Discuss the clinic's needs before promising implementation or delivery.",
+          "approved_points": [
+            "The proposed website would present clinic services and contact details in one place.",
+            "The proposed website would include a patient enquiry form."
+          ],
+          "prohibited_claims": [
+            "guaranteed bookings",
+            "guaranteed revenue",
+            "proven results",
+            "existing clinic clients",
+            "completed demo",
+            "you don't have a website"
+          ]
+        },
+        "cta": {
+          "text": "Would you be open to discussing a website for your clinic?",
+          "url": ""
+        },
+        "target_terms": [
+          "dental",
+          "dentist"
+        ],
+        "locations": [
+          "Islamabad"
+        ],
+        "exclude_terms": [],
+        "offer_profile": {
+          "key": "website_presence",
+          "source_check_max_age_days": 30
+        },
+        "offer_fit_rules": [
+          {
+            "evidence_terms": [
+              "dental",
+              "dentist"
+            ],
+            "approved_point_index": 0
+          }
+        ],
+        "tone": "polite, concise, consultative",
+        "timezone": "Asia/Karachi",
+        "sending_window": {
+          "start_hour": 9,
+          "end_hour": 17,
+          "weekdays": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "sequence": [
+          {
+            "channel": "email",
+            "delay_days": 0
+          },
+          {
+            "channel": "email",
+            "delay_days": 3
+          }
+        ],
+        "expiry_days": 14,
+        "templates": {
+          "email": {
+            "subject": "Website proposal for {{company_name}}",
+            "body": "Hello {{company_name}},\n\n{{offer_description}}\n\n{{cta}}\n\n{{sender_name}} | {{sender_company}}\nReply STOP to opt out.",
+            "followups": [
+              "Hello {{company_name}},\n\nWould you like to discuss the website proposal?\n\n{{sender_name}} | {{sender_company}}\nReply STOP to opt out."
+            ]
+          }
+        }
+      }
+    },
+    "lead": {
+      "org_id": 1,
+      "company_name": "Example Dental Clinic (fictional)",
+      "city": "Islamabad",
+      "email": "owned-test@example.org"
+    }
+  },
+  "output": {
+    "version": "customer_email_preview_v1",
+    "org_id": 1,
+    "state": "requires_review",
+    "mode": "template",
+    "preview_only": true,
+    "execution_authorized": false,
+    "approval_required": true,
+    "ai_calls": 0,
+    "ai_tokens": 0,
+    "claim_provenance": "customer_supplied_not_independently_verified",
+    "validation_errors": [],
+    "limitations": [
+      "Plain-text English email only; exact supplied wording is not a factual accuracy guarantee.",
+      "URL/phrase checks are not a comprehensive semantic, phishing or factual-verification engine.",
+      "Not accepted by the current strategy_v2 executor; no policy/approval or recipient-verification gates are bypassed."
+    ],
+    "draft": {
+      "recipient": "owned-test@example.org",
+      "timezone": "Asia/Karachi",
+      "sending_window": {
+        "start_hour": 9,
+        "end_hour": 17,
+        "weekdays": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "steps": [
+        {
+          "step": 1,
+          "channel": "email",
+          "delay_days": 0,
+          "subject": "Website proposal for Example Dental Clinic (fictional)",
+          "body": "Hello Example Dental Clinic (fictional),\n\nA proposed website project for a dental clinic. Discuss the clinic's needs before promising implementation or delivery.\n\nWould you be open to discussing a website for your clinic?\n\nFahad | Fahad Web Studio\nReply STOP to opt out.",
+          "condition": "initial",
+          "stop_on": [
+            "reply",
+            "opt_out",
+            "bounce",
+            "wrong_person",
+            "meeting_booked"
+          ]
+        },
+        {
+          "step": 2,
+          "channel": "email",
+          "delay_days": 3,
+          "subject": "Website proposal for Example Dental Clinic (fictional)",
+          "body": "Hello Example Dental Clinic (fictional),\n\nWould you like to discuss the website proposal?\n\nFahad | Fahad Web Studio\nReply STOP to opt out.",
+          "condition": "no_reply_after_previous_confirmed_send",
+          "stop_on": [
+            "reply",
+            "opt_out",
+            "bounce",
+            "wrong_person",
+            "meeting_booked"
+          ]
+        }
+      ]
+    },
+    "preview_hash": "d56ad7199b2d80dda5effec05e43fd59df12d71a052ff235c354eab827f2316f"
+  }
+}

@@ -1,0 +1,9 @@
+import React,{act,useState}from'react';
+import{createRoot}from'react-dom/client';
+import ManualLinkedInSettings from'./ManualLinkedInSettings';
+let root,container;
+function Fixture({channels=['linkedin'],mode='ai'}){const[v,set]=useState(null);return <><ManualLinkedInSettings settings={v} channels={channels} mode={mode} onChange={set}/><pre>{JSON.stringify(v)}</pre></>;}
+beforeEach(()=>{global.IS_REACT_ACT_ENVIRONMENT=true;container=document.createElement('div');document.body.appendChild(container);root=createRoot(container);});
+afterEach(()=>{act(()=>root.unmount());container.remove();});
+test('manual configuration is explicit and keeps exact supplied note without triggering generation',async()=>{await act(async()=>root.render(<Fixture/>));expect(container.querySelector('input[type=checkbox]').checked).toBe(false);await act(async()=>container.querySelector('input[type=checkbox]').click());expect(JSON.parse(container.querySelector('pre').textContent)).toEqual({enabled:true,daily_task_limit:10,connection_note:null});const area=container.querySelector('textarea');await act(async()=>{Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,'value').set.call(area,'Hello {{company_name}}');area.dispatchEvent(new Event('input',{bubbles:true}));});expect(JSON.parse(container.querySelector('pre').textContent).connection_note).toBe('Hello {{company_name}}');expect(container.textContent).toContain('Saving does not generate a plan or add a task');expect(container.textContent).toContain('operator must enable');});
+test('mixed channels and email-template mode cannot opt in through this editor',async()=>{await act(async()=>root.render(<Fixture channels={['email','linkedin']}/>));expect(container.querySelector('input[type=checkbox]').disabled).toBe(true);await act(async()=>root.render(<Fixture mode="template"/>));expect(container.querySelector('input[type=checkbox]').disabled).toBe(true);expect(container.querySelector('textarea')).toBeNull();});

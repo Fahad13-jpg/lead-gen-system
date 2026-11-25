@@ -1,0 +1,1125 @@
+{
+  "name": "6C - Campaign Outreach Strategy Planner",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## ✍️Outreach Strategy Stage 3\n\n**Purpose**\nThe final enrichment stage. Uses all research from Stage 1 and 2 to create a complete, personalized outreach plan for each lead across all channels.\n\n**How it works**\nPicks Stage 2 leads → AI generates: email subject line, opening message, SMS text, WhatsApp message, LinkedIn connection note, best send time, and follow-up sequences → calculates final lead score → labels lead as **hot / warm / cold**.\n\n**Key Rules**\n- Lead score is calculated out of **100 points**\n- Score 75+ = 🔥 Hot | 55–74 = 🌡️ Warm | Below = 🧊 Cold\n- Sets `enrichment_stage = 3, lead is now ready for outreach",
+        "height": 544,
+        "width": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        192,
+        -576
+      ],
+      "typeVersion": 1,
+      "id": "de92abb4-59c3-4b06-be47-032733f6ce3f",
+      "name": "Sticky Note"
+    },
+    {
+      "id": "3635a08f0daaf0ac9e8ee0abd3a7e62f",
+      "name": "Every Minute",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        260,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "d1d770bb8fb188bf19c525e3cd2a0aaa",
+      "name": "Manual Planner Test",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        520,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "4812d0c417b332f5d16c37e96d001328",
+      "name": "Claim Strategy Jobs",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        780,
+        0
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT coalesce(jsonb_agg(value),'[]'::jsonb) AS tasks FROM strategy_claim('{{ String($execution.id).replace(/'/g, \"''\") }}',2) value",
+        "options": {
+          "queryBatching": "independently"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "6f7d6c8687cf876ff918d28214a6158e",
+      "name": "Expand Claimed Jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems"
+      }
+    },
+    {
+      "id": "edbee24f90193f70f72015763d8eaf2f",
+      "name": "Prepare Strategy",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1300,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem"
+      }
+    },
+    {
+      "id": "60934a294a11f3e2b602080c8f82363a",
+      "name": "Reserve Strategy AI",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        240
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT strategy_ai_gate('{{ JSON.stringify($json).replace(/'/g, \"''\") }}'::jsonb) AS gate",
+        "options": {
+          "queryBatching": "independently"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "05ca6a9939cde55be09abb7598696cfe",
+      "name": "AI Allowed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        260,
+        240
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "allowed",
+              "leftValue": "={{ $json.gate.allowed }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "13f1bbf76a91d7835d0c320f2a5f093f",
+      "name": "Compose With Groq",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        520,
+        240
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ 'Bearer '+$env.GROQ_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $('Prepare Strategy').item.json.request }}",
+        "options": {
+          "timeout": 45000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "retryOnFail": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "3d47adf482b5bc73cd6b3f1cafb73db7",
+      "name": "Validate and Assemble Draft",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        780,
+        240
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem"
+      }
+    },
+    {
+      "id": "c5cbfb641019a00b244554134fe62e15",
+      "name": "Save Versioned Strategy",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1040,
+        240
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT strategy_finish('{{ JSON.stringify($json).replace(/'/g, \"''\") }}'::jsonb) AS result",
+        "options": {
+          "queryBatching": "independently"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "8261ec934674c002cf96732d6548bcd6",
+      "name": "campaign Endpoint",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1300,
+        240
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "strategy-campaign",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "leadGatheringAuth",
+          "name": "Lead Gathering API"
+        }
+      },
+      "webhookId": "a0511c3975b12a10401fc072254bdb88"
+    },
+    {
+      "id": "4ccbdd1d2be9e6f01ec754c4dc9aa76f",
+      "name": "campaign Validate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        480
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem"
+      }
+    },
+    {
+      "id": "39fbd0986e4949a1fb4aeb2979002a73",
+      "name": "campaign Database",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        260,
+        480
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT CASE WHEN {{ $json.error ? 'true' : 'false' }} THEN '{{ JSON.stringify($json).replace(/'/g, \"''\") }}'::jsonb ELSE coalesce(strategy_campaign_save('{{ JSON.stringify($json).replace(/'/g, \"''\") }}'::jsonb),'{\"error\":\"NOT_FOUND\",\"http_status\":404}'::jsonb) END AS result",
+        "options": {
+          "queryBatching": "independently"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "08522764ca5852cb528c63998b61b30c",
+      "name": "campaign Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        520,
+        480
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.result }}",
+        "options": {
+          "responseCode": "={{ $json.result.http_status || 200 }}"
+        }
+      }
+    },
+    {
+      "id": "2cffb5e02787bc3d77696ca974f7f9e9",
+      "name": "request Endpoint",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        780,
+        480
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "strategy-request",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "leadGatheringAuth",
+          "name": "Lead Gathering API"
+        }
+      },
+      "webhookId": "57d0c3c8003ab22918c7b678c64c9659"
+    },
+    {
+      "id": "61aadaa20f6830fb75ea6190697082a1",
+      "name": "request Validate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        480
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem"
+      }
+    },
+    {
+      "id": "3b4580dd0c52b38d14881e3c9228e3b8",
+      "name": "request Database",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1300,
+        480
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT CASE WHEN {{ $json.error ? 'true' : 'false' }} THEN '{{ JSON.stringify($json).replace(/'/g, \"''\") }}'::jsonb ELSE coalesce(strategy_enqueue('{{ JSON.stringify($json).replace(/'/g, \"''\") }}'::jsonb),'{\"error\":\"NOT_FOUND\",\"http_status\":404}'::jsonb) END AS result",
+        "options": {
+          "queryBatching": "independently"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "37235587addc03a63a4701be7d637eac",
+      "name": "request Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        720
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.result }}",
+        "options": {
+          "responseCode": "={{ $json.result.http_status || 200 }}"
+        }
+      }
+    },
+    {
+      "id": "bba033b1883a19a399b1e4cc43ff99b6",
+      "name": "batch Endpoint",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        260,
+        720
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "strategy-batch",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "leadGatheringAuth",
+          "name": "Lead Gathering API"
+        }
+      },
+      "webhookId": "4d1117eba4083b0b0590ad4607daf295"
+    },
+    {
+      "id": "7aef4773bad7911d30e5b1f74f24caf6",
+      "name": "batch Validate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        720
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem"
+      }
+    },
+    {
+      "id": "bce2af980d3708c3f4a76f806a6d288b",
+      "name": "batch Database",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        780,
+        720
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT CASE WHEN {{ $json.error ? 'true' : 'false' }} THEN '{{ JSON.stringify($json).replace(/'/g, \"''\") }}'::jsonb ELSE coalesce(strategy_enqueue_batch('{{ JSON.stringify($json).replace(/'/g, \"''\") }}'::jsonb),'{\"error\":\"NOT_FOUND\",\"http_status\":404}'::jsonb) END AS result",
+        "options": {
+          "queryBatching": "independently"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "1d01ac3a0797942f7d59b265bfd2b23f",
+      "name": "batch Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1040,
+        720
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.result }}",
+        "options": {
+          "responseCode": "={{ $json.result.http_status || 200 }}"
+        }
+      }
+    },
+    {
+      "id": "5db0f969fd023c066bc3262523aa0b61",
+      "name": "approval Endpoint",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1300,
+        720
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "strategy-approval",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "leadGatheringAuth",
+          "name": "Lead Gathering API"
+        }
+      },
+      "webhookId": "b6c84bf556bf44b24ae63e7d3033d7a3"
+    },
+    {
+      "id": "9a585a52f7384a7c774403c339fd918e",
+      "name": "approval Validate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        960
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem"
+      }
+    },
+    {
+      "id": "eb6ed356262df4d66c3e6df47084f4a5",
+      "name": "approval Database",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        260,
+        960
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT CASE WHEN {{ $json.error ? 'true' : 'false' }} THEN '{{ JSON.stringify($json).replace(/'/g, \"''\") }}'::jsonb ELSE coalesce(strategy_approval('{{ JSON.stringify($json).replace(/'/g, \"''\") }}'::jsonb),'{\"error\":\"NOT_FOUND\",\"http_status\":404}'::jsonb) END AS result",
+        "options": {
+          "queryBatching": "independently"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "d469373399920ea822be57674af474bd",
+      "name": "approval Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        520,
+        960
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.result }}",
+        "options": {
+          "responseCode": "={{ $json.result.http_status || 200 }}"
+        }
+      }
+    },
+    {
+      "id": "15c53f58fb84bbb0879a486ff72d237b",
+      "name": "report Endpoint",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        780,
+        960
+      ],
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "strategy-report",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "leadGatheringAuth",
+          "name": "Lead Gathering API"
+        }
+      },
+      "webhookId": "353e75921ff1964c7181b9bc44e0701e"
+    },
+    {
+      "id": "69c9e21fe01c2289b356b3f0633dfc3c",
+      "name": "report Validate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        960
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem"
+      }
+    },
+    {
+      "id": "9cf2fc12ebceb3a9f462819c80dfae98",
+      "name": "report Database",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1300,
+        960
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT CASE WHEN {{ $json.error ? 'true' : 'false' }} THEN '{{ JSON.stringify($json).replace(/'/g, \"''\") }}'::jsonb ELSE coalesce(strategy_report({{ Number.isSafeInteger($json.org_id)?$json.org_id:0 }},{{ Number.isSafeInteger($json.job_id)?$json.job_id:0 }}),'{\"error\":\"NOT_FOUND\",\"http_status\":404}'::jsonb) END AS result",
+        "options": {
+          "queryBatching": "independently"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "769d865973fedd07534d0f6632a5c3a1",
+      "name": "report Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        1200
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.result }}",
+        "options": {
+          "responseCode": "={{ $json.result.http_status || 200 }}"
+        }
+      }
+    },
+    {
+      "id": "bf9b41e2c1637e6fa0a145c732eaeed1",
+      "name": "preview Endpoint",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        260,
+        1200
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "strategy-preview",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "leadGatheringAuth",
+          "name": "Lead Gathering API"
+        }
+      },
+      "webhookId": "bde54f59abeb1338c0205b6361a69f7e"
+    },
+    {
+      "id": "97bbf48a464766383ef18251aa78a526",
+      "name": "preview Validate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        1200
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem"
+      }
+    },
+    {
+      "id": "0e1776980d17a68380e55325c369caf9",
+      "name": "preview Database",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        780,
+        1200
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT CASE WHEN {{ $json.error ? 'true' : 'false' }} THEN '{{ JSON.stringify($json).replace(/'/g, \"''\") }}'::jsonb ELSE coalesce(strategy_context({{ Number.isSafeInteger($json.org_id)?$json.org_id:0 }},{{ Number.isSafeInteger($json.campaign_id)?$json.campaign_id:0 }},{{ Number.isSafeInteger($json.lead_id)?$json.lead_id:0 }}),'{\"error\":\"NOT_FOUND\",\"http_status\":404}'::jsonb) END AS result",
+        "options": {
+          "queryBatching": "independently"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "f4006fb8d2ac194a3c17716ae70be5e9",
+      "name": "Build Preview",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        1200
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem"
+      }
+    },
+    {
+      "id": "0933deaa6db961911cdd43637a5666fc",
+      "name": "preview Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1300,
+        1200
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.result }}",
+        "options": {
+          "responseCode": "={{ $json.result.http_status || 200 }}"
+        }
+      }
+    },
+    {
+      "id": "fa2cb1d6966b149bd4466346c1db8435",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        1440
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "3e9d202f1381706acf72218c90a82b08",
+      "name": "Format Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        1440
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem"
+      }
+    },
+    {
+      "id": "c2c3e9f8c08139f5dc7040262277d477",
+      "name": "Mark Job Failed",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        520,
+        1440
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT strategy_fail('{{ JSON.stringify($json).replace(/'/g, \"''\") }}'::jsonb) AS result",
+        "options": {
+          "queryBatching": "independently"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "44f95978c9ef879121178b03dda855ae",
+      "name": "Planner Contract",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        780,
+        1440
+      ],
+      "parameters": {
+        "content": "## Campaign strategy planner\nReplaces legacy scoring and channel promotion. Campaign brief → queued draft → review → content approval. No legacy outreach flags are set and no messages are sent. Internal header-auth APIs require an authenticated org-binding gateway before Flutter use. AI is disabled by default and may only select approved text/source blocks. Original sticky note retained below as historical documentation.",
+        "width": 620,
+        "height": 270
+      }
+    }
+  ],
+  "connections": {
+    "Every Minute": {
+      "main": [
+        [
+          {
+            "node": "Claim Strategy Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Planner Test": {
+      "main": [
+        [
+          {
+            "node": "Claim Strategy Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claim Strategy Jobs": {
+      "main": [
+        [
+          {
+            "node": "Expand Claimed Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Expand Claimed Jobs": {
+      "main": [
+        [
+          {
+            "node": "Prepare Strategy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Strategy": {
+      "main": [
+        [
+          {
+            "node": "Reserve Strategy AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reserve Strategy AI": {
+      "main": [
+        [
+          {
+            "node": "AI Allowed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Allowed?": {
+      "main": [
+        [
+          {
+            "node": "Compose With Groq",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Validate and Assemble Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compose With Groq": {
+      "main": [
+        [
+          {
+            "node": "Validate and Assemble Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate and Assemble Draft": {
+      "main": [
+        [
+          {
+            "node": "Save Versioned Strategy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "campaign Endpoint": {
+      "main": [
+        [
+          {
+            "node": "campaign Validate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "campaign Validate": {
+      "main": [
+        [
+          {
+            "node": "campaign Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "campaign Database": {
+      "main": [
+        [
+          {
+            "node": "campaign Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "request Endpoint": {
+      "main": [
+        [
+          {
+            "node": "request Validate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "request Validate": {
+      "main": [
+        [
+          {
+            "node": "request Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "request Database": {
+      "main": [
+        [
+          {
+            "node": "request Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "batch Endpoint": {
+      "main": [
+        [
+          {
+            "node": "batch Validate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "batch Validate": {
+      "main": [
+        [
+          {
+            "node": "batch Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "batch Database": {
+      "main": [
+        [
+          {
+            "node": "batch Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "approval Endpoint": {
+      "main": [
+        [
+          {
+            "node": "approval Validate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "approval Validate": {
+      "main": [
+        [
+          {
+            "node": "approval Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "approval Database": {
+      "main": [
+        [
+          {
+            "node": "approval Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "report Endpoint": {
+      "main": [
+        [
+          {
+            "node": "report Validate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "report Validate": {
+      "main": [
+        [
+          {
+            "node": "report Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "report Database": {
+      "main": [
+        [
+          {
+            "node": "report Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "preview Endpoint": {
+      "main": [
+        [
+          {
+            "node": "preview Validate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "preview Validate": {
+      "main": [
+        [
+          {
+            "node": "preview Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "preview Database": {
+      "main": [
+        [
+          {
+            "node": "Build Preview",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Preview": {
+      "main": [
+        [
+          {
+            "node": "preview Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Format Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Error": {
+      "main": [
+        [
+          {
+            "node": "Mark Job Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "UTC",
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "none",
+    "saveManualExecutions": false,
+    "errorWorkflow": "27W04lgTGdgFMWUx"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "checked_at": "2026-10-19T02:50:18.223Z",
+  "read_only": true,
+  "functions": [
+    {
+      "name": "outreach_dispatch_check",
+      "baseline": "019_outreach_dispatch_handoff.sql",
+      "match": true,
+      "owner": "n8n_user",
+      "expected_sha256": "0de4d1cc5f6e6df6cbbfff5320dd3d2e42a06f8142eb2628f282d0ff82ff6ab9",
+      "actual_sha256": "0de4d1cc5f6e6df6cbbfff5320dd3d2e42a06f8142eb2628f282d0ff82ff6ab9"
+    },
+    {
+      "name": "outreach_dispatch_reserve",
+      "baseline": "019_outreach_dispatch_handoff.sql",
+      "match": true,
+      "owner": "n8n_user",
+      "expected_sha256": "9e2edc242b0cf39c3eba089249be745dc0ef21a70b18169bebec18240a37f772",
+      "actual_sha256": "9e2edc242b0cf39c3eba089249be745dc0ef21a70b18169bebec18240a37f772"
+    },
+    {
+      "name": "outreach_dispatch_recheck",
+      "baseline": "019_outreach_dispatch_handoff.sql",
+      "match": true,
+      "owner": "n8n_user",
+      "expected_sha256": "b8b26a63d0402309a1f16a30e294ea88aa5b81f4cfb2a6791e7dc9a2397d8ae3",
+      "actual_sha256": "b8b26a63d0402309a1f16a30e294ea88aa5b81f4cfb2a6791e7dc9a2397d8ae3"
+    },
+    {
+      "name": "outreach_email_begin",
+      "baseline": "020_email_dispatch_lifecycle.sql",
+      "match": true,
+      "owner": "n8n_user",
+      "expected_sha256": "8650474d98e25cdd3189f97226fc921594813155f9c6cb48c310b0e822c9f353",
+      "actual_sha256": "8650474d98e25cdd3189f97226fc921594813155f9c6cb48c310b0e822c9f353"
+    },
+    {
+      "name": "outreach_email_finish",
+      "baseline": "020_email_dispatch_lifecycle.sql",
+      "match": true,
+      "owner": "n8n_user",
+      "expected_sha256": "60c0be87597610506f72087b1aedf1eb2003be8e0e974633347268d7f42a37b0",
+      "actual_sha256": "60c0be87597610506f72087b1aedf1eb2003be8e0e974633347268d7f42a37b0"
+    }
+  ],
+  "unexpected_functions": [],
+  "workflows": [
+    {
+      "file": "07a_email_outreach_executor.json",
+      "id": "gTjsUEP8VLlxKfWf",
+      "name": "7A - Email Outreach Executor",
+      "active": false,
+      "sticky_notes_preserved": true,
+      "credential_references_preserved": true
+    },
+    {
+      "file": "09_reply_detection.json",
+      "id": "TrgeZrs4ILZnrXuJ",
+      "name": "9 - Reply Detection & AI Qualification",
+      "active": false,
+      "sticky_notes_preserved": true,
+      "credential_references_preserved": true
+    }
+  ],
+  "running": 0,
+  "ai_enabled": 0,
+  "blockers": [],
+  "gmail_account_verified": false,
+  "deploy": false,
+  "send": false
+}

@@ -1,0 +1,26 @@
+'use strict';
+// Static observations only: these labels are heuristics, never ownership/conversion claims.
+function text(html){return String(html||'').replace(/<(script|style|noscript)\b[^>]*>[\s\S]*?<\/\1>/gi,' ').replace(/<[^>]*>/g,' ').replace(/&nbsp;/gi,' ').replace(/\s+/g,' ').trim();}
+function inspect(html,url,year=new Date().getUTCFullYear(),category=''){
+ const body=text(html),headings=[...html.matchAll(/<h[123]\b[^>]*>([\s\S]*?)<\/h[123]>/gi)].map(x=>text(x[1]));
+ const years=[...body.matchAll(/(?:©|&copy;|copyright)\s*(?:\w+\s+){0,2}(20\d{2})(?:\s*[-–]\s*(20\d{2}))?/gi)].map(x=>Number(x[2]||x[1]));
+ return {text_bytes:Buffer.byteLength(body),flags:{placeholder_text:/lorem ipsum|just another wordpress site|sample page|please set google maps api key/i.test(body),no_viewport_meta:!/<meta\b[^>]*name\s*=\s*["']viewport["']/i.test(html),stale_copyright:years.length>0&&Math.max(...years)<year-2,no_https:!/^https:/i.test(url),offtopic_headings:/dent(al|ist|istry)|clinic/i.test(category)&&headings.some(h=>/Clydeside|resi development|construction news/i.test(h))}};
+}
+function build(result,sourceChecks=[],sourceCheckMaxAgeDays=30){
+ const at=result.observed_at,pages=result.pages.filter(p=>p.usable_html),complete=pages.length>0&&result.pages.every(p=>p.usable_html&&!p.truncated&&!p.error_class);
+ // Only explicit successful source checks count; a null cleaned website is not a search.
+ const recordedChecks=sourceChecks.filter(c=>['maps_listing','yellow_pages','yelp'].includes(c.source)&&c.status==='checked'&&c.source_url&&c.observed_at&&Number.isFinite(Date.parse(c.observed_at)));
+ const checks=recordedChecks.filter(c=>Date.parse(c.observed_at)<=Date.parse(at)&&Date.parse(c.observed_at)>Date.parse(at)-sourceCheckMaxAgeDays*86400000);
+ const checked=[...new Set(checks.map(c=>c.source))];if(result.pages.length)checked.push('site_fetch');
+ const evidence=result.evidence||[],flags={};for(const name of ['placeholder_text','no_viewport_meta','stale_copyright','no_https','offtopic_headings'])flags[name]={observed:pages.some(p=>p.quality_flags?.[name]),pages:pages.filter(p=>p.quality_flags?.[name]).map(p=>p.url)};
+ const inquiry_paths={};for(const kind of ['booking_link','contact_form','whatsapp','phone']){const found=evidence.filter(e=>e.type===kind);inquiry_paths[kind]={state:found.length?'observed':pages.length?`not_observed_on_${pages.length}_pages`:'unknown',n:pages.length,pages:pages.map(p=>p.url),evidence:found,limitations:['Static HTML only; presence does not establish working submission, ownership or permission.',...(!complete?['Incomplete coverage; absence must not be inferred.']:[])]};}
+ let state='unknown';
+ if(!result.business.website&&!result.pages.length&&checks.length&&checks.every(c=>c.website_result==='none_found'))state='none_found';
+ if(pages.length){if(flags.placeholder_text.observed)state='template_unfinished';else if(complete&&flags.stale_copyright.observed)state='outdated';else if(complete&&pages.reduce((n,p)=>n+p.text_bytes,0)>=200){state='functional';if(pages.reduce((n,p)=>n+p.text_bytes,0)>=1000&&(inquiry_paths.booking_link.state==='observed'||inquiry_paths.contact_form.state==='observed')&&!Object.values(flags).some(f=>f.observed))state='strong';}}
+ const social={};for(const platform of ['facebook','instagram'])social[platform]=evidence.filter(e=>e.type==='social'&&new RegExp('^https?://(?:www\\.)?'+platform+'\\.com/','i').test(e.value));
+ for(const c of checks)for(const value of c.social_profiles||[])for(const platform of ['facebook','instagram'])if(new RegExp('^https?://(?:www\\.)?'+platform+'\\.com/','i').test(value)&&!social[platform].some(e=>e.value===value))social[platform].push({type:'social',value,source_url:c.source_url,observed_at:c.observed_at,method:'stamped_source_record'});
+ const socialWebsite=/^https?:\/\/(?:www\.)?(facebook|instagram)\.com(?:\/|$)/i.test(result.business.website||'');
+ if(!result.pages.length&&(!result.business.website||socialWebsite)&&(social.facebook.length||social.instagram.length)&&!checks.some(c=>c.website_result==='present'))state='social_only';
+ return {version:'signal_sheet_v1',web_presence:{state,checked,checks:recordedChecks.map(c=>({...c})),source_check_max_age_days:sourceCheckMaxAgeDays,company_website_recorded:!!result.business.website&&!socialWebsite,reason_codes:recordedChecks.some(c=>Date.parse(c.observed_at)<=Date.parse(at)-sourceCheckMaxAgeDays*86400000)?['recheck_needed']:[],observed_at:at,pages:result.pages.map(p=>p.url),limitations:['Bounded static observations, not independent business verification.','Strong/functional/outdated are heuristic labels, not tested usability or business need.','Off-topic detection currently recognizes construction-template headings on clinic sites only; other topics are UNVERIFIED.']},inquiry_paths,social,stack:{cms:evidence.filter(e=>e.type==='technology_marker')},reputation:{rating:checks.filter(c=>typeof c.rating==='number'&&c.rating>=0&&c.rating<=5).map(c=>({value:c.rating,source_url:c.source_url,observed_at:c.observed_at})),reviews:checks.filter(c=>Number.isInteger(c.reviews)&&c.reviews>=0).map(c=>({value:c.reviews,source_url:c.source_url,observed_at:c.observed_at}))},site_quality_flags:flags,coverage_complete:complete};
+}
+module.exports={text,inspect,build};

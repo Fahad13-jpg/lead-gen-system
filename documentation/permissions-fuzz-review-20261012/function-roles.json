@@ -1,0 +1,225 @@
+{
+  "production_functions": [
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_ai_gate(bigint,text)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_ai_record(jsonb)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_ai_reserve(bigint,text)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_claim(text,integer)",
+      "security_definer": false
+    },
+    {
+      "acl": null,
+      "owner": "n8n_user",
+      "signature": "enrichment_fingerprint(integer,integer,text)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_finish(jsonb)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_linkedin_reserve(bigint)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_linkedin_settle(bigint,numeric)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_native_finish(jsonb)",
+      "security_definer": false
+    },
+    {
+      "acl": null,
+      "owner": "n8n_user",
+      "signature": "enrichment_project_legacy()",
+      "security_definer": false
+    },
+    {
+      "acl": null,
+      "owner": "n8n_user",
+      "signature": "enrichment_report(integer,integer)",
+      "security_definer": false
+    },
+    {
+      "acl": null,
+      "owner": "n8n_user",
+      "signature": "enrichment_report_evidence_v1(integer,integer)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_submit(jsonb,text)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_task_input(bigint,text)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "lead_trust_report(integer,integer)",
+      "security_definer": false
+    }
+  ],
+  "production_role": {
+    "name": "n8n_user",
+    "createdb": true,
+    "superuser": true,
+    "createrole": true
+  },
+  "scratch_functions": [
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_ai_gate(bigint,text)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_ai_record(jsonb)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_ai_reserve(bigint,text)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_claim(text,integer)",
+      "security_definer": false
+    },
+    {
+      "acl": null,
+      "owner": "n8n_user",
+      "signature": "enrichment_fingerprint(integer,integer,text)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_finish(jsonb)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_linkedin_reserve(bigint)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_linkedin_settle(bigint,numeric)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_native_finish(jsonb)",
+      "security_definer": false
+    },
+    {
+      "acl": null,
+      "owner": "n8n_user",
+      "signature": "enrichment_project_legacy()",
+      "security_definer": false
+    },
+    {
+      "acl": null,
+      "owner": "n8n_user",
+      "signature": "enrichment_report(integer,integer)",
+      "security_definer": false
+    },
+    {
+      "acl": null,
+      "owner": "n8n_user",
+      "signature": "enrichment_report_evidence_v1(integer,integer)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_source_checks(integer,integer)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_stamp_source(text,jsonb,text)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_submit(jsonb,text)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "enrichment_task_input(bigint,text)",
+      "security_definer": false
+    },
+    {
+      "acl": "{n8n_user=X/n8n_user}",
+      "owner": "n8n_user",
+      "signature": "lead_trust_report(integer,integer)",
+      "security_definer": false
+    }
+  ],
+  "n8n_environment": {
+    "role": "n8n_user",
+    "database": "lead_db",
+    "host": "postgres"
+  },
+  "postgres_credentials": [
+    {
+      "id": "Scc3yxojKZkvXpOL",
+      "name": "Lead Database",
+      "role": "n8n_user",
+      "database": "lead_db",
+      "host": "postgres"
+    },
+    {
+      "id": "gatheringTestPg",
+      "name": "Gathering test database",
+      "role": "n8n_user",
+      "database": "lead_gathering_test_20260926",
+      "host": "postgres"
+    }
+  ]
+}

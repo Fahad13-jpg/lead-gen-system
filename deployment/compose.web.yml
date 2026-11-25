@@ -1,0 +1,22 @@
+# Add to compose.application.yml only after choosing and verifying the public domain.
+services:
+  web:
+    image: ${CADDY_IMAGE:?Set a reviewed pinned Caddy image digest}
+    profiles: [public-web]
+    restart: unless-stopped
+    logging:
+      driver: local
+      options: {max-size: "10m", max-file: "3"}
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN:?Set the same hostname used by DASHBOARD_PUBLIC_ORIGIN}
+    ports: ["80:80", "443:443", "443:443/udp"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks: [application]
+    depends_on:
+      gateway: {condition: service_healthy}
+volumes:
+  caddy_data:
+  caddy_config:

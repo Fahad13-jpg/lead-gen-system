@@ -1,0 +1,912 @@
+[
+  {
+    "id": 167,
+    "expected": "strong",
+    "actual": "strong",
+    "signals": {
+      "version": "signal_sheet_v1",
+      "web_presence": {
+        "state": "template_unfinished",
+        "checked": [
+          "site_fetch"
+        ],
+        "checks": [
+          {
+            "source": "maps_listing",
+            "status": "checked",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Fiaz%20Dental%20Care&query_place_id=ChIJpRV2KrMdGTkRDyevJgm3WyQ",
+            "observed_at": "2026-10-05T08:39:34.818Z",
+            "website_result": "present",
+            "rating": 5,
+            "reviews": 92
+          }
+        ],
+        "source_check_max_age_days": 30,
+        "company_website_recorded": true,
+        "reason_codes": [
+          "recheck_needed"
+        ],
+        "observed_at": "2026-11-23T13:37:44.306Z",
+        "pages": [
+          "https://fiazdentalcare.com/",
+          "https://fiazdentalcare.com/index.php/contact-us/",
+          "https://fiazdentalcare.com/index.php/about-us/"
+        ],
+        "limitations": [
+          "Bounded static observations, not independent business verification.",
+          "Strong/functional/outdated are heuristic labels, not tested usability or business need.",
+          "Off-topic detection currently recognizes construction-template headings on clinic sites only; other topics are UNVERIFIED."
+        ]
+      },
+      "inquiry_paths": {
+        "booking_link": {
+          "state": "not_observed_on_3_pages",
+          "n": 3,
+          "pages": [
+            "https://fiazdentalcare.com/",
+            "https://fiazdentalcare.com/index.php/contact-us/",
+            "https://fiazdentalcare.com/index.php/about-us/"
+          ],
+          "evidence": [],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission."
+          ]
+        },
+        "contact_form": {
+          "state": "observed",
+          "n": 3,
+          "pages": [
+            "https://fiazdentalcare.com/",
+            "https://fiazdentalcare.com/index.php/contact-us/",
+            "https://fiazdentalcare.com/index.php/about-us/"
+          ],
+          "evidence": [
+            {
+              "type": "contact_form",
+              "value": "https://fiazdentalcare.com/index.php/contact-us/",
+              "source_url": "https://fiazdentalcare.com/index.php/contact-us/",
+              "observed_at": "2026-11-23T13:37:44.306Z"
+            }
+          ],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission."
+          ]
+        },
+        "whatsapp": {
+          "state": "not_observed_on_3_pages",
+          "n": 3,
+          "pages": [
+            "https://fiazdentalcare.com/",
+            "https://fiazdentalcare.com/index.php/contact-us/",
+            "https://fiazdentalcare.com/index.php/about-us/"
+          ],
+          "evidence": [],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission."
+          ]
+        },
+        "phone": {
+          "state": "not_observed_on_3_pages",
+          "n": 3,
+          "pages": [
+            "https://fiazdentalcare.com/",
+            "https://fiazdentalcare.com/index.php/contact-us/",
+            "https://fiazdentalcare.com/index.php/about-us/"
+          ],
+          "evidence": [],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission."
+          ]
+        }
+      },
+      "social": {
+        "facebook": [],
+        "instagram": []
+      },
+      "stack": {
+        "cms": [
+          {
+            "type": "technology_marker",
+            "value": "WordPress",
+            "source_url": "https://fiazdentalcare.com/"
+          },
+          {
+            "type": "technology_marker",
+            "value": "WordPress",
+            "source_url": "https://fiazdentalcare.com/index.php/contact-us/"
+          },
+          {
+            "type": "technology_marker",
+            "value": "WordPress",
+            "source_url": "https://fiazdentalcare.com/index.php/about-us/"
+          }
+        ]
+      },
+      "reputation": {
+        "rating": [],
+        "reviews": []
+      },
+      "site_quality_flags": {
+        "placeholder_text": {
+          "observed": true,
+          "pages": [
+            "https://fiazdentalcare.com/",
+            "https://fiazdentalcare.com/index.php/contact-us/",
+            "https://fiazdentalcare.com/index.php/about-us/"
+          ]
+        },
+        "no_viewport_meta": {
+          "observed": false,
+          "pages": []
+        },
+        "stale_copyright": {
+          "observed": true,
+          "pages": [
+            "https://fiazdentalcare.com/",
+            "https://fiazdentalcare.com/index.php/contact-us/",
+            "https://fiazdentalcare.com/index.php/about-us/"
+          ]
+        },
+        "no_https": {
+          "observed": false,
+          "pages": []
+        },
+        "offtopic_headings": {
+          "observed": true,
+          "pages": [
+            "https://fiazdentalcare.com/"
+          ]
+        }
+      },
+      "coverage_complete": true
+    },
+    "pages": [
+      {
+        "url": "https://fiazdentalcare.com/",
+        "requested_url": "https://fiazdentalcare.com/",
+        "final_url": "https://fiazdentalcare.com/",
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "html_bytes": 192579,
+        "text_bytes": 3451,
+        "truncated": false,
+        "usable_html": true,
+        "error_class": null,
+        "quality_flags": {
+          "placeholder_text": true,
+          "no_viewport_meta": false,
+          "stale_copyright": true,
+          "no_https": false,
+          "offtopic_headings": true
+        }
+      },
+      {
+        "url": "https://fiazdentalcare.com/index.php/contact-us/",
+        "requested_url": "https://fiazdentalcare.com/index.php/contact-us/",
+        "final_url": "https://fiazdentalcare.com/index.php/contact-us/",
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "html_bytes": 112904,
+        "text_bytes": 1446,
+        "truncated": false,
+        "usable_html": true,
+        "error_class": null,
+        "quality_flags": {
+          "placeholder_text": true,
+          "no_viewport_meta": false,
+          "stale_copyright": true,
+          "no_https": false,
+          "offtopic_headings": false
+        }
+      },
+      {
+        "url": "https://fiazdentalcare.com/index.php/about-us/",
+        "requested_url": "https://fiazdentalcare.com/index.php/about-us/",
+        "final_url": "https://fiazdentalcare.com/index.php/about-us/",
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "html_bytes": 138121,
+        "text_bytes": 3135,
+        "truncated": false,
+        "usable_html": true,
+        "error_class": null,
+        "quality_flags": {
+          "placeholder_text": true,
+          "no_viewport_meta": false,
+          "stale_copyright": true,
+          "no_https": false,
+          "offtopic_headings": false
+        }
+      }
+    ]
+  },
+  {
+    "id": 445,
+    "expected": "unclear",
+    "actual": "unclear",
+    "signals": {
+      "version": "signal_sheet_v1",
+      "web_presence": {
+        "state": "unknown",
+        "checked": [],
+        "checks": [
+          {
+            "source": "maps_listing",
+            "status": "checked",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Islamabad%20Dental%20Clinic&query_place_id=ChIJFdsB6Sy_3zgRylw6vcZMKbM",
+            "observed_at": "2026-10-05T08:39:34.818Z",
+            "website_result": "unknown",
+            "rating": 3.8,
+            "reviews": 4
+          }
+        ],
+        "source_check_max_age_days": 30,
+        "company_website_recorded": false,
+        "reason_codes": [
+          "recheck_needed"
+        ],
+        "observed_at": "2026-11-23T13:37:44.407Z",
+        "pages": [],
+        "limitations": [
+          "Bounded static observations, not independent business verification.",
+          "Strong/functional/outdated are heuristic labels, not tested usability or business need.",
+          "Off-topic detection currently recognizes construction-template headings on clinic sites only; other topics are UNVERIFIED."
+        ]
+      },
+      "inquiry_paths": {
+        "booking_link": {
+          "state": "unknown",
+          "n": 0,
+          "pages": [],
+          "evidence": [],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission.",
+            "Incomplete coverage; absence must not be inferred."
+          ]
+        },
+        "contact_form": {
+          "state": "unknown",
+          "n": 0,
+          "pages": [],
+          "evidence": [],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission.",
+            "Incomplete coverage; absence must not be inferred."
+          ]
+        },
+        "whatsapp": {
+          "state": "unknown",
+          "n": 0,
+          "pages": [],
+          "evidence": [],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission.",
+            "Incomplete coverage; absence must not be inferred."
+          ]
+        },
+        "phone": {
+          "state": "unknown",
+          "n": 0,
+          "pages": [],
+          "evidence": [],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission.",
+            "Incomplete coverage; absence must not be inferred."
+          ]
+        }
+      },
+      "social": {
+        "facebook": [],
+        "instagram": []
+      },
+      "stack": {
+        "cms": []
+      },
+      "reputation": {
+        "rating": [],
+        "reviews": []
+      },
+      "site_quality_flags": {
+        "placeholder_text": {
+          "observed": false,
+          "pages": []
+        },
+        "no_viewport_meta": {
+          "observed": false,
+          "pages": []
+        },
+        "stale_copyright": {
+          "observed": false,
+          "pages": []
+        },
+        "no_https": {
+          "observed": false,
+          "pages": []
+        },
+        "offtopic_headings": {
+          "observed": false,
+          "pages": []
+        }
+      },
+      "coverage_complete": false
+    },
+    "pages": []
+  },
+  {
+    "id": 446,
+    "expected": "unclear",
+    "actual": "unclear",
+    "signals": {
+      "version": "signal_sheet_v1",
+      "web_presence": {
+        "state": "unknown",
+        "checked": [],
+        "checks": [
+          {
+            "source": "maps_listing",
+            "status": "checked",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Luminosity%20Dental%20Clinic&query_place_id=ChIJtYIuK4zB3zgRhCfPj9mNPNg",
+            "observed_at": "2026-10-05T08:39:34.818Z",
+            "website_result": "unknown",
+            "rating": 5,
+            "reviews": 22
+          }
+        ],
+        "source_check_max_age_days": 30,
+        "company_website_recorded": false,
+        "reason_codes": [
+          "recheck_needed"
+        ],
+        "observed_at": "2026-11-23T13:37:44.408Z",
+        "pages": [],
+        "limitations": [
+          "Bounded static observations, not independent business verification.",
+          "Strong/functional/outdated are heuristic labels, not tested usability or business need.",
+          "Off-topic detection currently recognizes construction-template headings on clinic sites only; other topics are UNVERIFIED."
+        ]
+      },
+      "inquiry_paths": {
+        "booking_link": {
+          "state": "unknown",
+          "n": 0,
+          "pages": [],
+          "evidence": [],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission.",
+            "Incomplete coverage; absence must not be inferred."
+          ]
+        },
+        "contact_form": {
+          "state": "unknown",
+          "n": 0,
+          "pages": [],
+          "evidence": [],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission.",
+            "Incomplete coverage; absence must not be inferred."
+          ]
+        },
+        "whatsapp": {
+          "state": "unknown",
+          "n": 0,
+          "pages": [],
+          "evidence": [],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission.",
+            "Incomplete coverage; absence must not be inferred."
+          ]
+        },
+        "phone": {
+          "state": "unknown",
+          "n": 0,
+          "pages": [],
+          "evidence": [],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission.",
+            "Incomplete coverage; absence must not be inferred."
+          ]
+        }
+      },
+      "social": {
+        "facebook": [],
+        "instagram": []
+      },
+      "stack": {
+        "cms": []
+      },
+      "reputation": {
+        "rating": [],
+        "reviews": []
+      },
+      "site_quality_flags": {
+        "placeholder_text": {
+          "observed": false,
+          "pages": []
+        },
+        "no_viewport_meta": {
+          "observed": false,
+          "pages": []
+        },
+        "stale_copyright": {
+          "observed": false,
+          "pages": []
+        },
+        "no_https": {
+          "observed": false,
+          "pages": []
+        },
+        "offtopic_headings": {
+          "observed": false,
+          "pages": []
+        }
+      },
+      "coverage_complete": false
+    },
+    "pages": []
+  },
+  {
+    "id": 447,
+    "expected": "unclear",
+    "actual": "unclear",
+    "signals": {
+      "version": "signal_sheet_v1",
+      "web_presence": {
+        "state": "unknown",
+        "checked": [],
+        "checks": [
+          {
+            "source": "maps_listing",
+            "status": "checked",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=The%20Dental%20Care%20Clinic%20(%20Dr.Shahnawaz%20Ahmed)&query_place_id=ChIJw0r1b1-_3zgRY0YMatEk-UQ",
+            "observed_at": "2026-10-05T08:39:34.818Z",
+            "website_result": "unknown",
+            "rating": 4.9,
+            "reviews": 167
+          }
+        ],
+        "source_check_max_age_days": 30,
+        "company_website_recorded": false,
+        "reason_codes": [
+          "recheck_needed"
+        ],
+        "observed_at": "2026-11-23T13:37:44.409Z",
+        "pages": [],
+        "limitations": [
+          "Bounded static observations, not independent business verification.",
+          "Strong/functional/outdated are heuristic labels, not tested usability or business need.",
+          "Off-topic detection currently recognizes construction-template headings on clinic sites only; other topics are UNVERIFIED."
+        ]
+      },
+      "inquiry_paths": {
+        "booking_link": {
+          "state": "unknown",
+          "n": 0,
+          "pages": [],
+          "evidence": [],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission.",
+            "Incomplete coverage; absence must not be inferred."
+          ]
+        },
+        "contact_form": {
+          "state": "unknown",
+          "n": 0,
+          "pages": [],
+          "evidence": [],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission.",
+            "Incomplete coverage; absence must not be inferred."
+          ]
+        },
+        "whatsapp": {
+          "state": "unknown",
+          "n": 0,
+          "pages": [],
+          "evidence": [],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission.",
+            "Incomplete coverage; absence must not be inferred."
+          ]
+        },
+        "phone": {
+          "state": "unknown",
+          "n": 0,
+          "pages": [],
+          "evidence": [],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission.",
+            "Incomplete coverage; absence must not be inferred."
+          ]
+        }
+      },
+      "social": {
+        "facebook": [],
+        "instagram": []
+      },
+      "stack": {
+        "cms": []
+      },
+      "reputation": {
+        "rating": [],
+        "reviews": []
+      },
+      "site_quality_flags": {
+        "placeholder_text": {
+          "observed": false,
+          "pages": []
+        },
+        "no_viewport_meta": {
+          "observed": false,
+          "pages": []
+        },
+        "stale_copyright": {
+          "observed": false,
+          "pages": []
+        },
+        "no_https": {
+          "observed": false,
+          "pages": []
+        },
+        "offtopic_headings": {
+          "observed": false,
+          "pages": []
+        }
+      },
+      "coverage_complete": false
+    },
+    "pages": []
+  },
+  {
+    "id": 449,
+    "expected": "weak",
+    "actual": "weak",
+    "signals": {
+      "version": "signal_sheet_v1",
+      "web_presence": {
+        "state": "strong",
+        "checked": [
+          "site_fetch"
+        ],
+        "checks": [
+          {
+            "source": "maps_listing",
+            "status": "checked",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Zia%20Dental%20Consultants&query_place_id=ChIJX6DJN4a_3zgRLHPAx0ICgC4",
+            "observed_at": "2026-10-05T08:39:34.818Z",
+            "website_result": "present",
+            "rating": 4.4,
+            "reviews": 19
+          }
+        ],
+        "source_check_max_age_days": 30,
+        "company_website_recorded": true,
+        "reason_codes": [
+          "recheck_needed"
+        ],
+        "observed_at": "2026-11-23T13:37:44.410Z",
+        "pages": [
+          "https://ziadentalconsultants.me/",
+          "https://ziadentalconsultants.me/contact/",
+          "https://ziadentalconsultants.me/about/"
+        ],
+        "limitations": [
+          "Bounded static observations, not independent business verification.",
+          "Strong/functional/outdated are heuristic labels, not tested usability or business need.",
+          "Off-topic detection currently recognizes construction-template headings on clinic sites only; other topics are UNVERIFIED."
+        ]
+      },
+      "inquiry_paths": {
+        "booking_link": {
+          "state": "observed",
+          "n": 3,
+          "pages": [
+            "https://ziadentalconsultants.me/",
+            "https://ziadentalconsultants.me/contact/",
+            "https://ziadentalconsultants.me/about/"
+          ],
+          "evidence": [
+            {
+              "type": "booking_link",
+              "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+              "source_url": "https://ziadentalconsultants.me/",
+              "submission_tested": false
+            },
+            {
+              "type": "booking_link",
+              "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+              "source_url": "https://ziadentalconsultants.me/contact/",
+              "submission_tested": false
+            },
+            {
+              "type": "booking_link",
+              "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+              "source_url": "https://ziadentalconsultants.me/about/",
+              "submission_tested": false
+            }
+          ],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission."
+          ]
+        },
+        "contact_form": {
+          "state": "observed",
+          "n": 3,
+          "pages": [
+            "https://ziadentalconsultants.me/",
+            "https://ziadentalconsultants.me/contact/",
+            "https://ziadentalconsultants.me/about/"
+          ],
+          "evidence": [
+            {
+              "type": "contact_form",
+              "value": "https://ziadentalconsultants.me/contact/",
+              "source_url": "https://ziadentalconsultants.me/contact/",
+              "method": "appointment_request_form",
+              "submission_tested": false
+            }
+          ],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission."
+          ]
+        },
+        "whatsapp": {
+          "state": "observed",
+          "n": 3,
+          "pages": [
+            "https://ziadentalconsultants.me/",
+            "https://ziadentalconsultants.me/contact/",
+            "https://ziadentalconsultants.me/about/"
+          ],
+          "evidence": [
+            {
+              "type": "whatsapp",
+              "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+              "source_url": "https://ziadentalconsultants.me/",
+              "observed_at": "2026-11-23T13:37:44.410Z"
+            },
+            {
+              "type": "whatsapp",
+              "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+              "source_url": "https://ziadentalconsultants.me/contact/",
+              "observed_at": "2026-11-23T13:37:44.410Z"
+            },
+            {
+              "type": "whatsapp",
+              "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+              "source_url": "https://ziadentalconsultants.me/about/",
+              "observed_at": "2026-11-23T13:37:44.410Z"
+            }
+          ],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission."
+          ]
+        },
+        "phone": {
+          "state": "observed",
+          "n": 3,
+          "pages": [
+            "https://ziadentalconsultants.me/",
+            "https://ziadentalconsultants.me/contact/",
+            "https://ziadentalconsultants.me/about/"
+          ],
+          "evidence": [
+            {
+              "type": "phone",
+              "value": "+923335100708",
+              "source_url": "https://ziadentalconsultants.me/",
+              "observed_at": "2026-11-23T13:37:44.410Z"
+            },
+            {
+              "type": "phone",
+              "value": "+923335100708",
+              "source_url": "https://ziadentalconsultants.me/contact/",
+              "observed_at": "2026-11-23T13:37:44.410Z"
+            },
+            {
+              "type": "phone",
+              "value": "+923335100708",
+              "source_url": "https://ziadentalconsultants.me/about/",
+              "observed_at": "2026-11-23T13:37:44.410Z"
+            }
+          ],
+          "limitations": [
+            "Static HTML only; presence does not establish working submission, ownership or permission."
+          ]
+        }
+      },
+      "social": {
+        "facebook": [],
+        "instagram": []
+      },
+      "stack": {
+        "cms": []
+      },
+      "reputation": {
+        "rating": [],
+        "reviews": []
+      },
+      "site_quality_flags": {
+        "placeholder_text": {
+          "observed": false,
+          "pages": []
+        },
+        "no_viewport_meta": {
+          "observed": false,
+          "pages": []
+        },
+        "stale_copyright": {
+          "observed": false,
+          "pages": []
+        },
+        "no_https": {
+          "observed": false,
+          "pages": []
+        },
+        "offtopic_headings": {
+          "observed": false,
+          "pages": []
+        }
+      },
+      "coverage_complete": true
+    },
+    "pages": [
+      {
+        "url": "https://ziadentalconsultants.me/",
+        "requested_url": "https://ziadentalconsultants.me/",
+        "final_url": "https://ziadentalconsultants.me/",
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "html_bytes": 55300,
+        "text_bytes": 6009,
+        "truncated": false,
+        "usable_html": true,
+        "error_class": null,
+        "quality_flags": {
+          "placeholder_text": false,
+          "no_viewport_meta": false,
+          "stale_copyright": false,
+          "no_https": false,
+          "offtopic_headings": false
+        }
+      },
+      {
+        "url": "https://ziadentalconsultants.me/contact/",
+        "requested_url": "https://ziadentalconsultants.me/contact/",
+        "final_url": "https://ziadentalconsultants.me/contact/",
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "html_bytes": 17774,
+        "text_bytes": 2048,
+        "truncated": false,
+        "usable_html": true,
+        "error_class": null,
+        "quality_flags": {
+          "placeholder_text": false,
+          "no_viewport_meta": false,
+          "stale_copyright": false,
+          "no_https": false,
+          "offtopic_headings": false
+        }
+      },
+      {
+        "url": "https://ziadentalconsultants.me/about/",
+        "requested_url": "https://ziadentalconsultants.me/about/",
+        "final_url": "https://ziadentalconsultants.me/about/",
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "html_bytes": 20005,
+        "text_bytes": 2554,
+        "truncated": false,
+        "usable_html": true,
+        "error_class": null,
+        "quality_flags": {
+          "placeholder_text": false,
+          "no_viewport_meta": false,
+          "stale_copyright": false,
+          "no_https": false,
+          "offtopic_headings": false
+        }
+      }
+    ]
+  },
+  {
+    "name": "no website no checks",
+    "expected": "unclear",
+    "actual": "unclear"
+  },
+  {
+    "name": "explicit maps absence",
+    "expected": "strong",
+    "actual": "strong"
+  },
+  {
+    "name": "unknown listing result",
+    "expected": "unclear",
+    "actual": "unclear"
+  },
+  {
+    "name": "failed fetch",
+    "expected": "unclear",
+    "actual": "unclear"
+  },
+  {
+    "name": "blocked fetch",
+    "expected": "unclear",
+    "actual": "unclear"
+  },
+  {
+    "name": "JS shell",
+    "expected": "unclear",
+    "actual": "unclear"
+  },
+  {
+    "name": "template",
+    "expected": "strong",
+    "actual": "strong"
+  },
+  {
+    "name": "functional no paths",
+    "expected": "moderate",
+    "actual": "moderate"
+  },
+  {
+    "name": "strong with form",
+    "expected": "weak",
+    "actual": "weak"
+  },
+  {
+    "name": "cross domain redirect",
+    "expected": "unclear",
+    "actual": "unclear"
+  },
+  {
+    "name": "truncated",
+    "expected": "unclear",
+    "actual": "unclear"
+  },
+  {
+    "name": "non HTML",
+    "expected": "unclear",
+    "actual": "unclear"
+  },
+  {
+    "name": "facebook only",
+    "expected": "unclear",
+    "actual": "unclear"
+  },
+  {
+    "name": "facebook URL as website",
+    "expected": "strong",
+    "actual": "strong"
+  },
+  {
+    "name": "stale checks",
+    "expected": "unclear",
+    "actual": "unclear"
+  },
+  {
+    "name": "failed fetch despite absence check",
+    "expected": "unclear",
+    "actual": "unclear"
+  },
+  {
+    "name": "old copyright",
+    "expected": "unclear",
+    "actual": "unclear"
+  },
+  {
+    "name": "phone route",
+    "expected": "unclear",
+    "actual": "unclear"
+  },
+  {
+    "name": "mixed source results",
+    "expected": "unclear",
+    "actual": "unclear"
+  },
+  {
+    "name": "future check",
+    "expected": "unclear",
+    "actual": "unclear"
+  }
+]

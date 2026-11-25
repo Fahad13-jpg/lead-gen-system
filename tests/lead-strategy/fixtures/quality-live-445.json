@@ -1,0 +1,160 @@
+{
+  "brief": {
+    "contract": "strategy_v2",
+    "org_id": 1,
+    "lead_id": 445,
+    "qualifier": {
+      "fit": "unclear",
+      "reason_codes": [
+        "insufficient_current_evidence"
+      ],
+      "candidate_angles": []
+    },
+    "permitted_channels": [
+      {
+        "channel": "whatsapp",
+        "reason_codes": [
+          "existing_readiness_ready"
+        ]
+      },
+      {
+        "channel": "call",
+        "reason_codes": [
+          "existing_readiness_ready"
+        ]
+      }
+    ],
+    "blocked_channels": [],
+    "campaign": {
+      "offer": "Clinic website demo",
+      "description": "Sample clinic service-page demo; no claim that the business needs a replacement website.",
+      "approved_benefits": [
+        {
+          "id": "b1",
+          "text": "The demo explains clinic services."
+        },
+        {
+          "id": "b2",
+          "text": "The demo includes an enquiry form."
+        }
+      ],
+      "prohibited_claims": [
+        "guaranteed revenue"
+      ],
+      "cta": {
+        "text": "Would you like to review the demonstration?",
+        "url": ""
+      },
+      "tone": "professional",
+      "language": "en",
+      "sender": {
+        "name": "Demo Sender",
+        "company": "Example Studio",
+        "signature": ""
+      }
+    },
+    "facts": [],
+    "copy": {
+      "greeting": "Hello Islamabad Dental Clinic,",
+      "cta": "Would you like to review the demonstration?",
+      "sender": "Demo Sender — Example Studio",
+      "opt_out": "Reply STOP to opt out.",
+      "opening": "Hello, this is Demo Sender from Example Studio.",
+      "permission": "Is now a suitable time for a brief explanation?",
+      "busy": "Would you prefer that I leave it here?",
+      "not_interested": "Thank you for your time. I will leave it here.",
+      "unknown": "A team member can answer that; I do not want to guess.",
+      "stop": "I will stop and record your opt-out request."
+    },
+    "url_allowlist": [],
+    "limits": {
+      "email": 1200,
+      "sms": 480,
+      "whatsapp": 1500,
+      "linkedin": 500,
+      "call": 1500
+    },
+    "limitations": [
+      "Source observations are not independently verified ownership or need.",
+      "Internal notes and follow-up intents are not outgoing text."
+    ],
+    "conflicts": [],
+    "relevance": {
+      "matches": []
+    }
+  },
+  "output": null,
+  "provider_error": {
+    "code": "rate_limit_exceeded",
+    "type": "tokens"
+  },
+  "result": {
+    "lead_id": 445,
+    "evidence": "Historical stored snapshot, not freshly verified",
+    "offer": "Demonstration offer, not a real customer campaign",
+    "channel_permissions": "Synthetic draft-only readiness",
+    "budget": {
+      "requests": 1,
+      "max_completion_tokens": 6000
+    },
+    "token_estimate": {
+      "brief": 558,
+      "brief_upper_bound": 1673,
+      "hard_cap": 2500,
+      "method": "UTF-8 byte upper bound; /3 estimate UNVERIFIED",
+      "full_request_estimate": 2597
+    },
+    "at": "2026-10-14T08:12:23.637Z",
+    "calls": 1,
+    "http_status": 429,
+    "transport_error": null,
+    "duration_ms": 297,
+    "state": "ai_failed",
+    "generation": {
+      "method": "ai",
+      "model": "openai/gpt-oss-120b",
+      "prompt_version": "strategy_v2.5",
+      "attempts": 1,
+      "tokens": {
+        "prompt": 0,
+        "completion": 0,
+        "total": 0
+      },
+      "usage_complete": false,
+      "mocked": false,
+      "failure_reason": "INCOMPLETE_OR_PROVIDER_ERROR"
+    },
+    "validation_errors": [
+      "AI_FAILED"
+    ],
+    "quality_review": {
+      "flags": [
+        "fit_not_established"
+      ],
+      "followup_review": {
+        "items": [],
+        "errors": [],
+        "limitations": [
+          "Internal intent text is not an executable message.",
+          "Asset detection covers common English demo/product link phrases only; other wording requires review.",
+          "A configured URL does not prove it was sent, received or viewed."
+        ]
+      },
+      "personalization_status": "no_valid_plan",
+      "next_action": "Review the generation failure; no draft is ready.",
+      "available_match_count": 0,
+      "observed_personalization": false,
+      "benefit_relevance": "not_established",
+      "supported_fact_ids": [],
+      "recommendation": "Clarify relevance before pursuing the offer.",
+      "confirmed_need": false,
+      "campaign_gaps": [
+        "target_terms",
+        "optional_demo_url"
+      ]
+    },
+    "production_changes": false,
+    "trial_ledger_changes": false,
+    "sent": false
+  }
+}

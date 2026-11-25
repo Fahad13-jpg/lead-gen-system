@@ -1,0 +1,832 @@
+{
+  "requests": 60,
+  "groups": {
+    "n8n:default": {
+      "total": 20,
+      "expected_401": 0,
+      "p50_ms": 17,
+      "max_ms": 5324,
+      "failures": [
+        {
+          "round": 1,
+          "at": "2026-10-19T18:49:33.930Z",
+          "errors": [
+            {
+              "code": "EAI_AGAIN",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "EAI_AGAIN",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 2,
+          "at": "2026-10-19T18:50:09.426Z",
+          "errors": [
+            {
+              "code": "EAI_AGAIN",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "EAI_AGAIN",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 3,
+          "at": "2026-10-19T18:50:14.462Z",
+          "errors": [
+            {
+              "code": "EAI_AGAIN",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "EAI_AGAIN",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 4,
+          "at": "2026-10-19T18:50:22.042Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 5,
+          "at": "2026-10-19T18:50:27.057Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 6,
+          "at": "2026-10-19T18:50:39.128Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 7,
+          "at": "2026-10-19T18:50:39.145Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 8,
+          "at": "2026-10-19T18:50:39.205Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 9,
+          "at": "2026-10-19T18:50:39.227Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 10,
+          "at": "2026-10-19T18:50:39.290Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 11,
+          "at": "2026-10-19T18:50:39.315Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 12,
+          "at": "2026-10-19T18:50:39.386Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 13,
+          "at": "2026-10-19T18:50:39.407Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 14,
+          "at": "2026-10-19T18:50:39.540Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 15,
+          "at": "2026-10-19T18:50:39.562Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 16,
+          "at": "2026-10-19T18:50:39.625Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 17,
+          "at": "2026-10-19T18:50:39.649Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 18,
+          "at": "2026-10-19T18:50:39.724Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 19,
+          "at": "2026-10-19T18:50:39.740Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 20,
+          "at": "2026-10-19T18:50:39.792Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        }
+      ]
+    },
+    "n8n:scoped": {
+      "total": 20,
+      "expected_401": 0,
+      "p50_ms": 15,
+      "max_ms": 15012,
+      "failures": [
+        {
+          "round": 1,
+          "at": "2026-10-19T18:49:39.406Z",
+          "errors": [
+            {
+              "code": "ERR_CANCELED",
+              "syscall": null
+            }
+          ],
+          "attempts": [],
+          "connect_ms": 5377.229719000001,
+          "tls_ms": 10580.591129000002
+        },
+        {
+          "round": 2,
+          "at": "2026-10-19T18:49:54.409Z",
+          "errors": [
+            {
+              "code": "ERR_CANCELED",
+              "syscall": null
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 3,
+          "at": "2026-10-19T18:50:19.495Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 4,
+          "at": "2026-10-19T18:50:22.023Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 5,
+          "at": "2026-10-19T18:50:32.074Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 6,
+          "at": "2026-10-19T18:50:39.076Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 7,
+          "at": "2026-10-19T18:50:39.167Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 8,
+          "at": "2026-10-19T18:50:39.181Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 9,
+          "at": "2026-10-19T18:50:39.262Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 10,
+          "at": "2026-10-19T18:50:39.275Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 11,
+          "at": "2026-10-19T18:50:39.342Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 12,
+          "at": "2026-10-19T18:50:39.363Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 13,
+          "at": "2026-10-19T18:50:39.427Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 14,
+          "at": "2026-10-19T18:50:39.445Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 15,
+          "at": "2026-10-19T18:50:39.582Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 16,
+          "at": "2026-10-19T18:50:39.605Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 17,
+          "at": "2026-10-19T18:50:39.676Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 18,
+          "at": "2026-10-19T18:50:39.708Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 19,
+          "at": "2026-10-19T18:50:39.757Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 20,
+          "at": "2026-10-19T18:50:39.772Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            },
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        }
+      ]
+    },
+    "host:default": {
+      "total": 20,
+      "expected_401": 1,
+      "p50_ms": 8,
+      "max_ms": 12032,
+      "failures": [
+        {
+          "round": 2,
+          "at": "2026-10-19T18:49:54.421Z",
+          "errors": [
+            {
+              "code": "ETIMEDOUT",
+              "syscall": null
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 3,
+          "at": "2026-10-19T18:50:14.465Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 4,
+          "at": "2026-10-19T18:50:22.021Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 5,
+          "at": "2026-10-19T18:50:27.054Z",
+          "errors": [
+            {
+              "code": "ETIMEDOUT",
+              "syscall": null
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 6,
+          "at": "2026-10-19T18:50:39.069Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 7,
+          "at": "2026-10-19T18:50:39.139Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 8,
+          "at": "2026-10-19T18:50:39.177Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 9,
+          "at": "2026-10-19T18:50:39.222Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 10,
+          "at": "2026-10-19T18:50:39.270Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 11,
+          "at": "2026-10-19T18:50:39.308Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 12,
+          "at": "2026-10-19T18:50:39.356Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 13,
+          "at": "2026-10-19T18:50:39.402Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 14,
+          "at": "2026-10-19T18:50:39.439Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 15,
+          "at": "2026-10-19T18:50:39.556Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 16,
+          "at": "2026-10-19T18:50:39.595Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 17,
+          "at": "2026-10-19T18:50:39.643Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 18,
+          "at": "2026-10-19T18:50:39.696Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 19,
+          "at": "2026-10-19T18:50:39.735Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        },
+        {
+          "round": 20,
+          "at": "2026-10-19T18:50:39.765Z",
+          "errors": [
+            {
+              "code": "ENOTFOUND",
+              "syscall": "getaddrinfo"
+            }
+          ],
+          "attempts": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,437 @@
+{
+  "scratch_database": "scratch_lead_diag_20261011",
+  "rolled_back": true,
+  "provider_calls": 0,
+  "tasks": [
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 159
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 159
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 161
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 161
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 162
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 162
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 163
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 163
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 164
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 164
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 165
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 165
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 166
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 166
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 167
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 167
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 168
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 168
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 169
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 169
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 170
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 170
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 171
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 171
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 172
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 172
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 230
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 230
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 231
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 231
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 445
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 445
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 446
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 446
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 447
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 447
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 448
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 448
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 449
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 449
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 450
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 450
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 451
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 451
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 452
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 452
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 453
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 453
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 454
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 454
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 455
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 455
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 456
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 456
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 457
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 457
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 458
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 458
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 459
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 459
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 460
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 460
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 461
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 461
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 462
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 462
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 463
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 463
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 464
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 464
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 465
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 465
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 466
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 466
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 467
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 467
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 468
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 468
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 469
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 469
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 470
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 470
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 471
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 471
+    },
+    {
+      "kind": "basic",
+      "org_id": 1,
+      "lead_id": 472
+    },
+    {
+      "kind": "research",
+      "org_id": 1,
+      "lead_id": 472
+    }
+  ]
+}

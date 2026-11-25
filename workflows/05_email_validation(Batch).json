@@ -2,207 +2,189 @@
   "name": "5 - Email Validation (Batch)",
   "nodes": [
     {
+      "name": "Every Minute",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "id": "658ec78841c94fe288df1fe7c09b9a6d",
+      "position": [
+        0,
+        0
+      ],
       "parameters": {
         "rule": {
           "interval": [
             {
-              "field": "minutes"
+              "field": "minutes",
+              "minutesInterval": 1
             }
           ]
         }
-      },
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1.2,
-      "position": [
-        160,
-        -16
-      ],
-      "id": "5abfffec-d292-45c5-a683-c129b0d46d25",
-      "name": "Schedule Trigger"
+      }
     },
     {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT id, email\nFROM cleaned_leads\nWHERE email IS NOT NULL\nAND email_verification_status = 'pending'\nORDER BY created_at ASC\nLIMIT 1",
-        "options": {}
-      },
+      "name": "Manual Test",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "id": "f4bb8543dc234d593fa960468fcf5e64",
+      "position": [
+        240,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "name": "Claim Tasks",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
+      "id": "5d2542db3c8eb4299976de3f9a1e5ab3",
       "position": [
-        336,
-        -16
+        480,
+        0
       ],
-      "id": "fac14f39-d1d5-4aae-ade0-56a2818ddf62",
-      "name": "Get Pending Emails",
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT value AS task FROM contact_claim('verification',1) value",
+        "options": {
+          "queryReplacement": "={{ [] }}",
+          "queryBatching": "independently"
+        }
+      },
       "credentials": {
         "postgres": {
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "name": "Validate Worker Arguments",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "id": "69e89e21a920b11953d76438ce1abc8a",
+      "position": [
+        720,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// An empty claim is an idle queue, never a task.\nconst queueItems=$input.all();\nif(!queueItems.length||queueItems.every(item=>item&&item.json&&Object.keys(item.json).length===0))return [];\nreturn $input.all().map((item,index)=>{const t=item.json.task;if(!/^\\d+$/.test(String(t.id))||!/^[a-f0-9]{32}$/.test(t.lease))throw Error('Invalid task lease');return {json:t,pairedItem:{item:index}};});"
       }
     },
     {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "b631fb03-54b6-4e94-b560-2da43c0ec811",
-              "leftValue": "={{ $input.all().length }}",
-              "rightValue": 0,
-              "operator": {
-                "type": "number",
-                "operation": "gt"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        528,
-        -16
-      ],
-      "id": "bafc215d-4d49-4de6-947a-8599ebf30fa8",
-      "name": "Check If Any"
-    },
-    {
-      "parameters": {
-        "url": "=https://emailreputation.abstractapi.com/v1/?api_key={{ $env.ABSTRACT_EMAIL_API_KEY }}&email={{ $json.email }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "name": "Run Contact Worker",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "id": "b34526fe6c108e10198278d3dd99b76c",
       "position": [
         960,
-        -96
+        0
       ],
-      "id": "73f4f849-4da1-42ff-8089-c2effe481782",
-      "name": "Validate Email"
+      "parameters": {
+        "executeOnce": false,
+        "command": "={{ 'node /home/node/.n8n/contact-stage/worker.cjs ' + $json.id + ' ' + $json.lease }}"
+      }
     },
     {
-      "parameters": {
-        "jsCode": "const response = $input.first().json;\nconst leadId = $('Get Pending Emails').item.json.id;\n\n// Handle API errors gracefully\nif (!response || response.error) {\n  return {\n    lead_id: leadId,\n    email_valid: false,\n    email_verification_status: 'validation_failed'\n  };\n}\n\n// AbstractAPI response structure\nconst isDeliverable = response.deliverability === 'DELIVERABLE';\nconst isValid = \n  response.is_valid_format?.value === true &&\n  response.is_mx_found?.value === true &&\n  response.is_disposable_email?.value === false &&\n  isDeliverable;\n\nconst status = isDeliverable ? 'valid' : \n               response.deliverability === 'UNDELIVERABLE' ? 'invalid' : \n               'unknown';\n\nreturn {\n  lead_id: leadId,\n  email_valid: isValid,\n  email_verification_status: status\n};"
-      },
+      "name": "Parse Result",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
+      "id": "c4eda81c64decaafa0d39357b1179432",
       "position": [
-        1216,
-        -96
+        1200,
+        0
       ],
-      "id": "53f8cbbd-5338-4818-bb55-e62642786e0b",
-      "name": "Parse & Update"
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const r=JSON.parse($json.stdout);const t=$('Validate Worker Arguments').item.json;if(String(r.id)!==String(t.id)||r.lease!==t.lease)throw Error('Result identity mismatch');return r;"
+      }
     },
     {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "UPDATE cleaned_leads\nSET \n  email_valid = {{ $json.email_valid }},\n  email_verification_status = '{{ $json.email_verification_status }}'\nWHERE id = {{ $json.lead_id }}",
-        "options": {}
-      },
+      "name": "Save Outcome",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
+      "id": "b72793d29e8fc8bf5dc886303094f5cc",
       "position": [
-        1472,
-        -96
+        1440,
+        0
       ],
-      "id": "34ea7b40-3a19-4cd9-98c1-bc1f5a6744b0",
-      "name": "Update Database",
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT contact_finish($1::jsonb) AS result",
+        "options": {
+          "queryReplacement": "={{ [JSON.stringify($json)] }}",
+          "queryBatching": "independently"
+        }
+      },
       "credentials": {
         "postgres": {
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
       }
-    },
-    {
-      "parameters": {
-        "content": "## 📧 Email Validation (Batch)\n\n**Purpose**\nVerifies that emails in `cleaned_leads` are real and can actually receive mail. Prevents bounced emails and protects sender reputation during outreach.\n\n**How it works**\nRuns every **5 hours** → picks 10 leads with unverified emails → checks each one via AbstractAPI → updates `email_valid` and `email_verification_status` in the database.\n\n**Key Rules**\n- Only processes **10 emails per run** to respect API limits\n- Sets status to `DELIVERABLE`, `UNDELIVERABLE`, or `unknown`\n- Disposable emails are marked as invalid",
-        "height": 544,
-        "width": 272
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        160,
-        -592
-      ],
-      "typeVersion": 1,
-      "id": "d265ee13-f91a-44e4-9837-fd675f5e2c03",
-      "name": "Sticky Note"
-    },
-    {
-      "parameters": {
-        "jsCode": "return [\n  { json: { id: 1, email: \"info@google.com\" } },\n  { json: { id: 2, email: \"notreal@fakedomain12345.com\" } },\n  { json: { id: 3, email: \"contact@microsoft.com\" } }\n];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        336,
-        192
-      ],
-      "id": "7ab4aca5-c9ee-4af0-beda-a1668984aa7b",
-      "name": "Mock Pending Emails",
-      "disabled": true
     }
   ],
-  "pinData": {},
   "connections": {
-    "Schedule Trigger": {
+    "Every Minute": {
       "main": [
         [
           {
-            "node": "Get Pending Emails",
+            "node": "Claim Tasks",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get Pending Emails": {
+    "Manual Test": {
       "main": [
         [
           {
-            "node": "Check If Any",
+            "node": "Claim Tasks",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Check If Any": {
+    "Claim Tasks": {
       "main": [
         [
           {
-            "node": "Validate Email",
+            "node": "Validate Worker Arguments",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Validate Email": {
+    "Validate Worker Arguments": {
       "main": [
         [
           {
-            "node": "Parse & Update",
+            "node": "Run Contact Worker",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Parse & Update": {
+    "Run Contact Worker": {
       "main": [
         [
           {
-            "node": "Update Database",
+            "node": "Parse Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Result": {
+      "main": [
+        [
+          {
+            "node": "Save Outcome",
             "type": "main",
             "index": 0
           }
@@ -210,15 +192,16 @@
       ]
     }
   },
-  "active": false,
+  "pinData": {},
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "timezone": "UTC",
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "none",
+    "saveManualExecutions": false
   },
-  "versionId": "c30aee3e-6bf5-4754-ba4e-d4a891d5ed9b",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
-  },
-  "id": "PhPwFzvnz5uOmYQN",
-  "tags": []
+  }
 }

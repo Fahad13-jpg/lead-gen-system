@@ -1,13 +1,12 @@
 {
-  "name": "7B - LinkedIn Outreach Helper",
   "nodes": [
     {
       "parameters": {
         "rule": {
           "interval": [
             {
-              "field": "hours",
-              "hoursInterval": 2
+              "field": "minutes",
+              "minutesInterval": 5
             }
           ]
         }
@@ -24,7 +23,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n  el.lead_id,\n  cl.user_id,\n  cl.company_name,\n  cl.email,\n  el.company_linkedin_url,\n  el.linkedin_should_use,\n  el.linkedin_connection_note,\n  el.linkedin_first_message,\n  el.linkedin_approach,\n  el.personalization_hook,\n  el.lead_score,\n  el.priority,\n  el.products_services,\n  el.decision_maker_access\nFROM enriched_leads el\nJOIN cleaned_leads cl ON el.lead_id = cl.id\nWHERE el.enrichment_stage = 3\nAND el.linkedin_should_use = TRUE\nAND el.company_linkedin_url IS NOT NULL\nAND el.linkedin_status IS NULL\nORDER BY el.lead_score DESC\nLIMIT 5",
+        "query": "-- Operator org binding: 0 intentionally disables this local workflow. Never accept org from unauthenticated input.\nSELECT p.org_id,p.id AS plan_id,(d->>'step')::integer AS step\nFROM strategy_plans p\nCROSS JOIN LATERAL jsonb_array_elements(CASE WHEN jsonb_typeof(p.body->'artifacts'->'linkedin_manual'->'steps')='array' THEN p.body->'artifacts'->'linkedin_manual'->'steps' ELSE '[]'::jsonb END) d\nWHERE p.org_id=0 AND CASE WHEN coalesce(d->>'step','') ~ '^([1-9]|10)$' THEN outreach_linkedin_gate(p.org_id,p.id,(d->>'step')::integer)->>'allowed'='true' ELSE false END\nAND NOT EXISTS(SELECT 1 FROM outreach_activities a WHERE a.org_id=p.org_id AND a.dispatch_metadata->>'plan_id'=p.id::text AND a.dispatch_metadata->>'step'=d->>'step')\nORDER BY p.created_at,p.id LIMIT 30",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -40,7 +39,8 @@
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
-      }
+      },
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -77,7 +77,8 @@
     },
     {
       "parameters": {
-        "jsCode": "const leads = $input.all();\n\nconst formattedLeads = leads.map(item => {\n  const lead = item.json;\n  \n  // Determine approach\n  const approach = lead.linkedin_approach || 'connection_request';\n  \n  // Get messages from AI (generated in Workflow 6C)\n  const connectionNote = lead.linkedin_connection_note || \n    `Hi! I came across ${lead.company_name} and was impressed by your work in ${lead.products_services || 'your industry'}. Would love to connect!`;\n  \n  const followupMessage = lead.linkedin_first_message || \n    `Thanks for connecting! I noticed ${lead.personalization_hook}. Would love to learn more about how ${lead.company_name} approaches ${lead.products_services}.`;\n  \n  // Calculate character counts (LinkedIn limits)\n  const noteLength = connectionNote.length;\n  const messageLength = followupMessage.length;\n  \n  // Generate step-by-step instructions\n  const instructions = `\nLINKEDIN OUTREACH STEPS:\n\nSTEP 1: Send Connection Request\n1. Go to: ${lead.company_linkedin_url}\n2. Click the \"Connect\" button\n3. Click \"Add a note\"\n4. Copy and paste the message below:\n\n${connectionNote}\n\n5. Click \"Send\"\n6. Wait for connection acceptance (usually 1-7 days)\n\n---\n\nSTEP 2: After Connection Accepted\n1. Go to LinkedIn Messages\n2. Find ${lead.company_name}\n3. Copy and paste:\n\n${followupMessage}\n\n4. Send message\n5. Mark as completed in dashboard\n\n---\n\nTIPS:\n- Check LinkedIn daily for acceptance\n- Personalize further if you want\n- Don't send too many requests per day (max 20-30)\n- Wait at least 24 hours before step 2\n  `.trim();\n  \n  return {\n    lead_id: lead.lead_id,\n    user_id: lead.user_id,\n    company_name: lead.company_name,\n    linkedin_url: lead.company_linkedin_url,\n    priority: lead.priority,\n    lead_score: lead.lead_score,\n    \n    // Action items\n    approach: approach,\n    connection_note: connectionNote,\n    connection_note_length: noteLength,\n    connection_note_status: noteLength <= 300 ? 'ok' : 'too_long',\n    \n    followup_message: followupMessage,\n    followup_message_length: messageLength,\n    \n    instructions: instructions,\n    \n    // For dashboard display\n    status: 'ready_for_manual_send',\n    step_1_action: approach === 'connection_request' ? 'Send Connection Request' : 'Send InMail',\n    step_2_action: 'Send Follow-up Message',\n    \n    // Warnings\n    warnings: noteLength > 300 ? ['Connection note exceeds 300 char limit - trim it before sending'] : [],\n    \n    generated_at: new Date().toISOString()\n  };\n});\n\nreturn formattedLeads;"
+        "mode": "runOnceForAllItems",
+        "jsCode": "return $input.all().flatMap((item,index)=>{const x=item.json;if(!Number.isSafeInteger(x.org_id)||x.org_id<=0||!/^([1-9]|10)$/.test(String(x.step))||!/^\\d+$/.test(String(x.plan_id)))return [];return [{json:{org_id:x.org_id,plan_id:String(x.plan_id),step:x.step,connection_note_status:'ok'},pairedItem:{item:index}}];});"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -124,7 +125,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO linkedin_outreach_queue (\n  lead_id, user_id, company_name, linkedin_url,\n  connection_note, followup_message, approach,\n  priority, lead_score, status\n) VALUES (\n  {{ $json.lead_id }},\n  {{ $json.user_id }},\n  '{{ $json.company_name.replace(/'/g, \"''\") }}',\n  '{{ $json.linkedin_url }}',\n  '{{ $json.connection_note.replace(/'/g, \"''\") }}',\n  '{{ $json.followup_message.replace(/'/g, \"''\") }}',\n  '{{ $json.approach }}',\n  '{{ $json.priority }}',\n  {{ $json.lead_score }},\n  'pending'\n)\nRETURNING id, lead_id",
+        "query": "SELECT outreach_linkedin_prepare('{{ JSON.stringify({org_id:$json.org_id,plan_id:$json.plan_id,step:$json.step}).replace(/'/g, \"''\") }}'::jsonb) AS result",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -140,12 +141,13 @@
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
-      }
+      },
+      "alwaysOutputData": true
     },
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "UPDATE enriched_leads\nSET \n  linkedin_status = 'ready',\n  linkedin_prepared_at = NOW()\nWHERE lead_id = {{ $json.lead_id }}",
+        "query": "SELECT outreach_linkedin_queue('{{ JSON.stringify({org_id:$('Format LinkedIn Actions').item.json.org_id}).replace(/'/g, \"''\") }}'::jsonb) AS result",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -161,11 +163,13 @@
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
-      }
+      },
+      "alwaysOutputData": true
     },
     {
       "parameters": {
-        "jsCode": "const lead = $input.first().json;\n\nconsole.log(`WARNING: LinkedIn message too long for ${lead.company_name}`);\nconsole.log(`Length: ${lead.connection_note_length} (max 300)`);\nconsole.log(`Message: ${lead.connection_note}`);\n\nreturn {\n  lead_id: lead.lead_id,\n  company_name: lead.company_name,\n  issue: 'message_too_long',\n  length: lead.connection_note_length,\n  max_length: 300\n};"
+        "mode": "runOnceForEachItem",
+        "jsCode": "return {json:{reason:'approved_linkedin_content_required',manual_only:true,execution_authorized:false}};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -179,7 +183,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "UPDATE enriched_leads\nSET \n  linkedin_status = 'needs_review',\n  linkedin_prepared_at = NOW()\nWHERE lead_id = {{ $('Format LinkedIn Actions').item.json.lead_id }}",
+        "query": "SELECT jsonb_build_object('manual_only',true,'reason','approved_linkedin_content_required','execution_authorized',false) AS result",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -195,7 +199,8 @@
           "id": "Scc3yxojKZkvXpOL",
           "name": "Lead Database"
         }
-      }
+      },
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -211,9 +216,23 @@
       "typeVersion": 1,
       "id": "76d0ae9f-70bc-4861-b8c7-588e924cc315",
       "name": "Sticky Note"
+    },
+    {
+      "id": "linkedin-manual-v1-corrections",
+      "name": "Manual LinkedIn corrections - current scope",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        420,
+        -640
+      ],
+      "parameters": {
+        "width": 740,
+        "height": 460,
+        "content": "CURRENT LOCAL VERSION — requires unapplied migration 045. Disabled org binding=0; workflow inactive. The old sticky note is preserved as history. Its 300-character rule and 20–30 daily advice are superseded: notes default to 200 characters; no guaranteed safe invitation quota. Person profiles only; company pages are research context.\n\nApproved strategy_v2 artifacts are prepared before hashing/approval, with LINKEDIN_MANUAL_ENABLED operator opt-in. No API sending, LinkedIn login/cookies, clicking, inbox scraping or extra AI calls. Copying is not sending. Task events and replies are customer-reported, never provider-verified. Schedule prepares bounded tasks only; Flutter will read the queue and show reminders.\n\nExisting graph and notes retained. All storage is org-scoped outreach_activities JSON, unique per approved plan/step, ON CONFLICT DO NOTHING. Every task/action rechecks approval/hash/evidence and stops; durable stop events remain recordable for stale plans. Never silently edit approved content or restart an expired connection request.\n\nBackend adapter is local and requires trusted org/member authentication; no new public endpoint. Flutter login mapping remains pending. Changing target or outgoing content requires a new reviewed plan. Conversation/booking/calling stages unchanged."
+      }
     }
   ],
-  "pinData": {},
   "connections": {
     "Schedule Trigger": {
       "main": [
@@ -305,15 +324,15 @@
       ]
     }
   },
-  "active": false,
-  "settings": {
-    "executionOrder": "v1"
-  },
-  "versionId": "56be0483-72d0-4365-89ee-9de05e5a21ea",
+  "pinData": {},
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
   },
-  "id": "SYZYgAbCrJSbVCwa",
-  "tags": []
+  "active": false,
+  "settings": {
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "none",
+    "saveManualExecutions": false
+  }
 }

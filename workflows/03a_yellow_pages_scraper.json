@@ -2,128 +2,272 @@
   "name": "3A - Yellow Pages Scraper",
   "nodes": [
     {
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "id": "4814f62c108d82de42a65c515d56fc22",
+      "position": [
+        0,
+        0
+      ],
       "parameters": {
         "httpMethod": "POST",
         "path": "yellowpages-scraper",
+        "authentication": "headerAuth",
         "responseMode": "responseNode",
         "options": {}
       },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.1,
-      "position": [
-        64,
-        0
-      ],
-      "id": "04a5f3ba-4cab-480a-a7dd-40beb5335356",
-      "name": "Webhook",
-      "webhookId": "a678c1b8-2824-40dc-ac28-861ea03ccd91"
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "leadGatheringAuth",
+          "name": "Lead Gathering API"
+        }
+      },
+      "webhookId": "272f926c-5178-4662-bde8-f4ca3831a01d"
     },
     {
-      "parameters": {
-        "jsCode": "const body = $input.first().json.body;\n\n// Validate required fields\nif (!body.query) throw new Error('query required (e.g., \"marketing agencies\")');\nif (!body.location) throw new Error('location required (e.g., \"New York, NY\")');\n\nconst maxResults = body.max_results || 100;\nconst userId = body.user_id || 1;\n\nreturn {\n  query: body.query,\n  location: body.location,\n  max_results: maxResults,\n  user_id: userId,\n  scraper_type: 'yellow_pages',\n  requested_at: new Date().toISOString()\n};"
-      },
+      "name": "Validate Job",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
+      "id": "683b33b95921280cf4dbba7064d84ecd",
       "position": [
         240,
         0
       ],
-      "id": "1400c38b-14d2-4e5e-8500-9f4ac9f80643",
-      "name": "Validate Scraping Request"
-    },
-    {
       "parameters": {
-        "operation": "executeQuery",
-        "query": "INSERT INTO scraping_jobs (\n  user_id,\n  source,\n  scraper_type,\n  search_query,\n  location,\n  max_results,\n  status,\n  requested_at\n) VALUES (\n  {{ $json.user_id }},\n  'yellow_pages',\n  'yellow_pages',\n  '{{ $json.query }}',\n  '{{ $json.location }}',\n  {{ $json.max_results }},\n  'processing',\n  NOW()\n)\nRETURNING id as job_id",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        416,
-        0
-      ],
-      "id": "30f810f9-64f7-4add-b557-d3fd0ad6f47f",
-      "name": "Create Yellow Pages Job",
-      "credentials": {
-        "postgres": {
-          "id": "Scc3yxojKZkvXpOL",
-          "name": "Lead Database"
-        }
+        "mode": "runOnceForAllItems",
+        "jsCode": "const b=$input.first().json.body||{}; if(!/^\\d+$/.test(String(b.job_id))||!/^\\d+$/.test(String(b.org_id))) return {valid:false}; return {valid:true,job_id:Number(b.job_id),org_id:Number(b.org_id)};"
       }
     },
     {
-      "parameters": {
-        "jsCode": "const leads = $input.all();\nconst { Client } = require('pg');\n\nconst client = new Client({\n  host: 'postgres',\n  database: 'lead_db',\n  user: 'n8n_user',\n  password: 'n8n_pass123',\n  port: 5432\n});\n\nawait client.connect();\n\nlet insertedCount = 0;\n\nfor (const item of leads) {\n  const lead = item.json;\n  \n  const query = `\n    INSERT INTO staging_leads (\n      job_id, user_id, company_name, phone, email, website,\n      address, city, state, zip, country, category, rating,\n      review_count, additional_data, scraped_at, processing_status\n    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)\n  `;\n  \n  await client.query(query, [\n    lead.job_id,\n    lead.user_id,\n    lead.company_name,\n    lead.phone,\n    lead.email,\n    lead.website,\n    lead.address,\n    lead.city,\n    lead.state,\n    lead.zip,\n    lead.country,\n    lead.category,\n    lead.rating,\n    lead.review_count,\n    lead.additional_data,\n    lead.scraped_at,\n    'pending'\n  ]);\n  \n  insertedCount++;\n}\n\nawait client.end();\n\nreturn {\n  job_id: leads[0].json.job_id,\n  total_inserted: insertedCount,\n  scraper_type: 'yellow_pages'\n};"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "name": "Valid Job?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "id": "b611ffa2da191cad0074fb8d91e32626",
       "position": [
-        1216,
+        480,
         0
       ],
-      "id": "bc6109c7-e69f-4e6d-aed4-e0187ba7dd4d",
-      "name": "Insert Yellow Pages Leads"
-    },
-    {
       "parameters": {
-        "operation": "executeQuery",
-        "query": "UPDATE scraping_jobs\nSET \n  status = 'completed',\n  total_leads = {{ $json.total_inserted }},\n  completed_at = NOW()\nWHERE id = {{ $json.job_id }}",
+        "conditions": {
+          "options": {
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "Valid Job?",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
         "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        1424,
-        0
-      ],
-      "id": "317bd459-d100-439b-b4ed-baa6cfe5385f",
-      "name": "Mark Yellow Pages Job Complete",
-      "credentials": {
-        "postgres": {
-          "id": "Scc3yxojKZkvXpOL",
-          "name": "Lead Database"
-        }
       }
     },
     {
-      "parameters": {
-        "respondWith": "json",
-        "responseBody": "=={\n  success: true,\n  job_id: $json.job_id,\n  scraper: 'yellow_pages',\n  total_leads: $json.total_inserted,\n  message: 'Yellow Pages scraping completed successfully'\n}",
-        "options": {}
-      },
+      "name": "Invalid Job Response",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
+      "id": "20fddfb7da6d90bb53bf52ae6f19aaed",
       "position": [
-        1632,
+        720,
         0
       ],
-      "id": "9fcd9157-6e0d-4435-9e50-419555a56bf0",
-      "name": "Return Success Response"
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {received:false,message:\"Valid job_id and org_id required\"} }}",
+        "options": {
+          "responseCode": 400
+        }
+      }
     },
     {
+      "name": "Claim Job",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "id": "37951846ef4b0db04cbbcc313a0a11b5",
+      "position": [
+        960,
+        0
+      ],
       "parameters": {
-        "jsCode": "const validationData = $('Validate Scraping Request').first().json;\nconst jobId = $('Create Yellow Pages Job').first().json.job_id;\n\nreturn {\n  job_id: jobId,\n  user_id: validationData.user_id,\n  apify_input: {\n    search: validationData.query,\n    location: validationData.location,\n    maxItems: validationData.max_results,\n    debugMode: false,\n    proxyConfiguration: {\n      useApifyProxy: true\n    }\n  }\n};"
+        "operation": "executeQuery",
+        "query": "SELECT gathering_claim_v3($1,$2,'yellow_pages',$3) AS result",
+        "options": {
+          "queryReplacement": "={{ [$json.job_id,$json.org_id,String($execution.id)] }}"
+        }
       },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "name": "Unwrap Claim",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
+      "id": "691686cd44000011e8f1054824885cd0",
       "position": [
-        624,
+        1200,
         0
       ],
-      "id": "0439f266-ebee-48f5-94c8-d122cb36d8b1",
-      "name": "Prepare Apify Payload"
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return $input.first().json.result;"
+      }
     },
     {
+      "name": "Claimed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "id": "dcf72aedb5e38fd5c44652d2262d154b",
+      "position": [
+        1440,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "Claimed?",
+              "leftValue": "={{ $json.claimed }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "name": "Already Claimed",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "id": "344830be724045354469e81624aa214e",
+      "position": [
+        1680,
+        0
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {received:false,message:\"Job missing, already claimed, or connection unavailable\"} }}",
+        "options": {
+          "responseCode": 409
+        }
+      }
+    },
+    {
+      "name": "Respond ACK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "id": "4ed6f787ffcf49b93e3ad4865957bb06",
+      "position": [
+        1920,
+        0
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {received:true,job_id:$json.id} }}",
+        "options": {
+          "responseCode": 202
+        }
+      }
+    },
+    {
+      "name": "Prepare Actor",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "id": "7009c8ef051a07cae157b58875c2842b",
+      "position": [
+        2160,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return (function prepareActor() {\n  const j = $input.first().json;\n  const google = j.source === 'google_maps';\n  const settings = j.request_settings || {};\n  const terms=settings.search_terms||[j.search_query], locations=settings.locations||[j.location];\n  const candidateLimit=j.candidate_limit||j.max_results;\n  if(j.source==='facebook_pages'){\n    if(!Number.isInteger(candidateLimit)||candidateLimit<1||candidateLimit>150||Number(j.max_cost_usd)>0.5)throw Error('FACEBOOK_SCOPE_EXCEEDED');\n    return {...j,actor_id:'apify~facebook-search-scraper',apify_input:{categories:terms,locations,searchType:'pages-google',resultsLimit:candidateLimit}};\n  }\n  const input=google ? { searchStringsArray:locations.length===1?terms:locations.flatMap(l=>terms.map(t=>t+' in '+l)), maxCrawledPlacesPerSearch:Math.ceil(candidateLimit/(terms.length*locations.length)), language:'en',scrapeContacts:settings.scrape_contacts!==false,scrapePlaceDetailPage:false,skipClosedPlaces:settings.exclude_closed!==false,website:settings.website_filter||'allPlaces' } : {searchTerms:terms,locations,maxResults:candidateLimit,includeReviews:false};\n  if(google && settings.center) {\n    // Circumscribed polygon avoids cutting off the requested circular boundary.\n    const lat=settings.center.latitude*Math.PI/180, lon=settings.center.longitude*Math.PI/180, d=settings.radius_km/(6371*Math.cos(Math.PI/64));\n    const ring=[];\n    for(let i=0;i<=64;i++){const bearing=(i%64)*2*Math.PI/64;const a=Math.asin(Math.sin(lat)*Math.cos(d)+Math.cos(lat)*Math.sin(d)*Math.cos(bearing));const o=lon+Math.atan2(Math.sin(bearing)*Math.sin(d)*Math.cos(lat),Math.cos(d)-Math.sin(lat)*Math.sin(a));ring.push([o*180/Math.PI,a*180/Math.PI]);}\n    input.customGeolocation={type:'Polygon',coordinates:[ring]};\n  } else if(google && locations.length===1) input.locationQuery=locations[0];\n  return {...j,actor_id:google?'compass~google-maps-extractor':'solidcode~yellowpages-scraper',apify_input:input};\n})();"
+      }
+    },
+    {
+      "name": "Saved Run?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "id": "57b5d02c05ac27762ca53c606a314076",
+      "position": [
+        2400,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "Saved Run?",
+              "leftValue": "={{ $json.apify_actor_run_id != null || $json.dataset_id != null }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "name": "Start Apify Actor",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "id": "6da4d72f9e133d0a34aacf859b484a8a",
+      "position": [
+        2640,
+        0
+      ],
       "parameters": {
         "method": "POST",
-        "url": "=https://api.apify.com/v2/acts/trudax~yellow-pages-us-scraper/run-sync-get-dataset-items?token={{ $env.APIFY_API_KEY }}",
+        "url": "=https://api.apify.com/v2/acts/{{ $json.actor_id }}/runs",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
-              "name": "Content-Type",
-              "value": "application/json"
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Prepare Actor').first(0).json.apify_api_key }}"
+            }
+          ]
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "timeout",
+              "value": "600"
+            },
+            {
+              "name": "maxTotalChargeUsd",
+              "value": "={{ $json.max_cost_usd }}"
             }
           ]
         },
@@ -131,116 +275,841 @@
         "specifyBody": "json",
         "jsonBody": "={{ $json.apify_input }}",
         "options": {
-          "timeout": 300000
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 30000
         }
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        816,
-        0
-      ],
-      "id": "cb7676f2-44eb-4225-9004-992296da091f",
-      "name": "Start Yellow Pages Scraper"
+      "onError": "continueErrorOutput"
     },
     {
+      "name": "Parse Run",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "id": "452c3dd8453f9cafa2c943dd2096aa32",
+      "position": [
+        2880,
+        0
+      ],
       "parameters": {
-        "jsCode": "const results = $input.all();\nconst jobId = $('Prepare Apify Payload').first().json.job_id;\nconst userId = $('Prepare Apify Payload').first().json.user_id;\n\nconst processedLeads = results.map(item => {\n  const lead = item.json;\n  \n  return {\n    job_id: jobId,\n    user_id: userId,\n    company_name: lead.businessName || lead.name || 'Unknown',\n    phone: lead.phone || null,\n    email: lead.email || null,\n    website: lead.website || null,\n    address: lead.address || null,\n    city: lead.city || null,\n    state: lead.state || null,\n    zip: lead.zipCode || null,\n    country: 'United States',\n    category: lead.category || null,\n    rating: lead.rating || null,\n    review_count: lead.numberOfReviews || 0,\n    additional_data: JSON.stringify({\n      categories: lead.categories || []\n    }),\n    scraped_at: new Date().toISOString()\n  };\n});\n\nreturn processedLeads;"
+        "mode": "runOnceForAllItems",
+        "jsCode": "return (function parseStart() {\r\n  const r = $input.first().json;\r\n  const job = $('Prepare Actor').first(0).json;\r\n  const validId=v=>typeof v==='string'&&/^[A-Za-z0-9_-]{1,200}$/.test(v);\r\n  if (job.apify_actor_run_id!=null || job.dataset_id!=null){\r\n    if(!validId(job.apify_actor_run_id)||!validId(job.dataset_id))throw Error('GATHERING_PROVIDER_REFERENCE_INCOMPLETE');\r\n    return {job_id:job.id,org_id:job.org_id,run_id:job.apify_actor_run_id,dataset_id:job.dataset_id};\r\n  }\r\n  if(r.statusCode!==undefined&&(!Number.isInteger(r.statusCode)||r.statusCode<200||r.statusCode>=300))throw new Error('APIFY_START_RESPONSE_UNCONFIRMED');\r\n  const d = r.body?.data;\r\n  if (!validId(d?.id) || !validId(d?.defaultDatasetId)) throw new Error('Apify did not return a run ID and dataset ID; do not retry the paid start automatically');\r\n  return { job_id: job.id, org_id: job.org_id, run_id: d.id, dataset_id: d.defaultDatasetId };\r\n})();"
       },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "name": "Save Run",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "id": "94b508513b9abb8bcda5b6bd168d20b7",
+      "position": [
+        3120,
+        0
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE scraping_jobs SET apify_actor_run_id=$3,dataset_id=$4,heartbeat_at=now() WHERE id=$1 AND org_id=$2 AND status='running' AND execution_id=$5 RETURNING id",
+        "options": {
+          "queryReplacement": "={{ [$json.job_id,$json.org_id,$json.run_id,$json.dataset_id,String($execution.id)] }}"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "onError": "continueErrorOutput",
+      "alwaysOutputData": true
+    },
+    {
+      "name": "Wait Before Poll",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "id": "f9744ad4499f9f4269101f50b35ce3e8",
+      "position": [
+        3360,
+        0
+      ],
+      "parameters": {
+        "amount": 15,
+        "unit": "seconds"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "name": "Check Actor Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "id": "47ffb5419aec10b0ff437ef2a8b4738e",
+      "position": [
+        3600,
+        0
+      ],
+      "parameters": {
+        "url": "=https://api.apify.com/v2/actor-runs/{{ $('Parse Run').first(0).json.run_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Prepare Actor').first(0).json.apify_api_key }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "onError": "continueErrorOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000
+    },
+    {
+      "name": "Parse Status",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "id": "26fbb2fef8291a4d47a8440b9d47d750",
+      "position": [
+        3840,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return (function parseStatus() {\n  const r = $input.first().json;\n  if(r.statusCode!==undefined&&(!Number.isInteger(r.statusCode)||r.statusCode<200||r.statusCode>=300))throw new Error('APIFY_STATUS_RESPONSE_UNCONFIRMED');\n  const job = $('Prepare Actor').first(0).json;\n  const run = $('Parse Run').first(0).json;\n  const d = r.body?.data;\n  if (!d || d.id !== run.run_id) throw new Error('Invalid Apify status response');\n  const elapsed = Date.now() - new Date(job.heartbeat_at || job.started_at).getTime();\n  const terminal = ['SUCCEEDED', 'FAILED', 'ABORTED', 'TIMED-OUT'].includes(d.status);\n  if(!terminal && elapsed>=780000) throw new Error('Provider did not terminate after abort; preserve the run for review');\n  return { job_id: job.id, org_id: job.org_id, run_id: run.run_id, dataset_id: run.dataset_id, status: d.status, terminal, succeeded: d.status === 'SUCCEEDED', expired: !terminal && elapsed >= 660000, actual_cost: typeof d.usageTotalUsd === 'number' && Number.isFinite(d.usageTotalUsd) && d.usageTotalUsd >= 0 ? d.usageTotalUsd : null };\n})();"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "name": "Terminal?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "id": "c0341f2ccc366f68da6c61b07e730700",
+      "position": [
+        4080,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "Terminal?",
+              "leftValue": "={{ $json.terminal }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "name": "Expired?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "id": "a3388aa1bcf9f5bf738f73909274dff0",
+      "position": [
+        4320,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "Expired?",
+              "leftValue": "={{ $json.expired }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "name": "Heartbeat",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "id": "9df89427a7c806fb110b0194fc015948",
+      "position": [
+        4560,
+        0
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE scraping_jobs SET heartbeat_at=now() WHERE id=$1 AND org_id=$2 AND status='running' AND execution_id=$3 RETURNING id,cancel_requested",
+        "options": {
+          "queryReplacement": "={{ [$json.job_id,$json.org_id,String($execution.id)] }}"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "onError": "continueErrorOutput",
+      "alwaysOutputData": true
+    },
+    {
+      "name": "Current Worker State",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "id": "ae621a913019408c2bf9a5aaf8c55549",
+      "position": [
+        4800,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return (function currentWorkerState(){\n const saved=$input.first().json,run=$('Parse Status').first(0).json;\n if(!saved||saved.id===undefined||String(saved.id)!==String(run.job_id))throw new Error('GATHERING_OWNERSHIP_LOST');\n return {...run,...saved};\n})();"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "name": "Cancel Requested?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "id": "4d8da7eb93a973c74aaf6eaa229a9196",
+      "position": [
+        5040,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "Cancel Requested?",
+              "leftValue": "={{ $json.cancel_requested === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "name": "Abort Expired Run",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "id": "9e7946eaa06cd0f262a1108eeabe091b",
+      "position": [
+        5280,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.apify.com/v2/actor-runs/{{ $('Parse Run').first(0).json.run_id }}/abort",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Prepare Actor').first(0).json.apify_api_key }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "name": "Get Dataset",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "id": "cae2a5315c380fa9d75a1ee18d5cc669",
+      "position": [
+        5520,
+        0
+      ],
+      "parameters": {
+        "url": "=https://api.apify.com/v2/datasets/{{ $('Parse Run').first(0).json.dataset_id }}/items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Prepare Actor').first(0).json.apify_api_key }}"
+            }
+          ]
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "format",
+              "value": "json"
+            },
+            {
+              "name": "limit",
+              "value": "={{ ($('Prepare Actor').first(0).json.candidate_limit || $('Prepare Actor').first(0).json.max_results) + 100 }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "onError": "continueErrorOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000
+    },
+    {
+      "name": "Transform Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "id": "61457900f82314a491dc41e60b54c8ac",
+      "position": [
+        5760,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return (function transformResults() {\r\n  const job = $('Prepare Actor').first(0).json;\r\n  const r = $input.first().json;\r\n  if(r.statusCode!==undefined&&(!Number.isInteger(r.statusCode)||r.statusCode<200||r.statusCode>=300))throw new Error('APIFY_DATASET_RESPONSE_UNCONFIRMED');\r\n  if (!Array.isArray(r.body)) throw new Error('Dataset response must be an array');\r\n  const text = (v, max = 255) => typeof v === 'string' || typeof v === 'number' ? String(v).replace(/\\u0000/g, '').trim().slice(0, max) || null : null;\r\n  const first = (v) => Array.isArray(v) ? v[0] : v;\r\n  const rows = [];\r\n  const excluded = [];\r\n  const settings = job.request_settings || {};\r\n  const normalizeCategory=v=>String(v||'').normalize('NFKC').toLowerCase().replace(/[^\\p{L}\\p{N}]+/gu,' ').replace(/\\bcollag(?:e|es)\\b|\\bcolleges\\b/g,'college').replace(/\\bschools\\b/g,'school').replace(/\\bdepartments\\b/g,'department').trim();\r\n  const excludedCategory=row=>settings.exclude_categories?.some(term=>{const needle=normalizeCategory(term);return needle&&normalizeCategory([row.category,...(Array.isArray(row.raw_data?.categories)?row.raw_data.categories:[]),row.company_name].join(' ')).includes(needle);});\r\n  const universityOnly=normalizeCategory(job.search_query||settings.search_terms?.[0]).includes('universit')&&!/\\b(college|school|department|faculty|institute)\\b/.test(normalizeCategory(job.search_query||''));\r\n  const mismatchedUniversity=row=>{if(!universityOnly)return false;const name=normalizeCategory(row.company_name),category=normalizeCategory(row.category);return !/\\buniversit(?:y|ies)\\b/.test(name+' '+category)||/\\b(college|school|department|faculty|institute)\\b/.test(name+' '+category);};\r\n  function unrequestedPageType(categories){\r\n    if(settings.exclude_unrelated_page_types===false)return null;\r\n    const norm=v=>String(v).normalize('NFKC').toLowerCase().replace(/[^\\p{L}\\p{N}]+/gu,' ').trim();\r\n    const cats=categories.filter(v=>typeof v==='string').map(norm);\r\n    const queries=(Array.isArray(settings.search_terms)?settings.search_terms:[job.search_query||'']).map(v=>' '+norm(v)+' ');\r\n    const groups=[\r\n      {kind:'government_or_regulator',categories:['government organization','government organisation','government official','regulatory authority'],intent:['government','regulator','regulators','regulatory','council','councils','ministry','ministries','municipal','authority','authorities','public sector']},\r\n      {kind:'association_or_nonprofit',categories:['professional association','trade association','nonprofit organization','non profit organization'],intent:['association','associations','society','societies','chamber','chambers','union','unions','nonprofit','non profit','charity','charities','foundation','foundations','ngo','ngos']},\r\n      {kind:'creator_or_fan_page',categories:['reel creator','digital creator','video creator','content creator','gaming video creator','personal blog','fan page'],intent:['creator','creators','influencer','influencers','blogger','bloggers','vlogger','vloggers','fan page','fan pages','personal blog','video channel','video channels','content channel']}\r\n    ];\r\n    const group=groups.find(g=>cats.some(c=>g.categories.includes(c)));\r\n    return group&&!queries.some(q=>group.intent.some(term=>q.includes(' '+term+' ')))?group.kind:null;\r\n  }\r\n  let rejected = 0;\r\n  for (const [ordinal,original] of r.body.entries()) {\r\n    let raw=original;\r\n    if(job.source==='yelp'){\r\n      const listing=typeof raw?.directUrl==='string'&&/^https:\\/\\/(?:www\\.)?yelp\\.com\\/biz\\/[A-Za-z0-9_%.-]+(?:[?#].*)?$/.test(raw.directUrl)?raw.directUrl.split(/[?#]/)[0]:null;\r\n      if(!raw||typeof raw!=='object'||Array.isArray(raw)||raw.error||!text(raw.name)||!listing){rejected++;excluded.push({ordinal,reason:'invalid_yelp_business',raw_data:raw});continue;}\r\n      const a=raw.address&&typeof raw.address==='object'?raw.address:{};\r\n      // Retain published fields and the Yelp listing as provenance, never as the\r\n      // business website. No emails, geography or delivery readiness are inferred.\r\n      raw={...raw,id:raw.bizId||listing,url:listing,rating:raw.aggregatedRating,address:{...a,street:[a.addressLine1,a.addressLine2,a.addressLine3].filter(v=>typeof v==='string'&&v.trim()).join(', '),state:a.regionCode},observed_at:new Date().toISOString()};\r\n      if(typeof raw.website==='string'&&/^https?:\\/\\/(?:[^/]+\\.)?yelp\\.com(?:[/:?#]|$)/i.test(raw.website))raw.website=null;\r\n    }\r\n    const reasons=[];\r\n    if(job.source==='facebook_pages'){\r\n      if(!raw||typeof raw!=='object'||Array.isArray(raw)||raw.error||raw.searchType&&!['pages','pages-google'].includes(raw.searchType)){\r\n        rejected++;excluded.push({ordinal,reason:'invalid_facebook_page',raw_data:raw});continue;\r\n      }\r\n      const candidate=text(raw.pageUrl||raw.url||raw.facebookUrl,1000),match=/^https:\\/\\/(?:www\\.|m\\.|web\\.)?facebook\\.com\\/((?!search(?:[/?#]|$)|groups(?:[/?#]|$)|posts(?:[/?#]|$)|reels?(?:[/?#]|$)|watch(?:[/?#]|$)|login(?:[/?#]|$)|messages(?:[/?#]|$)|photo(?:[/?#]|$)|events(?:[/?#]|$)|marketplace(?:[/?#]|$))[A-Za-z0-9._-]+(?:\\/[A-Za-z0-9._-]+){0,2})\\/?(?:[?#].*)?$/i.exec(candidate||'');\r\n      const pageId=text(raw.pageId||raw.facebookId||raw.id,100),pageUrl=match?'https://www.facebook.com/'+match[1].replace(/\\/+$/,'')+'/':/^\\d+$/.test(pageId||'')?'https://www.facebook.com/'+pageId+'/':null;\r\n      const name=text(raw.pageName||raw.title||raw.name);\r\n      if(!pageUrl||!name){rejected++;excluded.push({ordinal,reason:'missing_facebook_page_identity',raw_data:raw});continue;}\r\n      const external=[raw.website,...(Array.isArray(raw.websites)?raw.websites:[])].filter(v=>typeof v==='string').map(v=>{\r\n        const candidate=/^https?:\\/\\//i.test(v.trim())?v.trim():'https://'+v.trim();\r\n        const parts=/^(https?):\\/\\/([a-z0-9][a-z0-9.-]*\\.[a-z0-9-]+(?::\\d{1,5})?)(\\/[^?#\\s\\\\]*)?(?:[?#].*)?$/i.exec(candidate);\r\n        if(!parts||/(?:^|\\.)(?:facebook\\.com|instagram\\.com|m\\.me)(?::\\d+)?$/i.test(parts[2]))return null;\r\n        if(/(?:^|\\.)maps\\.google\\.[a-z.]+$/i.test(parts[2])||/(?:^|\\.)maps\\.app\\.goo\\.gl$/i.test(parts[2])||/(?:^|\\.)google\\.[a-z.]+$/i.test(parts[2])&&/^\\/maps(?:\\/|$)/i.test(parts[3]||'')||/^(?:www\\.)?goo\\.gl$/i.test(parts[2])&&/^\\/maps(?:\\/|$)/i.test(parts[3]||''))return null;\r\n        return parts[1].toLowerCase()+'://'+parts[2].toLowerCase()+(parts[3]||'').replace(/\\/+$/,'');\r\n      }).find(Boolean);\r\n      const messenger=typeof raw.messenger==='string'&&/^https:\\/\\/(?:m\\.me\\/[A-Za-z0-9._-]+|(?:www\\.)?facebook\\.com\\/messages\\/t\\/[A-Za-z0-9._-]+)\\/?$/.test(raw.messenger)?raw.messenger:null;\r\n      const phone=text(raw.phone||first(raw.phones),50),email=text(raw.email||first(raw.emails))?.toLowerCase()||null;\r\n      const address=typeof raw.address==='string'?text(raw.address,1000):null;\r\n      const row={ordinal,company_name:text(raw.title||raw.name||raw.pageName),email,phone,website:external||null,address,city:text(raw.city,100),state:text(raw.state,100),zip:text(raw.postalCode,20),country:text(raw.countryCode,2),category:text(raw.category||first((Array.isArray(raw.categories)?raw.categories:[]).filter(v=>typeof v==='string'&&v.toLowerCase()!=='page')),100),source_record_id:pageId||pageUrl,raw_data:{...raw,facebook_page_url:pageUrl,messenger_url:messenger,messenger_availability:messenger?'observed_link':'unknown',automatic_messaging_eligible:false,location_verified:false,observed_at:new Date().toISOString()}};\r\n      if(settings.exclude_closed!==false&&(raw.isClosed===true||raw.permanentlyClosed===true))reasons.push('closed');\r\n      const cats=[row.category,...(Array.isArray(raw.categories)?raw.categories:[])].filter(v=>typeof v==='string').join(' ').toLowerCase();\r\n      const unrelated=unrequestedPageType([row.category,...(Array.isArray(raw.categories)?raw.categories:[])]);\r\n      row.raw_data.category_filter={version:'facebook_page_type_v1',excluded_type:unrelated,automatic_filter_enabled:settings.exclude_unrelated_page_types!==false,semantic_fit_verified:false};\r\n      if(unrelated)reasons.push('unrequested_page_type:'+unrelated);\r\n      if(settings.include_categories?.length&&!settings.include_categories.some(c=>cats.includes(c.toLowerCase())))reasons.push('category_not_included');\r\n      if(excludedCategory(row))reasons.push('category_excluded');\r\n      if(mismatchedUniversity(row))reasons.push('business_type_mismatch');\r\n      if(settings.require_contact&&!phone&&!email&&!external)reasons.push('missing_contact');\r\n      if(settings.country_code&&row.country&&row.country.toUpperCase()!==settings.country_code)reasons.push('outside_country');\r\n      if(rows.length>=(job.candidate_limit||job.max_results))reasons.push('candidate_limit');\r\n      if(reasons.length){rejected++;excluded.push({...row,reason:reasons.join(',')});}else rows.push(row);\r\n      continue;\r\n    }\r\n    if (!raw || typeof raw !== 'object' || Array.isArray(raw) || raw.error || !text(raw.title || raw.name)) { rejected++; excluded.push({ordinal,reason:'invalid_record',raw_data:raw}); continue; }\r\n    const addr = typeof raw.address === 'object' && raw.address ? raw.address : {};\r\n    let website = text(raw.website);\r\n    // n8n 1.111's Code sandbox does not expose the browser URL global.\r\n    // Normalize only ordinary HTTP(S) business URLs; do not silently discard all sites.\r\n    if (website) {\r\n      const candidate = /^https?:\\/\\//i.test(website) ? website : 'https://' + website;\r\n      const parts = /^(https?):\\/\\/([a-z0-9][a-z0-9.-]*\\.[a-z0-9-]+(?::\\d{1,5})?)(\\/[^?#\\s\\\\]*)?(?:[?#].*)?$/i.exec(candidate);\r\n      website = parts ? parts[1].toLowerCase() + '://' + parts[2].toLowerCase() + (parts[3] || '').replace(/\\/+$/, '') : null;\r\n    }\r\n    const email = text(raw.email || first(raw.emails) || raw.contactEmail)?.toLowerCase() || null;\r\n    const phone = text(raw.phone || raw.phoneNumber || first(raw.phones), 50);\r\n    const row={ordinal, company_name: text(raw.title || raw.name), email, phone, website, address: text(addr.street || (typeof raw.address === 'string' ? raw.address : null), 1000), city: text(raw.city || addr.city, 100), state: text(raw.state || addr.state, 100), zip: text(raw.postalCode || addr.postalCode, 20), country: text(raw.countryCode || addr.country || (job.source === 'yellow_pages' ? 'US' : null), 100), category: text(raw.categoryName || raw.primaryCategory || first(raw.categories), 100), source_record_id: text(raw.placeId || raw.cid || raw.id || raw.url, 500), raw_data: raw };\r\n    if(settings.exclude_closed!==false && (raw.permanentlyClosed===true || raw.temporarilyClosed===true || raw.isClosed===true)) reasons.push('closed');\r\n    if(settings.require_contact && !phone && !email && !website) reasons.push('missing_contact');\r\n    const cats=[row.category,...(Array.isArray(raw.categories)?raw.categories:[])].filter(v=>typeof v==='string').join(' ').toLowerCase();\r\n    if(settings.include_categories?.length && !settings.include_categories.some(c=>cats.includes(c.toLowerCase()))) reasons.push('category_not_included');\r\n    if(excludedCategory(row)) reasons.push('category_excluded');\r\n    if(mismatchedUniversity(row)) reasons.push('business_type_mismatch');\r\n    if(settings.country_code && row.country && row.country.toUpperCase()!==settings.country_code) reasons.push('outside_country');\r\n    if(settings.website_filter==='withWebsite'&&!website || settings.website_filter==='withoutWebsite'&&website) reasons.push('website_filter');\r\n    if(settings.center){\r\n      const lat=raw.location?.lat??raw.latitude,lon=raw.location?.lng??raw.longitude;\r\n      if(typeof lat!=='number'||typeof lon!=='number'||!Number.isFinite(lat)||!Number.isFinite(lon)||Math.abs(lat)>90||Math.abs(lon)>180) reasons.push('missing_coordinates');\r\n      else{const rad=Math.PI/180;const a=Math.sin((lat-settings.center.latitude)*rad/2)**2+Math.cos(lat*rad)*Math.cos(settings.center.latitude*rad)*Math.sin((lon-settings.center.longitude)*rad/2)**2;row.distance_km=6371*2*Math.asin(Math.sqrt(Math.min(1,a)));if(row.distance_km>settings.radius_km) reasons.push('outside_radius');}\r\n    }\r\n    // Database matching applies the NEW-business target after deduplication.\r\n    if(rows.length>=(job.candidate_limit||job.max_results)) reasons.push('candidate_limit');\r\n    if(reasons.length){rejected++;excluded.push({...row,reason:reasons.join(',')});}else rows.push(row);\r\n  }\r\n  return { job_id: job.id, org_id: job.org_id, rows, excluded, rejected, fetched: r.body.length };\r\n})();"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "name": "Save Results and Complete",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "id": "ee90cdcb715fce0bb47939e2fcb519fa",
+      "position": [
+        6000,
+        0
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT gathering_finish_v3($1,$2,$3::jsonb,$4,$5,$6::jsonb,$7,$8) AS result",
+        "options": {
+          "queryReplacement": "={{ [$json.job_id,$json.org_id,JSON.stringify($json.rows),$('Parse Status').first(0).json.actual_cost,$json.fetched,JSON.stringify($json.excluded),$('Parse Status').first(0).json.status,String($execution.id)] }}"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "name": "Format Failure",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "id": "5f1cfdf2b658ceac90b93c36c0c68d74",
+      "position": [
+        6240,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return (function formatFailure() {\n  const job = $('Prepare Actor').first(0).json;\n  const input = $input.first().json;\n  // Do not copy arbitrary HTTP error strings, URLs or response bodies into the DB.\n  let run = null;\n  try { run = $('Parse Status').first(0).json; } catch {}\n  return { job_id: job.id, org_id: job.org_id, code: run?.status && ['FAILED','ABORTED','TIMED-OUT'].includes(run.status) ? 'APIFY_' + run.status : run?.expired ? 'LOCAL_TIMEOUT' : 'GATHERING_STEP_FAILED', actual_cost: run?.actual_cost ?? null, detail: 'Inspect the n8n execution for details; a paid actor start must not be retried without checking Apify.', execution_id: String($execution.id) };\n})();"
+      }
+    },
+    {
+      "name": "Mark Failed",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "id": "d86e6047f9c039cf6ab68f04dc7017f7",
+      "position": [
+        6480,
+        0
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT gathering_worker_failed($1,$2,$3,$4,$5) AS result",
+        "options": {
+          "queryReplacement": "={{ [$json.job_id,$json.org_id,$json.code,$json.actual_cost,String($execution.id)] }}"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Scc3yxojKZkvXpOL",
+          "name": "Lead Database"
+        }
+      }
+    },
+    {
+      "id": "dc75e1bfdddef057ce7cc62ff763f6c6",
+      "name": "Validate Saved Run Ownership",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1008,
-        0
+        3240,
+        160
       ],
-      "id": "ecab5b74-0fcd-417f-8b96-0be96aa63229",
-      "name": "Process Yellow Pages Leads"
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return (function validateSavedRun(){\n const saved=$input.first().json,job=$('Prepare Actor').first(0).json;\n if(!saved||saved.id===undefined||String(saved.id)!==String(job.id))throw new Error('GATHERING_OWNERSHIP_LOST');\n return saved;\n})();"
+      },
+      "onError": "continueErrorOutput",
+      "notesInFlow": true,
+      "notes": "Require the saved-run UPDATE receipt before any poll. A stale worker must stop here; errors in Wait parameter expressions are not an ownership guard."
     }
   ],
-  "pinData": {},
   "connections": {
+    "Start Apify Actor": {
+      "main": [
+        [
+          {
+            "node": "Parse Run",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Run": {
+      "main": [
+        [
+          {
+            "node": "Save Run",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Run": {
+      "main": [
+        [
+          {
+            "node": "Validate Saved Run Ownership",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Actor Status": {
+      "main": [
+        [
+          {
+            "node": "Parse Status",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Status": {
+      "main": [
+        [
+          {
+            "node": "Heartbeat",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Heartbeat": {
+      "main": [
+        [
+          {
+            "node": "Current Worker State",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Dataset": {
+      "main": [
+        [
+          {
+            "node": "Transform Results",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transform Results": {
+      "main": [
+        [
+          {
+            "node": "Save Results and Complete",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Results and Complete": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Format Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Webhook": {
       "main": [
         [
           {
-            "node": "Validate Scraping Request",
+            "node": "Validate Job",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Validate Scraping Request": {
+    "Validate Job": {
       "main": [
         [
           {
-            "node": "Create Yellow Pages Job",
+            "node": "Valid Job?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Create Yellow Pages Job": {
+    "Valid Job?": {
       "main": [
         [
           {
-            "node": "Prepare Apify Payload",
+            "node": "Claim Job",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Invalid Job Response",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Insert Yellow Pages Leads": {
+    "Claim Job": {
       "main": [
         [
           {
-            "node": "Mark Yellow Pages Job Complete",
+            "node": "Unwrap Claim",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Mark Yellow Pages Job Complete": {
+    "Unwrap Claim": {
       "main": [
         [
           {
-            "node": "Return Success Response",
+            "node": "Claimed?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Prepare Apify Payload": {
+    "Claimed?": {
       "main": [
         [
           {
-            "node": "Start Yellow Pages Scraper",
+            "node": "Respond ACK",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Already Claimed",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Start Yellow Pages Scraper": {
+    "Respond ACK": {
       "main": [
         [
           {
-            "node": "Process Yellow Pages Leads",
+            "node": "Prepare Actor",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Process Yellow Pages Leads": {
+    "Prepare Actor": {
       "main": [
         [
           {
-            "node": "Insert Yellow Pages Leads",
+            "node": "Saved Run?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Saved Run?": {
+      "main": [
+        [
+          {
+            "node": "Parse Run",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Start Apify Actor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait Before Poll": {
+      "main": [
+        [
+          {
+            "node": "Check Actor Status",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Current Worker State": {
+      "main": [
+        [
+          {
+            "node": "Terminal?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Terminal?": {
+      "main": [
+        [
+          {
+            "node": "Get Dataset",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Expired?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Expired?": {
+      "main": [
+        [
+          {
+            "node": "Abort Expired Run",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Cancel Requested?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cancel Requested?": {
+      "main": [
+        [
+          {
+            "node": "Abort Expired Run",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait Before Poll",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Abort Expired Run": {
+      "main": [
+        [
+          {
+            "node": "Wait Before Poll",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Failure": {
+      "main": [
+        [
+          {
+            "node": "Mark Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Saved Run Ownership": {
+      "main": [
+        [
+          {
+            "node": "Wait Before Poll",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Failure",
             "type": "main",
             "index": 0
           }
@@ -248,15 +1117,16 @@
       ]
     }
   },
-  "active": true,
+  "pinData": {},
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "timezone": "UTC",
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "none",
+    "saveManualExecutions": false
   },
-  "versionId": "47e0c00d-2d66-4118-9533-8c9d33ebe563",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dca663e37726c81a3c935629cd2e11de0f4e015136ab9b3a68a64819241cd7b9"
-  },
-  "id": "RY8gsLPbZm4R3zti",
-  "tags": []
+  }
 }

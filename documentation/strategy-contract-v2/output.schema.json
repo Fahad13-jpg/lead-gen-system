@@ -1,0 +1,287 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "fit",
+    "fit_notes",
+    "angle_id",
+    "channel_plan",
+    "step1",
+    "followups",
+    "call_guidance",
+    "review_flags",
+    "personalization_level"
+  ],
+  "properties": {
+    "fit": {
+      "enum": [
+        "strong",
+        "moderate",
+        "weak",
+        "unclear",
+        "not_assessed"
+      ]
+    },
+    "fit_notes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 500
+      },
+      "maxItems": 4
+    },
+    "angle_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "maxLength": 80
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "channel_plan": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "channel",
+          "reason"
+        ],
+        "properties": {
+          "channel": {
+            "enum": [
+              "email",
+              "sms",
+              "whatsapp",
+              "linkedin",
+              "call"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 500
+          }
+        }
+      },
+      "maxItems": 5
+    },
+    "step1": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "channel",
+            "parts"
+          ],
+          "properties": {
+            "channel": {
+              "enum": [
+                "email",
+                "sms",
+                "whatsapp",
+                "linkedin",
+                "call"
+              ]
+            },
+            "parts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "type",
+                  "ref",
+                  "text"
+                ],
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "observed",
+                      "offer",
+                      "copy"
+                    ]
+                  },
+                  "ref": {
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "text": {
+                    "type": "string",
+                    "maxLength": 1000
+                  }
+                }
+              },
+              "maxItems": 10
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "followups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "channel",
+          "intent"
+        ],
+        "properties": {
+          "channel": {
+            "enum": [
+              "email",
+              "sms",
+              "whatsapp",
+              "linkedin",
+              "call"
+            ]
+          },
+          "intent": {
+            "type": "string",
+            "maxLength": 160
+          }
+        }
+      },
+      "maxItems": 4
+    },
+    "call_guidance": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "opening",
+            "permission_question",
+            "objections"
+          ],
+          "properties": {
+            "opening": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "ref",
+                "text"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "observed",
+                    "offer",
+                    "copy"
+                  ]
+                },
+                "ref": {
+                  "type": "string",
+                  "maxLength": 80
+                },
+                "text": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              }
+            },
+            "permission_question": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "ref",
+                "text"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "observed",
+                    "offer",
+                    "copy"
+                  ]
+                },
+                "ref": {
+                  "type": "string",
+                  "maxLength": 80
+                },
+                "text": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              }
+            },
+            "objections": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "response"
+                ],
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "busy",
+                      "not_interested",
+                      "unknown",
+                      "opt_out"
+                    ]
+                  },
+                  "response": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "type",
+                      "ref",
+                      "text"
+                    ],
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "observed",
+                          "offer",
+                          "copy"
+                        ]
+                      },
+                      "ref": {
+                        "type": "string",
+                        "maxLength": 80
+                      },
+                      "text": {
+                        "type": "string",
+                        "maxLength": 1000
+                      }
+                    }
+                  }
+                }
+              },
+              "maxItems": 4
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "review_flags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 80
+      },
+      "maxItems": 12
+    },
+    "personalization_level": {
+      "enum": [
+        "lead_specific",
+        "category_level"
+      ]
+    }
+  }
+}

@@ -1,0 +1,764 @@
+{
+  "lead_id": 445,
+  "name": "Islamabad Dental Clinic",
+  "evidence": "Historical stored fixtures; no fresh verification.",
+  "permissions": "Draft examples use synthetic ready WhatsApp/call gates. Actual current gates remain blocked.",
+  "fixture_expected_fit_original": "unclear",
+  "current_fixture_fit": "unclear",
+  "token_estimates": {
+    "brief": 528,
+    "brief_upper_bound": 1582,
+    "hard_cap": 2500,
+    "method": "UTF-8 byte upper bound; /3 estimate UNVERIFIED",
+    "full_request_estimate": 2200
+  },
+  "mock_usage_warning": "Reported response usage is fabricated fixture data, not measured tokens.",
+  "brief": {
+    "contract": "strategy_v2",
+    "org_id": 1,
+    "lead_id": 445,
+    "qualifier": {
+      "fit": "unclear",
+      "reason_codes": [
+        "insufficient_current_evidence"
+      ],
+      "candidate_angles": []
+    },
+    "permitted_channels": [
+      {
+        "channel": "whatsapp",
+        "reason_codes": [
+          "existing_readiness_ready"
+        ]
+      },
+      {
+        "channel": "call",
+        "reason_codes": [
+          "existing_readiness_ready"
+        ]
+      }
+    ],
+    "blocked_channels": [],
+    "campaign": {
+      "offer": "Clinic website demonstration",
+      "description": "A sample clinic website for review.",
+      "approved_benefits": [
+        {
+          "id": "b1",
+          "text": "The demonstration includes an enquiry form."
+        }
+      ],
+      "prohibited_claims": [
+        "guaranteed revenue"
+      ],
+      "cta": {
+        "text": "Would you like to review the demonstration?",
+        "url": ""
+      },
+      "tone": "professional",
+      "language": "en",
+      "sender": {
+        "name": "Demo Sender",
+        "company": "Example Studio",
+        "signature": ""
+      }
+    },
+    "facts": [],
+    "copy": {
+      "greeting": "Hello Islamabad Dental Clinic,",
+      "cta": "Would you like to review the demonstration?",
+      "sender": "Demo Sender — Example Studio",
+      "opt_out": "Reply STOP to opt out.",
+      "opening": "Hello, this is Demo Sender from Example Studio.",
+      "permission": "Is now a suitable time for a brief explanation?",
+      "busy": "Would you prefer that I leave it here?",
+      "not_interested": "Thank you for your time. I will leave it here.",
+      "unknown": "A team member can answer that; I do not want to guess.",
+      "stop": "I will stop and record your opt-out request."
+    },
+    "url_allowlist": [],
+    "limits": {
+      "email": 1200,
+      "sms": 480,
+      "whatsapp": 1500,
+      "linkedin": 500,
+      "call": 1500
+    },
+    "limitations": [
+      "Source observations are not independently verified ownership or need.",
+      "Internal notes and follow-up intents are not outgoing text."
+    ],
+    "conflicts": [],
+    "relevance": {
+      "matches": []
+    }
+  },
+  "real_gate_brief": {
+    "contract": "strategy_v2",
+    "org_id": 1,
+    "lead_id": 445,
+    "qualifier": {
+      "fit": "unclear",
+      "reason_codes": [
+        "insufficient_current_evidence"
+      ],
+      "candidate_angles": []
+    },
+    "permitted_channels": [],
+    "blocked_channels": [
+      {
+        "channel": "whatsapp",
+        "reason_codes": [
+          "phone_missing",
+          "executor_not_integrated"
+        ]
+      },
+      {
+        "channel": "call",
+        "reason_codes": [
+          "phone_missing",
+          "executor_not_integrated"
+        ]
+      }
+    ],
+    "campaign": {
+      "offer": "Clinic website demonstration",
+      "description": "A sample clinic website for review.",
+      "approved_benefits": [
+        {
+          "id": "b1",
+          "text": "The demonstration includes an enquiry form."
+        }
+      ],
+      "prohibited_claims": [
+        "guaranteed revenue"
+      ],
+      "cta": {
+        "text": "Would you like to review the demonstration?",
+        "url": ""
+      },
+      "tone": "professional",
+      "language": "en",
+      "sender": {
+        "name": "Demo Sender",
+        "company": "Example Studio",
+        "signature": ""
+      }
+    },
+    "facts": [],
+    "copy": {
+      "greeting": "Hello Islamabad Dental Clinic,",
+      "cta": "Would you like to review the demonstration?",
+      "sender": "Demo Sender — Example Studio",
+      "opt_out": "Reply STOP to opt out.",
+      "opening": "Hello, this is Demo Sender from Example Studio.",
+      "permission": "Is now a suitable time for a brief explanation?",
+      "busy": "Would you prefer that I leave it here?",
+      "not_interested": "Thank you for your time. I will leave it here.",
+      "unknown": "A team member can answer that; I do not want to guess.",
+      "stop": "I will stop and record your opt-out request."
+    },
+    "url_allowlist": [],
+    "limits": {
+      "email": 1200,
+      "sms": 480,
+      "whatsapp": 1500,
+      "linkedin": 500,
+      "call": 1500
+    },
+    "limitations": [
+      "Source observations are not independently verified ownership or need.",
+      "Internal notes and follow-up intents are not outgoing text."
+    ],
+    "conflicts": [],
+    "relevance": {
+      "matches": []
+    }
+  },
+  "real_gate_mock_plan": {
+    "version": "strategy_v2",
+    "state": "ai_completed",
+    "qualification": {
+      "version": "offer_qualifier_v1",
+      "profile": "website_presence",
+      "fit": "unclear",
+      "source_check_max_age_days": 180,
+      "reason_codes": [
+        "insufficient_current_evidence"
+      ],
+      "next_action": null,
+      "candidate_angles": [],
+      "absence_wording": null,
+      "evidence": {
+        "state": "unknown",
+        "checked": [
+          "maps_listing"
+        ],
+        "checks": [
+          {
+            "source": "maps_listing",
+            "status": "checked",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Islamabad%20Dental%20Clinic&query_place_id=ChIJFdsB6Sy_3zgRylw6vcZMKbM",
+            "observed_at": "2026-10-05T08:39:34.818Z",
+            "website_result": "unknown",
+            "rating": 3.8,
+            "reviews": 4
+          }
+        ],
+        "source_check_max_age_days": 30,
+        "company_website_recorded": false,
+        "reason_codes": [],
+        "observed_at": "2026-10-12T17:02:09.201Z",
+        "pages": [],
+        "limitations": [
+          "Bounded static observations, not independent business verification.",
+          "Strong/functional/outdated are heuristic labels, not tested usability or business need.",
+          "Off-topic detection currently recognizes construction-template headings on clinic sites only; other topics are UNVERIFIED."
+        ]
+      },
+      "limitations": [
+        "Deterministic potential fit, not confirmed need or buying intent."
+      ],
+      "execution_authorized": false
+    },
+    "generation": {
+      "method": "ai",
+      "model": "openai/gpt-oss-120b",
+      "prompt_version": "strategy_v2.2",
+      "attempts": 1,
+      "tokens": {
+        "prompt": 1800,
+        "completion": 550,
+        "total": 2350
+      },
+      "usage_complete": true,
+      "mocked": true
+    },
+    "strategy": {
+      "fit": "unclear",
+      "fit_notes": [
+        "The stored listing does not establish website absence. Ask about relevance without asserting a missing website."
+      ],
+      "angle_id": null,
+      "channel_plan": [],
+      "step1": null,
+      "followups": [],
+      "call_guidance": null,
+      "review_flags": [
+        "no_permitted_channel",
+        "thin_evidence",
+        "fit_not_established"
+      ],
+      "personalization_level": "category_level"
+    },
+    "input_hash": "2a5f7fca506ded37da11aa8f5f182817bff48cf8b97943e05c221a392aec60c1",
+    "approval_required": true,
+    "execution_authorized": false,
+    "fallback_acknowledgement_required": false,
+    "validation_errors": [],
+    "blocking_reasons": [
+      "v2_offline_only"
+    ],
+    "artifacts": {
+      "call_brief": null,
+      "whatsapp_draft": null
+    },
+    "quality_review": {
+      "flags": [
+        "fit_not_established"
+      ],
+      "observed_personalization": false,
+      "benefit_relevance": "not_established",
+      "supported_fact_ids": [],
+      "recommendation": "Clarify relevance before pursuing the offer.",
+      "confirmed_need": false
+    },
+    "content_hash": "7f048db4e4d0812fb8a03aca443791d9dd6b4c575a4017e4bd79849a47f1f23a"
+  },
+  "template_plan": {
+    "version": "strategy_v2",
+    "state": "template_completed",
+    "qualification": {
+      "version": "offer_qualifier_v1",
+      "profile": "website_presence",
+      "fit": "unclear",
+      "source_check_max_age_days": 180,
+      "reason_codes": [
+        "insufficient_current_evidence"
+      ],
+      "next_action": null,
+      "candidate_angles": [],
+      "absence_wording": null,
+      "evidence": {
+        "state": "unknown",
+        "checked": [
+          "maps_listing"
+        ],
+        "checks": [
+          {
+            "source": "maps_listing",
+            "status": "checked",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Islamabad%20Dental%20Clinic&query_place_id=ChIJFdsB6Sy_3zgRylw6vcZMKbM",
+            "observed_at": "2026-10-05T08:39:34.818Z",
+            "website_result": "unknown",
+            "rating": 3.8,
+            "reviews": 4
+          }
+        ],
+        "source_check_max_age_days": 30,
+        "company_website_recorded": false,
+        "reason_codes": [],
+        "observed_at": "2026-10-12T17:02:09.201Z",
+        "pages": [],
+        "limitations": [
+          "Bounded static observations, not independent business verification.",
+          "Strong/functional/outdated are heuristic labels, not tested usability or business need.",
+          "Off-topic detection currently recognizes construction-template headings on clinic sites only; other topics are UNVERIFIED."
+        ]
+      },
+      "limitations": [
+        "Deterministic potential fit, not confirmed need or buying intent."
+      ],
+      "execution_authorized": false
+    },
+    "generation": {
+      "method": "template",
+      "model": null,
+      "prompt_version": "strategy_v2.2",
+      "attempts": 0,
+      "tokens": {
+        "prompt": 0,
+        "completion": 0,
+        "total": 0
+      }
+    },
+    "strategy": {
+      "fit": "unclear",
+      "fit_notes": [
+        "Offer relevance is unconfirmed. Do not infer a missing website or a business need."
+      ],
+      "angle_id": null,
+      "channel_plan": [
+        {
+          "channel": "whatsapp",
+          "reason": "First permitted channel."
+        }
+      ],
+      "step1": {
+        "channel": "whatsapp",
+        "parts": [
+          {
+            "type": "copy",
+            "ref": "greeting",
+            "text": "Hello Islamabad Dental Clinic,"
+          },
+          {
+            "type": "offer",
+            "ref": "b1",
+            "text": "The demonstration includes an enquiry form."
+          },
+          {
+            "type": "copy",
+            "ref": "cta",
+            "text": "Would you like to review the demonstration?"
+          },
+          {
+            "type": "copy",
+            "ref": "sender",
+            "text": "Demo Sender — Example Studio"
+          },
+          {
+            "type": "copy",
+            "ref": "opt_out",
+            "text": "Reply STOP to opt out."
+          }
+        ]
+      },
+      "followups": [
+        {
+          "channel": "whatsapp",
+          "intent": "Ask whether the approved offer is relevant; stop on reply or opt-out."
+        }
+      ],
+      "call_guidance": {
+        "opening": {
+          "type": "copy",
+          "ref": "opening",
+          "text": "Hello, this is Demo Sender from Example Studio."
+        },
+        "permission_question": {
+          "type": "copy",
+          "ref": "permission",
+          "text": "Is now a suitable time for a brief explanation?"
+        },
+        "objections": [
+          {
+            "kind": "busy",
+            "response": {
+              "type": "copy",
+              "ref": "busy",
+              "text": "Would you prefer that I leave it here?"
+            }
+          },
+          {
+            "kind": "not_interested",
+            "response": {
+              "type": "copy",
+              "ref": "not_interested",
+              "text": "Thank you for your time. I will leave it here."
+            }
+          },
+          {
+            "kind": "unknown",
+            "response": {
+              "type": "copy",
+              "ref": "unknown",
+              "text": "A team member can answer that; I do not want to guess."
+            }
+          },
+          {
+            "kind": "opt_out",
+            "response": {
+              "type": "copy",
+              "ref": "stop",
+              "text": "I will stop and record your opt-out request."
+            }
+          }
+        ]
+      },
+      "review_flags": [
+        "thin_evidence",
+        "fit_not_established"
+      ],
+      "personalization_level": "category_level"
+    },
+    "input_hash": "cd52f578acb42f7d039a4f04cac8424d1bc7c795104748f32bc948e219ddc46b",
+    "approval_required": true,
+    "execution_authorized": false,
+    "fallback_acknowledgement_required": false,
+    "validation_errors": [],
+    "blocking_reasons": [
+      "v2_offline_only"
+    ],
+    "artifacts": {
+      "call_brief": {
+        "opening": {
+          "type": "copy",
+          "ref": "opening",
+          "text": "Hello, this is Demo Sender from Example Studio."
+        },
+        "permission_question": {
+          "type": "copy",
+          "ref": "permission",
+          "text": "Is now a suitable time for a brief explanation?"
+        },
+        "objections": [
+          {
+            "kind": "busy",
+            "response": {
+              "type": "copy",
+              "ref": "busy",
+              "text": "Would you prefer that I leave it here?"
+            }
+          },
+          {
+            "kind": "not_interested",
+            "response": {
+              "type": "copy",
+              "ref": "not_interested",
+              "text": "Thank you for your time. I will leave it here."
+            }
+          },
+          {
+            "kind": "unknown",
+            "response": {
+              "type": "copy",
+              "ref": "unknown",
+              "text": "A team member can answer that; I do not want to guess."
+            }
+          },
+          {
+            "kind": "opt_out",
+            "response": {
+              "type": "copy",
+              "ref": "stop",
+              "text": "I will stop and record your opt-out request."
+            }
+          }
+        ],
+        "approved_benefits": [
+          {
+            "id": "b1",
+            "text": "The demonstration includes an enquiry form."
+          }
+        ],
+        "objective": {
+          "text": "Would you like to review the demonstration?",
+          "url": ""
+        },
+        "stop_on": [
+          "opt_out",
+          "wrong_person",
+          "human_requested"
+        ],
+        "integration": "draft_only"
+      },
+      "whatsapp_draft": "Hello Islamabad Dental Clinic, The demonstration includes an enquiry form. Would you like to review the demonstration? Demo Sender — Example Studio Reply STOP to opt out."
+    },
+    "quality_review": {
+      "flags": [
+        "fit_not_established"
+      ],
+      "observed_personalization": false,
+      "benefit_relevance": "not_established",
+      "supported_fact_ids": [],
+      "recommendation": "Clarify relevance before pursuing the offer.",
+      "confirmed_need": false
+    },
+    "content_hash": "2b4ce2df6178d72268606dd27ad218fdca766d74a47b0159b3b793d0c9c1053c"
+  },
+  "ai_plan": {
+    "version": "strategy_v2",
+    "state": "ai_completed",
+    "qualification": {
+      "version": "offer_qualifier_v1",
+      "profile": "website_presence",
+      "fit": "unclear",
+      "source_check_max_age_days": 180,
+      "reason_codes": [
+        "insufficient_current_evidence"
+      ],
+      "next_action": null,
+      "candidate_angles": [],
+      "absence_wording": null,
+      "evidence": {
+        "state": "unknown",
+        "checked": [
+          "maps_listing"
+        ],
+        "checks": [
+          {
+            "source": "maps_listing",
+            "status": "checked",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Islamabad%20Dental%20Clinic&query_place_id=ChIJFdsB6Sy_3zgRylw6vcZMKbM",
+            "observed_at": "2026-10-05T08:39:34.818Z",
+            "website_result": "unknown",
+            "rating": 3.8,
+            "reviews": 4
+          }
+        ],
+        "source_check_max_age_days": 30,
+        "company_website_recorded": false,
+        "reason_codes": [],
+        "observed_at": "2026-10-12T17:02:09.201Z",
+        "pages": [],
+        "limitations": [
+          "Bounded static observations, not independent business verification.",
+          "Strong/functional/outdated are heuristic labels, not tested usability or business need.",
+          "Off-topic detection currently recognizes construction-template headings on clinic sites only; other topics are UNVERIFIED."
+        ]
+      },
+      "limitations": [
+        "Deterministic potential fit, not confirmed need or buying intent."
+      ],
+      "execution_authorized": false
+    },
+    "generation": {
+      "method": "ai",
+      "model": "openai/gpt-oss-120b",
+      "prompt_version": "strategy_v2.2",
+      "attempts": 1,
+      "tokens": {
+        "prompt": 1800,
+        "completion": 550,
+        "total": 2350
+      },
+      "usage_complete": true,
+      "mocked": true
+    },
+    "strategy": {
+      "fit": "unclear",
+      "fit_notes": [
+        "The stored listing does not establish website absence. Ask about relevance without asserting a missing website."
+      ],
+      "angle_id": null,
+      "channel_plan": [
+        {
+          "channel": "whatsapp",
+          "reason": "First permitted channel."
+        }
+      ],
+      "step1": {
+        "channel": "whatsapp",
+        "parts": [
+          {
+            "type": "copy",
+            "ref": "greeting",
+            "text": "Hello Islamabad Dental Clinic,"
+          },
+          {
+            "type": "offer",
+            "ref": "b1",
+            "text": "The demonstration includes an enquiry form."
+          },
+          {
+            "type": "copy",
+            "ref": "cta",
+            "text": "Would you like to review the demonstration?"
+          },
+          {
+            "type": "copy",
+            "ref": "sender",
+            "text": "Demo Sender — Example Studio"
+          },
+          {
+            "type": "copy",
+            "ref": "opt_out",
+            "text": "Reply STOP to opt out."
+          }
+        ]
+      },
+      "followups": [
+        {
+          "channel": "whatsapp",
+          "intent": "Offer one approved demonstration only if the prospect expresses interest; stop after opt-out."
+        }
+      ],
+      "call_guidance": {
+        "opening": {
+          "type": "copy",
+          "ref": "opening",
+          "text": "Hello, this is Demo Sender from Example Studio."
+        },
+        "permission_question": {
+          "type": "copy",
+          "ref": "permission",
+          "text": "Is now a suitable time for a brief explanation?"
+        },
+        "objections": [
+          {
+            "kind": "busy",
+            "response": {
+              "type": "copy",
+              "ref": "busy",
+              "text": "Would you prefer that I leave it here?"
+            }
+          },
+          {
+            "kind": "not_interested",
+            "response": {
+              "type": "copy",
+              "ref": "not_interested",
+              "text": "Thank you for your time. I will leave it here."
+            }
+          },
+          {
+            "kind": "unknown",
+            "response": {
+              "type": "copy",
+              "ref": "unknown",
+              "text": "A team member can answer that; I do not want to guess."
+            }
+          },
+          {
+            "kind": "opt_out",
+            "response": {
+              "type": "copy",
+              "ref": "stop",
+              "text": "I will stop and record your opt-out request."
+            }
+          }
+        ]
+      },
+      "review_flags": [
+        "thin_evidence",
+        "fit_not_established"
+      ],
+      "personalization_level": "category_level"
+    },
+    "input_hash": "cd52f578acb42f7d039a4f04cac8424d1bc7c795104748f32bc948e219ddc46b",
+    "approval_required": true,
+    "execution_authorized": false,
+    "fallback_acknowledgement_required": false,
+    "validation_errors": [],
+    "blocking_reasons": [
+      "v2_offline_only"
+    ],
+    "artifacts": {
+      "call_brief": {
+        "opening": {
+          "type": "copy",
+          "ref": "opening",
+          "text": "Hello, this is Demo Sender from Example Studio."
+        },
+        "permission_question": {
+          "type": "copy",
+          "ref": "permission",
+          "text": "Is now a suitable time for a brief explanation?"
+        },
+        "objections": [
+          {
+            "kind": "busy",
+            "response": {
+              "type": "copy",
+              "ref": "busy",
+              "text": "Would you prefer that I leave it here?"
+            }
+          },
+          {
+            "kind": "not_interested",
+            "response": {
+              "type": "copy",
+              "ref": "not_interested",
+              "text": "Thank you for your time. I will leave it here."
+            }
+          },
+          {
+            "kind": "unknown",
+            "response": {
+              "type": "copy",
+              "ref": "unknown",
+              "text": "A team member can answer that; I do not want to guess."
+            }
+          },
+          {
+            "kind": "opt_out",
+            "response": {
+              "type": "copy",
+              "ref": "stop",
+              "text": "I will stop and record your opt-out request."
+            }
+          }
+        ],
+        "approved_benefits": [
+          {
+            "id": "b1",
+            "text": "The demonstration includes an enquiry form."
+          }
+        ],
+        "objective": {
+          "text": "Would you like to review the demonstration?",
+          "url": ""
+        },
+        "stop_on": [
+          "opt_out",
+          "wrong_person",
+          "human_requested"
+        ],
+        "integration": "draft_only"
+      },
+      "whatsapp_draft": "Hello Islamabad Dental Clinic, The demonstration includes an enquiry form. Would you like to review the demonstration? Demo Sender — Example Studio Reply STOP to opt out."
+    },
+    "quality_review": {
+      "flags": [
+        "fit_not_established"
+      ],
+      "observed_personalization": false,
+      "benefit_relevance": "not_established",
+      "supported_fact_ids": [],
+      "recommendation": "Clarify relevance before pursuing the offer.",
+      "confirmed_need": false
+    },
+    "content_hash": "c7b65122a3ec3e8aa7bf7eacb09e8109a27a1a455a5daf01400198bd4de0cd3f"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-19T19:13:24.200Z",
+  "deployed": true,
+  "readiness": true,
+  "same_image": true,
+  "workflow_definitions_and_activation_unchanged": true,
+  "preload_loaded": true,
+  "preload_sha256": "6f7d438593f6ea8942934e7275b0843fca1aa3e3b3fbbee2f2dba37f29cb65a2",
+  "emails_sent": 0,
+  "rollback": ".local/gmail-network-deploy-20261020/docker-compose.before.yml"
+}

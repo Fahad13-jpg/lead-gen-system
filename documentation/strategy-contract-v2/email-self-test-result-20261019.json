@@ -1,0 +1,23 @@
+{
+  "checked_at": "2026-10-19T12:00:30.787Z",
+  "recipient": "mohmmadfahad53408@gmail.com",
+  "subject": "Lead management system — one-time email test",
+  "result": {
+    "state": "provider_accepted",
+    "provider_accepted": true,
+    "delivered": false,
+    "retry_allowed": false
+  },
+  "recorded": {
+    "state": "provider_accepted",
+    "attempts": "1",
+    "external_id": "1a15408dc03889b4"
+  },
+  "transport_calls": 1,
+  "scratch_database": "scratch_email_selftest_20261019",
+  "readiness": "synthetic self-test fixture only",
+  "live_campaigns_changed": false,
+  "prospects_contacted": 0,
+  "automatic_retry": false,
+  "production_quota_note": "Count this external test when approving any same-day live rollout."
+}

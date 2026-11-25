@@ -1,0 +1,26 @@
+import React,{useRef,useState}from'react';
+import{useAuth}from'../context/AuthContext';
+import{beginReconnectGmail,finishGmail,reconcileGmail}from'../api/client';
+export default function ReconnectGmail({connection:c,refresh}){
+ const{user,organization}=useAuth(),key=`lg_gmail_reconnect_${user.subject}_${organization.org_id}_${c.connection_id}`,pending=useRef(false);
+ const[record,setRecord]=useState(()=>{try{return JSON.parse(sessionStorage.getItem(key))||null;}catch{return{phase:'uncertain'};}});
+ const[confirmed,setConfirmed]=useState(false),[busy,setBusy]=useState(false),[message,setMessage]=useState('');
+ function clear(){try{sessionStorage.removeItem(key);}catch{}setRecord(null);setConfirmed(false);}
+ function uncertain(value){const next={...value,phase:'uncertain'};try{sessionStorage.setItem(key,JSON.stringify(next));}catch{}setRecord(next);}
+ async function start(){if(pending.current||record||!confirmed||c.can_reconnect!==true)return;pending.current=true;setBusy(true);setMessage('');
+  try{const r=await beginReconnectGmail({connection_id:c.connection_id,expected_version:c.version,acknowledge_reconnect:true}),url=new URL(r.authorization_url),state=url.searchParams.get('state');if(url.origin!=='https://accounts.google.com'||!/^[A-Za-z0-9_-]{43}$/.test(state||''))throw Error();const next={state,version:c.version,phase:'authorization'};sessionStorage.setItem(key,JSON.stringify(next));setRecord(next);window.location.assign(url.href);}
+  catch(e){setMessage(e.response?.data?.error==='GMAIL_CANONICAL_ORIGIN_REQUIRED'?'Open your workspace’s main address and refresh this account before authorizing Google.':'Reauthorization could not start. Refresh the account and check Google setup or any pending authorization.');refresh();pending.current=false;setBusy(false);}
+ }
+ async function finish(){if(pending.current||!record?.state||record.phase==='uncertain')return;pending.current=true;setBusy(true);setMessage('');
+  try{const r=await finishGmail(record.state);if(r.reconnected!==true||r.connection_id!==c.connection_id||r.execution_authorized!==false||r.campaign_rebind_required!==true)throw Error();clear();setMessage('Gmail reauthorization saved. Review the connection status, re-select this sender in campaigns and review new plans before sending.');refresh();}
+  catch(e){if(e.response?.data?.error==='GMAIL_CALLBACK_NOT_READY')setMessage('Google authorization is not ready or has expired. Finish the Google step, or check the saved status below.');else if(['GMAIL_RECONNECT_FORBIDDEN','GMAIL_RECONNECT_VERSION_CONFLICT','GMAIL_RECONNECT_ACCOUNT_MISMATCH','GMAIL_RECONNECT_IDENTITY_REVIEW_REQUIRED','GMAIL_CONSENT_DENIED'].includes(e.response?.data?.error)){clear();setMessage('Reauthorization was rejected. Use the same Google account, refresh its version and ask an administrator if stored identity needs review.');refresh();}else{uncertain(record);setMessage('Reauthorization result uncertain. Check the saved status before a fresh authorization. No token exchange has been retried.');}}
+  finally{pending.current=false;setBusy(false);}
+ }
+ async function recover(){if(pending.current||!record?.state)return;pending.current=true;setBusy(true);setMessage('');
+  try{const r=await reconcileGmail(record.state,{connection_id:c.connection_id});if(r.confirmed===true&&r.reconnected===true&&r.connection_id===c.connection_id&&r.execution_authorized===false){clear();setMessage('The reauthorization was saved. Review current status and reconnect campaigns before sending.');refresh();}else if(r.safe_to_restart===true){clear();setMessage('The earlier authorization is no longer running; its outcome was not confirmed. Review the account status before starting a fresh authorization.');refresh();}else setMessage('The saved result still needs checking. Do not authorize this account again yet.');}
+  catch{setMessage('Status could not be confirmed. Refresh the account and ask an administrator to reconcile it.');}
+  finally{pending.current=false;setBusy(false);}
+ }
+ if(c.can_reconnect!==true)return null;
+ return <details className="st-actions" open={Boolean(record||message)}><summary>Reconnect Gmail with Google</summary><p className="st-note">Reauthorize this same Google mailbox. Saving refreshed access preserves reply history, clears account readiness and requires campaigns to be reconnected and reviewed. A cancelled or wrong-account authorization does not replace stored access. In-progress messages cannot be recalled.</p>{message&&<p className="st-note" role="status">{message}</p>}{record?<><p className="st-note">Return from Google to finish, or check the saved result before starting again.</p>{record.phase!=='uncertain'&&<button className="live-secondary" disabled={busy} onClick={finish}>Finish Gmail reauthorization</button>}<button className="live-secondary" disabled={busy} onClick={recover}>Check reauthorization status</button></>:<><label className="st-note" style={{display:'block',marginBottom:14}}><input type="checkbox" checked={confirmed} disabled={busy} onChange={e=>setConfirmed(e.target.checked)}/> I understand campaigns must be reconnected and reviewed after reauthorization.</label><button className="live-secondary" disabled={busy||!confirmed} onClick={start}>{busy?'Opening Google…':'Reauthorize this Gmail account'}</button></>}</details>;
+}

@@ -1,0 +1,6 @@
+{
+  "enabled": true,
+  "origin": "https://app.example.com",
+  "redirect_uri": "https://app.example.com/oauth/gmail/callback",
+  "client_file": "/run/secrets/gmail-oauth-client"
+}

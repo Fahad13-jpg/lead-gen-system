@@ -1,0 +1,11 @@
+{
+  "deployed_at": "2026-10-14T13:16:31.333Z",
+  "workflow_id": "27W04lgTGdgFMWUx",
+  "preview_version": "strategy_v2",
+  "actual_n8n_preview_cases": 6,
+  "api_smoke_passed": true,
+  "ai_allowance": 0,
+  "provider_calls": 0,
+  "sent": false,
+  "migrations_applied": []
+}

@@ -1,0 +1,14 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict');
+const {reconcile}=require('../../scripts/calling/reconcile.cjs');
+function fixture(){const expected_request={override_agent_id:'agent',override_agent_version:1,from_number:'+12025550101',to_number:'+12025550102',metadata:{org_id:'1',activity_id:'123',plan_hash:'hash',dispatch_key:'key'}};
+ const row={org_id:1,activity_id:123,lease:'lease',connection_ref:'fixture',content_hash:'hash',provider_call_id:'fixture-call',expected_request};
+ const data={call_type:'phone_call',call_id:'fixture-call',call_status:'ended',agent_id:'agent',agent_version:1,from_number:expected_request.from_number,to_number:expected_request.to_number,metadata:expected_request.metadata,duration_ms:50000};
+ return {row,data};}
+test('authenticated-connection lookup saves bound facts but leaves billing pending',async()=>{const {row,data}=fixture();let query;const r=await reconcile(row,{mode:'mock',getCall:async req=>{assert.equal(req.method,'GET');assert.equal(req.org_id,1);return {status:200,data};},executeQuery:async q=>{query=q;return {saved:true};}});assert.equal(r.state,'awaiting_final_cost');assert.match(query,/outreach_call_ingest/);assert.doesNotMatch(query,/call_cost|transcript/);});
+test('missing call ID never guesses or creates another call',async()=>{const {row}=fixture();delete row.provider_call_id;const r=await reconcile(row,{mode:'mock',getCall:async()=>assert.fail('no lookup')});assert.equal(r.reason,'provider_call_id_unknown');assert.equal(r.retry_allowed,false);});
+test('wrong tenant correlation blocks lookup',async()=>{const {row}=fixture();row.org_id=2;const r=await reconcile(row,{mode:'mock',getCall:async()=>assert.fail('no lookup')});assert.equal(r.state,'blocked');});
+test('provider 404 does not mean safe to redial',async()=>{const {row}=fixture();const r=await reconcile(row,{mode:'mock',getCall:async()=>({status:404}),executeQuery:async()=>assert.fail('no write')});assert.equal(r.retry_allowed,false);assert.equal(r.reason,'provider_lookup_unverified');});
+test('mismatched provider receipt is never saved',async()=>{const {row,data}=fixture();data.agent_id='other';const r=await reconcile(row,{mode:'mock',getCall:async()=>({status:200,data}),executeQuery:async()=>assert.fail('no write')});assert.equal(r.reason,'provider_lookup_unverified');});
+test('DB timeout after lookup keeps result uncertain',async()=>{const {row,data}=fixture();const r=await reconcile(row,{mode:'mock',getCall:async()=>({status:200,data}),executeQuery:async()=>{throw Error('timeout');}});assert.equal(r.reason,'observation_commit_unknown');assert.equal(r.retry_allowed,false);});
+test('live reconciliation is unavailable until deployment',async()=>{await assert.rejects(reconcile(fixture().row,{mode:'live'}),/LIVE_RECONCILIATION/);});

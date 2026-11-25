@@ -1,0 +1,39 @@
+{
+  "cases": [
+    {
+      "case": "followup_accepted",
+      "pass": true
+    },
+    {
+      "case": "followup_timeout",
+      "pass": true
+    },
+    {
+      "case": "accepted",
+      "pass": true
+    },
+    {
+      "case": "timeout",
+      "pass": true
+    },
+    {
+      "case": "empty_receipt",
+      "pass": true
+    },
+    {
+      "case": "finish_rejected",
+      "pass": true
+    },
+    {
+      "case": "begin_denied",
+      "pass": true
+    },
+    {
+      "case": "reservation_denied",
+      "pass": true
+    }
+  ],
+  "network": "none",
+  "real_providers": false,
+  "sql": "mocked; separately scratch tested"
+}

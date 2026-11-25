@@ -1,0 +1,40 @@
+{
+  "verified_at": "2026-10-19T17:41:27.414Z",
+  "dispatch": {
+    "ready": false,
+    "reason": "suppressed_replied_or_bounced",
+    "execution_authorized": false
+  },
+  "followup": {
+    "ready": false,
+    "reason": "suppressed_replied_or_bounced",
+    "execution_authorized": false
+  },
+  "activities": [
+    {
+      "step": "1",
+      "accepted": true,
+      "reply_saved": false,
+      "stop_reason": null,
+      "stop_events": 0
+    },
+    {
+      "step": "2",
+      "accepted": true,
+      "reply_saved": true,
+      "stop_reason": "reply",
+      "stop_events": 1
+    }
+  ],
+  "thread": {
+    "same_thread": true,
+    "first": "1a15524dd7d4a4a0",
+    "second": "1a1552a320d2ec7f",
+    "thread_id": "1a15524dd7d4a4a0"
+  },
+  "limitations": [
+    "Scratch database and temporary native n8n HTTP client; production workflows remain inactive.",
+    "Intermittent ECONNRESET observed during a later read-only check; production connectivity is not proven reliable.",
+    "Earlier ambiguous test remains quarantined."
+  ]
+}

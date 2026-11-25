@@ -1,0 +1,84 @@
+'use strict';
+// Hardcoded network-isolated scratch DB. All functions/fixture writes roll back.
+const fs=require('node:fs'),cp=require('node:child_process'),assert=require('node:assert/strict');
+const container='lead_diag_pg_20261011',db='scratch_email_release_20261019';
+function docker(args,input){const r=cp.spawnSync('docker',args,{input,encoding:'utf8',timeout:90000,maxBuffer:1000000});if(r.status!==0)throw Error(String(r.stderr||r.error||'scratch failed').slice(0,4500));return r.stdout;}
+const info=JSON.parse(docker(['inspect',container]));assert(info[0].Name==='/'+container&&info[0].HostConfig.NetworkMode==='none'&&info[0].State.Running,'ISOLATED_SCRATCH_REQUIRED');
+const migration=fs.readFileSync('database/migrations/045_linkedin_manual.sql','utf8').replace(/^BEGIN;\r?$/m,'').replace(/^COMMIT;\r?$/m,'');
+const sql=`BEGIN;
+${migration}
+DO $test$
+DECLARE l record;c bigint;j bigint;pid bigint;b jsonb;cfg jsonb;who jsonb;research_data jsonb;basic jsonb;r jsonb;p jsonb;aid integer;second_id integer;bad jsonb;
+BEGIN
+ SELECT cl.org_id,cl.id INTO l FROM cleaned_leads cl JOIN organizations o ON o.id=cl.org_id WHERE o.status='active' AND enrichment_report(cl.org_id,cl.id) IS NOT NULL ORDER BY cl.id LIMIT 1;
+ ASSERT l.id IS NOT NULL,'scratch lead with report required';
+ DELETE FROM unsubscribes WHERE lower(email)=(SELECT lower(email) FROM cleaned_leads WHERE id=l.id);
+ UPDATE outreach_activities SET replied_at=NULL,bounced_at=NULL,dispatch_metadata=dispatch_metadata-'stop_reason'-'stop_events'-'followup_pause_reason' WHERE org_id=l.org_id AND lead_id=l.id;
+ who:=jsonb_build_object('kind','person','name','Fixture Owner','profile_url','https://www.linkedin.com/in/fixture-owner/','observed_at',now(),'provenance','scratch_fixture');
+ basic:=jsonb_build_object('status','complete','quality_flags','[]'::jsonb,'evidence','[]'::jsonb,'services','[]'::jsonb,'pages','[]'::jsonb,'observed_at',now(),'input_fingerprint',enrichment_fingerprint(l.org_id,l.id,'basic'));
+ INSERT INTO enrichment_profiles(org_id,lead_id,basic,basic_at) VALUES(l.org_id,l.id,basic,now()) ON CONFLICT(org_id,lead_id) DO UPDATE SET basic=excluded.basic,basic_at=excluded.basic_at;
+ research_data:=jsonb_build_object('status','complete','linkedin',jsonb_build_object('profiles',jsonb_build_array(who)),'input_fingerprint',enrichment_fingerprint(l.org_id,l.id,'research'),'observed_at',now());
+ UPDATE enrichment_profiles SET research=research_data,research_at=now() WHERE org_id=l.org_id AND lead_id=l.id;
+ cfg:=jsonb_build_object('mode','template','channels','["linkedin"]'::jsonb,'timezone','UTC','sending_window','{"start_hour":0,"end_hour":24,"weekdays":[1,2,3,4,5,6,7]}'::jsonb,'linkedin_manual','{"enabled":true,"daily_task_limit":1}'::jsonb,'sequence','[{"step":1,"channel":"linkedin","delay_days":0},{"step":2,"channel":"linkedin","delay_days":1}]'::jsonb);
+ INSERT INTO strategy_campaigns(org_id) VALUES(l.org_id) RETURNING id INTO c;
+ INSERT INTO strategy_campaign_versions(org_id,campaign_id,version,config) VALUES(l.org_id,c,1,cfg);
+ INSERT INTO strategy_jobs(org_id,campaign_id,campaign_version,lead_id,request_id) VALUES(l.org_id,c,1,l.id,'linkedin-manual-scratch-'||c) RETURNING id INTO j;
+ b:=jsonb_build_object('version','strategy_v2','state','template_completed','execution_authorized',false,'approval_required',true,'validation_errors','[]'::jsonb,'blocking_reasons','[]'::jsonb,'artifacts',jsonb_build_object('schedule',jsonb_build_object('sequence',cfg->'sequence'),'linkedin_manual',jsonb_build_object('version','linkedin_manual_v1','execution_mode','manual_only','target',who,'steps','[{"step":1,"delay_days":0,"requires_connection":true,"approval_required":true,"connection_note":"Hello, may we connect?","message":"Would you like a demo?"},{"step":2,"delay_days":1,"requires_connection":false,"approval_required":true,"message":"Is the demonstration relevant?"}]'::jsonb)));
+ INSERT INTO strategy_plans(org_id,job_id,campaign_id,campaign_version,lead_id,body,fingerprint,content_hash,expires_at) VALUES(l.org_id,j,c,1,l.id,b,strategy_context(l.org_id,c,l.id)->>'fingerprint',md5(b::text),now()+interval '7 days') RETURNING id INTO pid;
+ ASSERT outreach_linkedin_gate(l.org_id,pid,1)->>'reason'='approval_required','approval gate';
+ INSERT INTO strategy_approvals(org_id,plan_id,action,actor,content_hash) VALUES(l.org_id,pid,'approve','scratch',md5(b::text));
+ ASSERT outreach_linkedin_gate(l.org_id,pid,1)->>'allowed'='true','ready gate: '||outreach_linkedin_gate(l.org_id,pid,1)::text;
+ p:=jsonb_build_object('org_id',l.org_id,'plan_id',pid,'step',1);
+ r:=outreach_linkedin_prepare(p);ASSERT r->>'prepared'='true','prepare: '||r::text;aid:=(r->>'activity_id')::integer;
+ ASSERT outreach_linkedin_prepare(p)->>'idempotent'='true','unique plan step';
+ p:=jsonb_build_object('org_id',l.org_id,'activity_id',aid,'actor','member-a','content_hash',md5(b::text),'confirmed_by_customer',true);
+ ASSERT outreach_linkedin_event(p||'{"action":"message_sent","event_id":"early"}'::jsonb)->>'reason'='invalid_task_transition','acceptance required';
+ ASSERT outreach_linkedin_event(p||'{"action":"copy_note","event_id":"copy"}'::jsonb)->>'state'='ready','copy not sending';
+ ASSERT (SELECT sent_at IS NULL FROM outreach_activities WHERE id=aid),'copy leaves sent_at null';
+ ASSERT (SELECT dispatch_metadata->>'assignee' FROM outreach_activities WHERE id=aid)='member-a','first copy claims task';
+ INSERT INTO strategy_approvals(org_id,plan_id,action,actor,content_hash) VALUES(l.org_id,pid,'revoke','scratch',md5(b::text));
+ ASSERT outreach_linkedin_event(p||'{"action":"copy_note","event_id":"revoked"}'::jsonb)->>'reason'='approval_required','revocation blocks copy';
+ INSERT INTO strategy_approvals(org_id,plan_id,action,actor,content_hash) VALUES(l.org_id,pid,'approve','scratch',md5(b::text));
+ ASSERT outreach_linkedin_event(p||'{"action":"request_sent","event_id":"request"}'::jsonb)->>'state'='request_sent','reported request';
+ ASSERT outreach_linkedin_event(p||'{"action":"request_sent","event_id":"request"}'::jsonb)->>'idempotent'='true','event replay';
+ ASSERT outreach_linkedin_event(p||'{"action":"accepted","event_id":"request"}'::jsonb)->>'reason'='event_id_conflict','conflicting event reuse';
+ r:=outreach_linkedin_queue(jsonb_build_object('org_id',l.org_id));
+ ASSERT EXISTS(SELECT 1 FROM jsonb_array_elements(r->'items') t WHERE t->>'activity_id'=aid::text AND t->>'manual_action_due'='false'),'no send reminder before acceptance';
+ ASSERT outreach_linkedin_event(p||'{"action":"accepted","event_id":"accepted"}'::jsonb)->>'state'='accepted','reported acceptance';
+ ASSERT outreach_linkedin_event(p||'{"action":"assign","event_id":"assign-bad","assignee":"member-b"}'::jsonb)->>'reason'='verified_assignment_permission_required','assignment permissions';
+ ASSERT outreach_linkedin_event(p||'{"action":"assign","event_id":"assign","assignee":"member-b","can_manage_assignments":true}'::jsonb)->>'saved'='true','trusted verified assignment';
+ ASSERT outreach_linkedin_event(p||'{"action":"copy_message","event_id":"wrong-owner"}'::jsonb)->>'reason'='task_assigned_to_another_member','assignee binding';
+ p:=p||'{"actor":"member-b"}';
+ ASSERT outreach_linkedin_event(p||jsonb_build_object('action','snooze','event_id','snooze','snooze_until',to_char(now()+interval '1 hour','YYYY-MM-DD"T"HH24:MI:SS"Z"')))->>'saved'='true','snooze';
+ ASSERT outreach_linkedin_event(p||'{"action":"copy_message","event_id":"snoozed"}'::jsonb)->>'reason'='task_snoozed','snooze enforced';
+ -- Advance only fixture timing, never live state.
+ UPDATE outreach_activities SET dispatch_metadata=dispatch_metadata-'snooze_until' WHERE id=aid;
+ ASSERT outreach_linkedin_event(p||'{"action":"message_sent","event_id":"message"}'::jsonb)->>'state'='message_sent','reported message';
+ ASSERT (SELECT sent_at IS NOT NULL AND external_id IS NULL FROM outreach_activities WHERE id=aid),'customer report not provider receipt';
+ ASSERT outreach_linkedin_prepare(jsonb_build_object('org_id',l.org_id,'plan_id',pid,'step',2))->>'reason'='delay_not_elapsed','delay starts at confirmed message';
+ UPDATE outreach_activities SET sent_at=now()-interval '2 days' WHERE id=aid;
+ ASSERT outreach_linkedin_prepare(jsonb_build_object('org_id',l.org_id,'plan_id',pid,'step',2))->>'reason'='daily_task_limit_reached','bounded task preparation';
+ UPDATE outreach_activities SET created_at=now()-interval '2 days' WHERE id=aid;
+ r:=outreach_linkedin_prepare(jsonb_build_object('org_id',l.org_id,'plan_id',pid,'step',2));ASSERT r->>'prepared'='true','followup: '||r::text;second_id:=(r->>'activity_id')::integer;
+ ASSERT r->>'state'='accepted','followup reuses confirmed connection';
+ UPDATE outreach_activities SET dispatch_metadata=jsonb_set(dispatch_metadata,'{draft,message}','"Unapproved edit"') WHERE id=second_id;
+ ASSERT outreach_linkedin_event(p||jsonb_build_object('activity_id',second_id,'action','copy_message','event_id','tampered'))->>'reason'='task_snapshot_mismatch','task cannot replace approved text';
+ UPDATE outreach_activities SET dispatch_metadata=jsonb_set(dispatch_metadata,'{draft}',b->'artifacts'->'linkedin_manual'->'steps'->1) WHERE id=second_id;
+ ASSERT outreach_linkedin_event(p||jsonb_build_object('org_id',l.org_id+1000,'action','reply','event_id','cross-org'))->>'reason'='task_or_content_mismatch','cross org';
+ UPDATE strategy_plans SET expires_at=now()-interval '1 second' WHERE id=pid;
+ ASSERT outreach_linkedin_event(p||jsonb_build_object('activity_id',second_id,'action','copy_message','event_id','expired'))->>'reason'='stale_plan','stale actions blocked';
+ ASSERT outreach_linkedin_event(p||jsonb_build_object('activity_id',second_id,'action','skip','event_id','close-expired'))->>'state'='skipped','expired task can be closed';
+ ASSERT outreach_linkedin_event(p||jsonb_build_object('activity_id',second_id,'action','not_interested','event_id','not-interested'))->>'state'='not_interested','customer refusal recorded';
+ ASSERT (SELECT replied_at IS NOT NULL FROM outreach_activities WHERE id=second_id),'refusal stops existing reply-aware channels';
+ ASSERT outreach_linkedin_event(p||'{"action":"opt_out","event_id":"late-stop"}'::jsonb)->>'state'='opt_out','stop survives expiry';
+ ASSERT EXISTS(SELECT 1 FROM outreach_activities WHERE id=aid AND dispatch_metadata->>'stop_reason'='opt_out'),'durable cross-channel stop';
+ ASSERT outreach_linkedin_event(p||'{"action":"reply","event_id":"weaken"}'::jsonb)->>'reason'='already_opted_out','cannot weaken optout';
+ FOR bad IN SELECT value FROM jsonb_array_elements('[null,"text",{},[]]') LOOP
+  ASSERT outreach_linkedin_event(bad)->>'saved'='false','malformed event';
+  ASSERT outreach_linkedin_prepare(bad)->>'prepared'='false','malformed prepare';
+  ASSERT outreach_linkedin_queue(bad)->'items'='[]'::jsonb,'malformed queue';
+ END LOOP;
+END $test$;
+ROLLBACK;
+SELECT count(*) FROM pg_proc WHERE proname LIKE 'outreach_linkedin_%';`;
+const result=docker(['exec','-i',container,'psql','-XAt','-v','ON_ERROR_STOP=1','-U','n8n_user','-d',db],sql);assert(result.trim().endsWith('0'),'ROLLBACK_VERIFICATION_FAILED');console.log(JSON.stringify({database:db,result:'passed',rolled_back:true,live_changed:false,provider_requests:0}));

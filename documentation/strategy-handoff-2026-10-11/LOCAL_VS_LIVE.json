@@ -1,0 +1,16 @@
+{
+  "connections_identical": true,
+  "changed_nodes": [
+    "Prepare Strategy",
+    "Validate and Assemble Draft",
+    "campaign Validate",
+    "request Validate",
+    "batch Validate",
+    "approval Validate",
+    "report Validate",
+    "preview Validate",
+    "Build Preview"
+  ],
+  "local_required_evidence": true,
+  "live_required_evidence": false
+}

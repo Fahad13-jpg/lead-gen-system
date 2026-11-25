@@ -1,0 +1,856 @@
+{
+  "lead_id": 449,
+  "name": "Zia Dental Consultants",
+  "evidence": "Historical stored fixtures; no fresh verification.",
+  "permissions": "Draft examples use synthetic ready WhatsApp/call gates. Actual current gates remain blocked.",
+  "fixture_expected_fit_original": "weak",
+  "current_fixture_fit": "weak",
+  "token_estimates": {
+    "brief": 822,
+    "brief_upper_bound": 2464,
+    "hard_cap": 2500,
+    "method": "UTF-8 byte upper bound; /3 estimate UNVERIFIED",
+    "full_request_estimate": 2494
+  },
+  "mock_usage_warning": "Reported response usage is fabricated fixture data, not measured tokens.",
+  "brief": {
+    "contract": "strategy_v2",
+    "org_id": 1,
+    "lead_id": 449,
+    "qualifier": {
+      "fit": "weak",
+      "reason_codes": [
+        "established_inquiry_presence"
+      ],
+      "candidate_angles": []
+    },
+    "permitted_channels": [
+      {
+        "channel": "whatsapp",
+        "reason_codes": [
+          "existing_readiness_ready"
+        ]
+      },
+      {
+        "channel": "call",
+        "reason_codes": [
+          "existing_readiness_ready"
+        ]
+      }
+    ],
+    "blocked_channels": [],
+    "campaign": {
+      "offer": "Clinic website demonstration",
+      "description": "A sample clinic website for review.",
+      "approved_benefits": [
+        {
+          "id": "b1",
+          "text": "The demonstration includes an enquiry form."
+        }
+      ],
+      "prohibited_claims": [
+        "guaranteed revenue"
+      ],
+      "cta": {
+        "text": "Would you like to review the demonstration?",
+        "url": ""
+      },
+      "tone": "professional",
+      "language": "en",
+      "sender": {
+        "name": "Demo Sender",
+        "company": "Example Studio",
+        "signature": ""
+      }
+    },
+    "facts": [
+      {
+        "id": "f1",
+        "source": "https://ziadentalconsultants.me/",
+        "age_days": 6,
+        "polarity": "present",
+        "data": {
+          "label": "UNTRUSTED_WEBSITE_DATA",
+          "text": "Orthodontics & braces"
+        },
+        "outgoing_text": "Your website lists: “Orthodontics & braces”."
+      },
+      {
+        "id": "f2",
+        "source": "https://ziadentalconsultants.me/",
+        "age_days": 6,
+        "polarity": "present",
+        "data": {
+          "label": "UNTRUSTED_WEBSITE_DATA",
+          "text": "Clear aligners"
+        },
+        "outgoing_text": "Your website lists: “Clear aligners”."
+      },
+      {
+        "id": "f3",
+        "source": "https://ziadentalconsultants.me/",
+        "age_days": 6,
+        "polarity": "present",
+        "data": {
+          "label": "UNTRUSTED_WEBSITE_DATA",
+          "text": "Cosmetic dentistry"
+        },
+        "outgoing_text": "Your website lists: “Cosmetic dentistry”."
+      },
+      {
+        "id": "f4",
+        "source": "https://ziadentalconsultants.me/",
+        "age_days": 6,
+        "polarity": "present",
+        "data": {
+          "label": "UNTRUSTED_WEBSITE_DATA",
+          "text": "Dental implants"
+        },
+        "outgoing_text": "Your website lists: “Dental implants”."
+      }
+    ],
+    "copy": {
+      "greeting": "Hello Zia Dental Consultants,",
+      "cta": "Would you like to review the demonstration?",
+      "sender": "Demo Sender — Example Studio",
+      "opt_out": "Reply STOP to opt out.",
+      "opening": "Hello, this is Demo Sender from Example Studio.",
+      "permission": "Is now a suitable time for a brief explanation?",
+      "busy": "Would you prefer that I leave it here?",
+      "not_interested": "Thank you for your time. I will leave it here.",
+      "unknown": "A team member can answer that; I do not want to guess.",
+      "stop": "I will stop and record your opt-out request."
+    },
+    "url_allowlist": [],
+    "limits": {
+      "email": 1200,
+      "sms": 480,
+      "whatsapp": 1500,
+      "linkedin": 500,
+      "call": 1500
+    },
+    "limitations": [
+      "Source observations are not independently verified ownership or need.",
+      "Internal notes and follow-up intents are not outgoing text."
+    ],
+    "conflicts": [],
+    "relevance": {
+      "matches": []
+    }
+  },
+  "real_gate_brief": {
+    "contract": "strategy_v2",
+    "org_id": 1,
+    "lead_id": 449,
+    "qualifier": {
+      "fit": "weak",
+      "reason_codes": [
+        "established_inquiry_presence"
+      ],
+      "candidate_angles": []
+    },
+    "permitted_channels": [],
+    "blocked_channels": [
+      {
+        "channel": "whatsapp",
+        "reason_codes": [
+          "phone_missing",
+          "executor_not_integrated"
+        ]
+      },
+      {
+        "channel": "call",
+        "reason_codes": [
+          "phone_missing",
+          "executor_not_integrated"
+        ]
+      }
+    ],
+    "campaign": {
+      "offer": "Clinic website demonstration",
+      "description": "A sample clinic website for review.",
+      "approved_benefits": [
+        {
+          "id": "b1",
+          "text": "The demonstration includes an enquiry form."
+        }
+      ],
+      "prohibited_claims": [
+        "guaranteed revenue"
+      ],
+      "cta": {
+        "text": "Would you like to review the demonstration?",
+        "url": ""
+      },
+      "tone": "professional",
+      "language": "en",
+      "sender": {
+        "name": "Demo Sender",
+        "company": "Example Studio",
+        "signature": ""
+      }
+    },
+    "facts": [
+      {
+        "id": "f1",
+        "source": "https://ziadentalconsultants.me/",
+        "age_days": 6,
+        "polarity": "present",
+        "data": {
+          "label": "UNTRUSTED_WEBSITE_DATA",
+          "text": "Orthodontics & braces"
+        },
+        "outgoing_text": "Your website lists: “Orthodontics & braces”."
+      },
+      {
+        "id": "f2",
+        "source": "https://ziadentalconsultants.me/",
+        "age_days": 6,
+        "polarity": "present",
+        "data": {
+          "label": "UNTRUSTED_WEBSITE_DATA",
+          "text": "Clear aligners"
+        },
+        "outgoing_text": "Your website lists: “Clear aligners”."
+      },
+      {
+        "id": "f3",
+        "source": "https://ziadentalconsultants.me/",
+        "age_days": 6,
+        "polarity": "present",
+        "data": {
+          "label": "UNTRUSTED_WEBSITE_DATA",
+          "text": "Cosmetic dentistry"
+        },
+        "outgoing_text": "Your website lists: “Cosmetic dentistry”."
+      },
+      {
+        "id": "f4",
+        "source": "https://ziadentalconsultants.me/",
+        "age_days": 6,
+        "polarity": "present",
+        "data": {
+          "label": "UNTRUSTED_WEBSITE_DATA",
+          "text": "Dental implants"
+        },
+        "outgoing_text": "Your website lists: “Dental implants”."
+      }
+    ],
+    "copy": {
+      "greeting": "Hello Zia Dental Consultants,",
+      "cta": "Would you like to review the demonstration?",
+      "sender": "Demo Sender — Example Studio",
+      "opt_out": "Reply STOP to opt out.",
+      "opening": "Hello, this is Demo Sender from Example Studio.",
+      "permission": "Is now a suitable time for a brief explanation?",
+      "busy": "Would you prefer that I leave it here?",
+      "not_interested": "Thank you for your time. I will leave it here.",
+      "unknown": "A team member can answer that; I do not want to guess.",
+      "stop": "I will stop and record your opt-out request."
+    },
+    "url_allowlist": [],
+    "limits": {
+      "email": 1200,
+      "sms": 480,
+      "whatsapp": 1500,
+      "linkedin": 500,
+      "call": 1500
+    },
+    "limitations": [
+      "Source observations are not independently verified ownership or need.",
+      "Internal notes and follow-up intents are not outgoing text."
+    ],
+    "conflicts": [],
+    "relevance": {
+      "matches": []
+    }
+  },
+  "real_gate_mock_plan": {
+    "version": "strategy_v2",
+    "state": "ai_completed",
+    "qualification": {
+      "version": "offer_qualifier_v1",
+      "profile": "website_presence",
+      "fit": "weak",
+      "source_check_max_age_days": 180,
+      "reason_codes": [
+        "established_inquiry_presence"
+      ],
+      "next_action": null,
+      "candidate_angles": [],
+      "absence_wording": null,
+      "evidence": {
+        "state": "strong",
+        "checked": [
+          "maps_listing",
+          "site_fetch"
+        ],
+        "checks": [
+          {
+            "source": "maps_listing",
+            "status": "checked",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Zia%20Dental%20Consultants&query_place_id=ChIJX6DJN4a_3zgRLHPAx0ICgC4",
+            "observed_at": "2026-10-05T08:39:34.818Z",
+            "website_result": "present",
+            "rating": 4.4,
+            "reviews": 19
+          }
+        ],
+        "source_check_max_age_days": 30,
+        "company_website_recorded": true,
+        "reason_codes": [],
+        "observed_at": "2026-10-12T17:02:09.206Z",
+        "pages": [
+          "https://ziadentalconsultants.me/",
+          "https://ziadentalconsultants.me/contact/",
+          "https://ziadentalconsultants.me/about/"
+        ],
+        "limitations": [
+          "Bounded static observations, not independent business verification.",
+          "Strong/functional/outdated are heuristic labels, not tested usability or business need.",
+          "Off-topic detection currently recognizes construction-template headings on clinic sites only; other topics are UNVERIFIED."
+        ]
+      },
+      "limitations": [
+        "Deterministic potential fit, not confirmed need or buying intent."
+      ],
+      "execution_authorized": false
+    },
+    "generation": {
+      "method": "ai",
+      "model": "openai/gpt-oss-120b",
+      "prompt_version": "strategy_v2.2",
+      "attempts": 1,
+      "tokens": {
+        "prompt": 1800,
+        "completion": 550,
+        "total": 2350
+      },
+      "usage_complete": true,
+      "mocked": true
+    },
+    "strategy": {
+      "fit": "weak",
+      "fit_notes": [
+        "Existing site evidence supports a weak website offer fit; avoid asserting a need to replace it."
+      ],
+      "angle_id": null,
+      "channel_plan": [],
+      "step1": null,
+      "followups": [],
+      "call_guidance": null,
+      "review_flags": [
+        "no_permitted_channel",
+        "weak_offer_fit"
+      ],
+      "personalization_level": "category_level"
+    },
+    "input_hash": "55b3cba52a4a9fbad5cadb3f447513a62be625370e543c30b269217655e4642a",
+    "approval_required": true,
+    "execution_authorized": false,
+    "fallback_acknowledgement_required": false,
+    "validation_errors": [],
+    "blocking_reasons": [
+      "v2_offline_only"
+    ],
+    "artifacts": {
+      "call_brief": null,
+      "whatsapp_draft": null
+    },
+    "quality_review": {
+      "flags": [
+        "weak_offer_fit"
+      ],
+      "observed_personalization": false,
+      "benefit_relevance": "not_established",
+      "supported_fact_ids": [],
+      "recommendation": "Review whether to pursue this lead before follow-up.",
+      "confirmed_need": false
+    },
+    "content_hash": "67415cd37e90e12cbf37c8a2ef94653c35e4d46a2f46435bfba6dd41b4013468"
+  },
+  "template_plan": {
+    "version": "strategy_v2",
+    "state": "template_completed",
+    "qualification": {
+      "version": "offer_qualifier_v1",
+      "profile": "website_presence",
+      "fit": "weak",
+      "source_check_max_age_days": 180,
+      "reason_codes": [
+        "established_inquiry_presence"
+      ],
+      "next_action": null,
+      "candidate_angles": [],
+      "absence_wording": null,
+      "evidence": {
+        "state": "strong",
+        "checked": [
+          "maps_listing",
+          "site_fetch"
+        ],
+        "checks": [
+          {
+            "source": "maps_listing",
+            "status": "checked",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Zia%20Dental%20Consultants&query_place_id=ChIJX6DJN4a_3zgRLHPAx0ICgC4",
+            "observed_at": "2026-10-05T08:39:34.818Z",
+            "website_result": "present",
+            "rating": 4.4,
+            "reviews": 19
+          }
+        ],
+        "source_check_max_age_days": 30,
+        "company_website_recorded": true,
+        "reason_codes": [],
+        "observed_at": "2026-10-12T17:02:09.206Z",
+        "pages": [
+          "https://ziadentalconsultants.me/",
+          "https://ziadentalconsultants.me/contact/",
+          "https://ziadentalconsultants.me/about/"
+        ],
+        "limitations": [
+          "Bounded static observations, not independent business verification.",
+          "Strong/functional/outdated are heuristic labels, not tested usability or business need.",
+          "Off-topic detection currently recognizes construction-template headings on clinic sites only; other topics are UNVERIFIED."
+        ]
+      },
+      "limitations": [
+        "Deterministic potential fit, not confirmed need or buying intent."
+      ],
+      "execution_authorized": false
+    },
+    "generation": {
+      "method": "template",
+      "model": null,
+      "prompt_version": "strategy_v2.2",
+      "attempts": 0,
+      "tokens": {
+        "prompt": 0,
+        "completion": 0,
+        "total": 0
+      }
+    },
+    "strategy": {
+      "fit": "weak",
+      "fit_notes": [
+        "Current evidence indicates weak fit. Review whether this offer is relevant before pursuing it."
+      ],
+      "angle_id": null,
+      "channel_plan": [
+        {
+          "channel": "whatsapp",
+          "reason": "First permitted channel."
+        }
+      ],
+      "step1": {
+        "channel": "whatsapp",
+        "parts": [
+          {
+            "type": "copy",
+            "ref": "greeting",
+            "text": "Hello Zia Dental Consultants,"
+          },
+          {
+            "type": "offer",
+            "ref": "b1",
+            "text": "The demonstration includes an enquiry form."
+          },
+          {
+            "type": "copy",
+            "ref": "cta",
+            "text": "Would you like to review the demonstration?"
+          },
+          {
+            "type": "copy",
+            "ref": "sender",
+            "text": "Demo Sender — Example Studio"
+          },
+          {
+            "type": "copy",
+            "ref": "opt_out",
+            "text": "Reply STOP to opt out."
+          }
+        ]
+      },
+      "followups": [],
+      "call_guidance": {
+        "opening": {
+          "type": "copy",
+          "ref": "opening",
+          "text": "Hello, this is Demo Sender from Example Studio."
+        },
+        "permission_question": {
+          "type": "copy",
+          "ref": "permission",
+          "text": "Is now a suitable time for a brief explanation?"
+        },
+        "objections": [
+          {
+            "kind": "busy",
+            "response": {
+              "type": "copy",
+              "ref": "busy",
+              "text": "Would you prefer that I leave it here?"
+            }
+          },
+          {
+            "kind": "not_interested",
+            "response": {
+              "type": "copy",
+              "ref": "not_interested",
+              "text": "Thank you for your time. I will leave it here."
+            }
+          },
+          {
+            "kind": "unknown",
+            "response": {
+              "type": "copy",
+              "ref": "unknown",
+              "text": "A team member can answer that; I do not want to guess."
+            }
+          },
+          {
+            "kind": "opt_out",
+            "response": {
+              "type": "copy",
+              "ref": "stop",
+              "text": "I will stop and record your opt-out request."
+            }
+          }
+        ]
+      },
+      "review_flags": [
+        "weak_offer_fit"
+      ],
+      "personalization_level": "category_level"
+    },
+    "input_hash": "497986adc44f4c1f865a6fd8e168a3e866c539a78f2c8e60e32a1f8b6119a361",
+    "approval_required": true,
+    "execution_authorized": false,
+    "fallback_acknowledgement_required": false,
+    "validation_errors": [],
+    "blocking_reasons": [
+      "v2_offline_only"
+    ],
+    "artifacts": {
+      "call_brief": {
+        "opening": {
+          "type": "copy",
+          "ref": "opening",
+          "text": "Hello, this is Demo Sender from Example Studio."
+        },
+        "permission_question": {
+          "type": "copy",
+          "ref": "permission",
+          "text": "Is now a suitable time for a brief explanation?"
+        },
+        "objections": [
+          {
+            "kind": "busy",
+            "response": {
+              "type": "copy",
+              "ref": "busy",
+              "text": "Would you prefer that I leave it here?"
+            }
+          },
+          {
+            "kind": "not_interested",
+            "response": {
+              "type": "copy",
+              "ref": "not_interested",
+              "text": "Thank you for your time. I will leave it here."
+            }
+          },
+          {
+            "kind": "unknown",
+            "response": {
+              "type": "copy",
+              "ref": "unknown",
+              "text": "A team member can answer that; I do not want to guess."
+            }
+          },
+          {
+            "kind": "opt_out",
+            "response": {
+              "type": "copy",
+              "ref": "stop",
+              "text": "I will stop and record your opt-out request."
+            }
+          }
+        ],
+        "approved_benefits": [
+          {
+            "id": "b1",
+            "text": "The demonstration includes an enquiry form."
+          }
+        ],
+        "objective": {
+          "text": "Would you like to review the demonstration?",
+          "url": ""
+        },
+        "stop_on": [
+          "opt_out",
+          "wrong_person",
+          "human_requested"
+        ],
+        "integration": "draft_only"
+      },
+      "whatsapp_draft": "Hello Zia Dental Consultants, The demonstration includes an enquiry form. Would you like to review the demonstration? Demo Sender — Example Studio Reply STOP to opt out."
+    },
+    "quality_review": {
+      "flags": [
+        "weak_offer_fit"
+      ],
+      "observed_personalization": false,
+      "benefit_relevance": "not_established",
+      "supported_fact_ids": [],
+      "recommendation": "Review whether to pursue this lead before follow-up.",
+      "confirmed_need": false
+    },
+    "content_hash": "25a9cc179d628c00fe5669adfd8de248b37cee9b1cde91ea4c5751d92830d3d9"
+  },
+  "ai_plan": {
+    "version": "strategy_v2",
+    "state": "ai_completed",
+    "qualification": {
+      "version": "offer_qualifier_v1",
+      "profile": "website_presence",
+      "fit": "weak",
+      "source_check_max_age_days": 180,
+      "reason_codes": [
+        "established_inquiry_presence"
+      ],
+      "next_action": null,
+      "candidate_angles": [],
+      "absence_wording": null,
+      "evidence": {
+        "state": "strong",
+        "checked": [
+          "maps_listing",
+          "site_fetch"
+        ],
+        "checks": [
+          {
+            "source": "maps_listing",
+            "status": "checked",
+            "source_url": "https://www.google.com/maps/search/?api=1&query=Zia%20Dental%20Consultants&query_place_id=ChIJX6DJN4a_3zgRLHPAx0ICgC4",
+            "observed_at": "2026-10-05T08:39:34.818Z",
+            "website_result": "present",
+            "rating": 4.4,
+            "reviews": 19
+          }
+        ],
+        "source_check_max_age_days": 30,
+        "company_website_recorded": true,
+        "reason_codes": [],
+        "observed_at": "2026-10-12T17:02:09.206Z",
+        "pages": [
+          "https://ziadentalconsultants.me/",
+          "https://ziadentalconsultants.me/contact/",
+          "https://ziadentalconsultants.me/about/"
+        ],
+        "limitations": [
+          "Bounded static observations, not independent business verification.",
+          "Strong/functional/outdated are heuristic labels, not tested usability or business need.",
+          "Off-topic detection currently recognizes construction-template headings on clinic sites only; other topics are UNVERIFIED."
+        ]
+      },
+      "limitations": [
+        "Deterministic potential fit, not confirmed need or buying intent."
+      ],
+      "execution_authorized": false
+    },
+    "generation": {
+      "method": "ai",
+      "model": "openai/gpt-oss-120b",
+      "prompt_version": "strategy_v2.2",
+      "attempts": 1,
+      "tokens": {
+        "prompt": 1800,
+        "completion": 550,
+        "total": 2350
+      },
+      "usage_complete": true,
+      "mocked": true
+    },
+    "strategy": {
+      "fit": "weak",
+      "fit_notes": [
+        "Existing site evidence supports a weak website offer fit; avoid asserting a need to replace it."
+      ],
+      "angle_id": null,
+      "channel_plan": [
+        {
+          "channel": "whatsapp",
+          "reason": "First permitted channel."
+        }
+      ],
+      "step1": {
+        "channel": "whatsapp",
+        "parts": [
+          {
+            "type": "copy",
+            "ref": "greeting",
+            "text": "Hello Zia Dental Consultants,"
+          },
+          {
+            "type": "offer",
+            "ref": "b1",
+            "text": "The demonstration includes an enquiry form."
+          },
+          {
+            "type": "copy",
+            "ref": "cta",
+            "text": "Would you like to review the demonstration?"
+          },
+          {
+            "type": "copy",
+            "ref": "sender",
+            "text": "Demo Sender — Example Studio"
+          },
+          {
+            "type": "copy",
+            "ref": "opt_out",
+            "text": "Reply STOP to opt out."
+          }
+        ]
+      },
+      "followups": [],
+      "call_guidance": {
+        "opening": {
+          "type": "copy",
+          "ref": "opening",
+          "text": "Hello, this is Demo Sender from Example Studio."
+        },
+        "permission_question": {
+          "type": "copy",
+          "ref": "permission",
+          "text": "Is now a suitable time for a brief explanation?"
+        },
+        "objections": [
+          {
+            "kind": "busy",
+            "response": {
+              "type": "copy",
+              "ref": "busy",
+              "text": "Would you prefer that I leave it here?"
+            }
+          },
+          {
+            "kind": "not_interested",
+            "response": {
+              "type": "copy",
+              "ref": "not_interested",
+              "text": "Thank you for your time. I will leave it here."
+            }
+          },
+          {
+            "kind": "unknown",
+            "response": {
+              "type": "copy",
+              "ref": "unknown",
+              "text": "A team member can answer that; I do not want to guess."
+            }
+          },
+          {
+            "kind": "opt_out",
+            "response": {
+              "type": "copy",
+              "ref": "stop",
+              "text": "I will stop and record your opt-out request."
+            }
+          }
+        ]
+      },
+      "review_flags": [
+        "weak_offer_fit"
+      ],
+      "personalization_level": "category_level"
+    },
+    "input_hash": "497986adc44f4c1f865a6fd8e168a3e866c539a78f2c8e60e32a1f8b6119a361",
+    "approval_required": true,
+    "execution_authorized": false,
+    "fallback_acknowledgement_required": false,
+    "validation_errors": [],
+    "blocking_reasons": [
+      "v2_offline_only"
+    ],
+    "artifacts": {
+      "call_brief": {
+        "opening": {
+          "type": "copy",
+          "ref": "opening",
+          "text": "Hello, this is Demo Sender from Example Studio."
+        },
+        "permission_question": {
+          "type": "copy",
+          "ref": "permission",
+          "text": "Is now a suitable time for a brief explanation?"
+        },
+        "objections": [
+          {
+            "kind": "busy",
+            "response": {
+              "type": "copy",
+              "ref": "busy",
+              "text": "Would you prefer that I leave it here?"
+            }
+          },
+          {
+            "kind": "not_interested",
+            "response": {
+              "type": "copy",
+              "ref": "not_interested",
+              "text": "Thank you for your time. I will leave it here."
+            }
+          },
+          {
+            "kind": "unknown",
+            "response": {
+              "type": "copy",
+              "ref": "unknown",
+              "text": "A team member can answer that; I do not want to guess."
+            }
+          },
+          {
+            "kind": "opt_out",
+            "response": {
+              "type": "copy",
+              "ref": "stop",
+              "text": "I will stop and record your opt-out request."
+            }
+          }
+        ],
+        "approved_benefits": [
+          {
+            "id": "b1",
+            "text": "The demonstration includes an enquiry form."
+          }
+        ],
+        "objective": {
+          "text": "Would you like to review the demonstration?",
+          "url": ""
+        },
+        "stop_on": [
+          "opt_out",
+          "wrong_person",
+          "human_requested"
+        ],
+        "integration": "draft_only"
+      },
+      "whatsapp_draft": "Hello Zia Dental Consultants, The demonstration includes an enquiry form. Would you like to review the demonstration? Demo Sender — Example Studio Reply STOP to opt out."
+    },
+    "quality_review": {
+      "flags": [
+        "weak_offer_fit"
+      ],
+      "observed_personalization": false,
+      "benefit_relevance": "not_established",
+      "supported_fact_ids": [],
+      "recommendation": "Review whether to pursue this lead before follow-up.",
+      "confirmed_need": false
+    },
+    "content_hash": "2796f5c9777b397dcc0402677c1ac5bf9db2b8564afe7712fa65c6ab679d2d43"
+  }
+}

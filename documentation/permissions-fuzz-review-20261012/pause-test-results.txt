@@ -1,0 +1,10 @@
+BEGIN
+SET
+UPDATE 1
+DO
+UPDATE 1
+DO
+PASS global pause blocks basic and research; explicit basic-only claim leaves research unchanged
+ROLLBACK
+PASS actual LinkedIn advance with disabled-controls mock: zero provider calls.
+SQL fixtures rolled back. No workflow activation/import tested.

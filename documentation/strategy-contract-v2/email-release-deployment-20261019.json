@@ -1,0 +1,40 @@
+{
+  "started_at": "2026-10-19T02:50:26.381Z",
+  "migrations": [
+    "database/migrations/021_email_sending_window.sql",
+    "database/migrations/022_followup_readiness.sql",
+    "database/migrations/023_email_sequence_dispatch.sql",
+    "database/migrations/024_outreach_review_events.sql",
+    "database/migrations/025_gmail_reply_scan.sql",
+    "database/migrations/026_mailbox_capacity.sql",
+    "database/migrations/027_email_safe_deferral.sql",
+    "database/migrations/028_email_contact_gate.sql",
+    "database/migrations/029_delivery_scan_checkpoint.sql",
+    "database/migrations/030_delivery_scan_recovery.sql"
+  ],
+  "imports": [
+    {
+      "id": "gTjsUEP8VLlxKfWf",
+      "active": false
+    },
+    {
+      "id": "TrgeZrs4ILZnrXuJ",
+      "active": false
+    }
+  ],
+  "active": false,
+  "sends": 0,
+  "completed_at": "2026-10-19T02:52:57.049Z",
+  "verified": {
+    "step_begin_denied": true,
+    "reply_scan_denied": true,
+    "recovery_denied": true,
+    "runtime_grants": true
+  },
+  "preserved_snapshot": true,
+  "transport_blocked": true,
+  "entry_gates_closed": true,
+  "provider_calls": 0,
+  "container_restarts": 0,
+  "gmail_account_verified": false
+}

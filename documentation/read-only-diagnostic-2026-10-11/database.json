@@ -1,0 +1,1955 @@
+{
+  "at": "2026-10-11T14:04:53.400Z",
+  "leads": [
+    {
+      "id": 167,
+      "org_id": 1,
+      "website": "https://fiazdentalcare.com/",
+      "basic": {
+        "pages": [
+          {
+            "url": "https://fiazdentalcare.com/",
+            "status": 200,
+            "truncated": false,
+            "usable_html": true
+          },
+          {
+            "url": "https://fiazdentalcare.com/index.php/contact-us/",
+            "status": 200,
+            "truncated": false,
+            "usable_html": true
+          },
+          {
+            "url": "https://fiazdentalcare.com/index.php/about-us/",
+            "status": 200,
+            "truncated": false,
+            "usable_html": true
+          }
+        ],
+        "status": "complete",
+        "version": "enrichment_v1",
+        "business": {
+          "city": "Lahore",
+          "name": "Fiaz Dental Care",
+          "domain": "fiazdentalcare.com",
+          "country": "PK",
+          "website": "https://fiazdentalcare.com/",
+          "category": "Dental clinic",
+          "timezone": null
+        },
+        "coverage": "up_to_three_pages",
+        "evidence": [
+          {
+            "type": "technology_marker",
+            "value": "WordPress",
+            "source_url": "https://fiazdentalcare.com/"
+          },
+          {
+            "type": "contact_form",
+            "value": "https://fiazdentalcare.com/index.php/contact-us/",
+            "source_url": "https://fiazdentalcare.com/index.php/contact-us/",
+            "observed_at": "2026-10-10T11:29:20.444Z"
+          },
+          {
+            "type": "technology_marker",
+            "value": "WordPress",
+            "source_url": "https://fiazdentalcare.com/index.php/contact-us/"
+          },
+          {
+            "type": "technology_marker",
+            "value": "WordPress",
+            "source_url": "https://fiazdentalcare.com/index.php/about-us/"
+          }
+        ],
+        "services": [],
+        "observed_at": "2026-10-10T11:29:20.444Z",
+        "observations": {
+          "whatsapp": "not_observed",
+          "booking_link": "not_observed",
+          "contact_form": "observed"
+        },
+        "technologies": [
+          "WordPress"
+        ],
+        "quality_flags": [],
+        "social_profiles": [],
+        "input_fingerprint": "ab353d8b65bab3c01dc62e98299b7d93"
+      },
+      "research": {
+        "status": "complete",
+        "summary": "Fiaz Dental Care — Dental clinic — Lahore",
+        "version": "enrichment_v1",
+        "linkedin": {
+          "profiles": [],
+          "recent_posts": [],
+          "collection_status": "not_configured",
+          "unmatched_profiles": []
+        },
+        "services": [],
+        "readiness": {
+          "email": "use_contact_verification_status",
+          "campaign": "configuration_needed",
+          "outreach": "not_authorized",
+          "research": "complete"
+        },
+        "ai_research": {
+          "model": "openai/gpt-oss-120b",
+          "status": "insufficient_evidence",
+          "version": "evidence_ai_v1",
+          "evidence": [],
+          "provider": "groq",
+          "generated_at": "2026-10-10T11:29:37.044Z",
+          "fact_verification": "quotes_checked_against_collected_sources_not_independently_verified"
+        },
+        "observed_at": "2026-10-10T11:29:37.027Z",
+        "campaign_fit": null,
+        "opportunities": [],
+        "summary_method": "saved_business_facts",
+        "personalization": [],
+        "input_fingerprint": "9375d690002a460b81da242236dd7971"
+      },
+      "basic_at": "2026-10-10T11:29:28.616Z",
+      "research_at": "2026-10-10T11:29:37.092Z",
+      "report": {
+        "basic": {
+          "pages": [
+            {
+              "url": "https://fiazdentalcare.com/",
+              "status": 200,
+              "truncated": false,
+              "usable_html": true
+            },
+            {
+              "url": "https://fiazdentalcare.com/index.php/contact-us/",
+              "status": 200,
+              "truncated": false,
+              "usable_html": true
+            },
+            {
+              "url": "https://fiazdentalcare.com/index.php/about-us/",
+              "status": 200,
+              "truncated": false,
+              "usable_html": true
+            }
+          ],
+          "status": "complete",
+          "version": "enrichment_v1",
+          "business": {
+            "city": "Lahore",
+            "name": "Fiaz Dental Care",
+            "domain": "fiazdentalcare.com",
+            "country": "PK",
+            "website": "https://fiazdentalcare.com/",
+            "category": "Dental clinic",
+            "timezone": null
+          },
+          "coverage": "up_to_three_pages",
+          "evidence": [
+            {
+              "type": "technology_marker",
+              "value": "WordPress",
+              "source_url": "https://fiazdentalcare.com/"
+            },
+            {
+              "type": "contact_form",
+              "value": "https://fiazdentalcare.com/index.php/contact-us/",
+              "source_url": "https://fiazdentalcare.com/index.php/contact-us/",
+              "observed_at": "2026-10-10T11:29:20.444Z"
+            },
+            {
+              "type": "technology_marker",
+              "value": "WordPress",
+              "source_url": "https://fiazdentalcare.com/index.php/contact-us/"
+            },
+            {
+              "type": "technology_marker",
+              "value": "WordPress",
+              "source_url": "https://fiazdentalcare.com/index.php/about-us/"
+            }
+          ],
+          "services": [],
+          "observed_at": "2026-10-10T11:29:20.444Z",
+          "observations": {
+            "whatsapp": "not_observed",
+            "booking_link": "not_observed",
+            "contact_form": "observed"
+          },
+          "technologies": [
+            "WordPress"
+          ],
+          "quality_flags": [],
+          "social_profiles": [],
+          "input_fingerprint": "ab353d8b65bab3c01dc62e98299b7d93"
+        },
+        "tasks": [
+          {
+            "kind": "basic",
+            "error": null,
+            "status": "complete",
+            "attempts": 1
+          },
+          {
+            "kind": "research",
+            "error": null,
+            "status": "complete",
+            "attempts": 1
+          }
+        ],
+        "trust": {
+          "fields": {
+            "phone": {
+              "value": "+923367612507",
+              "source": "cleaned_record",
+              "status": "ownership_and_reachability_unknown"
+            },
+            "emails": [],
+            "website": {
+              "value": "https://fiazdentalcare.com/",
+              "status": "page_observed_ownership_unverified",
+              "sources": [
+                {
+                  "url": "https://fiazdentalcare.com/",
+                  "status": 200,
+                  "truncated": false,
+                  "usable_html": true
+                },
+                {
+                  "url": "https://fiazdentalcare.com/index.php/contact-us/",
+                  "status": 200,
+                  "truncated": false,
+                  "usable_html": true
+                },
+                {
+                  "url": "https://fiazdentalcare.com/index.php/about-us/",
+                  "status": 200,
+                  "truncated": false,
+                  "usable_html": true
+                }
+              ],
+              "observed_at": "2026-10-10T11:29:28.616604+00:00"
+            },
+            "category": {
+              "value": "Dental clinic",
+              "source": "cleaned_record",
+              "status": "recorded_not_independently_verified"
+            },
+            "location": {
+              "city": "Lahore",
+              "source": "cleaned_record",
+              "status": "recorded_not_independently_verified",
+              "country": "PK"
+            },
+            "company_name": {
+              "value": "Fiaz Dental Care",
+              "source": "cleaned_record",
+              "status": "recorded_not_independently_verified"
+            }
+          },
+          "version": "lead_trust_v1",
+          "identity": {
+            "method": "name_and_website_matching_only",
+            "status": "unconfirmed",
+            "independent_verification": false
+          },
+          "ai_policy": "source_excerpts_only_no_verified_recommendations",
+          "conflicts": [],
+          "freshness": {
+            "website_current": true,
+            "research_current": true
+          },
+          "usable_for": {
+            "manual_research": true,
+            "automatic_outreach": false
+          },
+          "evaluated_at": "2026-10-11T14:04:53.398413+00:00",
+          "fully_verified": false,
+          "overall_status": "evidence_available_contacts_unverified",
+          "blocking_reasons": [
+            "business_identity_unconfirmed",
+            "no_fresh_provider_verified_email"
+          ]
+        },
+        "org_id": 1,
+        "contact": {
+          "city": "Lahore",
+          "phone": "+923367612507",
+          "org_id": 1,
+          "lead_id": 167,
+          "website": "https://fiazdentalcare.com/",
+          "category": "Dental clinic",
+          "contacts": [],
+          "facebook": null,
+          "discovery": {
+            "pages": [
+              {
+                "url": "https://fiazdentalcare.com/",
+                "status": 200
+              },
+              {
+                "url": "https://fiazdentalcare.com/index.php/contact-us/",
+                "status": 200
+              },
+              {
+                "url": "https://fiazdentalcare.com/index.php/about-us/",
+                "status": 200
+              },
+              {
+                "url": "https://fiazdentalcare.com/contact",
+                "status": 404
+              },
+              {
+                "url": "https://fiazdentalcare.com/contact-us",
+                "status": 404
+              }
+            ],
+            "errors": [],
+            "status": "not_found",
+            "strategy": "contact_evidence_v2",
+            "cache_hit": true,
+            "candidates": [],
+            "stop_reason": "page_budget_reached",
+            "quality_flags": [],
+            "contact_routes": [
+              {
+                "type": "phone",
+                "value": "+923367612507",
+                "method": "source_record",
+                "source_url": "https://www.google.com/maps/search/?api=1&query=Fiaz%20Dental%20Care&query_place_id=ChIJpRV2KrMdGTkRDyevJgm3WyQ",
+                "staging_id": 115
+              },
+              {
+                "type": "phone",
+                "value": "+92 336 7612507",
+                "method": "source_record",
+                "source_url": "https://www.google.com/maps/search/?api=1&query=Fiaz%20Dental%20Care&query_place_id=ChIJpRV2KrMdGTkRDyevJgm3WyQ",
+                "staging_id": 115
+              },
+              {
+                "type": "contact_form",
+                "value": "https://fiazdentalcare.com/index.php/contact-us/",
+                "source_url": "https://fiazdentalcare.com/index.php/contact-us/"
+              }
+            ],
+            "pages_attempted": 5,
+            "remaining_pages": 1,
+            "business_context": {
+              "city": "Lahore",
+              "phone": "+923367612507",
+              "source": "cleaned_record",
+              "website": "https://fiazdentalcare.com/",
+              "category": "Dental clinic",
+              "inferred": false,
+              "company_name": "Fiaz Dental Care"
+            },
+            "facebook_profile": null,
+            "discovery_outcome": "alternative_route_only",
+            "relevant_candidate_count": 0,
+            "network_pages_this_attempt": 0
+          },
+          "company_name": "Fiaz Dental Care",
+          "contact_readiness": "review_or_alternative_route",
+          "enrichment_complete": false,
+          "business_details_source": "cleaned_record",
+          "email_verification_enabled": false
+        },
+        "lead_id": 167,
+        "research": {
+          "status": "complete",
+          "summary": "Fiaz Dental Care — Dental clinic — Lahore",
+          "version": "enrichment_v1",
+          "linkedin": {
+            "profiles": [],
+            "recent_posts": [],
+            "collection_status": "not_configured",
+            "unmatched_profiles": []
+          },
+          "services": [],
+          "readiness": {
+            "email": "use_contact_verification_status",
+            "campaign": "configuration_needed",
+            "outreach": "not_authorized",
+            "research": "complete"
+          },
+          "ai_research": {
+            "model": "openai/gpt-oss-120b",
+            "status": "insufficient_evidence",
+            "version": "evidence_ai_v1",
+            "evidence": [],
+            "provider": "groq",
+            "generated_at": "2026-10-10T11:29:37.044Z",
+            "fact_verification": "quotes_checked_against_collected_sources_not_independently_verified"
+          },
+          "observed_at": "2026-10-10T11:29:37.027Z",
+          "campaign_fit": null,
+          "opportunities": [],
+          "summary_method": "saved_business_facts",
+          "personalization": [],
+          "input_fingerprint": "9375d690002a460b81da242236dd7971"
+        },
+        "linkedin_jobs": [
+          {
+            "kind": "company",
+            "reason": null,
+            "status": "pending",
+            "cost_usd": null
+          }
+        ],
+        "outreach_context": [],
+        "automatic_linkedin_collection": true
+      }
+    },
+    {
+      "id": 445,
+      "org_id": 1,
+      "website": null,
+      "basic": {
+        "pages": [],
+        "reason": "no_website",
+        "status": "partial",
+        "version": "enrichment_v1",
+        "business": {
+          "city": "Islamabad",
+          "name": "Islamabad Dental Clinic",
+          "domain": null,
+          "country": "PK",
+          "website": null,
+          "category": "Medical clinic",
+          "timezone": null
+        },
+        "evidence": [],
+        "services": [],
+        "observed_at": "2026-10-03T16:50:09.008Z",
+        "observations": {
+          "whatsapp": "unknown",
+          "booking_link": "unknown",
+          "contact_form": "unknown"
+        },
+        "quality_flags": [],
+        "input_fingerprint": "2b7ce26f7221560115d38b70f8745172"
+      },
+      "research": {
+        "status": "partial",
+        "summary": "Islamabad Dental Clinic — Medical clinic — Islamabad",
+        "version": "enrichment_v1",
+        "linkedin": {
+          "profiles": [],
+          "recent_posts": [],
+          "collection_status": "not_configured",
+          "unmatched_profiles": []
+        },
+        "services": [],
+        "readiness": {
+          "email": "use_contact_verification_status",
+          "campaign": "configuration_needed",
+          "outreach": "not_authorized",
+          "research": "partial"
+        },
+        "ai_research": {
+          "status": "insufficient_evidence",
+          "requires_review": true
+        },
+        "observed_at": "2026-10-10T17:15:53.917Z",
+        "campaign_fit": null,
+        "opportunities": [],
+        "summary_method": "saved_business_facts",
+        "personalization": [],
+        "input_fingerprint": "26f65c96cbf9a71425187fe6a7d01767"
+      },
+      "basic_at": "2026-10-03T16:50:09.185Z",
+      "research_at": "2026-10-10T17:15:54.109Z",
+      "report": {
+        "basic": {
+          "pages": [],
+          "reason": "no_website",
+          "status": "partial",
+          "version": "enrichment_v1",
+          "business": {
+            "city": "Islamabad",
+            "name": "Islamabad Dental Clinic",
+            "domain": null,
+            "country": "PK",
+            "website": null,
+            "category": "Medical clinic",
+            "timezone": null
+          },
+          "evidence": [],
+          "services": [],
+          "observed_at": "2026-10-03T16:50:09.008Z",
+          "observations": {
+            "whatsapp": "unknown",
+            "booking_link": "unknown",
+            "contact_form": "unknown"
+          },
+          "quality_flags": [],
+          "input_fingerprint": "2b7ce26f7221560115d38b70f8745172"
+        },
+        "tasks": [
+          {
+            "kind": "basic",
+            "error": null,
+            "status": "partial",
+            "attempts": 1
+          },
+          {
+            "kind": "research",
+            "error": null,
+            "status": "partial",
+            "attempts": 1
+          }
+        ],
+        "trust": {
+          "fields": {
+            "phone": {
+              "value": "+923329367402",
+              "source": "cleaned_record",
+              "status": "ownership_and_reachability_unknown"
+            },
+            "emails": [],
+            "website": {
+              "value": null,
+              "status": "missing",
+              "sources": [],
+              "observed_at": "2026-10-03T16:50:09.185868+00:00"
+            },
+            "category": {
+              "value": "Medical clinic",
+              "source": "cleaned_record",
+              "status": "recorded_not_independently_verified"
+            },
+            "location": {
+              "city": "Islamabad",
+              "source": "cleaned_record",
+              "status": "recorded_not_independently_verified",
+              "country": "PK"
+            },
+            "company_name": {
+              "value": "Islamabad Dental Clinic",
+              "source": "cleaned_record",
+              "status": "recorded_not_independently_verified"
+            }
+          },
+          "version": "lead_trust_v1",
+          "identity": {
+            "method": "name_and_website_matching_only",
+            "status": "unconfirmed",
+            "independent_verification": false
+          },
+          "ai_policy": "source_excerpts_only_no_verified_recommendations",
+          "conflicts": [],
+          "freshness": {
+            "website_current": true,
+            "research_current": true
+          },
+          "usable_for": {
+            "manual_research": false,
+            "automatic_outreach": false
+          },
+          "evaluated_at": "2026-10-11T14:04:53.398413+00:00",
+          "fully_verified": false,
+          "overall_status": "insufficient_fresh_evidence",
+          "blocking_reasons": [
+            "missing_or_stale_business_evidence",
+            "business_identity_unconfirmed",
+            "no_fresh_provider_verified_email"
+          ]
+        },
+        "org_id": 1,
+        "contact": {
+          "city": "Islamabad",
+          "phone": "+923329367402",
+          "org_id": 1,
+          "lead_id": 445,
+          "website": null,
+          "category": "Medical clinic",
+          "contacts": [],
+          "facebook": null,
+          "discovery": {
+            "pages": [],
+            "status": "not_found",
+            "strategy": "contact_evidence_v2",
+            "cache_hit": false,
+            "candidates": [],
+            "stop_reason": "no_website_or_saved_email",
+            "quality_flags": [],
+            "contact_routes": [
+              {
+                "type": "phone",
+                "value": "+923329367402",
+                "method": "source_record",
+                "source_url": "https://www.google.com/maps/search/?api=1&query=Islamabad%20Dental%20Clinic&query_place_id=ChIJFdsB6Sy_3zgRylw6vcZMKbM",
+                "staging_id": 150
+              },
+              {
+                "type": "phone",
+                "value": "+92 332 9367402",
+                "method": "source_record",
+                "source_url": "https://www.google.com/maps/search/?api=1&query=Islamabad%20Dental%20Clinic&query_place_id=ChIJFdsB6Sy_3zgRylw6vcZMKbM",
+                "staging_id": 150
+              }
+            ],
+            "pages_attempted": 0,
+            "business_context": {
+              "city": "Islamabad",
+              "phone": "+923329367402",
+              "source": "cleaned_record",
+              "website": null,
+              "category": "Medical clinic",
+              "inferred": false,
+              "company_name": "Islamabad Dental Clinic"
+            },
+            "facebook_profile": null,
+            "discovery_outcome": "alternative_route_only",
+            "relevant_candidate_count": 0
+          },
+          "company_name": "Islamabad Dental Clinic",
+          "contact_readiness": "review_or_alternative_route",
+          "enrichment_complete": false,
+          "business_details_source": "cleaned_record",
+          "email_verification_enabled": false
+        },
+        "lead_id": 445,
+        "research": {
+          "status": "partial",
+          "summary": "Islamabad Dental Clinic — Medical clinic — Islamabad",
+          "version": "enrichment_v1",
+          "linkedin": {
+            "profiles": [],
+            "recent_posts": [],
+            "collection_status": "not_configured",
+            "unmatched_profiles": []
+          },
+          "services": [],
+          "readiness": {
+            "email": "use_contact_verification_status",
+            "campaign": "configuration_needed",
+            "outreach": "not_authorized",
+            "research": "partial"
+          },
+          "ai_research": {
+            "status": "insufficient_evidence",
+            "requires_review": true
+          },
+          "observed_at": "2026-10-10T17:15:53.917Z",
+          "campaign_fit": null,
+          "opportunities": [],
+          "summary_method": "saved_business_facts",
+          "personalization": [],
+          "input_fingerprint": "26f65c96cbf9a71425187fe6a7d01767"
+        },
+        "linkedin_jobs": [
+          {
+            "kind": "company",
+            "reason": null,
+            "status": "pending",
+            "cost_usd": null
+          }
+        ],
+        "outreach_context": [],
+        "automatic_linkedin_collection": true
+      }
+    },
+    {
+      "id": 446,
+      "org_id": 1,
+      "website": null,
+      "basic": {
+        "pages": [],
+        "reason": "no_website",
+        "status": "partial",
+        "version": "enrichment_v1",
+        "business": {
+          "city": "Islamabad",
+          "name": "Luminosity Dental Clinic",
+          "domain": null,
+          "country": "PK",
+          "website": null,
+          "category": "Dental clinic",
+          "timezone": null
+        },
+        "evidence": [],
+        "services": [],
+        "observed_at": "2026-10-03T16:55:08.545Z",
+        "observations": {
+          "whatsapp": "unknown",
+          "booking_link": "unknown",
+          "contact_form": "unknown"
+        },
+        "quality_flags": [],
+        "input_fingerprint": "91c724a112aa5a030671054b3c24a7c8"
+      },
+      "research": {
+        "status": "partial",
+        "summary": "Luminosity Dental Clinic — Dental clinic — Islamabad",
+        "version": "enrichment_v1",
+        "linkedin": {
+          "profiles": [],
+          "recent_posts": [],
+          "collection_status": "not_configured",
+          "unmatched_profiles": []
+        },
+        "services": [],
+        "readiness": {
+          "email": "use_contact_verification_status",
+          "campaign": "configuration_needed",
+          "outreach": "not_authorized",
+          "research": "partial"
+        },
+        "ai_research": {
+          "status": "insufficient_evidence",
+          "requires_review": true
+        },
+        "observed_at": "2026-10-10T17:20:52.928Z",
+        "campaign_fit": null,
+        "opportunities": [],
+        "summary_method": "saved_business_facts",
+        "personalization": [],
+        "input_fingerprint": "95e556f6cb066144c6d2c1bb061b82f8"
+      },
+      "basic_at": "2026-10-03T16:55:08.986Z",
+      "research_at": "2026-10-10T17:20:53.184Z",
+      "report": {
+        "basic": {
+          "pages": [],
+          "reason": "no_website",
+          "status": "partial",
+          "version": "enrichment_v1",
+          "business": {
+            "city": "Islamabad",
+            "name": "Luminosity Dental Clinic",
+            "domain": null,
+            "country": "PK",
+            "website": null,
+            "category": "Dental clinic",
+            "timezone": null
+          },
+          "evidence": [],
+          "services": [],
+          "observed_at": "2026-10-03T16:55:08.545Z",
+          "observations": {
+            "whatsapp": "unknown",
+            "booking_link": "unknown",
+            "contact_form": "unknown"
+          },
+          "quality_flags": [],
+          "input_fingerprint": "91c724a112aa5a030671054b3c24a7c8"
+        },
+        "tasks": [
+          {
+            "kind": "basic",
+            "error": null,
+            "status": "partial",
+            "attempts": 1
+          },
+          {
+            "kind": "research",
+            "error": null,
+            "status": "partial",
+            "attempts": 1
+          }
+        ],
+        "trust": {
+          "fields": {
+            "phone": {
+              "value": "+923218933839",
+              "source": "cleaned_record",
+              "status": "ownership_and_reachability_unknown"
+            },
+            "emails": [],
+            "website": {
+              "value": null,
+              "status": "missing",
+              "sources": [],
+              "observed_at": "2026-10-03T16:55:08.986719+00:00"
+            },
+            "category": {
+              "value": "Dental clinic",
+              "source": "cleaned_record",
+              "status": "recorded_not_independently_verified"
+            },
+            "location": {
+              "city": "Islamabad",
+              "source": "cleaned_record",
+              "status": "recorded_not_independently_verified",
+              "country": "PK"
+            },
+            "company_name": {
+              "value": "Luminosity Dental Clinic",
+              "source": "cleaned_record",
+              "status": "recorded_not_independently_verified"
+            }
+          },
+          "version": "lead_trust_v1",
+          "identity": {
+            "method": "name_and_website_matching_only",
+            "status": "unconfirmed",
+            "independent_verification": false
+          },
+          "ai_policy": "source_excerpts_only_no_verified_recommendations",
+          "conflicts": [],
+          "freshness": {
+            "website_current": true,
+            "research_current": true
+          },
+          "usable_for": {
+            "manual_research": false,
+            "automatic_outreach": false
+          },
+          "evaluated_at": "2026-10-11T14:04:53.398413+00:00",
+          "fully_verified": false,
+          "overall_status": "insufficient_fresh_evidence",
+          "blocking_reasons": [
+            "missing_or_stale_business_evidence",
+            "business_identity_unconfirmed",
+            "no_fresh_provider_verified_email"
+          ]
+        },
+        "org_id": 1,
+        "contact": {
+          "city": "Islamabad",
+          "phone": "+923218933839",
+          "org_id": 1,
+          "lead_id": 446,
+          "website": null,
+          "category": "Dental clinic",
+          "contacts": [],
+          "facebook": null,
+          "discovery": {
+            "pages": [],
+            "status": "not_found",
+            "strategy": "contact_evidence_v2",
+            "cache_hit": false,
+            "candidates": [],
+            "stop_reason": "no_website_or_saved_email",
+            "quality_flags": [],
+            "contact_routes": [
+              {
+                "type": "phone",
+                "value": "+923218933839",
+                "method": "source_record",
+                "source_url": "https://www.google.com/maps/search/?api=1&query=Luminosity%20Dental%20Clinic&query_place_id=ChIJtYIuK4zB3zgRhCfPj9mNPNg",
+                "staging_id": 151
+              },
+              {
+                "type": "phone",
+                "value": "+92 321 8933839",
+                "method": "source_record",
+                "source_url": "https://www.google.com/maps/search/?api=1&query=Luminosity%20Dental%20Clinic&query_place_id=ChIJtYIuK4zB3zgRhCfPj9mNPNg",
+                "staging_id": 151
+              }
+            ],
+            "pages_attempted": 0,
+            "business_context": {
+              "city": "Islamabad",
+              "phone": "+923218933839",
+              "source": "cleaned_record",
+              "website": null,
+              "category": "Dental clinic",
+              "inferred": false,
+              "company_name": "Luminosity Dental Clinic"
+            },
+            "facebook_profile": null,
+            "discovery_outcome": "alternative_route_only",
+            "relevant_candidate_count": 0
+          },
+          "company_name": "Luminosity Dental Clinic",
+          "contact_readiness": "review_or_alternative_route",
+          "enrichment_complete": false,
+          "business_details_source": "cleaned_record",
+          "email_verification_enabled": false
+        },
+        "lead_id": 446,
+        "research": {
+          "status": "partial",
+          "summary": "Luminosity Dental Clinic — Dental clinic — Islamabad",
+          "version": "enrichment_v1",
+          "linkedin": {
+            "profiles": [],
+            "recent_posts": [],
+            "collection_status": "not_configured",
+            "unmatched_profiles": []
+          },
+          "services": [],
+          "readiness": {
+            "email": "use_contact_verification_status",
+            "campaign": "configuration_needed",
+            "outreach": "not_authorized",
+            "research": "partial"
+          },
+          "ai_research": {
+            "status": "insufficient_evidence",
+            "requires_review": true
+          },
+          "observed_at": "2026-10-10T17:20:52.928Z",
+          "campaign_fit": null,
+          "opportunities": [],
+          "summary_method": "saved_business_facts",
+          "personalization": [],
+          "input_fingerprint": "95e556f6cb066144c6d2c1bb061b82f8"
+        },
+        "linkedin_jobs": [
+          {
+            "kind": "company",
+            "reason": null,
+            "status": "pending",
+            "cost_usd": null
+          }
+        ],
+        "outreach_context": [],
+        "automatic_linkedin_collection": true
+      }
+    },
+    {
+      "id": 447,
+      "org_id": 1,
+      "website": null,
+      "basic": {
+        "pages": [],
+        "reason": "no_website",
+        "status": "partial",
+        "version": "enrichment_v1",
+        "business": {
+          "city": "Islamabad",
+          "name": "The Dental Care Clinic ( Dr.Shahnawaz Ahmed)",
+          "domain": null,
+          "country": "PK",
+          "website": null,
+          "category": "Dental clinic",
+          "timezone": null
+        },
+        "evidence": [],
+        "services": [],
+        "observed_at": "2026-10-03T16:55:08.876Z",
+        "observations": {
+          "whatsapp": "unknown",
+          "booking_link": "unknown",
+          "contact_form": "unknown"
+        },
+        "quality_flags": [],
+        "input_fingerprint": "eabdae84fcbf82ad2e01101a88d89d33"
+      },
+      "research": {
+        "status": "partial",
+        "summary": "The Dental Care Clinic ( Dr.Shahnawaz Ahmed) — Dental clinic — Islamabad",
+        "version": "enrichment_v1",
+        "linkedin": {
+          "profiles": [],
+          "recent_posts": [],
+          "collection_status": "not_configured",
+          "unmatched_profiles": []
+        },
+        "services": [],
+        "readiness": {
+          "email": "use_contact_verification_status",
+          "campaign": "configuration_needed",
+          "outreach": "not_authorized",
+          "research": "partial"
+        },
+        "ai_research": {
+          "status": "insufficient_evidence",
+          "requires_review": true
+        },
+        "observed_at": "2026-10-10T17:20:52.967Z",
+        "campaign_fit": null,
+        "opportunities": [],
+        "summary_method": "saved_business_facts",
+        "personalization": [],
+        "input_fingerprint": "433779b9e4db21f7c2a1e3b18e2d33b3"
+      },
+      "basic_at": "2026-10-03T16:55:09.031Z",
+      "research_at": "2026-10-10T17:20:53.367Z",
+      "report": {
+        "basic": {
+          "pages": [],
+          "reason": "no_website",
+          "status": "partial",
+          "version": "enrichment_v1",
+          "business": {
+            "city": "Islamabad",
+            "name": "The Dental Care Clinic ( Dr.Shahnawaz Ahmed)",
+            "domain": null,
+            "country": "PK",
+            "website": null,
+            "category": "Dental clinic",
+            "timezone": null
+          },
+          "evidence": [],
+          "services": [],
+          "observed_at": "2026-10-03T16:55:08.876Z",
+          "observations": {
+            "whatsapp": "unknown",
+            "booking_link": "unknown",
+            "contact_form": "unknown"
+          },
+          "quality_flags": [],
+          "input_fingerprint": "eabdae84fcbf82ad2e01101a88d89d33"
+        },
+        "tasks": [
+          {
+            "kind": "basic",
+            "error": null,
+            "status": "partial",
+            "attempts": 1
+          },
+          {
+            "kind": "research",
+            "error": null,
+            "status": "partial",
+            "attempts": 1
+          }
+        ],
+        "trust": {
+          "fields": {
+            "phone": {
+              "value": "+923352114347",
+              "source": "cleaned_record",
+              "status": "ownership_and_reachability_unknown"
+            },
+            "emails": [],
+            "website": {
+              "value": null,
+              "status": "missing",
+              "sources": [],
+              "observed_at": "2026-10-03T16:55:09.031198+00:00"
+            },
+            "category": {
+              "value": "Dental clinic",
+              "source": "cleaned_record",
+              "status": "recorded_not_independently_verified"
+            },
+            "location": {
+              "city": "Islamabad",
+              "source": "cleaned_record",
+              "status": "recorded_not_independently_verified",
+              "country": "PK"
+            },
+            "company_name": {
+              "value": "The Dental Care Clinic ( Dr.Shahnawaz Ahmed)",
+              "source": "cleaned_record",
+              "status": "recorded_not_independently_verified"
+            }
+          },
+          "version": "lead_trust_v1",
+          "identity": {
+            "method": "name_and_website_matching_only",
+            "status": "unconfirmed",
+            "independent_verification": false
+          },
+          "ai_policy": "source_excerpts_only_no_verified_recommendations",
+          "conflicts": [],
+          "freshness": {
+            "website_current": true,
+            "research_current": true
+          },
+          "usable_for": {
+            "manual_research": false,
+            "automatic_outreach": false
+          },
+          "evaluated_at": "2026-10-11T14:04:53.398413+00:00",
+          "fully_verified": false,
+          "overall_status": "insufficient_fresh_evidence",
+          "blocking_reasons": [
+            "missing_or_stale_business_evidence",
+            "business_identity_unconfirmed",
+            "no_fresh_provider_verified_email"
+          ]
+        },
+        "org_id": 1,
+        "contact": {
+          "city": "Islamabad",
+          "phone": "+923352114347",
+          "org_id": 1,
+          "lead_id": 447,
+          "website": null,
+          "category": "Dental clinic",
+          "contacts": [],
+          "facebook": null,
+          "discovery": {
+            "pages": [],
+            "status": "not_found",
+            "strategy": "contact_evidence_v2",
+            "cache_hit": false,
+            "candidates": [],
+            "stop_reason": "no_website_or_saved_email",
+            "quality_flags": [],
+            "contact_routes": [
+              {
+                "type": "phone",
+                "value": "+923352114347",
+                "method": "source_record",
+                "source_url": "https://www.google.com/maps/search/?api=1&query=The%20Dental%20Care%20Clinic%20(%20Dr.Shahnawaz%20Ahmed)&query_place_id=ChIJw0r1b1-_3zgRY0YMatEk-UQ",
+                "staging_id": 152
+              },
+              {
+                "type": "phone",
+                "value": "+92 335 2114347",
+                "method": "source_record",
+                "source_url": "https://www.google.com/maps/search/?api=1&query=The%20Dental%20Care%20Clinic%20(%20Dr.Shahnawaz%20Ahmed)&query_place_id=ChIJw0r1b1-_3zgRY0YMatEk-UQ",
+                "staging_id": 152
+              }
+            ],
+            "pages_attempted": 0,
+            "business_context": {
+              "city": "Islamabad",
+              "phone": "+923352114347",
+              "source": "cleaned_record",
+              "website": null,
+              "category": "Dental clinic",
+              "inferred": false,
+              "company_name": "The Dental Care Clinic ( Dr.Shahnawaz Ahmed)"
+            },
+            "facebook_profile": null,
+            "discovery_outcome": "alternative_route_only",
+            "relevant_candidate_count": 0
+          },
+          "company_name": "The Dental Care Clinic ( Dr.Shahnawaz Ahmed)",
+          "contact_readiness": "review_or_alternative_route",
+          "enrichment_complete": false,
+          "business_details_source": "cleaned_record",
+          "email_verification_enabled": false
+        },
+        "lead_id": 447,
+        "research": {
+          "status": "partial",
+          "summary": "The Dental Care Clinic ( Dr.Shahnawaz Ahmed) — Dental clinic — Islamabad",
+          "version": "enrichment_v1",
+          "linkedin": {
+            "profiles": [],
+            "recent_posts": [],
+            "collection_status": "not_configured",
+            "unmatched_profiles": []
+          },
+          "services": [],
+          "readiness": {
+            "email": "use_contact_verification_status",
+            "campaign": "configuration_needed",
+            "outreach": "not_authorized",
+            "research": "partial"
+          },
+          "ai_research": {
+            "status": "insufficient_evidence",
+            "requires_review": true
+          },
+          "observed_at": "2026-10-10T17:20:52.967Z",
+          "campaign_fit": null,
+          "opportunities": [],
+          "summary_method": "saved_business_facts",
+          "personalization": [],
+          "input_fingerprint": "433779b9e4db21f7c2a1e3b18e2d33b3"
+        },
+        "linkedin_jobs": [
+          {
+            "kind": "company",
+            "reason": null,
+            "status": "pending",
+            "cost_usd": null
+          }
+        ],
+        "outreach_context": [],
+        "automatic_linkedin_collection": true
+      }
+    },
+    {
+      "id": 449,
+      "org_id": 1,
+      "website": "https://ziadentalconsultants.me",
+      "basic": {
+        "pages": [
+          {
+            "url": "https://ziadentalconsultants.me/",
+            "status": 200,
+            "truncated": false,
+            "usable_html": true
+          },
+          {
+            "url": "https://ziadentalconsultants.me/contact/",
+            "status": 200,
+            "truncated": false,
+            "usable_html": true
+          },
+          {
+            "url": "https://ziadentalconsultants.me/about/",
+            "status": 200,
+            "truncated": false,
+            "usable_html": true
+          }
+        ],
+        "status": "complete",
+        "version": "enrichment_v1",
+        "business": {
+          "city": "Islamabad",
+          "name": "Zia Dental Consultants",
+          "domain": "ziadentalconsultants.me",
+          "country": "PK",
+          "website": "https://ziadentalconsultants.me",
+          "category": "Dental clinic",
+          "timezone": null
+        },
+        "coverage": "up_to_three_pages",
+        "evidence": [
+          {
+            "type": "phone",
+            "value": "+923335100708",
+            "source_url": "https://ziadentalconsultants.me/",
+            "observed_at": "2026-10-10T11:29:29.012Z"
+          },
+          {
+            "type": "whatsapp",
+            "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+            "source_url": "https://ziadentalconsultants.me/",
+            "observed_at": "2026-10-10T11:29:29.012Z"
+          },
+          {
+            "type": "booking_link",
+            "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+            "source_url": "https://ziadentalconsultants.me/",
+            "submission_tested": false
+          },
+          {
+            "type": "website_description",
+            "value": "Explore braces, clear aligners and dental care with Dr Adeel Zia at Zia Dental Consultants in G-6 Markaz, Islamabad, Pakistan. Plan your consultation.",
+            "source_url": "https://ziadentalconsultants.me/"
+          },
+          {
+            "type": "phone",
+            "value": "+923335100708",
+            "source_url": "https://ziadentalconsultants.me/contact/",
+            "observed_at": "2026-10-10T11:29:29.012Z"
+          },
+          {
+            "type": "whatsapp",
+            "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+            "source_url": "https://ziadentalconsultants.me/contact/",
+            "observed_at": "2026-10-10T11:29:29.012Z"
+          },
+          {
+            "type": "contact_form",
+            "value": "https://ziadentalconsultants.me/contact/",
+            "method": "appointment_request_form",
+            "source_url": "https://ziadentalconsultants.me/contact/",
+            "submission_tested": false
+          },
+          {
+            "type": "booking_link",
+            "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+            "source_url": "https://ziadentalconsultants.me/contact/",
+            "submission_tested": false
+          },
+          {
+            "type": "phone",
+            "value": "+923335100708",
+            "source_url": "https://ziadentalconsultants.me/about/",
+            "observed_at": "2026-10-10T11:29:29.012Z"
+          },
+          {
+            "type": "whatsapp",
+            "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+            "source_url": "https://ziadentalconsultants.me/about/",
+            "observed_at": "2026-10-10T11:29:29.012Z"
+          },
+          {
+            "type": "booking_link",
+            "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+            "source_url": "https://ziadentalconsultants.me/about/",
+            "submission_tested": false
+          }
+        ],
+        "services": [
+          {
+            "text": "Orthodontics & braces",
+            "method": "industry_matched_page_heading",
+            "source_url": "https://ziadentalconsultants.me/",
+            "requires_review": true
+          },
+          {
+            "text": "Clear aligners",
+            "method": "industry_matched_page_heading",
+            "source_url": "https://ziadentalconsultants.me/",
+            "requires_review": true
+          },
+          {
+            "text": "Cosmetic dentistry",
+            "method": "industry_matched_page_heading",
+            "source_url": "https://ziadentalconsultants.me/",
+            "requires_review": true
+          },
+          {
+            "text": "Dental implants",
+            "method": "industry_matched_page_heading",
+            "source_url": "https://ziadentalconsultants.me/",
+            "requires_review": true
+          },
+          {
+            "text": "Metal braces",
+            "method": "industry_matched_page_heading",
+            "source_url": "https://ziadentalconsultants.me/",
+            "requires_review": true
+          },
+          {
+            "text": "Braces cost in Islamabad",
+            "method": "industry_matched_page_heading",
+            "source_url": "https://ziadentalconsultants.me/",
+            "requires_review": true
+          },
+          {
+            "text": "Braces vs clear aligners",
+            "method": "industry_matched_page_heading",
+            "source_url": "https://ziadentalconsultants.me/",
+            "requires_review": true
+          },
+          {
+            "text": "Orthodontic consultation in Islamabad",
+            "method": "industry_matched_page_heading",
+            "source_url": "https://ziadentalconsultants.me/",
+            "requires_review": true
+          }
+        ],
+        "observed_at": "2026-10-10T11:29:29.012Z",
+        "observations": {
+          "whatsapp": "observed",
+          "booking_link": "observed",
+          "contact_form": "observed"
+        },
+        "technologies": [],
+        "quality_flags": [],
+        "social_profiles": [],
+        "input_fingerprint": "2ab34df3df39bd441ee0f2a723a8db36",
+        "website_description": "Explore braces, clear aligners and dental care with Dr Adeel Zia at Zia Dental Consultants in G-6 Markaz, Islamabad, Pakistan. Plan your consultation."
+      },
+      "research": {
+        "status": "complete",
+        "summary": "Zia Dental Consultants — Dental clinic — Islamabad",
+        "version": "enrichment_v1",
+        "linkedin": {
+          "profiles": [],
+          "recent_posts": [],
+          "collection_status": "not_configured",
+          "unmatched_profiles": []
+        },
+        "services": [
+          {
+            "text": "Orthodontics & braces",
+            "method": "industry_matched_page_heading",
+            "source_url": "https://ziadentalconsultants.me/",
+            "requires_review": true
+          },
+          {
+            "text": "Clear aligners",
+            "method": "industry_matched_page_heading",
+            "source_url": "https://ziadentalconsultants.me/",
+            "requires_review": true
+          },
+          {
+            "text": "Cosmetic dentistry",
+            "method": "industry_matched_page_heading",
+            "source_url": "https://ziadentalconsultants.me/",
+            "requires_review": true
+          },
+          {
+            "text": "Dental implants",
+            "method": "industry_matched_page_heading",
+            "source_url": "https://ziadentalconsultants.me/",
+            "requires_review": true
+          },
+          {
+            "text": "Metal braces",
+            "method": "industry_matched_page_heading",
+            "source_url": "https://ziadentalconsultants.me/",
+            "requires_review": true
+          },
+          {
+            "text": "Braces cost in Islamabad",
+            "method": "industry_matched_page_heading",
+            "source_url": "https://ziadentalconsultants.me/",
+            "requires_review": true
+          },
+          {
+            "text": "Braces vs clear aligners",
+            "method": "industry_matched_page_heading",
+            "source_url": "https://ziadentalconsultants.me/",
+            "requires_review": true
+          },
+          {
+            "text": "Orthodontic consultation in Islamabad",
+            "method": "industry_matched_page_heading",
+            "source_url": "https://ziadentalconsultants.me/",
+            "requires_review": true
+          }
+        ],
+        "readiness": {
+          "email": "use_contact_verification_status",
+          "campaign": "configuration_needed",
+          "outreach": "not_authorized",
+          "research": "complete"
+        },
+        "ai_research": {
+          "model": "openai/gpt-oss-120b",
+          "status": "disabled_or_quota_blocked",
+          "version": "evidence_ai_v1",
+          "evidence": [
+            {
+              "id": "e1",
+              "text": "Explore braces, clear aligners and dental care with Dr Adeel Zia at Zia Dental Consultants in G-6 Markaz, Islamabad, Pakistan. Plan your consultation.",
+              "type": "website_description",
+              "source_url": "https://ziadentalconsultants.me/"
+            },
+            {
+              "id": "e2",
+              "text": "Orthodontics & braces",
+              "type": "website_heading",
+              "source_url": "https://ziadentalconsultants.me/"
+            },
+            {
+              "id": "e3",
+              "text": "Clear aligners",
+              "type": "website_heading",
+              "source_url": "https://ziadentalconsultants.me/"
+            },
+            {
+              "id": "e4",
+              "text": "Cosmetic dentistry",
+              "type": "website_heading",
+              "source_url": "https://ziadentalconsultants.me/"
+            },
+            {
+              "id": "e5",
+              "text": "Dental implants",
+              "type": "website_heading",
+              "source_url": "https://ziadentalconsultants.me/"
+            },
+            {
+              "id": "e6",
+              "text": "Metal braces",
+              "type": "website_heading",
+              "source_url": "https://ziadentalconsultants.me/"
+            },
+            {
+              "id": "e7",
+              "text": "Braces cost in Islamabad",
+              "type": "website_heading",
+              "source_url": "https://ziadentalconsultants.me/"
+            },
+            {
+              "id": "e8",
+              "text": "Braces vs clear aligners",
+              "type": "website_heading",
+              "source_url": "https://ziadentalconsultants.me/"
+            },
+            {
+              "id": "e9",
+              "text": "Orthodontic consultation in Islamabad",
+              "type": "website_heading",
+              "source_url": "https://ziadentalconsultants.me/"
+            }
+          ],
+          "provider": "groq",
+          "generated_at": "2026-10-10T11:29:37.638Z",
+          "fact_verification": "quotes_checked_against_collected_sources_not_independently_verified"
+        },
+        "observed_at": "2026-10-10T11:29:37.598Z",
+        "campaign_fit": null,
+        "opportunities": [],
+        "summary_method": "saved_business_facts",
+        "personalization": [],
+        "input_fingerprint": "ea2fc957b4b4efbaf354ca13c3b5210a"
+      },
+      "basic_at": "2026-10-10T11:29:36.696Z",
+      "research_at": "2026-10-10T11:29:37.680Z",
+      "report": {
+        "basic": {
+          "pages": [
+            {
+              "url": "https://ziadentalconsultants.me/",
+              "status": 200,
+              "truncated": false,
+              "usable_html": true
+            },
+            {
+              "url": "https://ziadentalconsultants.me/contact/",
+              "status": 200,
+              "truncated": false,
+              "usable_html": true
+            },
+            {
+              "url": "https://ziadentalconsultants.me/about/",
+              "status": 200,
+              "truncated": false,
+              "usable_html": true
+            }
+          ],
+          "status": "complete",
+          "version": "enrichment_v1",
+          "business": {
+            "city": "Islamabad",
+            "name": "Zia Dental Consultants",
+            "domain": "ziadentalconsultants.me",
+            "country": "PK",
+            "website": "https://ziadentalconsultants.me",
+            "category": "Dental clinic",
+            "timezone": null
+          },
+          "coverage": "up_to_three_pages",
+          "evidence": [
+            {
+              "type": "phone",
+              "value": "+923335100708",
+              "source_url": "https://ziadentalconsultants.me/",
+              "observed_at": "2026-10-10T11:29:29.012Z"
+            },
+            {
+              "type": "whatsapp",
+              "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+              "source_url": "https://ziadentalconsultants.me/",
+              "observed_at": "2026-10-10T11:29:29.012Z"
+            },
+            {
+              "type": "booking_link",
+              "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+              "source_url": "https://ziadentalconsultants.me/",
+              "submission_tested": false
+            },
+            {
+              "type": "website_description",
+              "value": "Explore braces, clear aligners and dental care with Dr Adeel Zia at Zia Dental Consultants in G-6 Markaz, Islamabad, Pakistan. Plan your consultation.",
+              "source_url": "https://ziadentalconsultants.me/"
+            },
+            {
+              "type": "phone",
+              "value": "+923335100708",
+              "source_url": "https://ziadentalconsultants.me/contact/",
+              "observed_at": "2026-10-10T11:29:29.012Z"
+            },
+            {
+              "type": "whatsapp",
+              "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+              "source_url": "https://ziadentalconsultants.me/contact/",
+              "observed_at": "2026-10-10T11:29:29.012Z"
+            },
+            {
+              "type": "contact_form",
+              "value": "https://ziadentalconsultants.me/contact/",
+              "method": "appointment_request_form",
+              "source_url": "https://ziadentalconsultants.me/contact/",
+              "submission_tested": false
+            },
+            {
+              "type": "booking_link",
+              "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+              "source_url": "https://ziadentalconsultants.me/contact/",
+              "submission_tested": false
+            },
+            {
+              "type": "phone",
+              "value": "+923335100708",
+              "source_url": "https://ziadentalconsultants.me/about/",
+              "observed_at": "2026-10-10T11:29:29.012Z"
+            },
+            {
+              "type": "whatsapp",
+              "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+              "source_url": "https://ziadentalconsultants.me/about/",
+              "observed_at": "2026-10-10T11:29:29.012Z"
+            },
+            {
+              "type": "booking_link",
+              "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+              "source_url": "https://ziadentalconsultants.me/about/",
+              "submission_tested": false
+            }
+          ],
+          "services": [
+            {
+              "text": "Orthodontics & braces",
+              "method": "industry_matched_page_heading",
+              "source_url": "https://ziadentalconsultants.me/",
+              "requires_review": true
+            },
+            {
+              "text": "Clear aligners",
+              "method": "industry_matched_page_heading",
+              "source_url": "https://ziadentalconsultants.me/",
+              "requires_review": true
+            },
+            {
+              "text": "Cosmetic dentistry",
+              "method": "industry_matched_page_heading",
+              "source_url": "https://ziadentalconsultants.me/",
+              "requires_review": true
+            },
+            {
+              "text": "Dental implants",
+              "method": "industry_matched_page_heading",
+              "source_url": "https://ziadentalconsultants.me/",
+              "requires_review": true
+            },
+            {
+              "text": "Metal braces",
+              "method": "industry_matched_page_heading",
+              "source_url": "https://ziadentalconsultants.me/",
+              "requires_review": true
+            },
+            {
+              "text": "Braces cost in Islamabad",
+              "method": "industry_matched_page_heading",
+              "source_url": "https://ziadentalconsultants.me/",
+              "requires_review": true
+            },
+            {
+              "text": "Braces vs clear aligners",
+              "method": "industry_matched_page_heading",
+              "source_url": "https://ziadentalconsultants.me/",
+              "requires_review": true
+            },
+            {
+              "text": "Orthodontic consultation in Islamabad",
+              "method": "industry_matched_page_heading",
+              "source_url": "https://ziadentalconsultants.me/",
+              "requires_review": true
+            }
+          ],
+          "observed_at": "2026-10-10T11:29:29.012Z",
+          "observations": {
+            "whatsapp": "observed",
+            "booking_link": "observed",
+            "contact_form": "observed"
+          },
+          "technologies": [],
+          "quality_flags": [],
+          "social_profiles": [],
+          "input_fingerprint": "2ab34df3df39bd441ee0f2a723a8db36",
+          "website_description": "Explore braces, clear aligners and dental care with Dr Adeel Zia at Zia Dental Consultants in G-6 Markaz, Islamabad, Pakistan. Plan your consultation."
+        },
+        "tasks": [
+          {
+            "kind": "basic",
+            "error": null,
+            "status": "complete",
+            "attempts": 1
+          },
+          {
+            "kind": "research",
+            "error": null,
+            "status": "complete",
+            "attempts": 1
+          }
+        ],
+        "trust": {
+          "fields": {
+            "phone": {
+              "value": "+923335100708",
+              "source": "cleaned_record",
+              "status": "ownership_and_reachability_unknown"
+            },
+            "emails": [],
+            "website": {
+              "value": "https://ziadentalconsultants.me",
+              "status": "page_observed_ownership_unverified",
+              "sources": [
+                {
+                  "url": "https://ziadentalconsultants.me/",
+                  "status": 200,
+                  "truncated": false,
+                  "usable_html": true
+                },
+                {
+                  "url": "https://ziadentalconsultants.me/contact/",
+                  "status": 200,
+                  "truncated": false,
+                  "usable_html": true
+                },
+                {
+                  "url": "https://ziadentalconsultants.me/about/",
+                  "status": 200,
+                  "truncated": false,
+                  "usable_html": true
+                }
+              ],
+              "observed_at": "2026-10-10T11:29:36.696682+00:00"
+            },
+            "category": {
+              "value": "Dental clinic",
+              "source": "cleaned_record",
+              "status": "recorded_not_independently_verified"
+            },
+            "location": {
+              "city": "Islamabad",
+              "source": "cleaned_record",
+              "status": "recorded_not_independently_verified",
+              "country": "PK"
+            },
+            "company_name": {
+              "value": "Zia Dental Consultants",
+              "source": "cleaned_record",
+              "status": "recorded_not_independently_verified"
+            }
+          },
+          "version": "lead_trust_v1",
+          "identity": {
+            "method": "name_and_website_matching_only",
+            "status": "unconfirmed",
+            "independent_verification": false
+          },
+          "ai_policy": "source_excerpts_only_no_verified_recommendations",
+          "conflicts": [],
+          "freshness": {
+            "website_current": true,
+            "research_current": true
+          },
+          "usable_for": {
+            "manual_research": true,
+            "automatic_outreach": false
+          },
+          "evaluated_at": "2026-10-11T14:04:53.398413+00:00",
+          "fully_verified": false,
+          "overall_status": "evidence_available_contacts_unverified",
+          "blocking_reasons": [
+            "business_identity_unconfirmed",
+            "no_fresh_provider_verified_email"
+          ]
+        },
+        "org_id": 1,
+        "contact": {
+          "city": "Islamabad",
+          "phone": "+923335100708",
+          "org_id": 1,
+          "lead_id": 449,
+          "website": "https://ziadentalconsultants.me",
+          "category": "Dental clinic",
+          "contacts": [],
+          "facebook": null,
+          "discovery": {
+            "pages": [
+              {
+                "url": "https://ziadentalconsultants.me/",
+                "status": 200
+              },
+              {
+                "url": "https://ziadentalconsultants.me/contact/",
+                "status": 200
+              },
+              {
+                "url": "https://ziadentalconsultants.me/about/",
+                "status": 200
+              },
+              {
+                "url": "https://ziadentalconsultants.me/contact-us",
+                "status": 404
+              }
+            ],
+            "errors": [],
+            "status": "not_found",
+            "strategy": "contact_evidence_v2",
+            "cache_hit": true,
+            "candidates": [],
+            "stop_reason": "relevant_pages_exhausted",
+            "quality_flags": [],
+            "contact_routes": [
+              {
+                "type": "phone",
+                "value": "+923335100708",
+                "source_url": "https://ziadentalconsultants.me/about/"
+              },
+              {
+                "type": "phone",
+                "value": "+92 333 5100708",
+                "method": "source_record",
+                "source_url": "https://www.google.com/maps/search/?api=1&query=Zia%20Dental%20Consultants&query_place_id=ChIJX6DJN4a_3zgRLHPAx0ICgC4",
+                "staging_id": 154
+              },
+              {
+                "type": "whatsapp",
+                "value": "https://wa.me/923335100708?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20request%20a%20consultation%20at%20Zia%20Dental%20Consultants%2C%20G-6%20Markaz%2C%20Islamabad.%20Please%20share%20available%20appointments.%20Thank%20you.",
+                "source_url": "https://ziadentalconsultants.me/about/"
+              }
+            ],
+            "pages_attempted": 4,
+            "remaining_pages": 0,
+            "business_context": {
+              "city": "Islamabad",
+              "phone": "+923335100708",
+              "source": "cleaned_record",
+              "website": "https://ziadentalconsultants.me",
+              "category": "Dental clinic",
+              "inferred": false,
+              "company_name": "Zia Dental Consultants"
+            },
+            "facebook_profile": null,
+            "discovery_outcome": "alternative_route_only",
+            "relevant_candidate_count": 0,
+            "network_pages_this_attempt": 0
+          },
+          "company_name": "Zia Dental Consultants",
+          "contact_readiness": "review_or_alternative_route",
+          "enrichment_complete": false,
+          "business_details_source": "cleaned_record",
+          "email_verification_enabled": false
+        },
+        "lead_id": 449,
+        "research": {
+          "status": "complete",
+          "summary": "Zia Dental Consultants — Dental clinic — Islamabad",
+          "version": "enrichment_v1",
+          "linkedin": {
+            "profiles": [],
+            "recent_posts": [],
+            "collection_status": "not_configured",
+            "unmatched_profiles": []
+          },
+          "services": [
+            {
+              "text": "Orthodontics & braces",
+              "method": "industry_matched_page_heading",
+              "source_url": "https://ziadentalconsultants.me/",
+              "requires_review": true
+            },
+            {
+              "text": "Clear aligners",
+              "method": "industry_matched_page_heading",
+              "source_url": "https://ziadentalconsultants.me/",
+              "requires_review": true
+            },
+            {
+              "text": "Cosmetic dentistry",
+              "method": "industry_matched_page_heading",
+              "source_url": "https://ziadentalconsultants.me/",
+              "requires_review": true
+            },
+            {
+              "text": "Dental implants",
+              "method": "industry_matched_page_heading",
+              "source_url": "https://ziadentalconsultants.me/",
+              "requires_review": true
+            },
+            {
+              "text": "Metal braces",
+              "method": "industry_matched_page_heading",
+              "source_url": "https://ziadentalconsultants.me/",
+              "requires_review": true
+            },
+            {
+              "text": "Braces cost in Islamabad",
+              "method": "industry_matched_page_heading",
+              "source_url": "https://ziadentalconsultants.me/",
+              "requires_review": true
+            },
+            {
+              "text": "Braces vs clear aligners",
+              "method": "industry_matched_page_heading",
+              "source_url": "https://ziadentalconsultants.me/",
+              "requires_review": true
+            },
+            {
+              "text": "Orthodontic consultation in Islamabad",
+              "method": "industry_matched_page_heading",
+              "source_url": "https://ziadentalconsultants.me/",
+              "requires_review": true
+            }
+          ],
+          "readiness": {
+            "email": "use_contact_verification_status",
+            "campaign": "configuration_needed",
+            "outreach": "not_authorized",
+            "research": "complete"
+          },
+          "ai_research": {
+            "model": "openai/gpt-oss-120b",
+            "status": "disabled_or_quota_blocked",
+            "version": "evidence_ai_v1",
+            "evidence": [
+              {
+                "id": "e1",
+                "text": "Explore braces, clear aligners and dental care with Dr Adeel Zia at Zia Dental Consultants in G-6 Markaz, Islamabad, Pakistan. Plan your consultation.",
+                "type": "website_description",
+                "source_url": "https://ziadentalconsultants.me/"
+              },
+              {
+                "id": "e2",
+                "text": "Orthodontics & braces",
+                "type": "website_heading",
+                "source_url": "https://ziadentalconsultants.me/"
+              },
+              {
+                "id": "e3",
+                "text": "Clear aligners",
+                "type": "website_heading",
+                "source_url": "https://ziadentalconsultants.me/"
+              },
+              {
+                "id": "e4",
+                "text": "Cosmetic dentistry",
+                "type": "website_heading",
+                "source_url": "https://ziadentalconsultants.me/"
+              },
+              {
+                "id": "e5",
+                "text": "Dental implants",
+                "type": "website_heading",
+                "source_url": "https://ziadentalconsultants.me/"
+              },
+              {
+                "id": "e6",
+                "text": "Metal braces",
+                "type": "website_heading",
+                "source_url": "https://ziadentalconsultants.me/"
+              },
+              {
+                "id": "e7",
+                "text": "Braces cost in Islamabad",
+                "type": "website_heading",
+                "source_url": "https://ziadentalconsultants.me/"
+              },
+              {
+                "id": "e8",
+                "text": "Braces vs clear aligners",
+                "type": "website_heading",
+                "source_url": "https://ziadentalconsultants.me/"
+              },
+              {
+                "id": "e9",
+                "text": "Orthodontic consultation in Islamabad",
+                "type": "website_heading",
+                "source_url": "https://ziadentalconsultants.me/"
+              }
+            ],
+            "provider": "groq",
+            "generated_at": "2026-10-10T11:29:37.638Z",
+            "fact_verification": "quotes_checked_against_collected_sources_not_independently_verified"
+          },
+          "observed_at": "2026-10-10T11:29:37.598Z",
+          "campaign_fit": null,
+          "opportunities": [],
+          "summary_method": "saved_business_facts",
+          "personalization": [],
+          "input_fingerprint": "ea2fc957b4b4efbaf354ca13c3b5210a"
+        },
+        "linkedin_jobs": [
+          {
+            "kind": "company",
+            "reason": null,
+            "status": "pending",
+            "cost_usd": null
+          }
+        ],
+        "outreach_context": [],
+        "automatic_linkedin_collection": true
+      }
+    }
+  ],
+  "functions": [
+    {
+      "proname": "enrichment_report_evidence_v1",
+      "definition": "CREATE OR REPLACE FUNCTION public.enrichment_report_evidence_v1(p_org integer, p_lead integer)\n RETURNS jsonb\n LANGUAGE sql\n STABLE\nAS $function$\r\n SELECT jsonb_build_object('org_id',c.org_id,'lead_id',c.id,'basic',p.basic,'research',p.research,'tasks',(SELECT coalesce(jsonb_agg(jsonb_build_object('kind',kind,'status',status,'attempts',attempts,'error',error)),'[]') FROM enrichment_tasks WHERE org_id=c.org_id AND lead_id=c.id),'linkedin_jobs',(SELECT coalesce(jsonb_agg(jsonb_build_object('kind',j.kind,'status',j.status,'reason',j.reason,'cost_usd',d.actual_cost_usd)),'[]') FROM enrichment_linkedin_jobs j LEFT JOIN apify_diagnostic_runs d ON d.reference=j.reference WHERE j.org_id=c.org_id AND j.lead_id=c.id),'contact',contact_lead_report(c.org_id,c.id),'outreach_context',CASE WHEN p.research_at>now()-interval '7 days' AND p.research->>'input_fingerprint'=enrichment_fingerprint(c.org_id,c.id,'research') THEN p.research->'personalization' ELSE '[]'::jsonb END,'automatic_linkedin_collection',coalesce((SELECT cfg.enabled AND pol.enabled FROM enrichment_linkedin_controls cfg CROSS JOIN enrichment_linkedin_policy pol WHERE cfg.id AND pol.org_id=c.org_id),false))\r\n FROM cleaned_leads c LEFT JOIN enrichment_profiles p ON p.org_id=c.org_id AND p.lead_id=c.id WHERE c.org_id=p_org AND c.id=p_lead AND EXISTS(SELECT 1 FROM cleaning_links l WHERE l.org_id=c.org_id AND l.cleaned_id=c.id AND contact_eligible(c.org_id,c.id,l.staging_id))\r\n$function$\n"
+    },
+    {
+      "proname": "enrichment_report",
+      "definition": "CREATE OR REPLACE FUNCTION public.enrichment_report(p_org integer, p_lead integer)\n RETURNS jsonb\n LANGUAGE sql\n STABLE\nAS $function$\n SELECT CASE WHEN r IS NULL OR t IS NULL THEN NULL ELSE r||jsonb_build_object('trust',t,'outreach_context',\n CASE WHEN t->'freshness'->>'website_current'='true' AND t->'freshness'->>'research_current'='true' AND jsonb_array_length(t->'conflicts')=0 THEN coalesce(r->'outreach_context','[]'::jsonb) ELSE '[]'::jsonb END) END\n FROM (SELECT enrichment_report_evidence_v1(p_org,p_lead) r,lead_trust_report(p_org,p_lead) t) q\n$function$\n"
+    },
+    {
+      "proname": "enrichment_project_legacy",
+      "definition": "CREATE OR REPLACE FUNCTION public.enrichment_project_legacy()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nBEGIN\r\n IF EXISTS(SELECT 1 FROM enriched_leads WHERE lead_id=NEW.lead_id AND org_id IS DISTINCT FROM NEW.org_id) THEN RAISE EXCEPTION 'Legacy enrichment ownership conflict';END IF;\r\n INSERT INTO enriched_leads(org_id,lead_id,domain,detected_country,website_description,has_contact_form,technologies_detected,ai_company_summary,data_sources_used,enrichment_stage,email_should_use,sms_should_use,whatsapp_should_use,linkedin_should_use,sales_ready)\r\n VALUES(NEW.org_id,NEW.lead_id,NEW.basic->'business'->>'domain',NEW.basic->'business'->>'country',NEW.basic->>'website_description',CASE WHEN NEW.basic->'observations'->>'contact_form'='observed' THEN true ELSE NULL END,NEW.basic->'technologies',NEW.research->>'summary',jsonb_build_object('version','enrichment_v1','evidence',NEW.basic->'evidence'),CASE WHEN NEW.research IS NULL THEN 1 ELSE 2 END,false,false,false,false,false)\r\n ON CONFLICT(lead_id) DO UPDATE SET domain=excluded.domain,detected_country=excluded.detected_country,website_description=excluded.website_description,has_contact_form=excluded.has_contact_form,technologies_detected=excluded.technologies_detected,ai_company_summary=excluded.ai_company_summary,data_sources_used=excluded.data_sources_used,enrichment_stage=greatest(enriched_leads.enrichment_stage,excluded.enrichment_stage)\r\n WHERE enriched_leads.org_id=NEW.org_id;\r\n RETURN NEW;\r\nEND $function$\n"
+    },
+    {
+      "proname": "strategy_context",
+      "definition": "CREATE OR REPLACE FUNCTION public.strategy_context(p_org integer, p_campaign bigint, p_lead integer)\n RETURNS jsonb\n LANGUAGE plpgsql\n STABLE\nAS $function$\nDECLARE c strategy_campaigns%ROWTYPE;cfg jsonb;l cleaned_leads%ROWTYPE;r jsonb;result jsonb;stopped boolean;answered boolean;\nBEGIN\n SELECT * INTO c FROM strategy_campaigns WHERE org_id=p_org AND id=p_campaign;\n IF NOT FOUND OR NOT EXISTS(SELECT 1 FROM organizations WHERE id=p_org AND status='active') THEN RETURN NULL;END IF;\n SELECT config INTO cfg FROM strategy_campaign_versions WHERE org_id=p_org AND campaign_id=c.id AND version=c.version;\n SELECT * INTO l FROM cleaned_leads WHERE id=p_lead AND org_id=p_org;IF NOT FOUND THEN RETURN NULL;END IF;\n r:=enrichment_report(p_org,p_lead);IF r IS NULL OR r->'trust' IS NULL THEN RETURN NULL;END IF;\n SELECT EXISTS(SELECT 1 FROM unsubscribes WHERE lower(email)=lower(l.email)) INTO stopped;\n SELECT EXISTS(SELECT 1 FROM outreach_activities WHERE lead_id=p_lead AND org_id=p_org AND replied_at IS NOT NULL) INTO answered;\n result:=jsonb_build_object('org_id',p_org,'campaign',jsonb_build_object('id',c.id,'version',c.version,'config',cfg),\n 'lead',jsonb_build_object('id',l.id,'org_id',l.org_id,'company_name',l.company_name,'category',l.category,'city',l.city,'email',l.email,'phone',l.phone,'website',l.website),\n 'report',jsonb_build_object('basic',r->'basic','research',r->'research','outreach_context',r->'outreach_context','trust',(r->'trust')-'evaluated_at'),'suppressed',stopped,'replied',answered);\n RETURN result||jsonb_build_object('fingerprint',md5(result::text));\nEND $function$\n"
+    }
+  ]
+}

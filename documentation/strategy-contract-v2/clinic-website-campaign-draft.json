@@ -1,0 +1,78 @@
+{
+  "status": "draft_not_approved_for_sending",
+  "execution_authorized": false,
+  "provenance": {
+    "campaign_choice": "Assistant-selected under user authorization",
+    "sender_brand": "Proposed name, not a verified registered business",
+    "offer": "Proposed service scope; no completed product, portfolio or results claimed",
+    "demo_url": "Not supplied; intentionally omitted",
+    "benefits": "Draft offer points requiring confirmation before campaign approval"
+  },
+  "campaign_request": {
+    "org_id": 1,
+    "config": {
+      "name": "Islamabad Dental Clinic Website Introduction",
+      "mode": "ai",
+      "language": "en",
+      "channels": ["email"],
+      "sender": {
+        "name": "Fahad",
+        "company": "Fahad Web Studio",
+        "signature": "Fahad | Fahad Web Studio"
+      },
+      "offer": {
+        "name": "Proposed clinic website",
+        "description": "A proposed website project for a dental clinic. Discuss the clinic's needs before promising implementation or delivery.",
+        "approved_points": [
+          "The proposed website would present clinic services and contact details in one place.",
+          "The proposed website would include a patient enquiry form."
+        ],
+        "prohibited_claims": [
+          "guaranteed bookings",
+          "guaranteed revenue",
+          "proven results",
+          "existing clinic clients",
+          "completed demo",
+          "you don't have a website"
+        ]
+      },
+      "cta": {
+        "text": "Would you be open to discussing a website for your clinic?",
+        "url": ""
+      },
+      "target_terms": ["dental", "dentist"],
+      "locations": ["Islamabad"],
+      "exclude_terms": [],
+      "offer_profile": {
+        "key": "website_presence",
+        "source_check_max_age_days": 30
+      },
+      "offer_fit_rules": [
+        {
+          "evidence_terms": ["dental", "dentist"],
+          "approved_point_index": 0
+        }
+      ],
+      "tone": "polite, concise, consultative",
+      "timezone": "Asia/Karachi",
+      "sending_window": {
+        "start_hour": 9,
+        "end_hour": 17,
+        "weekdays": [1, 2, 3, 4, 5]
+      },
+      "sequence": [
+        {"channel": "email", "delay_days": 0},
+        {"channel": "email", "delay_days": 3}
+      ],
+      "expiry_days": 14
+    }
+  },
+  "release_requirements": [
+    "Confirm proposed sender identity and service scope",
+    "Create a production campaign version through the existing approval flow",
+    "Use fresh lead evidence and provider-verified recipient addresses",
+    "Generate and review exact lead-specific plans; AI allowance remains unchanged",
+    "Review recipients and message hashes before any sending authorization",
+    "The 24-hour canary release cannot send a day-3 follow-up; a renewed reviewed release is required"
+  ]
+}
